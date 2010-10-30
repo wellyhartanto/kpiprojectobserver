@@ -1,4 +1,4 @@
-package sk.tuke.fei.kpi.ProjectObserver.Visualization;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
