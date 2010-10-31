@@ -29,14 +29,18 @@ public class PackageTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return classes.size();
 	}
 
 	@Override
 	public Object getValueAt(int arg0, int arg1) {
 		// TODO Auto-generated method stub
-		return null;
+		return "nejake data";
+	}
+
+	public void setClasses(
+			List<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class> classes) {
+		this.classes = classes;
 	}
 
 }
