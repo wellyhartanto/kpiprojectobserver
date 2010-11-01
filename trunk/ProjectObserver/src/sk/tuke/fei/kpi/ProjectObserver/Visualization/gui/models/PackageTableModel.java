@@ -12,7 +12,7 @@ public class PackageTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = -2895295854299696658L;
 
-	private final String[] columnNames = { "Classes" };
+	private final String[] columnNames = { "Classes", "fdsa" };
 
 	private List<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class> classes;
 

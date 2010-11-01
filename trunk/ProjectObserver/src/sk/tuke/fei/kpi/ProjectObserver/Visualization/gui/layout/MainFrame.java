@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.BorderLayout;
 import java.awt.Label;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,10 @@ import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import net.miginfocom.swing.MigLayout;
-
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.PackageTableModel;
 
 public class MainFrame extends JFrame {
@@ -34,9 +34,10 @@ public class MainFrame extends JFrame {
 	private JMenuBar menuBar;
 	private ResourceBundle bundle;
 	private PackageTableModel packageTableModel;
-	private JXTable packageTable;
 
 	private static final long serialVersionUID = -1960464005712732926L;
+	private JScrollPane scrollPane;
+	private JXTable packageTable;
 
 	public static void main(String[] args) {
 		try {
@@ -78,12 +79,28 @@ public class MainFrame extends JFrame {
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setViewportView(navigationTree);
 
-		rightPanel = new JPanel();
-		rightPanel.setLayout(new MigLayout());
-		rightPanel.add(packageTable, "span 2,wrap");
+		rightPanel = new JPanel(new BorderLayout());
 
-		rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text"));
-		rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text2"));
+		scrollPane = new JScrollPane();
+
+		packageTable = new JXTable(packageTableModel);
+
+		// packageTable = new JXTable(packageTableModel);
+		packageTable.setRolloverEnabled(true);
+		packageTable.setHorizontalScrollEnabled(true);
+		packageTable.setFillsViewportHeight(true);
+		packageTable.setEditable(true);
+		packageTable.getColumnExt(0).setTitle("nazov stlpca");
+
+		scrollPane.setSize(800, 400);
+		scrollPane.setViewportView(packageTable);
+		//
+		rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text"),
+				BorderLayout.NORTH);
+		rightPanel.add(new Label(), BorderLayout.SOUTH);
+		rightPanel.add(new Label(), BorderLayout.EAST);
+		// rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text2"));
+		rightPanel.add(scrollPane, BorderLayout.CENTER);
 		splitPane = new JSplitPane();
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
@@ -101,46 +118,45 @@ public class MainFrame extends JFrame {
 		classes.add(new Class());
 		classes.add(new Class());
 		classes.add(new Class());
+		classes.add(new Class());
+		classes.add(new Class());
+		classes.add(new Class());
+		classes.add(new Class());
+		classes.add(new Class());
 
 		packageTableModel = new PackageTableModel();
 		packageTableModel.setClasses(classes);
-
-		packageTable = new JXTable(packageTableModel);
-		packageTable.setRolloverEnabled(true);
-		packageTable.setHorizontalScrollEnabled(true);
-		packageTable.setEditable(true);
-		packageTable.getColumnExt(0).setTitle("nazov ");
-		packageTable.getColumnExt(0).setHeaderValue("tab");
-
-		packageTable.setVisible(true);
 
 	}
 
 	private void createTree() {
 
-		List<String> packages = getPackages();
+		List<Package> packages = new ArrayList<Package>();
+
+		for (int i = 0; i < 7; i++) {
+			Package p = new Package();
+			p.setName("package nejaky");
+			List<Class> cl = new ArrayList<Class>();
+			for (int j = 0; j < 7; j++) {
+				Class c = new Class();
+				c.setName("class");
+				cl.add(c);
+			}
+			p.setClasses(cl);
+			packages.add(p);
+		}
 
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Model");
-		for (String s : packages) {
+		for (Package s : packages) {
 			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(s);
 			root.add(child1);
-			for (String s2 : packages) {
-				DefaultMutableTreeNode child2 = new DefaultMutableTreeNode(s);
+			for (Class s2 : s.getClasses()) {
+				DefaultMutableTreeNode child2 = new DefaultMutableTreeNode(s2);
 				child1.add(child2);
 
 			}
 		}
 		navigationTree = new JTree(root);
-	}
-
-	private List<String> getPackages() {
-		List<String> packages = new ArrayList<String>();
-		packages.add("balik 1");
-		packages.add("balik 2");
-		packages.add("balik 3");
-		packages.add("balik 4");
-
-		return packages;
 	}
 
 }
