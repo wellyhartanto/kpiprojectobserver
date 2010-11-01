@@ -9,7 +9,7 @@ public class Package {
 	private List<Package> packages;
 	private String name;
 	private List<Interface> interfaces;
-	
+
 	public Package() {
 		classes = new ArrayList<Class>();
 		enums = new ArrayList<Enum>();
@@ -55,5 +55,10 @@ public class Package {
 
 	public List<Interface> getInterfaces() {
 		return interfaces;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
 	}
 }
