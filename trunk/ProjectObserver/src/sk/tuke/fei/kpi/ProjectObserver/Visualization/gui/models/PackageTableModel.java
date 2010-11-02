@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
+
 public class PackageTableModel extends AbstractTableModel {
 
 	/**
@@ -12,13 +14,13 @@ public class PackageTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = -2895295854299696658L;
 
-	private final String[] columnNames = { "Classes", "fdsa" };
+	private final String[] columnNames = { "Classes" };
 
-	private List<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class> classes;
+	private List<Class> classes;
 
 	public PackageTableModel() {
 		super();
-		classes = new ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class>();
+		classes = new ArrayList<Class>();
 	}
 
 	@Override
@@ -33,13 +35,12 @@ public class PackageTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return "nejake data";
+	public Object getValueAt(int row, int column) {
+
+		return classes.get(row).toString();
 	}
 
-	public void setClasses(
-			List<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class> classes) {
+	public void setClasses(List<Class> classes) {
 		this.classes = classes;
 	}
 
