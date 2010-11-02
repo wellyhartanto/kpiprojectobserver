@@ -16,7 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.UIManager;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -83,16 +86,6 @@ public class MainFrame extends JFrame {
 
 		scrollPane = new JScrollPane();
 
-		packageTable = new JXTable(packageTableModel);
-
-		// packageTable = new JXTable(packageTableModel);
-		packageTable.setRolloverEnabled(true);
-		packageTable.setHorizontalScrollEnabled(true);
-		packageTable.setFillsViewportHeight(true);
-		packageTable.setEditable(true);
-		packageTable.getColumnExt(0).setTitle("nazov stlpca");
-
-		scrollPane.setSize(800, 400);
 		scrollPane.setViewportView(packageTable);
 		//
 		rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text"),
@@ -113,20 +106,48 @@ public class MainFrame extends JFrame {
 	private void createPackageTable() {
 
 		List<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class> classes = new ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class>();
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
-		classes.add(new Class());
+
+		Class cla = new Class();
+		cla.setName("prva klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("druha klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("tretia klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("stvrta klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("5 klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("6 klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("7 klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("8 klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("9 klasa");
+		classes.add(cla);
+		cla = new Class();
+		cla.setName("10 klasa");
+		// classes.add(cla);
 
 		packageTableModel = new PackageTableModel();
 		packageTableModel.setClasses(classes);
 
+		packageTable = new JXTable(packageTableModel);
+
+		packageTable.setRolloverEnabled(true);
+		packageTable.setHorizontalScrollEnabled(true);
+		packageTable.setFillsViewportHeight(true);
+		packageTable.setEditable(true);
+		packageTable.getColumnExt(0).setTitle("nazov stlpca");
 	}
 
 	private void createTree() {
@@ -157,6 +178,34 @@ public class MainFrame extends JFrame {
 			}
 		}
 		navigationTree = new JTree(root);
-	}
+		navigationTree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.SINGLE_TREE_SELECTION);
+		navigationTree.addTreeSelectionListener(new TreeSelectionListener() {
 
+			@Override
+			public void valueChanged(TreeSelectionEvent e) {
+
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) navigationTree
+						.getLastSelectedPathComponent();
+
+				/* if nothing is selected */
+				if (node == null)
+					return;
+
+				/* retrieve the node that was selected */
+				Object nodeInfo = node.getUserObject();
+				if (nodeInfo instanceof Package) {
+
+					createPackageTable();
+
+				}
+				if (nodeInfo instanceof Class) {
+					packageTable.getColumnExt(0).setTitle("novy nazov");
+					packageTable.setVisible(false);
+					packageTable.repaint();
+				}
+
+			}
+		});
+	}
 }
