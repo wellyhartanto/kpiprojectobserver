@@ -1,4 +1,4 @@
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 
-public class PackageTableModel extends AbstractTableModel {
+public class ClassesTableModel extends AbstractTableModel {
 
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class PackageTableModel extends AbstractTableModel {
 
 	private List<Class> classes;
 
-	public PackageTableModel() {
+	public ClassesTableModel() {
 		super();
 		classes = new ArrayList<Class>();
 	}
