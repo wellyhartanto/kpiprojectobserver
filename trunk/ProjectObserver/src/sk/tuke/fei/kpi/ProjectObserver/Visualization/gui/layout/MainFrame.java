@@ -1,7 +1,5 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
-import java.awt.BorderLayout;
-import java.awt.Label;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,11 +19,15 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+import net.miginfocom.swing.MigLayout;
+
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.PackageTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ClassesTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.InterfacesTableModel;
 
 public class MainFrame extends JFrame {
 
@@ -36,11 +38,14 @@ public class MainFrame extends JFrame {
 	private JMenu menu;
 	private JMenuBar menuBar;
 	private ResourceBundle bundle;
-	private PackageTableModel packageTableModel;
+	private ClassesTableModel classesTableModel;
+	private InterfacesTableModel interfacesTableModel;
 
 	private static final long serialVersionUID = -1960464005712732926L;
-	private JScrollPane scrollPane;
-	private JXTable packageTable;
+	private JScrollPane scrollPaneClasses;
+	private JScrollPane scrollPaneInterfaces;
+	private JXTable classesTable;
+	private JXTable interfacesTable;
 
 	public static void main(String[] args) {
 		try {
@@ -77,23 +82,30 @@ public class MainFrame extends JFrame {
 		setJMenuBar(menuBar);
 
 		createTree();
-		createPackageTable();
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setViewportView(navigationTree);
 
-		rightPanel = new JPanel(new BorderLayout());
+		rightPanel = new JPanel(new MigLayout("wrap 3", "[grow,fill,left]",
+				"[grow,fill]2[grow,fill]"));
 
-		scrollPane = new JScrollPane();
+		scrollPaneClasses = new JScrollPane();
 
-		scrollPane.setViewportView(packageTable);
+		scrollPaneClasses.setViewportView(classesTable);
+
+		scrollPaneInterfaces = new JScrollPane();
+		scrollPaneInterfaces.setViewportView(interfacesTable);
+
 		//
-		rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text"),
-				BorderLayout.NORTH);
-		rightPanel.add(new Label(), BorderLayout.SOUTH);
-		rightPanel.add(new Label(), BorderLayout.EAST);
+		// rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text"),
+		// BorderLayout.NORTH);
+		// rightPanel.add(new Label(), BorderLayout.SOUTH);
+		// rightPanel.add(new Label(), BorderLayout.EAST);
 		// rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text2"));
-		rightPanel.add(scrollPane, BorderLayout.CENTER);
+		// rightPanel.add(scrollPane, BorderLayout.CENTER);
+
+		rightPanel.add(scrollPaneClasses, "wrap");
+		rightPanel.add(scrollPaneInterfaces);
 		splitPane = new JSplitPane();
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
@@ -103,79 +115,67 @@ public class MainFrame extends JFrame {
 
 	}
 
-	private void createPackageTable() {
+	private void createClassesTable(Package selectedpackage) {
 
-		List<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class> classes = new ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class>();
+		List<Class> classes = selectedpackage.getClasses();
 
-		Class cla = new Class();
-		cla.setName("prva klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("druha klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("tretia klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("stvrta klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("5 klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("6 klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("7 klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("8 klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("9 klasa");
-		classes.add(cla);
-		cla = new Class();
-		cla.setName("10 klasa");
-		// classes.add(cla);
+		classesTableModel = new ClassesTableModel();
+		classesTableModel.setClasses(classes);
 
-		packageTableModel = new PackageTableModel();
-		packageTableModel.setClasses(classes);
+		classesTable = new JXTable(classesTableModel);
 
-		packageTable = new JXTable(packageTableModel);
+		classesTable.setRolloverEnabled(true);
+		classesTable.setHorizontalScrollEnabled(true);
+		classesTable.setFillsViewportHeight(true);
+		classesTable.setEditable(true);
+		classesTable.getColumnExt(0).setTitle("nazov stlpca");
+	}
 
-		packageTable.setRolloverEnabled(true);
-		packageTable.setHorizontalScrollEnabled(true);
-		packageTable.setFillsViewportHeight(true);
-		packageTable.setEditable(true);
-		packageTable.getColumnExt(0).setTitle("nazov stlpca");
+	private void createInterfacesTable(Package selectedpackage) {
+
+		List<Interface> interfaces = selectedpackage.getInterfaces();
+
+		interfacesTableModel = new InterfacesTableModel();
+		interfacesTableModel.setInterfaces(interfaces);
+
+		interfacesTable = new JXTable(interfacesTableModel);
+
+		interfacesTable.setRolloverEnabled(true);
+		interfacesTable.setHorizontalScrollEnabled(true);
+		interfacesTable.setFillsViewportHeight(true);
+		interfacesTable.setEditable(true);
+		interfacesTable.getColumnExt(0).setTitle("nazov stlpca");
+
 	}
 
 	private void createTree() {
 
-		List<Package> packages = new ArrayList<Package>();
-
-		for (int i = 0; i < 7; i++) {
-			Package p = new Package();
-			p.setName("package nejaky");
-			List<Class> cl = new ArrayList<Class>();
-			for (int j = 0; j < 7; j++) {
-				Class c = new Class();
-				c.setName("class");
-				cl.add(c);
-			}
-			p.setClasses(cl);
-			packages.add(p);
-		}
+		List<Package> packages = createTestData();
 
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Model");
 		for (Package s : packages) {
 			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(s);
 			root.add(child1);
+
+			DefaultMutableTreeNode classes = new DefaultMutableTreeNode(
+					"Classes");
+			child1.add(classes);
+
 			for (Class s2 : s.getClasses()) {
 				DefaultMutableTreeNode child2 = new DefaultMutableTreeNode(s2);
-				child1.add(child2);
+				classes.add(child2);
 
 			}
+
+			DefaultMutableTreeNode interfaces = new DefaultMutableTreeNode(
+					"Iterfaces");
+			child1.add(interfaces);
+			for (Interface s2 : s.getInterfaces()) {
+				DefaultMutableTreeNode child2 = new DefaultMutableTreeNode(s2);
+				interfaces.add(child2);
+
+			}
+
 		}
 		navigationTree = new JTree(root);
 		navigationTree.getSelectionModel().setSelectionMode(
@@ -196,16 +196,50 @@ public class MainFrame extends JFrame {
 				Object nodeInfo = node.getUserObject();
 				if (nodeInfo instanceof Package) {
 
-					createPackageTable();
+					createClassesTable((Package) nodeInfo);
+					createInterfacesTable((Package) nodeInfo);
+
+					scrollPaneClasses.setViewportView(classesTable);
+					scrollPaneInterfaces.setViewportView(interfacesTable);
 
 				}
 				if (nodeInfo instanceof Class) {
-					packageTable.getColumnExt(0).setTitle("novy nazov");
-					packageTable.setVisible(false);
-					packageTable.repaint();
+					classesTable.getColumnExt(0).setTitle("novy nazov");
+					classesTable.setVisible(false);
+					classesTable.repaint();
 				}
 
 			}
+
 		});
 	}
+
+	public List<Package> createTestData() {
+
+		List<Package> packages = new ArrayList<Package>();
+
+		for (int i = 0; i < 7; i++) {
+			Package p = new Package();
+			p.setName("package" + i);
+			List<Class> cl = new ArrayList<Class>();
+			for (int j = 0; j < 7; j++) {
+				Class c = new Class();
+				c.setName("class" + i + "." + j);
+				cl.add(c);
+			}
+			List<Interface> inf = new ArrayList<Interface>();
+			for (int j = 0; j < 7; j++) {
+				Interface c = new Interface();
+				c.setName("interface" + i + "." + j);
+				inf.add(c);
+			}
+
+			p.setClasses(cl);
+			p.setInterfaces(inf);
+			packages.add(p);
+		}
+
+		return packages;
+	}
+
 }

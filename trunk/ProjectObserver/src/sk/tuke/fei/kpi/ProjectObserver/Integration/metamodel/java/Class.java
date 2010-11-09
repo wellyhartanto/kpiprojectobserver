@@ -53,8 +53,4 @@ public class Class extends Element {
 		return superClass;
 	}
 
-	@Override
-	public String toString() {
-		return getName();
-	}
 }
