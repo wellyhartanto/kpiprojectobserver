@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -17,6 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -26,6 +28,7 @@ import org.jdesktop.swingx.JXTable;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ClassesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.InterfacesTableModel;
 
@@ -155,6 +158,7 @@ public class MainFrame extends JFrame {
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Model");
 		for (Package s : packages) {
 			DefaultMutableTreeNode child1 = new DefaultMutableTreeNode(s);
+
 			root.add(child1);
 
 			DefaultMutableTreeNode classes = new DefaultMutableTreeNode(
@@ -178,6 +182,9 @@ public class MainFrame extends JFrame {
 
 		}
 		navigationTree = new JTree(root);
+
+		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer());
+
 		navigationTree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 		navigationTree.addTreeSelectionListener(new TreeSelectionListener() {
