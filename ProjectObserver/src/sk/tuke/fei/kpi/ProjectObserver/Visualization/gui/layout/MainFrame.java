@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
@@ -43,6 +44,8 @@ public class MainFrame extends JFrame {
 	private ResourceBundle bundle;
 	private ClassesTableModel classesTableModel;
 	private InterfacesTableModel interfacesTableModel;
+	
+	private JTabbedPane tabbedPane;
 
 	private static final long serialVersionUID = -1960464005712732926L;
 	private JScrollPane scrollPaneClasses;
@@ -50,6 +53,13 @@ public class MainFrame extends JFrame {
 	private JXTable classesTable;
 	private JXTable interfacesTable;
 
+	private static final String IMAGES_FOLDER_PATH = "src/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/resources/images/";
+
+	private ImageIcon iconPackage;
+	private ImageIcon iconInterface;
+	private ImageIcon iconClass;
+	private ImageIcon iconEnum;
+	
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -107,8 +117,23 @@ public class MainFrame extends JFrame {
 		// rightPanel.add(new Label("ahoj ako sa mas a nejaky dalsi text2"));
 		// rightPanel.add(scrollPane, BorderLayout.CENTER);
 
-		rightPanel.add(scrollPaneClasses, "wrap");
-		rightPanel.add(scrollPaneInterfaces);
+		tabbedPane = new JTabbedPane();
+
+		iconPackage = new ImageIcon(IMAGES_FOLDER_PATH + "package_obj.gif");
+		iconInterface = new ImageIcon(IMAGES_FOLDER_PATH + "int_obj.gif");
+		iconClass = new ImageIcon(IMAGES_FOLDER_PATH + "classes.gif");
+		iconEnum = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
+	
+		tabbedPane.addTab("klasy",iconClass,scrollPaneClasses);
+		
+		tabbedPane.addTab("interf",iconInterface, scrollPaneInterfaces);
+		
+	///	rightPanel.add(scrollPaneClasses, "wrap");
+	//	rightPanel.add(scrollPaneInterfaces);
+		
+		
+		
+		rightPanel.add(tabbedPane);
 		splitPane = new JSplitPane();
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
