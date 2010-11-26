@@ -32,6 +32,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ClassesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.EnumsTableModel;
@@ -86,13 +87,11 @@ public class MainFrame extends JFrame  {
 		this.setSize(1000, 500);
 		setName("myFirstframe");
 		
-		// setLocale(new Locale("en"));
+	//	 setLocale(new Locale("en"));
 		setLocale(new Locale("sk"));
 
-		bundle = ResourceBundle
-				.getBundle(
-						"sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.resources.resources",
-						getLocale());
+		bundle = MyResourceBundle
+				.getResourceBundle(getLocale());
 
 		initComponents();
 	}
@@ -162,7 +161,7 @@ public class MainFrame extends JFrame  {
 
 		List<Class> classes = selectedpackage.getClasses();
 
-		classesTableModel = new ClassesTableModel();
+		classesTableModel = new ClassesTableModel(getLocale());
 		classesTableModel.setClasses(classes);
 
 		classesTable = new JXTable(classesTableModel);
@@ -171,14 +170,14 @@ public class MainFrame extends JFrame  {
 		classesTable.setHorizontalScrollEnabled(true);
 		classesTable.setFillsViewportHeight(true);
 		classesTable.setEditable(true);
-		classesTable.getColumnExt(0).setTitle("nazov stlpca");
+		
 	}
 
 	private void createInterfacesTable(Package selectedpackage) {
 
 		List<Interface> interfaces = selectedpackage.getInterfaces();
 
-		interfacesTableModel = new InterfacesTableModel();
+		interfacesTableModel = new InterfacesTableModel(getLocale());
 		interfacesTableModel.setInterfaces(interfaces);
 
 		interfacesTable = new JXTable(interfacesTableModel);
@@ -187,7 +186,7 @@ public class MainFrame extends JFrame  {
 		interfacesTable.setHorizontalScrollEnabled(true);
 		interfacesTable.setFillsViewportHeight(true);
 		interfacesTable.setEditable(true);
-		interfacesTable.getColumnExt(0).setTitle("nazov stlpca");
+		
 
 	}
 	
@@ -195,7 +194,7 @@ public class MainFrame extends JFrame  {
 
 		List<Enum> enums = selectedpackage.getEnums();
 
-		enumsTableModel = new EnumsTableModel();
+		enumsTableModel = new EnumsTableModel(getLocale());
 		enumsTableModel.setEnums(enums);
 
 		enumsTable = new JXTable(enumsTableModel);
@@ -204,7 +203,7 @@ public class MainFrame extends JFrame  {
 		enumsTable.setHorizontalScrollEnabled(true);
 		enumsTable.setFillsViewportHeight(true);
 		enumsTable.setEditable(true);
-		enumsTable.getColumnExt(0).setTitle("nazov stlpca");
+		
 
 	}
 	
