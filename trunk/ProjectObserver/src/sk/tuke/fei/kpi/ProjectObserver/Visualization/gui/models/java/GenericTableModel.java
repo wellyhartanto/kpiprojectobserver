@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -8,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 
-public abstract class GenericTableModel<T> extends AbstractTableModel{
+public abstract class GenericTableModel<T> extends AbstractTableModel {
 
 	/**
 	 * 
@@ -22,10 +23,8 @@ public abstract class GenericTableModel<T> extends AbstractTableModel{
 
 	public GenericTableModel(Locale locale) {
 		super();
-		
-		bundle = MyResourceBundle.getResourceBundle(locale);
 
-		
+		bundle = MyResourceBundle.getResourceBundle(locale);
 
 	}
 
@@ -47,7 +46,12 @@ public abstract class GenericTableModel<T> extends AbstractTableModel{
 	}
 
 	public void setData(List<T> data) {
-		this.data = data;
+		if (data != null) {
+			this.data = data;
+		} else {
+			this.data = new ArrayList<T>();
+		}
+
 	}
 
 	@Override
@@ -55,6 +59,5 @@ public abstract class GenericTableModel<T> extends AbstractTableModel{
 		// TODO Auto-generated method stub
 		return columnNames[column].toString();
 	}
-
 
 }

@@ -21,7 +21,6 @@ import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -91,6 +90,9 @@ public class MainFrame extends JFrame {
 	private ImageIcon iconMethod;
 	private ImageIcon iconField;
 	private ImageIcon iconEnumValue;
+	private ImageIcon iconInfo;
+
+	private Font tablesHeaderFont;
 
 	public static void main(String[] args) {
 		try {
@@ -147,6 +149,12 @@ public class MainFrame extends JFrame {
 		iconMethod = new ImageIcon(IMAGES_FOLDER_PATH + "method_obj.gif");
 		iconField = new ImageIcon(IMAGES_FOLDER_PATH + "field_obj.gif");
 		iconEnumValue = new ImageIcon(IMAGES_FOLDER_PATH + "enum_value_obj.gif");
+		iconInfo = new ImageIcon(IMAGES_FOLDER_PATH + "information.gif");
+		tablesHeaderFont = MyFonts.font3;
+
+		ImageIcon kpilogo = new ImageIcon(IMAGES_FOLDER_PATH + "tu_kpi.jpg");
+		setIconImage(kpilogo.getImage());
+		setTitle("Project Observer");
 
 		rightPanel.add(tabbedPane);
 		splitPane = new JSplitPane();
@@ -155,6 +163,7 @@ public class MainFrame extends JFrame {
 		splitPane.setRightComponent(rightPanel);
 
 		getContentPane().add(splitPane);
+
 		setVisible(true);
 
 	}
@@ -165,7 +174,7 @@ public class MainFrame extends JFrame {
 		packagesTableModel.setData(packages);
 
 		packagesTable = new JXTable(packagesTableModel);
-
+		packagesTable.getTableHeader().setFont(tablesHeaderFont);
 		packagesTable.setRolloverEnabled(true);
 		packagesTable.setHorizontalScrollEnabled(true);
 		packagesTable.setFillsViewportHeight(true);
@@ -181,7 +190,7 @@ public class MainFrame extends JFrame {
 		classesTableModel.setData(classes);
 
 		classesTable = new JXTable(classesTableModel);
-
+		classesTable.getTableHeader().setFont(tablesHeaderFont);
 		classesTable.setRolloverEnabled(true);
 		classesTable.setHorizontalScrollEnabled(true);
 		classesTable.setFillsViewportHeight(true);
@@ -197,7 +206,7 @@ public class MainFrame extends JFrame {
 		interfacesTableModel.setData(interfaces);
 
 		interfacesTable = new JXTable(interfacesTableModel);
-
+		interfacesTable.getTableHeader().setFont(tablesHeaderFont);
 		interfacesTable.setRolloverEnabled(true);
 		interfacesTable.setHorizontalScrollEnabled(true);
 		interfacesTable.setFillsViewportHeight(true);
@@ -213,7 +222,7 @@ public class MainFrame extends JFrame {
 		enumsTableModel.setData(enums);
 
 		enumsTable = new JXTable(enumsTableModel);
-
+		enumsTable.getTableHeader().setFont(tablesHeaderFont);
 		enumsTable.setRolloverEnabled(true);
 		enumsTable.setHorizontalScrollEnabled(true);
 		enumsTable.setFillsViewportHeight(true);
@@ -229,7 +238,7 @@ public class MainFrame extends JFrame {
 		fieldsTableModel.setData(fields);
 
 		fieldsTable = new JXTable(fieldsTableModel);
-
+		fieldsTable.getTableHeader().setFont(tablesHeaderFont);
 		fieldsTable.setRolloverEnabled(true);
 		fieldsTable.setHorizontalScrollEnabled(true);
 		fieldsTable.setFillsViewportHeight(true);
@@ -245,7 +254,7 @@ public class MainFrame extends JFrame {
 		methodsTableModel.setData(methods);
 
 		methodsTable = new JXTable(methodsTableModel);
-
+		methodsTable.getTableHeader().setFont(tablesHeaderFont);
 		methodsTable.setRolloverEnabled(true);
 		methodsTable.setHorizontalScrollEnabled(true);
 		methodsTable.setFillsViewportHeight(true);
@@ -261,7 +270,7 @@ public class MainFrame extends JFrame {
 		fieldsTableModel.setData(fields);
 
 		fieldsTable = new JXTable(fieldsTableModel);
-
+		fieldsTable.getTableHeader().setFont(tablesHeaderFont);
 		fieldsTable.setRolloverEnabled(true);
 		fieldsTable.setHorizontalScrollEnabled(true);
 		fieldsTable.setFillsViewportHeight(true);
@@ -277,7 +286,7 @@ public class MainFrame extends JFrame {
 		methodsTableModel.setData(methods);
 
 		methodsTable = new JXTable(methodsTableModel);
-
+		methodsTable.getTableHeader().setFont(tablesHeaderFont);
 		methodsTable.setRolloverEnabled(true);
 		methodsTable.setHorizontalScrollEnabled(true);
 		methodsTable.setFillsViewportHeight(true);
@@ -293,7 +302,7 @@ public class MainFrame extends JFrame {
 		enumValuesTableModel.setData(values);
 
 		enumValuesTable = new JXTable(enumValuesTableModel);
-
+		enumValuesTable.getTableHeader().setFont(tablesHeaderFont);
 		enumValuesTable.setRolloverEnabled(true);
 		enumValuesTable.setHorizontalScrollEnabled(true);
 		enumValuesTable.setFillsViewportHeight(true);
@@ -331,9 +340,9 @@ public class MainFrame extends JFrame {
 		return packagex;
 	}
 
-	private DefaultMutableTreeNode createClassTree(Class c){
+	private DefaultMutableTreeNode createClassTree(Class c) {
 		DefaultMutableTreeNode classx = new DefaultMutableTreeNode(c);
-		
+
 		for (Method m : c.getMethods()) {
 			DefaultMutableTreeNode methodx = new DefaultMutableTreeNode(m);
 			classx.add(methodx);
@@ -342,14 +351,13 @@ public class MainFrame extends JFrame {
 			DefaultMutableTreeNode fieldx = new DefaultMutableTreeNode(f);
 			classx.add(fieldx);
 		}
-		
-		
+
 		return classx;
 	}
-	
-	private DefaultMutableTreeNode createInterfaceTree(Interface c){
+
+	private DefaultMutableTreeNode createInterfaceTree(Interface c) {
 		DefaultMutableTreeNode classx = new DefaultMutableTreeNode(c);
-		
+
 		for (Method m : c.getMethods()) {
 			DefaultMutableTreeNode methodx = new DefaultMutableTreeNode(m);
 			classx.add(methodx);
@@ -358,11 +366,10 @@ public class MainFrame extends JFrame {
 			DefaultMutableTreeNode fieldx = new DefaultMutableTreeNode(f);
 			classx.add(fieldx);
 		}
-		
-		
+
 		return classx;
 	}
-	
+
 	private DefaultMutableTreeNode createApplicationTree(Application p) {
 		DefaultMutableTreeNode packagex = new DefaultMutableTreeNode(p);
 
@@ -442,8 +449,8 @@ public class MainFrame extends JFrame {
 			scrollPaneInterfaces = new JScrollPane(interfacesTable);
 			scrollPaneEnums = new JScrollPane(enumsTable);
 			scrollPanePackages = new JScrollPane(packagesTable);
-			
 
+			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
 			tabbedPane.addTab(bundle.getString("title.packages"), iconPackage,
 					scrollPanePackages);
 			tabbedPane.addTab(bundle.getString("title.classes"), iconClass,
@@ -458,14 +465,19 @@ public class MainFrame extends JFrame {
 		if (nodeInfo instanceof Package) {
 			tabbedPane.removeAll();
 
+			createPackagesTable(((Package) nodeInfo).getPackages());
 			createClassesTable(((Package) nodeInfo).getClasses());
 			createInterfacesTable(((Package) nodeInfo).getInterfaces());
 			createEnumsTable(((Package) nodeInfo).getEnums());
 
+			scrollPanePackages = new JScrollPane(packagesTable);
 			scrollPaneClasses = new JScrollPane(classesTable);
 			scrollPaneInterfaces = new JScrollPane(interfacesTable);
 			scrollPaneEnums = new JScrollPane(enumsTable);
 
+			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+			tabbedPane.addTab(bundle.getString("title.packages"), iconPackage,
+					scrollPanePackages);
 			tabbedPane.addTab(bundle.getString("title.classes"), iconClass,
 					scrollPaneClasses);
 			tabbedPane.addTab(bundle.getString("title.interfaces"),
@@ -479,12 +491,23 @@ public class MainFrame extends JFrame {
 
 			createClassMethodsTable((Class) nodeInfo);
 			createClassFieldsTable((Class) nodeInfo);
+			createEnumsTable(((Class) nodeInfo).getEnums());
+			createClassesTable(((Class) nodeInfo).getClasses());
 
 			scrollPaneMethods = new JScrollPane(methodsTable);
 			scrollPaneFields = new JScrollPane(fieldsTable);
+			scrollPaneEnums = new JScrollPane(enumsTable);
+			scrollPaneClasses = new JScrollPane(classesTable);
 
-			tabbedPane.addTab("metody", iconMethod, scrollPaneMethods);
-			tabbedPane.addTab("fieldy", iconField, scrollPaneFields);
+			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+			tabbedPane.addTab(bundle.getString("title.methods"), iconMethod,
+					scrollPaneMethods);
+			tabbedPane.addTab(bundle.getString("title.fields"), iconField,
+					scrollPaneFields);
+			tabbedPane.addTab(bundle.getString("title.classes"), iconClass,
+					scrollPaneClasses);
+			tabbedPane.addTab(bundle.getString("title.enums"), iconEnum,
+					scrollPaneEnums);
 
 		}
 		if (nodeInfo instanceof Interface) {
@@ -496,8 +519,11 @@ public class MainFrame extends JFrame {
 			scrollPaneMethods = new JScrollPane(methodsTable);
 			scrollPaneFields = new JScrollPane(fieldsTable);
 
-			tabbedPane.addTab("metody", iconMethod, scrollPaneMethods);
-			tabbedPane.addTab("fieldy", iconField, scrollPaneFields);
+			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+			tabbedPane.addTab(bundle.getString("title.methods"), iconMethod,
+					scrollPaneMethods);
+			tabbedPane.addTab(bundle.getString("title.fields"), iconField,
+					scrollPaneFields);
 
 		}
 		if (nodeInfo instanceof Enum) {
@@ -505,8 +531,20 @@ public class MainFrame extends JFrame {
 
 			createEnumValuesTable((Enum) nodeInfo);
 			scrollPaneEnumValues = new JScrollPane(enumValuesTable);
-			tabbedPane.addTab("Values", iconEnumValue, scrollPaneEnumValues);
 
+			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+			tabbedPane.addTab(bundle.getString("title.values"), iconEnumValue,
+					scrollPaneEnumValues);
+
+		}
+
+		if (nodeInfo instanceof Method) {
+			tabbedPane.removeAll();
+			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+		}
+		if (nodeInfo instanceof Field) {
+			tabbedPane.removeAll();
+			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
 		}
 
 	}
