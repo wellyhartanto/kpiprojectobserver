@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -27,23 +28,26 @@ import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.swingx.JXTable;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ClassesTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.EnumValuesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.EnumsTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.FieldsTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.InterfacesTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.MethodsTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.PackagesTableModel;
 
-public class MainFrame extends JFrame  {
+public class MainFrame extends JFrame {
 
-	
-	
-	
-	
 	private JSplitPane splitPane;
 	private JScrollPane leftScrollPane;
 	private JPanel rightPanel;
@@ -54,16 +58,29 @@ public class MainFrame extends JFrame  {
 	private ClassesTableModel classesTableModel;
 	private InterfacesTableModel interfacesTableModel;
 	private EnumsTableModel enumsTableModel;
-	
+	private FieldsTableModel fieldsTableModel;
+	private MethodsTableModel methodsTableModel;
+	private EnumValuesTableModel enumValuesTableModel;
+	private PackagesTableModel packagesTableModel;
+
 	private JTabbedPane tabbedPane;
 
 	private static final long serialVersionUID = -1960464005712732926L;
 	private JScrollPane scrollPaneClasses;
 	private JScrollPane scrollPaneInterfaces;
 	private JScrollPane scrollPaneEnums;
+	private JScrollPane scrollPaneMethods;
+	private JScrollPane scrollPaneFields;
+	private JScrollPane scrollPaneEnumValues;
+	private JScrollPane scrollPanePackages;
+
 	private JXTable classesTable;
 	private JXTable interfacesTable;
 	private JXTable enumsTable;
+	private JXTable fieldsTable;
+	private JXTable methodsTable;
+	private JXTable enumValuesTable;
+	private JXTable packagesTable;
 
 	private static final String IMAGES_FOLDER_PATH = "src/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/resources/images/";
 
@@ -71,7 +88,10 @@ public class MainFrame extends JFrame  {
 	private ImageIcon iconInterface;
 	private ImageIcon iconClass;
 	private ImageIcon iconEnum;
-	
+	private ImageIcon iconMethod;
+	private ImageIcon iconField;
+	private ImageIcon iconEnumValue;
+
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -86,20 +106,17 @@ public class MainFrame extends JFrame  {
 	public MainFrame() {
 		this.setSize(1000, 500);
 		setName("myFirstframe");
-		
-	//	 setLocale(new Locale("en"));
+
+		// setLocale(new Locale("en"));
 		setLocale(new Locale("sk"));
 
-		bundle = MyResourceBundle
-				.getResourceBundle(getLocale());
+		bundle = MyResourceBundle.getResourceBundle(getLocale());
 
 		initComponents();
 	}
 
 	private void initComponents() {
-		
-		
-		
+
 		menuBar = new JMenuBar();
 		menuBar.setName("menuBar");
 
@@ -113,25 +130,13 @@ public class MainFrame extends JFrame  {
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
-	
+
 		leftScrollPane.setViewportView(navigationTree);
-		
-		
+
 		rightPanel = new JPanel(new MigLayout("wrap 3", "[grow,fill,left]",
 				"[grow,fill]2[grow,fill]"));
 		rightPanel.setName("rightPanel");
-		
-		scrollPaneClasses = new JScrollPane();
 
-		scrollPaneClasses.setViewportView(classesTable);
-
-		scrollPaneInterfaces = new JScrollPane();
-		scrollPaneInterfaces.setViewportView(interfacesTable);
-
-		scrollPaneEnums = new JScrollPane();
-		scrollPaneEnums.setViewportView(enumsTable);
-		
-	
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(MyFonts.font2);
 
@@ -139,13 +144,10 @@ public class MainFrame extends JFrame  {
 		iconInterface = new ImageIcon(IMAGES_FOLDER_PATH + "int_obj.gif");
 		iconClass = new ImageIcon(IMAGES_FOLDER_PATH + "classes.gif");
 		iconEnum = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
-	
-		tabbedPane.addTab(bundle.getString("title.classes"),iconClass,scrollPaneClasses);
-		
-		tabbedPane.addTab(bundle.getString("title.interfaces"),iconInterface, scrollPaneInterfaces);
+		iconMethod = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
+		iconField = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
+		iconEnumValue = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
 
-		tabbedPane.addTab(bundle.getString("title.enums"), iconEnum,scrollPaneEnums);
-		
 		rightPanel.add(tabbedPane);
 		splitPane = new JSplitPane();
 		splitPane.setName("splitPane");
@@ -157,12 +159,26 @@ public class MainFrame extends JFrame  {
 
 	}
 
-	private void createClassesTable(Package selectedpackage) {
+	private void createPackagesTable(List<Package> packages) {
 
-		List<Class> classes = selectedpackage.getClasses();
+		packagesTableModel = new PackagesTableModel(getLocale());
+		packagesTableModel.setData(packages);
+
+		packagesTable = new JXTable(packagesTableModel);
+
+		packagesTable.setRolloverEnabled(true);
+		packagesTable.setHorizontalScrollEnabled(true);
+		packagesTable.setFillsViewportHeight(true);
+		packagesTable.setEditable(true);
+
+	}
+
+	private void createClassesTable(List<Class> classes) {
+
+		// List<Class> classes = selectedpackage.getClasses();
 
 		classesTableModel = new ClassesTableModel(getLocale());
-		classesTableModel.setClasses(classes);
+		classesTableModel.setData(classes);
 
 		classesTable = new JXTable(classesTableModel);
 
@@ -170,15 +186,15 @@ public class MainFrame extends JFrame  {
 		classesTable.setHorizontalScrollEnabled(true);
 		classesTable.setFillsViewportHeight(true);
 		classesTable.setEditable(true);
-		
+
 	}
 
-	private void createInterfacesTable(Package selectedpackage) {
+	private void createInterfacesTable(List<Interface> interfaces) {
 
-		List<Interface> interfaces = selectedpackage.getInterfaces();
+		// List<Interface> interfaces = selectedpackage.getInterfaces();
 
 		interfacesTableModel = new InterfacesTableModel(getLocale());
-		interfacesTableModel.setInterfaces(interfaces);
+		interfacesTableModel.setData(interfaces);
 
 		interfacesTable = new JXTable(interfacesTableModel);
 
@@ -186,16 +202,15 @@ public class MainFrame extends JFrame  {
 		interfacesTable.setHorizontalScrollEnabled(true);
 		interfacesTable.setFillsViewportHeight(true);
 		interfacesTable.setEditable(true);
-		
 
 	}
-	
-	private void createEnumsTable(Package selectedpackage) {
 
-		List<Enum> enums = selectedpackage.getEnums();
+	private void createEnumsTable(List<Enum> enums) {
+
+		// List<Enum> enums = selectedpackage.getEnums();
 
 		enumsTableModel = new EnumsTableModel(getLocale());
-		enumsTableModel.setEnums(enums);
+		enumsTableModel.setData(enums);
 
 		enumsTable = new JXTable(enumsTableModel);
 
@@ -203,18 +218,94 @@ public class MainFrame extends JFrame  {
 		enumsTable.setHorizontalScrollEnabled(true);
 		enumsTable.setFillsViewportHeight(true);
 		enumsTable.setEditable(true);
-		
 
 	}
-	
-	
-	
-	
-	private DefaultMutableTreeNode createTree(Package p){
+
+	private void createClassFieldsTable(Class selectedClass) {
+
+		List<Field> fields = selectedClass.getFields();
+
+		fieldsTableModel = new FieldsTableModel(getLocale());
+		fieldsTableModel.setData(fields);
+
+		fieldsTable = new JXTable(fieldsTableModel);
+
+		fieldsTable.setRolloverEnabled(true);
+		fieldsTable.setHorizontalScrollEnabled(true);
+		fieldsTable.setFillsViewportHeight(true);
+		fieldsTable.setEditable(true);
+
+	}
+
+	private void createClassMethodsTable(Class selectedClass) {
+
+		List<Method> methods = selectedClass.getMethods();
+
+		methodsTableModel = new MethodsTableModel(getLocale());
+		methodsTableModel.setData(methods);
+
+		methodsTable = new JXTable(methodsTableModel);
+
+		methodsTable.setRolloverEnabled(true);
+		methodsTable.setHorizontalScrollEnabled(true);
+		methodsTable.setFillsViewportHeight(true);
+		methodsTable.setEditable(true);
+
+	}
+
+	private void createInterfaceFieldsTable(Interface selectedInterface) {
+
+		List<Field> fields = selectedInterface.getFields();
+
+		fieldsTableModel = new FieldsTableModel(getLocale());
+		fieldsTableModel.setData(fields);
+
+		fieldsTable = new JXTable(fieldsTableModel);
+
+		fieldsTable.setRolloverEnabled(true);
+		fieldsTable.setHorizontalScrollEnabled(true);
+		fieldsTable.setFillsViewportHeight(true);
+		fieldsTable.setEditable(true);
+
+	}
+
+	private void createInterfaceMethodsTable(Interface selectedInterface) {
+
+		List<Method> methods = selectedInterface.getMethods();
+
+		methodsTableModel = new MethodsTableModel(getLocale());
+		methodsTableModel.setData(methods);
+
+		methodsTable = new JXTable(methodsTableModel);
+
+		methodsTable.setRolloverEnabled(true);
+		methodsTable.setHorizontalScrollEnabled(true);
+		methodsTable.setFillsViewportHeight(true);
+		methodsTable.setEditable(true);
+
+	}
+
+	private void createEnumValuesTable(Enum selectedEnum) {
+
+		List<String> values = Arrays.asList(selectedEnum.getValues());
+
+		enumValuesTableModel = new EnumValuesTableModel(getLocale());
+		enumValuesTableModel.setData(values);
+
+		enumValuesTable = new JXTable(enumValuesTableModel);
+
+		enumValuesTable.setRolloverEnabled(true);
+		enumValuesTable.setHorizontalScrollEnabled(true);
+		enumValuesTable.setFillsViewportHeight(true);
+		enumValuesTable.setEditable(true);
+
+	}
+
+	private DefaultMutableTreeNode createPackageTree(Package p) {
 		DefaultMutableTreeNode packagex = new DefaultMutableTreeNode(p);
-		
+
 		for (Package s2 : p.getPackages()) {
-			DefaultMutableTreeNode subpackagex = createTree(s2);
+			DefaultMutableTreeNode subpackagex = createPackageTree(s2);
 			packagex.add(subpackagex);
 
 		}
@@ -225,43 +316,58 @@ public class MainFrame extends JFrame  {
 
 		}
 
-		
 		for (Interface s2 : p.getInterfaces()) {
 			DefaultMutableTreeNode interfacex = new DefaultMutableTreeNode(s2);
 			packagex.add(interfacex);
 
 		}
-		
+
 		for (Enum s2 : p.getEnums()) {
 			DefaultMutableTreeNode enumx = new DefaultMutableTreeNode(s2);
 			packagex.add(enumx);
 
 		}
-		
-	
-		
-		
-		
-		
+
+		return packagex;
+	}
+
+	private DefaultMutableTreeNode createApplicationTree(Application p) {
+		DefaultMutableTreeNode packagex = new DefaultMutableTreeNode(p);
+
+		for (Package s2 : p.getPackages()) {
+			DefaultMutableTreeNode subpackagex = createPackageTree(s2);
+			packagex.add(subpackagex);
+
+		}
+
+		for (Class s2 : p.getClasses()) {
+			DefaultMutableTreeNode classx = new DefaultMutableTreeNode(s2);
+			packagex.add(classx);
+
+		}
+
+		for (Interface s2 : p.getInterfaces()) {
+			DefaultMutableTreeNode interfacex = new DefaultMutableTreeNode(s2);
+			packagex.add(interfacex);
+
+		}
+
+		for (Enum s2 : p.getEnums()) {
+			DefaultMutableTreeNode enumx = new DefaultMutableTreeNode(s2);
+			packagex.add(enumx);
+
+		}
+
 		return packagex;
 	}
 
 	private void createTree() {
 
-		List<Package> packages = createTestData();
+		Application app = createTestData();
 
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Model");
-		for (Package p : packages) {
-			DefaultMutableTreeNode packagex = createTree(p);
+		DefaultMutableTreeNode root = createApplicationTree(app);
 
-			root.add(packagex);
-
-		
-
-
-		}
 		navigationTree = new JTree(root);
-		
 
 		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer());
 
@@ -272,15 +378,13 @@ public class MainFrame extends JFrame  {
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
 				treeValueChangedAction();
-				
+
 			}
-			
+
 		});
 	}
-	
-	
-	private void treeValueChangedAction(){
 
+	private void treeValueChangedAction() {
 
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) navigationTree
 				.getLastSelectedPathComponent();
@@ -291,42 +395,93 @@ public class MainFrame extends JFrame  {
 
 		/* retrieve the node that was selected */
 		Object nodeInfo = node.getUserObject();
+
+		if (nodeInfo instanceof Application) {
+			tabbedPane.removeAll();
+
+			tabbedPane.removeAll();
+
+			createClassesTable(((Application) nodeInfo).getClasses());
+			createInterfacesTable(((Application) nodeInfo).getInterfaces());
+			createEnumsTable(((Application) nodeInfo).getEnums());
+			createPackagesTable(((Application) nodeInfo).getPackages());
+
+			scrollPaneClasses = new JScrollPane(classesTable);
+			scrollPaneInterfaces = new JScrollPane(interfacesTable);
+			scrollPaneEnums = new JScrollPane(enumsTable);
+			scrollPanePackages = new JScrollPane(packagesTable);
+			
+
+			tabbedPane.addTab("packo", iconPackage,
+					scrollPanePackages);
+			tabbedPane.addTab(bundle.getString("title.classes"), iconClass,
+					scrollPaneClasses);
+			tabbedPane.addTab(bundle.getString("title.interfaces"),
+					iconInterface, scrollPaneInterfaces);
+			tabbedPane.addTab(bundle.getString("title.enums"), iconEnum,
+					scrollPaneEnums);
+
+		}
+
 		if (nodeInfo instanceof Package) {
+			tabbedPane.removeAll();
 
-			createClassesTable((Package) nodeInfo);
-			createInterfacesTable((Package) nodeInfo);
-			createEnumsTable((Package)nodeInfo);
-			
-			scrollPaneClasses.setViewportView(classesTable);
-			scrollPaneInterfaces.setViewportView(interfacesTable);
-			scrollPaneEnums.setViewportView(enumsTable);
-			
-			tabbedPane.addTab(bundle.getString("title.classes"),iconClass,scrollPaneClasses);
-			
-			tabbedPane.addTab(bundle.getString("title.interfaces"),iconInterface, scrollPaneInterfaces);
+			createClassesTable(((Package) nodeInfo).getClasses());
+			createInterfacesTable(((Package) nodeInfo).getInterfaces());
+			createEnumsTable(((Package) nodeInfo).getEnums());
 
-			tabbedPane.addTab(bundle.getString("title.enums"), iconEnum,scrollPaneEnums);
-			
+			scrollPaneClasses = new JScrollPane(classesTable);
+			scrollPaneInterfaces = new JScrollPane(interfacesTable);
+			scrollPaneEnums = new JScrollPane(enumsTable);
+
+			tabbedPane.addTab(bundle.getString("title.classes"), iconClass,
+					scrollPaneClasses);
+			tabbedPane.addTab(bundle.getString("title.interfaces"),
+					iconInterface, scrollPaneInterfaces);
+			tabbedPane.addTab(bundle.getString("title.enums"), iconEnum,
+					scrollPaneEnums);
+
 		}
 		if (nodeInfo instanceof Class) {
 			tabbedPane.removeAll();
-			
-	//		classesTable.getColumnExt(0).setTitle("novy nazov");
-	//		classesTable.setVisible(false);
-	//		classesTable.repaint();
-		}
-		if (nodeInfo instanceof Class) {
-			tabbedPane.removeAll();
-			}
-		if (nodeInfo instanceof Class) {
-			tabbedPane.removeAll();
-			}
 
-	
-	
+			createClassMethodsTable((Class) nodeInfo);
+			createClassFieldsTable((Class) nodeInfo);
+
+			scrollPaneMethods = new JScrollPane(methodsTable);
+			scrollPaneFields = new JScrollPane(fieldsTable);
+
+			tabbedPane.addTab("metody", iconClass, scrollPaneMethods);
+			tabbedPane.addTab("fieldy", iconClass, scrollPaneFields);
+
+		}
+		if (nodeInfo instanceof Interface) {
+			tabbedPane.removeAll();
+
+			createInterfaceMethodsTable((Interface) nodeInfo);
+			createInterfaceFieldsTable((Interface) nodeInfo);
+
+			scrollPaneMethods = new JScrollPane(methodsTable);
+			scrollPaneFields = new JScrollPane(fieldsTable);
+
+			tabbedPane.addTab("metody", iconClass, scrollPaneMethods);
+			tabbedPane.addTab("fieldy", iconClass, scrollPaneFields);
+
+		}
+		if (nodeInfo instanceof Enum) {
+			tabbedPane.removeAll();
+
+			createEnumValuesTable((Enum) nodeInfo);
+			scrollPaneEnumValues = new JScrollPane(enumValuesTable);
+			tabbedPane.addTab("Values", iconClass, scrollPaneEnumValues);
+
+		}
+
 	}
 
-	public List<Package> createTestData() {
+	public Application createTestData() {
+
+		Application app = new Application();
 
 		List<Package> packages = new ArrayList<Package>();
 
@@ -337,58 +492,130 @@ public class MainFrame extends JFrame  {
 			for (int j = 0; j < 7; j++) {
 				Class c = new Class();
 				c.setName("class" + i + "." + j);
+
+				List<Method> methods = new ArrayList<Method>();
+				List<Field> fields = new ArrayList<Field>();
+
+				for (int x = 0; x < 3; x++) {
+
+					Method m = new Method();
+					m.setName("method" + x);
+					methods.add(m);
+
+					Field f = new Field();
+					f.setName("field" + x);
+					fields.add(f);
+				}
+				c.setMethods(methods);
+				c.setFields(fields);
+
 				cl.add(c);
 			}
 			List<Interface> inf = new ArrayList<Interface>();
 			for (int j = 0; j < 5; j++) {
 				Interface c = new Interface();
 				c.setName("interface" + i + "." + j);
+
+				List<Method> methods = new ArrayList<Method>();
+				List<Field> fields = new ArrayList<Field>();
+
+				for (int x = 0; x < 2; x++) {
+
+					Method m = new Method();
+					m.setName("method" + x);
+					methods.add(m);
+
+					Field f = new Field();
+					f.setName("field" + x);
+					fields.add(f);
+				}
+				c.setMethods(methods);
+				c.setFields(fields);
+
 				inf.add(c);
 			}
 
-			
 			List<Enum> en = new ArrayList<Enum>();
 			for (int j = 0; j < 4; j++) {
 				Enum c = new Enum();
 				c.setName("enum" + i + "." + j);
+
+				String[] s = { "value1", "value2" };
+
+				c.setValues(s);
+
 				en.add(c);
 			}
-			
+
 			List<Package> pcg = new ArrayList<Package>();
 			for (int j = 0; j < 3; j++) {
 				Package c = new Package();
-				c.setName(p.getName()+"sub" + i + "." + j);
+				c.setName(p.getName() + "sub" + i + "." + j);
 				pcg.add(c);
-				
+
 				List<Class> cl2 = new ArrayList<Class>();
 				for (int z = 0; z < 3; z++) {
 					Class c2 = new Class();
 					c2.setName("class" + i + "." + z);
+
+					List<Method> methods = new ArrayList<Method>();
+					List<Field> fields = new ArrayList<Field>();
+
+					for (int x = 0; x < 3; x++) {
+
+						Method m = new Method();
+						m.setName("method" + x);
+						methods.add(m);
+
+						Field f = new Field();
+						f.setName("field" + x);
+						fields.add(f);
+					}
+					c2.setMethods(methods);
+					c2.setFields(fields);
+
 					cl2.add(c2);
 				}
 				List<Interface> inf2 = new ArrayList<Interface>();
 				for (int z = 0; z < 2; z++) {
 					Interface c2 = new Interface();
 					c2.setName("interface" + i + "." + z);
+
+					List<Method> methods = new ArrayList<Method>();
+					List<Field> fields = new ArrayList<Field>();
+
+					for (int x = 0; x < 2; x++) {
+
+						Method m = new Method();
+						m.setName("method" + x);
+						methods.add(m);
+
+						Field f = new Field();
+						f.setName("field" + x);
+						fields.add(f);
+					}
+					c2.setMethods(methods);
+					c2.setFields(fields);
 					inf2.add(c2);
 				}
 
-				
 				List<Enum> en2 = new ArrayList<Enum>();
 				for (int z = 0; z < 1; z++) {
 					Enum c2 = new Enum();
 					c2.setName("enum" + i + "." + z);
+					String[] s = { "value1", "value2" };
+
+					c2.setValues(s);
 					en2.add(c2);
 				}
-				
+
 				c.setClasses(cl2);
 				c.setInterfaces(inf2);
 				c.setEnums(en2);
 				pcg.add(c);
-				
-				
+
 			}
-			
+
 			p.setPackages(pcg);
 			p.setClasses(cl);
 			p.setInterfaces(inf);
@@ -396,7 +623,14 @@ public class MainFrame extends JFrame  {
 			packages.add(p);
 		}
 
-		return packages;
+		app.setPackages(packages);
+		app.setClasses(packages.get(0).getClasses());
+		app.setEnums(packages.get(0).getEnums());
+		app.setInterfaces(packages.get(0).getInterfaces());
+		app.setFilename("defaultfile.owl");
+		app.setName("MyExampleApplication");
+
+		return app;
 	}
 
 }
