@@ -19,7 +19,7 @@ public class MethodsTableModel extends GenericTableModel<Method> {
 		
 		
 
-		columnNames = new String[] {"chyba bundle"
+		columnNames = new String[] {bundle.getString("table.methodstable.column.name")
 				};
 
 	}

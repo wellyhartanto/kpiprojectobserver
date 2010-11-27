@@ -15,6 +15,6 @@ public class PackagesTableModel extends GenericTableModel<Package> {
 		super(locale);
 		data = new ArrayList<Package>();
 
-		columnNames = new String[] { "chyba bundle" };
+		columnNames = new String[] {bundle.getString("table.packagestable.column.name")};
 	}
 }
