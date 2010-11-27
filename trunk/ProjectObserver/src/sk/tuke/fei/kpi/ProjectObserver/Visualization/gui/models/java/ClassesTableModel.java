@@ -10,53 +10,21 @@ import javax.swing.table.AbstractTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 
-public class ClassesTableModel extends AbstractTableModel {
+public class ClassesTableModel extends GenericTableModel<Class> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2895295854299696658L;
 
-	private ResourceBundle bundle;
-	private String[] columnNames;
-	private List<Class> classes;
-
 	public ClassesTableModel(Locale locale) {
-		super();
-		classes = new ArrayList<Class>();
-		bundle = MyResourceBundle.getResourceBundle(locale);
+		super(locale);
+		data = new ArrayList<Class>();
 
 		columnNames = new String[] {
 				bundle.getString("table.classestable.column.name"),
 				bundle.getString("table.classestable.column.visibility") };
 
-	}
-
-	@Override
-	public int getColumnCount() {
-
-		return columnNames.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		return classes.size();
-	}
-
-	@Override
-	public Object getValueAt(int row, int column) {
-
-		return classes.get(row).toString();
-	}
-
-	public void setClasses(List<Class> classes) {
-		this.classes = classes;
-	}
-
-	@Override
-	public String getColumnName(int column) {
-		// TODO Auto-generated method stub
-		return columnNames[column].toString();
 	}
 
 }

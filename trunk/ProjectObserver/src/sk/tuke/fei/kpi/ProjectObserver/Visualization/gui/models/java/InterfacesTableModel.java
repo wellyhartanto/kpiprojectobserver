@@ -10,47 +10,20 @@ import javax.swing.table.AbstractTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 
-public class InterfacesTableModel extends AbstractTableModel {
-	private String[] columnNames;
+public class InterfacesTableModel extends GenericTableModel<Interface> {
 
-	private List<Interface> interfaces;
-	private ResourceBundle bundle;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1629050875612660093L;
 
 	public InterfacesTableModel(Locale locale) {
-		super();
-		interfaces = new ArrayList<Interface>();
-		bundle = MyResourceBundle.getResourceBundle(locale);
+		super(locale);
+		data = new ArrayList<Interface>();
 
-		columnNames = new String[] {
-				bundle.getString("table.interfacestable.column.name") };
+		columnNames = new String[] { bundle
+				.getString("table.interfacestable.column.name") };
 
-	}
-
-	@Override
-	public int getColumnCount() {
-
-		return columnNames.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		return interfaces.size();
-	}
-
-	@Override
-	public Object getValueAt(int row, int column) {
-
-		return interfaces.get(row).toString();
-	}
-
-	public void setInterfaces(List<Interface> interfaces) {
-		this.interfaces = interfaces;
-	}
-
-	@Override
-	public String getColumnName(int column) {
-		// TODO Auto-generated method stub
-		return columnNames[column].toString();
 	}
 
 }

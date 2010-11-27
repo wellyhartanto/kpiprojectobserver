@@ -10,6 +10,7 @@ public class Application {
 	private String filename;
 	private String name;
 	private List<Interface> interfaces;
+
 	public Application() {
 		classes = new ArrayList<Class>();
 		enums = new ArrayList<Enum>();
@@ -70,4 +71,8 @@ public class Application {
 		return interfaces;
 	}
 
+	@Override
+	public String toString() {
+		return getName();
+	}
 }
