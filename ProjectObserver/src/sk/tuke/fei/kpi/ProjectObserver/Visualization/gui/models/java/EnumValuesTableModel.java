@@ -17,7 +17,7 @@ public class EnumValuesTableModel extends GenericTableModel<String> {
 		data = new ArrayList<String>();
 		
 		
-		columnNames = new String[] {"Valuesss"};
+		columnNames = new String[] {bundle.getString("table.enumvaluestable.column.name")};
 
 	}
 

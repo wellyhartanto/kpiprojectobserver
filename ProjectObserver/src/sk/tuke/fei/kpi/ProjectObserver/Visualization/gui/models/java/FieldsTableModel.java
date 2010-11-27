@@ -17,9 +17,9 @@ public class FieldsTableModel extends GenericTableModel<Field> {
 		super(locale);
 		
 		data = new ArrayList<Field>();
-	//	columnNames = new String[] { bundle
-	//			.getString("table.interfacestable.column.name") };
-		columnNames = new String[] { "Nazov pola"};
+		columnNames = new String[] { bundle
+				.getString("table.fieldstable.column.name") };
+		
 	
 	}
 
