@@ -10,7 +10,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 
 public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -26,13 +28,18 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 	private ImageIcon iconInterface;
 	private ImageIcon iconClass;
 	private ImageIcon iconEnum;
-
+	private ImageIcon iconMethod;
+	private ImageIcon iconField;
+	private ImageIcon iconEnumValue;
 	public NavigationJTreeCellRenderer() {
 
 		iconPackage = new ImageIcon(IMAGES_FOLDER_PATH + "package_obj.gif");
 		iconInterface = new ImageIcon(IMAGES_FOLDER_PATH + "int_obj.gif");
 		iconClass = new ImageIcon(IMAGES_FOLDER_PATH + "classes.gif");
 		iconEnum = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
+		iconMethod = new ImageIcon(IMAGES_FOLDER_PATH + "method_obj.gif");
+		iconField = new ImageIcon(IMAGES_FOLDER_PATH + "field_obj.gif");
+		iconEnumValue = new ImageIcon(IMAGES_FOLDER_PATH + "enum_value_obj.gif");
 
 	}
 
@@ -55,6 +62,13 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 
 		if (isEnum(value)) {
 			setIcon(iconEnum);
+		}
+		
+		if (isMethod(value)) {
+			setIcon(iconMethod);
+		}
+		if(isField(value)){
+			setIcon(iconField);
 		}
 
 		return this;
@@ -90,6 +104,24 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 	private boolean isEnum(Object value) {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 		if (node.getUserObject() instanceof Enum) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean isMethod(Object value) {
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+		if (node.getUserObject() instanceof Method) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean isField(Object value) {
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+		if (node.getUserObject() instanceof Field) {
 			return true;
 		} else {
 			return false;

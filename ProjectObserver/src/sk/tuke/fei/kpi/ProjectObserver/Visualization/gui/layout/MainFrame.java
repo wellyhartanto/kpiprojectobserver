@@ -144,9 +144,9 @@ public class MainFrame extends JFrame {
 		iconInterface = new ImageIcon(IMAGES_FOLDER_PATH + "int_obj.gif");
 		iconClass = new ImageIcon(IMAGES_FOLDER_PATH + "classes.gif");
 		iconEnum = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
-		iconMethod = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
-		iconField = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
-		iconEnumValue = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
+		iconMethod = new ImageIcon(IMAGES_FOLDER_PATH + "method_obj.gif");
+		iconField = new ImageIcon(IMAGES_FOLDER_PATH + "field_obj.gif");
+		iconEnumValue = new ImageIcon(IMAGES_FOLDER_PATH + "enum_value_obj.gif");
 
 		rightPanel.add(tabbedPane);
 		splitPane = new JSplitPane();
@@ -311,13 +311,13 @@ public class MainFrame extends JFrame {
 		}
 
 		for (Class s2 : p.getClasses()) {
-			DefaultMutableTreeNode classx = new DefaultMutableTreeNode(s2);
+			DefaultMutableTreeNode classx = createClassTree(s2);
 			packagex.add(classx);
 
 		}
 
 		for (Interface s2 : p.getInterfaces()) {
-			DefaultMutableTreeNode interfacex = new DefaultMutableTreeNode(s2);
+			DefaultMutableTreeNode interfacex = createInterfaceTree(s2);
 			packagex.add(interfacex);
 
 		}
@@ -331,6 +331,38 @@ public class MainFrame extends JFrame {
 		return packagex;
 	}
 
+	private DefaultMutableTreeNode createClassTree(Class c){
+		DefaultMutableTreeNode classx = new DefaultMutableTreeNode(c);
+		
+		for (Method m : c.getMethods()) {
+			DefaultMutableTreeNode methodx = new DefaultMutableTreeNode(m);
+			classx.add(methodx);
+		}
+		for (Field f : c.getFields()) {
+			DefaultMutableTreeNode fieldx = new DefaultMutableTreeNode(f);
+			classx.add(fieldx);
+		}
+		
+		
+		return classx;
+	}
+	
+	private DefaultMutableTreeNode createInterfaceTree(Interface c){
+		DefaultMutableTreeNode classx = new DefaultMutableTreeNode(c);
+		
+		for (Method m : c.getMethods()) {
+			DefaultMutableTreeNode methodx = new DefaultMutableTreeNode(m);
+			classx.add(methodx);
+		}
+		for (Field f : c.getFields()) {
+			DefaultMutableTreeNode fieldx = new DefaultMutableTreeNode(f);
+			classx.add(fieldx);
+		}
+		
+		
+		return classx;
+	}
+	
 	private DefaultMutableTreeNode createApplicationTree(Application p) {
 		DefaultMutableTreeNode packagex = new DefaultMutableTreeNode(p);
 
@@ -341,13 +373,13 @@ public class MainFrame extends JFrame {
 		}
 
 		for (Class s2 : p.getClasses()) {
-			DefaultMutableTreeNode classx = new DefaultMutableTreeNode(s2);
+			DefaultMutableTreeNode classx = createClassTree(s2);
 			packagex.add(classx);
 
 		}
 
 		for (Interface s2 : p.getInterfaces()) {
-			DefaultMutableTreeNode interfacex = new DefaultMutableTreeNode(s2);
+			DefaultMutableTreeNode interfacex = createInterfaceTree(s2);
 			packagex.add(interfacex);
 
 		}
@@ -412,7 +444,7 @@ public class MainFrame extends JFrame {
 			scrollPanePackages = new JScrollPane(packagesTable);
 			
 
-			tabbedPane.addTab("packo", iconPackage,
+			tabbedPane.addTab(bundle.getString("title.packages"), iconPackage,
 					scrollPanePackages);
 			tabbedPane.addTab(bundle.getString("title.classes"), iconClass,
 					scrollPaneClasses);
@@ -451,8 +483,8 @@ public class MainFrame extends JFrame {
 			scrollPaneMethods = new JScrollPane(methodsTable);
 			scrollPaneFields = new JScrollPane(fieldsTable);
 
-			tabbedPane.addTab("metody", iconClass, scrollPaneMethods);
-			tabbedPane.addTab("fieldy", iconClass, scrollPaneFields);
+			tabbedPane.addTab("metody", iconMethod, scrollPaneMethods);
+			tabbedPane.addTab("fieldy", iconField, scrollPaneFields);
 
 		}
 		if (nodeInfo instanceof Interface) {
@@ -464,8 +496,8 @@ public class MainFrame extends JFrame {
 			scrollPaneMethods = new JScrollPane(methodsTable);
 			scrollPaneFields = new JScrollPane(fieldsTable);
 
-			tabbedPane.addTab("metody", iconClass, scrollPaneMethods);
-			tabbedPane.addTab("fieldy", iconClass, scrollPaneFields);
+			tabbedPane.addTab("metody", iconMethod, scrollPaneMethods);
+			tabbedPane.addTab("fieldy", iconField, scrollPaneFields);
 
 		}
 		if (nodeInfo instanceof Enum) {
@@ -473,7 +505,7 @@ public class MainFrame extends JFrame {
 
 			createEnumValuesTable((Enum) nodeInfo);
 			scrollPaneEnumValues = new JScrollPane(enumValuesTable);
-			tabbedPane.addTab("Values", iconClass, scrollPaneEnumValues);
+			tabbedPane.addTab("Values", iconEnumValue, scrollPaneEnumValues);
 
 		}
 
