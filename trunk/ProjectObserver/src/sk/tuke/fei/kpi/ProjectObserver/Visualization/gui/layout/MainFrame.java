@@ -34,16 +34,19 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ClassesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.EnumValuesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.EnumsTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ExceptionsTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.FieldsTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.InterfacesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.MethodsTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.PackagesTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ParamsTableModel;
 
 public class MainFrame extends JFrame {
 
@@ -61,6 +64,8 @@ public class MainFrame extends JFrame {
 	private MethodsTableModel methodsTableModel;
 	private EnumValuesTableModel enumValuesTableModel;
 	private PackagesTableModel packagesTableModel;
+	private ExceptionsTableModel exceptionsTableModel;
+	private ParamsTableModel paramsTableModel;
 
 	private JTabbedPane tabbedPane;
 
@@ -72,6 +77,8 @@ public class MainFrame extends JFrame {
 	private JScrollPane scrollPaneFields;
 	private JScrollPane scrollPaneEnumValues;
 	private JScrollPane scrollPanePackages;
+	private JScrollPane scrollPaneExceptions;
+	private JScrollPane scrollPaneParams;
 
 	private JXTable classesTable;
 	private JXTable interfacesTable;
@@ -80,6 +87,8 @@ public class MainFrame extends JFrame {
 	private JXTable methodsTable;
 	private JXTable enumValuesTable;
 	private JXTable packagesTable;
+	private JXTable exceptionsTable;
+	private JXTable paramsTable;
 
 	private static final String IMAGES_FOLDER_PATH = "src/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/resources/images/";
 
@@ -307,6 +316,39 @@ public class MainFrame extends JFrame {
 		enumValuesTable.setHorizontalScrollEnabled(true);
 		enumValuesTable.setFillsViewportHeight(true);
 		enumValuesTable.setEditable(true);
+
+	}
+
+	private void createExceptionsTable(Method selectedMethod) {
+
+		// List<String> exceptions =
+		// Arrays.asList(selectedMethod.getExceptions());
+		List<String> exceptions = null;
+		exceptionsTableModel = new ExceptionsTableModel(getLocale());
+		exceptionsTableModel.setData(exceptions);
+
+		exceptionsTable = new JXTable(exceptionsTableModel);
+		exceptionsTable.getTableHeader().setFont(tablesHeaderFont);
+		exceptionsTable.setRolloverEnabled(true);
+		exceptionsTable.setHorizontalScrollEnabled(true);
+		exceptionsTable.setFillsViewportHeight(true);
+		exceptionsTable.setEditable(true);
+
+	}
+
+	private void createParamsTable(Method selectedMethod) {
+
+		// List<Param> values = Arrays.asList(selectedMethod.getParams());
+		List<Param> values = null;
+		paramsTableModel = new ParamsTableModel(getLocale());
+		paramsTableModel.setData(values);
+
+		paramsTable = new JXTable(paramsTableModel);
+		paramsTable.getTableHeader().setFont(tablesHeaderFont);
+		paramsTable.setRolloverEnabled(true);
+		paramsTable.setHorizontalScrollEnabled(true);
+		paramsTable.setFillsViewportHeight(true);
+		paramsTable.setEditable(true);
 
 	}
 
@@ -540,7 +582,17 @@ public class MainFrame extends JFrame {
 
 		if (nodeInfo instanceof Method) {
 			tabbedPane.removeAll();
+
+			createExceptionsTable((Method) nodeInfo);
+			createParamsTable((Method) nodeInfo);
+			scrollPaneExceptions = new JScrollPane(exceptionsTable);
+			scrollPaneParams = new JScrollPane(paramsTable);
 			tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+			tabbedPane.addTab(bundle.getString("title.params"), iconInfo,
+					scrollPaneParams);
+			tabbedPane.addTab(bundle.getString("title.exceptions"), iconInfo,
+					scrollPaneExceptions);
+
 		}
 		if (nodeInfo instanceof Field) {
 			tabbedPane.removeAll();

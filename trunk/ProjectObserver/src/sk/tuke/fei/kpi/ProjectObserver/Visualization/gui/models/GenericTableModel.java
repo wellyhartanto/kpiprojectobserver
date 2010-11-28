@@ -1,4 +1,4 @@
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models;
 
 import java.util.ArrayList;
 import java.util.List;
