@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
 
 public class EnumsTableModel extends GenericTableModel<Enum> {
 

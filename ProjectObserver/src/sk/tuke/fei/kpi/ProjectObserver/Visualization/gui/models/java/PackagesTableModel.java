@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
 
 public class PackagesTableModel extends GenericTableModel<Package> {
 	/**
