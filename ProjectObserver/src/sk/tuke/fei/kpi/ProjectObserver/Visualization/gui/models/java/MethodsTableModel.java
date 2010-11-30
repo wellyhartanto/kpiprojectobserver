@@ -8,7 +8,6 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableMode
 
 public class MethodsTableModel extends GenericTableModel<Method> {
 
-
 	/**
 	 * 
 	 */
@@ -17,13 +16,32 @@ public class MethodsTableModel extends GenericTableModel<Method> {
 	public MethodsTableModel(Locale locale) {
 		super(locale);
 		data = new ArrayList<Method>();
-		
-		
 
-		columnNames = new String[] {bundle.getString("table.methodstable.column.name")
-				};
+		columnNames = new String[] {
+				bundle.getString("table.methodstable.column.name"),
+				bundle.getString("table.methodstable.column.visibility"),
+				bundle.getString("table.methodstable.column.returntype") };
 
 	}
 
-	
+	@Override
+	public Object getValueAt(int row, int column) {
+
+		switch (column) {
+		case 0:
+			return data.get(row).getName();
+
+		case 1:
+
+			return data.get(row).getVisibility();
+		case 2:
+
+			return data.get(row).getReturnType();
+		default:
+			break;
+		}
+
+		return "";
+	}
+
 }

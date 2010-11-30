@@ -1,14 +1,9 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.swing.table.AbstractTableModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
 
 public class ClassesTableModel extends GenericTableModel<Class> {
@@ -26,6 +21,24 @@ public class ClassesTableModel extends GenericTableModel<Class> {
 				bundle.getString("table.classestable.column.name"),
 				bundle.getString("table.classestable.column.visibility") };
 
+	}
+
+	@Override
+	public Object getValueAt(int row, int column) {
+
+		switch (row) {
+		case 0:
+			return data.get(row).getName();
+
+		case 1:
+
+			return data.get(row).getVisibility();
+
+		default:
+			break;
+		}
+
+		return "";
 	}
 
 }
