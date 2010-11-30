@@ -217,16 +217,20 @@ public class MainFrame extends JFrame {
 
 	private void documentTableMouseClicked(MouseEvent e, JXTable table) {
 		if (e.getClickCount() == 2) {
-			setDetailSelectio(table);
+			setDetailSelection(table);
 		}
 	}
 
-	private void setDetailSelectio(JXTable table) {
+	private void setDetailSelection(JXTable table) {
 
 		int selectedrow = table.getSelectedRow();
-		GenericTableModel p = (GenericTableModel) table.getModel();
+		if (selectedrow != -1) {
 
-		setSelected(p.getData().get(selectedrow));
+			GenericTableModel<Object> p = (GenericTableModel<Object>) table
+					.getModel();
+
+			setSelected(p.getData().get(selectedrow));
+		}
 	}
 
 	private void setSelected(Object o) {
@@ -248,11 +252,10 @@ public class MainFrame extends JFrame {
 			DefaultMutableTreeNode dmtn = e.nextElement();
 			if (dmtn.getUserObject().equals(o)) {
 				parentPath = new TreePath(dmtn.getPath());
+				navigationTree.getSelectionModel().setSelectionPath(parentPath);
 			}
 
 		}
-
-		navigationTree.getSelectionModel().setSelectionPath(parentPath);
 
 	}
 
@@ -327,6 +330,18 @@ public class MainFrame extends JFrame {
 		enumsTable.setFillsViewportHeight(true);
 		enumsTable.setEditable(true);
 
+		enumsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(enumsTable);
+		enumsTable.getSelectionModel().addListSelectionListener(listener);
+		enumsTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		enumsTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, enumsTable);
+			}
+		});
 	}
 
 	private void createClassFieldsTable(Class selectedClass) {
@@ -342,6 +357,19 @@ public class MainFrame extends JFrame {
 		fieldsTable.setHorizontalScrollEnabled(true);
 		fieldsTable.setFillsViewportHeight(true);
 		fieldsTable.setEditable(true);
+
+		fieldsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(fieldsTable);
+		fieldsTable.getSelectionModel().addListSelectionListener(listener);
+		fieldsTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		fieldsTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, fieldsTable);
+			}
+		});
 
 	}
 
@@ -359,6 +387,19 @@ public class MainFrame extends JFrame {
 		methodsTable.setFillsViewportHeight(true);
 		methodsTable.setEditable(true);
 
+		methodsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(methodsTable);
+		methodsTable.getSelectionModel().addListSelectionListener(listener);
+		methodsTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		methodsTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, methodsTable);
+			}
+		});
+
 	}
 
 	private void createInterfaceFieldsTable(Interface selectedInterface) {
@@ -374,6 +415,19 @@ public class MainFrame extends JFrame {
 		fieldsTable.setHorizontalScrollEnabled(true);
 		fieldsTable.setFillsViewportHeight(true);
 		fieldsTable.setEditable(true);
+
+		fieldsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(fieldsTable);
+		fieldsTable.getSelectionModel().addListSelectionListener(listener);
+		fieldsTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		fieldsTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, fieldsTable);
+			}
+		});
 
 	}
 
@@ -391,6 +445,19 @@ public class MainFrame extends JFrame {
 		methodsTable.setFillsViewportHeight(true);
 		methodsTable.setEditable(true);
 
+		methodsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(methodsTable);
+		methodsTable.getSelectionModel().addListSelectionListener(listener);
+		methodsTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		methodsTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, methodsTable);
+			}
+		});
+
 	}
 
 	private void createEnumValuesTable(Enum selectedEnum) {
@@ -406,6 +473,19 @@ public class MainFrame extends JFrame {
 		enumValuesTable.setHorizontalScrollEnabled(true);
 		enumValuesTable.setFillsViewportHeight(true);
 		enumValuesTable.setEditable(true);
+
+		enumValuesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(enumValuesTable);
+		enumValuesTable.getSelectionModel().addListSelectionListener(listener);
+		enumValuesTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		enumValuesTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, enumValuesTable);
+			}
+		});
 
 	}
 
@@ -424,6 +504,19 @@ public class MainFrame extends JFrame {
 		exceptionsTable.setFillsViewportHeight(true);
 		exceptionsTable.setEditable(true);
 
+		exceptionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(exceptionsTable);
+		exceptionsTable.getSelectionModel().addListSelectionListener(listener);
+		exceptionsTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		exceptionsTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, exceptionsTable);
+			}
+		});
+
 	}
 
 	private void createParamsTable(Method selectedMethod) {
@@ -439,6 +532,19 @@ public class MainFrame extends JFrame {
 		paramsTable.setHorizontalScrollEnabled(true);
 		paramsTable.setFillsViewportHeight(true);
 		paramsTable.setEditable(true);
+
+		paramsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(paramsTable);
+		paramsTable.getSelectionModel().addListSelectionListener(listener);
+		paramsTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		paramsTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, paramsTable);
+			}
+		});
 
 	}
 
@@ -862,10 +968,7 @@ public class MainFrame extends JFrame {
 					&& table.getColumnSelectionAllowed()) {
 
 			}
-			if (e.getValueIsAdjusting()) {
-				System.out
-						.println("The mouse button has not yet been released");
-			}
+
 		}
 
 	}
