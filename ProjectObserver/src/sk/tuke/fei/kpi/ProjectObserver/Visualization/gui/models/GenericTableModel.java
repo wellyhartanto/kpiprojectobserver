@@ -60,4 +60,8 @@ public abstract class GenericTableModel<T> extends AbstractTableModel {
 		return columnNames[column].toString();
 	}
 
+	public List<T> getData() {
+		return data;
+	}
+
 }

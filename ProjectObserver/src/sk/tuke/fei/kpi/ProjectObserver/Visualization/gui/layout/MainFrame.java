@@ -1,8 +1,11 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -17,10 +20,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -38,6 +45,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ClassesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.EnumValuesTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.EnumsTableModel;
@@ -159,6 +167,7 @@ public class MainFrame extends JFrame {
 		iconField = new ImageIcon(IMAGES_FOLDER_PATH + "field_obj.gif");
 		iconEnumValue = new ImageIcon(IMAGES_FOLDER_PATH + "enum_value_obj.gif");
 		iconInfo = new ImageIcon(IMAGES_FOLDER_PATH + "information.gif");
+
 		tablesHeaderFont = MyFonts.font3;
 
 		ImageIcon kpilogo = new ImageIcon(IMAGES_FOLDER_PATH + "tu_kpi.jpg");
@@ -189,6 +198,62 @@ public class MainFrame extends JFrame {
 		packagesTable.setFillsViewportHeight(true);
 		packagesTable.setEditable(true);
 
+		packagesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		SelectionListener listener = new SelectionListener(packagesTable);
+		packagesTable.getSelectionModel().addListSelectionListener(listener);
+		packagesTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		packagesTable.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, packagesTable);
+			}
+		});
+
+	}
+
+	private void documentTableMouseClicked(MouseEvent e, JXTable table) {
+		if (e.getClickCount() == 2) {
+			setDetailSelectio(table);
+		}
+	}
+
+	private void setDetailSelectio(JXTable table) {
+
+		int selectedrow = table.getSelectedRow();
+		GenericTableModel p = (GenericTableModel) table.getModel();
+
+		setSelected(p.getData().get(selectedrow));
+	}
+
+	private void setSelected(Object o) {
+
+		DefaultMutableTreeNode parentNode = null;
+		TreePath parentPath = navigationTree.getPathForRow(0);
+
+		parentNode = (DefaultMutableTreeNode) (parentPath
+				.getLastPathComponent());
+
+		parentNode.getLeafCount();
+
+		parentNode.getUserObjectPath();
+
+		Enumeration<DefaultMutableTreeNode> e = parentNode
+				.breadthFirstEnumeration();
+		while (e.hasMoreElements()) {
+
+			DefaultMutableTreeNode dmtn = e.nextElement();
+			if (dmtn.getUserObject().equals(o)) {
+				parentPath = new TreePath(dmtn.getPath());
+			}
+
+		}
+
+		navigationTree.getSelectionModel().setSelectionPath(parentPath);
+
 	}
 
 	private void createClassesTable(List<Class> classes) {
@@ -204,6 +269,19 @@ public class MainFrame extends JFrame {
 		classesTable.setHorizontalScrollEnabled(true);
 		classesTable.setFillsViewportHeight(true);
 		classesTable.setEditable(true);
+
+		classesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(classesTable);
+		classesTable.getSelectionModel().addListSelectionListener(listener);
+		classesTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		classesTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, classesTable);
+			}
+		});
 
 	}
 
@@ -221,6 +299,18 @@ public class MainFrame extends JFrame {
 		interfacesTable.setFillsViewportHeight(true);
 		interfacesTable.setEditable(true);
 
+		interfacesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		SelectionListener listener = new SelectionListener(interfacesTable);
+		interfacesTable.getSelectionModel().addListSelectionListener(listener);
+		interfacesTable.getColumnModel().getSelectionModel()
+				.addListSelectionListener(listener);
+
+		interfacesTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				documentTableMouseClicked(e, interfacesTable);
+			}
+		});
 	}
 
 	private void createEnumsTable(List<Enum> enums) {
@@ -753,6 +843,31 @@ public class MainFrame extends JFrame {
 		app.setName("MyExampleApplication");
 
 		return app;
+	}
+
+	class SelectionListener implements ListSelectionListener {
+		JXTable table;
+
+		SelectionListener(JXTable table) {
+			this.table = table;
+		}
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			if (e.getSource() == table.getSelectionModel()
+					&& table.getRowSelectionAllowed()) {
+
+			} else if (e.getSource() == table.getColumnModel()
+					.getSelectionModel()
+					&& table.getColumnSelectionAllowed()) {
+
+			}
+			if (e.getValueIsAdjusting()) {
+				System.out
+						.println("The mouse button has not yet been released");
+			}
+		}
+
 	}
 
 }
