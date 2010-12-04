@@ -1,45 +1,43 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
 
 public class InterfacesTableModel extends GenericTableModel<Interface> {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -1629050875612660093L;
+    private static final long serialVersionUID = -1629050875612660093L;
 
-	public InterfacesTableModel(Locale locale) {
-		super(locale);
-		data = new ArrayList<Interface>();
+    public InterfacesTableModel() {
+	super();
+	data = new ArrayList<Interface>();
 
-		columnNames = new String[] {
-				bundle.getString("table.interfacestable.column.name"),
+	columnNames = new String[] { bundle.getString("table.interfacestable.column.name"),
 
-				bundle.getString("table.interfacestable.column.visibility") };
+	bundle.getString("table.interfacestable.column.visibility") };
 
+    }
+
+    @Override
+    public Object getValueAt(int row, int column) {
+
+	switch (column) {
+	case 0:
+	    return data.get(row).getName();
+
+	case 1:
+
+	    return data.get(row).getVisibility();
+
+	default:
+	    break;
 	}
 
-	@Override
-	public Object getValueAt(int row, int column) {
-
-		switch (column) {
-		case 0:
-			return data.get(row).getName();
-
-		case 1:
-
-			return data.get(row).getVisibility();
-
-		default:
-			break;
-		}
-
-		return "";
-	}
+	return "";
+    }
 
 }
