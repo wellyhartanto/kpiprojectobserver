@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
@@ -49,8 +48,10 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.TestData;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.InfoPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ClassesTableModel;
@@ -82,6 +83,8 @@ public class MainFrame extends JFrame {
     private ExceptionsTableModel exceptionsTableModel;
     private ParamsTableModel paramsTableModel;
 
+    private JPanel infoPanel;
+
     private JTabbedPane tabbedPane;
 
     private JPanel languages;
@@ -109,7 +112,7 @@ public class MainFrame extends JFrame {
     private JXTable exceptionsTable;
     private JXTable paramsTable;
 
-    private static final String IMAGES_FOLDER_PATH = "src/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/resources/images/";
+    private static final String IMAGES_FOLDER_PATH = "/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/resources/images/";
 
     private ImageIcon iconPackage;
     private ImageIcon iconInterface;
@@ -135,9 +138,9 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
 
-	ImageIcon kpilogo = new ImageIcon(IMAGES_FOLDER_PATH + "tu_kpi.jpg");
+	ImageIcon kpilogo = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "icon.png"));
+
 	setIconImage(kpilogo.getImage());
-	setTitle("Project Observer");
 
 	setName("myFirstframe");
 	setBounds(500, 200, 120, 120);
@@ -147,7 +150,7 @@ public class MainFrame extends JFrame {
 	bundle = MyResourceBundle.getResourceBundle(Locale.getDefault());
 
 	languages = new JPanel(new MigLayout());
-	sklanguage = new JRadioButton("Slovensky");
+	sklanguage = new JRadioButton("Slovenský");
 	sklanguage.setSelected(true);
 	enlanguage = new JRadioButton("English");
 	ButtonGroup lang = new ButtonGroup();
@@ -207,7 +210,7 @@ public class MainFrame extends JFrame {
 	});
 
 	menu.add(open);
-	menu.add(new JMenuItem(bundle.getString("main.menu.close")));
+	// menu.add(new JMenuItem(bundle.getString("main.menu.close")));
 	menuBar.add(menu);
 
 	setJMenuBar(menuBar);
@@ -229,14 +232,15 @@ public class MainFrame extends JFrame {
 	tabbedPane = new JTabbedPane();
 	tabbedPane.setFont(MyFonts.font2);
 
-	iconPackage = new ImageIcon(IMAGES_FOLDER_PATH + "package_obj.gif");
-	iconInterface = new ImageIcon(IMAGES_FOLDER_PATH + "int_obj.gif");
-	iconClass = new ImageIcon(IMAGES_FOLDER_PATH + "classes.gif");
-	iconEnum = new ImageIcon(IMAGES_FOLDER_PATH + "enum_obj.gif");
-	iconMethod = new ImageIcon(IMAGES_FOLDER_PATH + "method_obj.gif");
-	iconField = new ImageIcon(IMAGES_FOLDER_PATH + "field_obj.gif");
-	iconEnumValue = new ImageIcon(IMAGES_FOLDER_PATH + "enum_value_obj.gif");
-	iconInfo = new ImageIcon(IMAGES_FOLDER_PATH + "information.gif");
+	iconPackage = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "package_obj.gif"));
+
+	iconInterface = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "int_obj.gif"));
+	iconClass = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "classes.gif"));
+	iconEnum = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_obj.gif"));
+	iconMethod = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "method_obj.gif"));
+	iconField = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "field_obj.gif"));
+	iconEnumValue = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
+	iconInfo = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "information.gif"));
 
 	tablesHeaderFont = MyFonts.font3;
 
@@ -692,7 +696,7 @@ public class MainFrame extends JFrame {
 
     private void createTree() {
 
-	Application app = createTestData();
+	Application app = TestData.createTestData();
 
 	DefaultMutableTreeNode root = createApplicationTree(app);
 
@@ -738,7 +742,8 @@ public class MainFrame extends JFrame {
 	    scrollPaneEnums = new JScrollPane(enumsTable);
 	    scrollPanePackages = new JScrollPane(packagesTable);
 
-	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+		    .asComponent());
 	    tabbedPane.addTab(bundle.getString("title.packages"), iconPackage, scrollPanePackages);
 	    tabbedPane.addTab(bundle.getString("title.classes"), iconClass, scrollPaneClasses);
 	    tabbedPane.addTab(bundle.getString("title.interfaces"), iconInterface, scrollPaneInterfaces);
@@ -759,7 +764,8 @@ public class MainFrame extends JFrame {
 	    scrollPaneInterfaces = new JScrollPane(interfacesTable);
 	    scrollPaneEnums = new JScrollPane(enumsTable);
 
-	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+		    .asComponent());
 	    tabbedPane.addTab(bundle.getString("title.packages"), iconPackage, scrollPanePackages);
 	    tabbedPane.addTab(bundle.getString("title.classes"), iconClass, scrollPaneClasses);
 	    tabbedPane.addTab(bundle.getString("title.interfaces"), iconInterface, scrollPaneInterfaces);
@@ -779,7 +785,8 @@ public class MainFrame extends JFrame {
 	    scrollPaneEnums = new JScrollPane(enumsTable);
 	    scrollPaneClasses = new JScrollPane(classesTable);
 
-	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+		    .asComponent());
 	    tabbedPane.addTab(bundle.getString("title.methods"), iconMethod, scrollPaneMethods);
 	    tabbedPane.addTab(bundle.getString("title.fields"), iconField, scrollPaneFields);
 	    tabbedPane.addTab(bundle.getString("title.classes"), iconClass, scrollPaneClasses);
@@ -795,7 +802,8 @@ public class MainFrame extends JFrame {
 	    scrollPaneMethods = new JScrollPane(methodsTable);
 	    scrollPaneFields = new JScrollPane(fieldsTable);
 
-	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+		    .asComponent());
 	    tabbedPane.addTab(bundle.getString("title.methods"), iconMethod, scrollPaneMethods);
 	    tabbedPane.addTab(bundle.getString("title.fields"), iconField, scrollPaneFields);
 
@@ -806,7 +814,8 @@ public class MainFrame extends JFrame {
 	    createEnumValuesTable((Enum) nodeInfo);
 	    scrollPaneEnumValues = new JScrollPane(enumValuesTable);
 
-	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+		    .asComponent());
 	    tabbedPane.addTab(bundle.getString("title.values"), iconEnumValue, scrollPaneEnumValues);
 
 	}
@@ -818,170 +827,18 @@ public class MainFrame extends JFrame {
 	    createParamsTable((Method) nodeInfo);
 	    scrollPaneExceptions = new JScrollPane(exceptionsTable);
 	    scrollPaneParams = new JScrollPane(paramsTable);
-	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+		    .asComponent());
 	    tabbedPane.addTab(bundle.getString("title.params"), iconInfo, scrollPaneParams);
 	    tabbedPane.addTab(bundle.getString("title.exceptions"), iconInfo, scrollPaneExceptions);
 
 	}
 	if (nodeInfo instanceof Field) {
 	    tabbedPane.removeAll();
-	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, null);
+	    tabbedPane.addTab(bundle.getString("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+		    .asComponent());
 	}
 
-    }
-
-    public Application createTestData() {
-
-	Application app = new Application();
-
-	List<Package> packages = new ArrayList<Package>();
-
-	for (int i = 0; i < 7; i++) {
-	    Package p = new Package();
-	    p.setName("sk.tuke.fei.kpi.package" + i);
-	    List<Class> cl = new ArrayList<Class>();
-	    for (int j = 0; j < 7; j++) {
-		Class c = new Class();
-		c.setName("class" + i + "." + j);
-
-		List<Method> methods = new ArrayList<Method>();
-		List<Field> fields = new ArrayList<Field>();
-
-		for (int x = 0; x < 3; x++) {
-
-		    Method m = new Method();
-		    m.setName("method" + x);
-		    methods.add(m);
-
-		    Field f = new Field();
-		    f.setName("field" + x);
-		    fields.add(f);
-		}
-		c.setMethods(methods);
-		c.setFields(fields);
-
-		cl.add(c);
-	    }
-	    List<Interface> inf = new ArrayList<Interface>();
-	    for (int j = 0; j < 5; j++) {
-		Interface c = new Interface();
-		c.setName("interface" + i + "." + j);
-
-		List<Method> methods = new ArrayList<Method>();
-		List<Field> fields = new ArrayList<Field>();
-
-		for (int x = 0; x < 2; x++) {
-
-		    Method m = new Method();
-		    m.setName("method" + x);
-		    methods.add(m);
-
-		    Field f = new Field();
-		    f.setName("field" + x);
-		    fields.add(f);
-		}
-		c.setMethods(methods);
-		c.setFields(fields);
-
-		inf.add(c);
-	    }
-
-	    List<Enum> en = new ArrayList<Enum>();
-	    for (int j = 0; j < 4; j++) {
-		Enum c = new Enum();
-		c.setName("enum" + i + "." + j);
-
-		String[] s = { "value1", "value2" };
-
-		c.setValues(s);
-
-		en.add(c);
-	    }
-
-	    List<Package> pcg = new ArrayList<Package>();
-	    for (int j = 0; j < 3; j++) {
-		Package c = new Package();
-		c.setName(p.getName() + "sub" + i + "." + j);
-		pcg.add(c);
-
-		List<Class> cl2 = new ArrayList<Class>();
-		for (int z = 0; z < 3; z++) {
-		    Class c2 = new Class();
-		    c2.setName("class" + i + "." + z);
-
-		    List<Method> methods = new ArrayList<Method>();
-		    List<Field> fields = new ArrayList<Field>();
-
-		    for (int x = 0; x < 3; x++) {
-
-			Method m = new Method();
-			m.setName("method" + x);
-			methods.add(m);
-
-			Field f = new Field();
-			f.setName("field" + x);
-			fields.add(f);
-		    }
-		    c2.setMethods(methods);
-		    c2.setFields(fields);
-
-		    cl2.add(c2);
-		}
-		List<Interface> inf2 = new ArrayList<Interface>();
-		for (int z = 0; z < 2; z++) {
-		    Interface c2 = new Interface();
-		    c2.setName("interface" + i + "." + z);
-
-		    List<Method> methods = new ArrayList<Method>();
-		    List<Field> fields = new ArrayList<Field>();
-
-		    for (int x = 0; x < 2; x++) {
-
-			Method m = new Method();
-			m.setName("method" + x);
-			methods.add(m);
-
-			Field f = new Field();
-			f.setName("field" + x);
-			fields.add(f);
-		    }
-		    c2.setMethods(methods);
-		    c2.setFields(fields);
-		    inf2.add(c2);
-		}
-
-		List<Enum> en2 = new ArrayList<Enum>();
-		for (int z = 0; z < 1; z++) {
-		    Enum c2 = new Enum();
-		    c2.setName("enum" + i + "." + z);
-		    String[] s = { "value1", "value2" };
-
-		    c2.setValues(s);
-		    en2.add(c2);
-		}
-
-		c.setClasses(cl2);
-		c.setInterfaces(inf2);
-		c.setEnums(en2);
-		pcg.add(c);
-
-	    }
-
-	    p.setPackages(pcg);
-	    p.setClasses(cl);
-	    p.setInterfaces(inf);
-	    p.setEnums(en);
-	    packages.add(p);
-	}
-
-	app.setPackages(packages);
-	app.setClasses(packages.get(0).getClasses());
-	app.setEnums(packages.get(0).getEnums());
-	app.setInterfaces(packages.get(0).getInterfaces());
-	app.setFilename("defaultfile.owl");
-	app.setName("MyExampleApplication");
-
-	return app;
     }
 
     class SelectionListener implements ListSelectionListener {
