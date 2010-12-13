@@ -253,6 +253,8 @@ public class MainFrame extends JFrame {
 	getContentPane().add(splitPane);
 
 	setVisible(true);
+	TreePath tp = navigationTree.getPathForRow(0);
+	navigationTree.setSelectionPath(tp);
 
     }
 
@@ -705,6 +707,7 @@ public class MainFrame extends JFrame {
 	navigationTree.setCellRenderer(new NavigationJTreeCellRenderer());
 
 	navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
 	navigationTree.addTreeSelectionListener(new TreeSelectionListener() {
 
 	    @Override
@@ -714,6 +717,7 @@ public class MainFrame extends JFrame {
 	    }
 
 	});
+
     }
 
     private void treeValueChangedAction() {
