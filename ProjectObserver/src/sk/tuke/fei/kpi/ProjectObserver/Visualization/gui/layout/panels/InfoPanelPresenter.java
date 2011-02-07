@@ -1,7 +1,5 @@
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.InfoPanelDisplay;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.InfoPanelView;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 
 public class InfoPanelPresenter extends BasicPresenter<InfoPanelDisplay> {

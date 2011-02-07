@@ -1,0 +1,12 @@
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
+
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
+
+public class EnumValuesPresenter extends BasicPresenter<EnumValuesDisplay> {
+
+	public EnumValuesPresenter(String[] values) {
+		display = new EnumValuesView(values);
+		bind();
+	}
+
+}
