@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
@@ -37,6 +38,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.TestData;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.ClassPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.ClassesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumValuesPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumsPanelPresenter;
@@ -139,12 +141,14 @@ public class MainFrame extends JFrame {
 		iconEnumValue = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
 		iconInfo = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "information.gif"));
 
-		rightPanel.add(tabbedPane);
+		rightPanel.add(tabbedPane,"wrap");
 		splitPane = new JSplitPane();
 		splitPane.setName("splitPane");
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
 
+		rightPanel.add(new ClassPanel());
+		
 		getContentPane().add(splitPane);
 
 		setVisible(true);
