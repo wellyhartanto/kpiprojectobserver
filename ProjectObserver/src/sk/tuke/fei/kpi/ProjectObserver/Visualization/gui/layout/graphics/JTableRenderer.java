@@ -13,13 +13,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -43,16 +46,29 @@ public class JTableRenderer extends JPanel {
 	protected mxGraph graph;
 	public JTable table;
 
-	public JTableRenderer(final Object cell, final mxGraphComponent graphContainer) {
+	public JTableRenderer(final Object cell,
+			final mxGraphComponent graphContainer) {
 
-		setLayout(new MigLayout("insets 0"));
+		setLayout(new MigLayout("insets 0", "", "[]0[]0[]"));
 		setOpaque(false);
 
 		this.cell = cell;
 		this.graphContainer = graphContainer;
 		this.graph = graphContainer.getGraph();
 
-		JPanel name = new JPanel(new MigLayout("insets 0"));
+		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+		separator.setBackground(Color.RED);
+		separator.setOpaque(true);
+		JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
+		separator1.setBackground(Color.RED);
+		separator1.setOpaque(true);
+		JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
+		separator2.setBackground(Color.RED);
+		separator2.setOpaque(true);
+		
+		
+
+		JPanel name = new JPanel(new MigLayout("insets 0,fill"));
 		JPanel fields = new JPanel(new MigLayout("insets 0"));
 		JPanel methods = new JPanel(new MigLayout("insets 0"));
 		name.setOpaque(false);
@@ -68,18 +84,14 @@ public class JTableRenderer extends JPanel {
 		fields.add(fieldsTable);
 		methods.add(methodsTable);
 
-		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setBackground(Color.RED);
-		separator.setForeground(Color.YELLOW);
-
-		name.setBorder(new LineBorder(Color.RED));
-
-		add(name, "wrap");
-		add(separator, "wrap");
+		add(name, "wrap,span,center");
+		add(separator, "wrap,span,growx");
 		add(fields, "wrap");
-		add(separator, "wrap");
+		add(separator1, "wrap,span,growx");
 		add(methods, "wrap");
-
+		add(separator2, "wrap,span,growx");
+		
+		
 	}
 
 	public class MyTable extends JTable {
@@ -88,14 +100,14 @@ public class JTableRenderer extends JPanel {
 
 		Object[][] data;
 
-		String[] colNames = new String[] { "A", "B", "C" };
+		String[] colNames = new String[] { "A", "B"};
 
 		public MyTable() {
-			data = new Object[4][3];
-			for (int i = 0; i < 4; i++) {
+			data = new Object[5][2];
+			for (int i = 0; i < 5; i++) {
 				data[i][0] = "Co " + i + 2;
 				data[i][1] = "Col " + i;
-				data[i][2] = "Colu " + i / 2;
+		//		data[i][2] = "Colu " + i / 2;
 			}
 
 			setOpaque(false);
@@ -108,14 +120,12 @@ public class JTableRenderer extends JPanel {
 			setTableHeader(null);
 			setAutoscrolls(true);
 			setGridColor(Color.WHITE);
-			TableColumn column = getColumnModel().getColumn(0);
-			column.setMaxWidth(100);
-			column = getColumnModel().getColumn(1);
-			column.setMaxWidth(100);
-			column = getColumnModel().getColumn(2);
-			column.setMaxWidth(100);
 
 			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		}
+		
+		public Object[][] getData() {
+			return data;
 		}
 
 		/**

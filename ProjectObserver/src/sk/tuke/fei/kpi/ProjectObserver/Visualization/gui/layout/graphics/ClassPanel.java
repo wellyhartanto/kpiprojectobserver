@@ -6,7 +6,9 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 
 public class ClassPanel extends JPanel {
@@ -17,6 +19,8 @@ public class ClassPanel extends JPanel {
 	private static final long serialVersionUID = -7007225006753337933L;
 
 	protected mxGraphComponent graphComponent;
+	
+	private mxIGraphModel model;
 
 	public ClassPanel() {
 		super();
@@ -25,20 +29,41 @@ public class ClassPanel extends JPanel {
 
 		graphComponent = new SchemaGraphComponent(new mxGraph());
 
-		graphComponent.getGraph().setCellsResizable(false);
+		graphComponent.getGraph().setCellsResizable(true);
 
 		mxGraph graph = graphComponent.getGraph();
 
+		
+		
+		
+		
 		Object parent = graph.getDefaultParent();
+		
+		
+
+		graph.setAutoSizeCells(true);
+
+		mxCell v1;
+		
+		model = graph.getModel();
+		
 		graph.getModel().beginUpdate();
 		try {
-			mxCell v1 = (mxCell) graph.insertVertex(parent, null, "", 20, 20, 200, 280);
+			
+			 v1 = (mxCell) graph.insertVertex(parent, null, "", 20, 20, 200,200 );
+			
+			graph.cellSizeUpdated(v1, false);
+			
 		} finally {
 			graph.getModel().endUpdate();
 		}
 
 		setLayout(new BorderLayout());
+		
 		add(graphComponent, BorderLayout.CENTER);
-
+		
+		
 	}
+	
+	
 }
