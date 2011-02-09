@@ -1,52 +1,63 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics;
 
-import java.util.Arrays;
+import java.awt.Color;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.handler.mxKeyboardHandler;
-import com.mxgraph.swing.handler.mxRubberband;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxMultiplicity;  
 
 public class ClassPanel extends JPanel {
-	
+
 	public ClassPanel() {
 
-		
-		Document xmlDocument = mxUtils.createDocument();
-		Element sourceNode = xmlDocument.createElement("Source");
-		
+		setBackground(Color.WHITE);
 
-		mxGraph graph = new mxGraph();
+		createGraph();
+
+	}
+
+	private void createGraph() {
+
+		mxGraph graph = new mxGraph() {
+			// Make all edges unmovable
+			public boolean isCellMovable(Object cell) {
+				return !getModel().isEdge(cell);
+			}
+
+			// Make all vertex boxes unresizable
+			public boolean isCellResizable(Object cell) {
+				return !getModel().isVertex(cell);
+			}
+
+		};
+
 		Object parent = graph.getDefaultParent();
+		// Make all vertices and edges uneditable
+		graph.setCellsEditable(false);
+		// Make all edges unbendable
+		graph.setCellsBendable(false);
 
 		graph.getModel().beginUpdate();
-		
-		try
-		{
-			Object v1 = graph.insertVertex(parent, null, sourceNode, 20, 20,
-					80, 30);
-		}
-		finally
-		{
+		try {
+			Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80, 30);
+			Object v2 = graph.insertVertex(parent, null, "World!", 240, 150, 80, 30, "ROUNDED");
+			graph.insertEdge(parent, null, "Edge", v1, v2);
+			// To modify the color of a vertex:
+			graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, "#00FF00", new Object[] { v1 });
+			graph.setCellStyles(mxConstants.STYLE_FONTCOLOR, "BLACK", new Object[] { v1 });
+
+		} finally {
 			graph.getModel().endUpdate();
 		}
 
-		mxGraphComponent graphComponent = new mxGraphComponent(graph); 
-		add(graphComponent);  
+		graph.getModel().endUpdate();
 
+		mxGraphComponent graphComponent = new mxGraphComponent(graph);
+
+		add(graphComponent);
 
 	}
-	
+
 }
