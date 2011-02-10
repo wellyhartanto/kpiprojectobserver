@@ -12,6 +12,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -93,6 +94,9 @@ public class JTableRenderer extends JPanel {
 		
 		
 	}
+	
+	
+	
 
 	public class MyTable extends JTable {
 

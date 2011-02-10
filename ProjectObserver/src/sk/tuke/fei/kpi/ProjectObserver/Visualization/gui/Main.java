@@ -3,7 +3,8 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.LoginPanelPresenter;
+
 
 public class Main {
 
@@ -11,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		//	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -25,7 +26,9 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		new MainFrame();
+		//new MainFrame();
+		
+		MainFrame.getMainFrame();
 
 		// Application.launch(Main.class, args);
 	}

@@ -1,17 +1,10 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
-import java.awt.event.ActionEvent;
-
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -50,21 +43,22 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodPar
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodsPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.PackagesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
 
-public class MainFrame extends JFrame {
+public class MainPanelView extends JPanel implements MainPanelDisplay{
 
-	private static final long serialVersionUID = -1960464005712732926L;
+	private static final long serialVersionUID = -6427921875113787927L;
+
+	@Override
+	public JComponent asComponent() {
+		return this;
+		}
 
 	private JSplitPane splitPane;
 	private JScrollPane leftScrollPane;
 	private JPanel rightPanel;
 	private JTree navigationTree;
-	private JMenu menu;
-	private JMenuBar menuBar;
-
 	private JTabbedPane tabbedPane;
-
 	private ImageIcon iconPackage;
 	private ImageIcon iconInterface;
 	private ImageIcon iconClass;
@@ -74,65 +68,32 @@ public class MainFrame extends JFrame {
 	private ImageIcon iconEnumValue;
 	private ImageIcon iconInfo;
 
-	public MainFrame() {
-		// initComponents();
-		initMenu();
+	public MainPanelView() {
+		initComponents();
 
-		// pack();
 		setVisible(true);
 
 	}
 
-	private void initMenu() {
 
-		setBounds(100, 100, 1000, 750);
-		menuBar = new JMenuBar();
-		menuBar.setName("menuBar");
-
-		menu = new JMenu(MyResourceBundle.getMessage("main.menu.text"));
-		JMenuItem open = new JMenuItem(MyResourceBundle.getMessage("main.menu.openfile"));
-		open.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fch = new JFileChooser();
-				int retvalue = fch.showOpenDialog(MainFrame.this);
-
-				if (retvalue == JFileChooser.APPROVE_OPTION) {
-
-					initComponents();
-				}
-			}
-		});
-
-		menu.add(open);
-		// menu.add(new
-		// JMenuItem(MyResourceBundle.getMessage("main.menu.close")));
-		menuBar.add(menu);
-
-		setJMenuBar(menuBar);
-
-		initComponents();
-
-	}
 
 	private void initComponents() {
 
+	
+		
 		createTree();
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
-
 		leftScrollPane.setViewportView(navigationTree);
-
-		rightPanel = new JPanel(new MigLayout("wrap 3", "[grow,fill,left]", "[grow,fill]2[grow,fill]"));
+		rightPanel = new JPanel(new MigLayout("fill,insets 0,wrap 3", "[grow,fill,left]", "[grow,fill]2[grow,fill]"));
 		rightPanel.setName("rightPanel");
 
+		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(MyFonts.font2);
 
 		iconPackage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
-
 		iconInterface = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "int_obj.gif"));
 		iconClass = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "classes.gif"));
 		iconEnum = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "enum_obj.gif"));
@@ -141,20 +102,26 @@ public class MainFrame extends JFrame {
 		iconEnumValue = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
 		iconInfo = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "information.gif"));
 
-		rightPanel.add(tabbedPane,"wrap");
 		splitPane = new JSplitPane();
 		splitPane.setName("splitPane");
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
-
-		rightPanel.add(new ClassPanel());
 		
-		getContentPane().add(splitPane);
 
-		setVisible(true);
 		TreePath tp = navigationTree.getPathForRow(0);
 		navigationTree.setSelectionPath(tp);
 
+		setComponentsPosition();
+		
+	}
+	
+	private void setComponentsPosition(){
+		setLayout(new MigLayout("fill,insets 0"));
+		rightPanel.add(tabbedPane,"span,wrap");
+		rightPanel.add(new ClassPanel(),"wrap,span");
+		add(splitPane,"span,growx");
+
+		
 	}
 
 	private void documentTableMouseClicked(MouseEvent e, JXTable table) {
@@ -409,4 +376,6 @@ public class MainFrame extends JFrame {
 
 	}
 
+
+	
 }

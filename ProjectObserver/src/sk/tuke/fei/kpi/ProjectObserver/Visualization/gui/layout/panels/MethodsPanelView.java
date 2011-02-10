@@ -16,7 +16,7 @@ import org.jdesktop.swingx.JXTable;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.MethodsTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.MethodsTableModel;
 
 public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 
