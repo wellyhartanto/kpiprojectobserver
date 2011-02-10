@@ -1,10 +1,10 @@
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java;
 
 import java.util.ArrayList;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.GenericTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
 
 public class ClassesTableModel extends GenericTableModel<Class> {
 
@@ -25,7 +25,7 @@ public class ClassesTableModel extends GenericTableModel<Class> {
 	@Override
 	public Object getValueAt(int row, int column) {
 
-		switch (row) {
+		switch (column) {
 		case 0:
 			return data.get(row).getName();
 

@@ -1,0 +1,126 @@
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
+
+import org.jdesktop.swingx.JXTable;
+
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
+
+import net.miginfocom.swing.MigLayout;
+
+public class LoginPanelView extends JPanel implements LoginPanelDisplay {
+
+	private static final long serialVersionUID = -6427921875113787927L;
+
+	@Override
+	public JComponent asComponent() {
+		return this;
+	}
+
+	private JXTable projectsTable;
+
+	private JButton openProject;
+	private JButton deleteProject;
+	private JButton createProject;
+	private JButton loadSourceCode;
+	private JButton loadUmlModel;
+
+	private JTextField projectName;
+	private JTextArea projectDescription;
+
+	public LoginPanelView() {
+
+		initComponents();
+
+	}
+
+	private void initComponents() {
+
+		ProjectsTableModel projectsTableModel = new ProjectsTableModel();
+		List<Project> projects = new ArrayList<Project>();
+
+		Project proj = new Project();
+		proj.setCreationDate(new Date());
+		proj.setName("prvy projekt");
+		proj.setDescription("opis prveho projektu");
+		projects.add(proj);
+		projectsTableModel.setData(projects);
+
+		projectsTable = new JXTable(projectsTableModel);
+		projectsTable.getTableHeader().setFont(MyFonts.font3);
+		projectsTable.setRolloverEnabled(true);
+		projectsTable.setHorizontalScrollEnabled(true);
+		projectsTable.setFillsViewportHeight(true);
+		projectsTable.setEditable(true);
+
+		projectsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		Font buttonsFont = MyFonts.font2;
+		Dimension buttonsSize = new Dimension(100, 30);
+
+		openProject = new JButton("open");
+		deleteProject = new JButton("delete");
+		createProject = new JButton("create");
+		loadSourceCode = new JButton("load s");
+		loadUmlModel = new JButton("load uml");
+
+		openProject.setFont(buttonsFont);
+		deleteProject.setFont(buttonsFont);
+		createProject.setFont(buttonsFont);
+		loadSourceCode.setFont(buttonsFont);
+		loadUmlModel.setFont(buttonsFont);
+
+		openProject.setMinimumSize(buttonsSize);
+		deleteProject.setMinimumSize(buttonsSize);
+		createProject.setMinimumSize(buttonsSize);
+		loadSourceCode.setMinimumSize(buttonsSize);
+		loadUmlModel.setMinimumSize(buttonsSize);
+
+		projectName = new JTextField(50);
+		projectDescription = new JTextArea(3, 50);
+
+		setComponentsPosition();
+	}
+
+	private void setComponentsPosition() {
+		setLayout(new MigLayout("", "50[]50[]", "60[][]150[][][][]"));
+
+		JScrollPane scroll = new JScrollPane(projectsTable);
+		scroll.setMaximumSize(new Dimension(1000, 200));
+
+		add(scroll, "span 1 2,growx");
+		add(openProject, "wrap");
+		add(deleteProject, "wrap");
+
+		add(projectName);
+		add(createProject, "wrap");
+		add(projectDescription, "wrap");
+		add(loadSourceCode, "wrap");
+		add(loadUmlModel, "wrap");
+
+	}
+
+	@Override
+	public void setOpenAction(ActionListener actionListener) {
+		openProject.addActionListener(actionListener);
+	}
+}

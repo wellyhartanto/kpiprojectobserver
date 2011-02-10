@@ -16,7 +16,7 @@ import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.models.java.ExceptionsTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.ExceptionsTableModel;
 
 public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDisplay {
 
