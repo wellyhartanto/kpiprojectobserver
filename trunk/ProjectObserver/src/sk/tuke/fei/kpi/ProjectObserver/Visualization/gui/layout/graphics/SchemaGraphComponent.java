@@ -42,20 +42,12 @@ public class SchemaGraphComponent extends mxGraphComponent {
 
 	public Component[] createComponents(mxCellState state) {
 		if (getGraph().getModel().isVertex(state.getCell())) {
-			
-			
-			Component comp =  new JTableRenderer(state.getCell(), this);
-			
-			return new Component[] {  comp};
+			return new Component[] {  new JTableRenderer(state.getCell(), this) };
 		}
 
 		return null;
 	}
 	
-	@Override
-	public Dimension getSize() {
-		return getPreferredSize();
-	}
 	
 	
 	

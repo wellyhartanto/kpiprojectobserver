@@ -16,11 +16,9 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		setBounds(100, 100, 1000, 750);
-
+		actualcomponent = new JComponent() {
+		};
 		setLayout(new MigLayout("insets 0,fill", "[]", "[]"));
-		actualcomponent = new LoginPanelPresenter().getDisplay().asComponent();
-		add(actualcomponent, "span,growx,growy");
-		setVisible(true);
 	}
 
 	public static MainFrame getMainFrame() {
@@ -37,8 +35,7 @@ public class MainFrame extends JFrame {
 
 		remove(actualcomponent);
 		actualcomponent = jComponent;
-		setLayout(new MigLayout("insets 0,fill", "[]", "[]"));
-		add(jComponent, "span,growx,growy");
+		add(jComponent, "span,growx,growy,top");
 		setVisible(true);
 	}
 

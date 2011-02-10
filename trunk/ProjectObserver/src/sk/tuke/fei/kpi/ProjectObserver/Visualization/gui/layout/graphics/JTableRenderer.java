@@ -53,6 +53,7 @@ public class JTableRenderer extends JPanel {
 		setLayout(new MigLayout("insets 0", "", "[]0[]0[]"));
 		setOpaque(false);
 
+		
 		this.cell = cell;
 		this.graphContainer = graphContainer;
 		this.graph = graphContainer.getGraph();
