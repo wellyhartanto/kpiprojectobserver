@@ -119,7 +119,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay{
 		setLayout(new MigLayout("fill,insets 0"));
 		rightPanel.add(tabbedPane,"span,wrap");
 		rightPanel.add(new ClassPanel(),"wrap,span");
-		add(splitPane,"span,growx");
+		add(splitPane,"span,growx,growy");
 
 		
 	}

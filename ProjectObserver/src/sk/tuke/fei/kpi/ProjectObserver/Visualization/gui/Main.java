@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-		//	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -28,7 +28,7 @@ public class Main {
 
 		//new MainFrame();
 		
-		MainFrame.getMainFrame();
+		MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
 
 		// Application.launch(Main.class, args);
 	}
