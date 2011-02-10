@@ -12,20 +12,15 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -59,14 +54,11 @@ public class JTableRenderer extends JPanel {
 		this.graph = graphContainer.getGraph();
 
 		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-		separator.setBackground(Color.RED);
+		separator.setBackground(Color.BLACK);
 		separator.setOpaque(true);
 		JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
-		separator1.setBackground(Color.RED);
+		separator1.setBackground(Color.BLACK);
 		separator1.setOpaque(true);
-		JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
-		separator2.setBackground(Color.RED);
-		separator2.setOpaque(true);
 		
 		
 
@@ -91,8 +83,7 @@ public class JTableRenderer extends JPanel {
 		add(fields, "wrap");
 		add(separator1, "wrap,span,growx");
 		add(methods, "wrap");
-		add(separator2, "wrap,span,growx");
-		
+		setBorder(new LineBorder(Color.BLACK));
 		
 	}
 	
