@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.Hashtable;
 
 import org.w3c.dom.Document;
 
@@ -49,6 +50,6 @@ public class SchemaGraphComponent extends mxGraphComponent {
 	}
 	
 	
-	
+		
 	
 }
