@@ -43,16 +43,17 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodPar
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodsPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.PackagesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
 
-public class MainPanelView extends JPanel implements MainPanelDisplay{
+public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	private static final long serialVersionUID = -6427921875113787927L;
 
 	@Override
 	public JComponent asComponent() {
 		return this;
-		}
+	}
 
 	private JSplitPane splitPane;
 	private JScrollPane leftScrollPane;
@@ -67,20 +68,18 @@ public class MainPanelView extends JPanel implements MainPanelDisplay{
 	private ImageIcon iconField;
 	private ImageIcon iconEnumValue;
 	private ImageIcon iconInfo;
+	private Project project;
 
-	public MainPanelView() {
+	public MainPanelView(Project project) {
+		this.project = project;
 		initComponents();
 
 		setVisible(true);
 
 	}
 
-
-
 	private void initComponents() {
 
-	
-		
 		createTree();
 
 		leftScrollPane = new JScrollPane();
@@ -89,7 +88,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay{
 		rightPanel = new JPanel(new MigLayout("fill,insets 0,wrap 3", "[grow,fill,left]", "[grow,fill]2[grow,fill]"));
 		rightPanel.setName("rightPanel");
 
-		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(MyFonts.font2);
 
@@ -106,22 +104,20 @@ public class MainPanelView extends JPanel implements MainPanelDisplay{
 		splitPane.setName("splitPane");
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
-		
 
 		TreePath tp = navigationTree.getPathForRow(0);
 		navigationTree.setSelectionPath(tp);
 
 		setComponentsPosition();
-		
-	}
-	
-	private void setComponentsPosition(){
-		setLayout(new MigLayout("fill,insets 0"));
-		rightPanel.add(tabbedPane,"span,wrap");
-		rightPanel.add(new ClassPanel(),"wrap,span");
-		add(splitPane,"span,growx,growy");
 
-		
+	}
+
+	private void setComponentsPosition() {
+		setLayout(new MigLayout("fill,insets 0"));
+		rightPanel.add(tabbedPane, "span,wrap");
+		rightPanel.add(new ClassPanel(), "wrap,span");
+		add(splitPane, "span,growx,growy");
+
 	}
 
 	private void documentTableMouseClicked(MouseEvent e, JXTable table) {
@@ -258,7 +254,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay{
 	private void createTree() {
 
 		Application app = TestData.createTestData();
-
+		app.setName(project.getName());
 		DefaultMutableTreeNode root = createApplicationTree(app);
 
 		navigationTree = new JTree(root);
@@ -293,89 +289,80 @@ public class MainPanelView extends JPanel implements MainPanelDisplay{
 		if (nodeInfo instanceof Application) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, new PackagesPanelPresenter(((Application) nodeInfo).getPackages())
+					.getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, new ClassesPanelPresenter(((Application) nodeInfo).getClasses())
+					.getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface,
+					new InterfacesPanelPresenter(((Application) nodeInfo).getInterfaces()).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, new EnumsPanelPresenter(((Application) nodeInfo).getEnums()).getDisplay()
 					.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, new PackagesPanelPresenter(
-					((Application) nodeInfo).getPackages()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, new ClassesPanelPresenter(
-					((Application) nodeInfo).getClasses()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface, new InterfacesPanelPresenter(
-					((Application) nodeInfo).getInterfaces()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, new EnumsPanelPresenter(
-					((Application) nodeInfo).getEnums()).getDisplay().asComponent());
 
 		}
 
 		if (nodeInfo instanceof Package) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, new PackagesPanelPresenter(((Package) nodeInfo).getPackages())
+					.getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, new ClassesPanelPresenter(((Package) nodeInfo).getClasses())
+					.getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface,
+					new InterfacesPanelPresenter(((Package) nodeInfo).getInterfaces()).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, new EnumsPanelPresenter(((Package) nodeInfo).getEnums()).getDisplay()
 					.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, new PackagesPanelPresenter(
-					((Package) nodeInfo).getPackages()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, new ClassesPanelPresenter(
-					((Package) nodeInfo).getClasses()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface, new InterfacesPanelPresenter(
-					((Package) nodeInfo).getInterfaces()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, new EnumsPanelPresenter(((Package) nodeInfo)
-					.getEnums()).getDisplay().asComponent());
 
 		}
 		if (nodeInfo instanceof Class) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, new MethodsPanelPresenter(((Class) nodeInfo).getMethods()).getDisplay()
 					.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, new MethodsPanelPresenter(
-					((Class) nodeInfo).getMethods()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, new FieldsPanelPresenter(((Class) nodeInfo)
-					.getFields()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, new ClassesPanelPresenter(
-					((Class) nodeInfo).getClasses()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, new EnumsPanelPresenter(((Class) nodeInfo)
-					.getEnums()).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, new FieldsPanelPresenter(((Class) nodeInfo).getFields()).getDisplay()
+					.asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, new ClassesPanelPresenter(((Class) nodeInfo).getClasses()).getDisplay()
+					.asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, new EnumsPanelPresenter(((Class) nodeInfo).getEnums()).getDisplay()
+					.asComponent());
 
 		}
 		if (nodeInfo instanceof Interface) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, new MethodsPanelPresenter(((Interface) nodeInfo).getMethods())
+					.getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, new FieldsPanelPresenter(((Interface) nodeInfo).getFields()).getDisplay()
 					.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, new MethodsPanelPresenter(
-					((Interface) nodeInfo).getMethods()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, new FieldsPanelPresenter(
-					((Interface) nodeInfo).getFields()).getDisplay().asComponent());
 
 		}
 		if (nodeInfo instanceof Enum) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.values"), iconEnumValue, new EnumValuesPresenter(((Enum) nodeInfo).getValues()).getDisplay()
 					.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.values"), iconEnumValue, new EnumValuesPresenter(
-					((Enum) nodeInfo).getValues()).getDisplay().asComponent());
 
 		}
 
 		if (nodeInfo instanceof Method) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.params"), iconInfo, new MethodParamsPresenter(((Method) nodeInfo).getParams()).getDisplay()
 					.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.params"), iconInfo, new MethodParamsPresenter(
-					((Method) nodeInfo).getParams()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.exceptions"), iconInfo, new ExceptionsPanelPresenter(
-					((Method) nodeInfo).getExceptions()).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.exceptions"), iconInfo, new ExceptionsPanelPresenter(((Method) nodeInfo).getExceptions())
+					.getDisplay().asComponent());
 
 		}
 		if (nodeInfo instanceof Field) {
 			tabbedPane.removeAll();
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-					.asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay().asComponent());
 		}
 
 	}
 
-
-	
 }

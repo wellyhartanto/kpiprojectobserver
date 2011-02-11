@@ -55,23 +55,12 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	private void initComponents() {
 
-		ProjectsTableModel projectsTableModel = new ProjectsTableModel();
-		List<Project> projects = new ArrayList<Project>();
-
-		Project proj = new Project();
-		proj.setCreationDate(new Date());
-		proj.setName("prvy projekt");
-		proj.setDescription("opis prveho projektu");
-		projects.add(proj);
-		projectsTableModel.setData(projects);
-
-		projectsTable = new JXTable(projectsTableModel);
+		projectsTable = new JXTable(new ProjectsTableModel());
 		projectsTable.getTableHeader().setFont(MyFonts.font3);
 		projectsTable.setRolloverEnabled(true);
 		projectsTable.setHorizontalScrollEnabled(true);
 		projectsTable.setFillsViewportHeight(true);
 		projectsTable.setEditable(true);
-
 		projectsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		Font buttonsFont = MyFonts.font2;
@@ -122,5 +111,37 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	@Override
 	public void setOpenAction(ActionListener actionListener) {
 		openProject.addActionListener(actionListener);
+	}
+
+	@Override
+	public void setCreateAction(ActionListener actionListener) {
+		createProject.addActionListener(actionListener);
+
+	}
+
+	@Override
+	public void setDeleteAction(ActionListener actionListener) {
+		deleteProject.addActionListener(actionListener);
+	}
+
+	@Override
+	public Project getSelectedProject() {
+
+		if (projectsTable.getSelectedRow() >= 0) {
+
+			int index = projectsTable.convertRowIndexToModel(projectsTable.getSelectedRow());
+
+			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+			return tableModel.getData().get(index);
+		}
+		return null;
+	}
+
+	@Override
+	public void removeProjectFromList(Project project) {
+		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+		tableModel.getData().remove(project);
+		tableModel.fireTableDataChanged();
+
 	}
 }

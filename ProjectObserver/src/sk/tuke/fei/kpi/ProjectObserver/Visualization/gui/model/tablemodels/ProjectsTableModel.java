@@ -1,9 +1,11 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
 
 public class ProjectsTableModel extends GenericTableModel<Project>{
 
@@ -12,11 +14,15 @@ public class ProjectsTableModel extends GenericTableModel<Project>{
 
 	public ProjectsTableModel() {
 		super();
-		data = new ArrayList<Project>();
+		data = ProjectService.loadProjects();
 
 		columnNames = new String[] { "Name","Date","Description" };
 
 	}
+	
+	
+	
+	
 
 	@Override
 	public Object getValueAt(int row, int column) {

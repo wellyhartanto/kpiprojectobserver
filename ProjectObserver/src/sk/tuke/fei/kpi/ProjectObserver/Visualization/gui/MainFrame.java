@@ -1,9 +1,11 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import net.miginfocom.swing.MigLayout;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.LoginPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.MainPanelPresenter;
 
@@ -16,6 +18,10 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		setBounds(100, 100, 1000, 750);
+		ImageIcon frameIcon = new ImageIcon(getClass().getResource(
+				CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
+		setIconImage(frameIcon.getImage());
+
 		actualcomponent = new JComponent() {
 		};
 		setLayout(new MigLayout("insets 0,fill", "[]", "[]"));
