@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,7 @@ import javax.swing.border.LineBorder;
 
 import org.jdesktop.swingx.JXTable;
 
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
@@ -85,7 +88,59 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loadUmlModel.setMinimumSize(buttonsSize);
 
 		projectName = new JTextField(50);
-		projectDescription = new JTextArea(3, 50);
+		projectName.setDocument(new JTextFieldLimit(20));
+
+		projectName.setText("Project Name");
+		projectName.setForeground(Color.GRAY);
+		projectName.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if (projectName.getText().isEmpty()) {
+					projectName.setText("Project Name");
+					projectName.setForeground(Color.GRAY);
+
+				}
+			}
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+			if(	projectName.getText().equals("Project Name")){
+				projectName.setText("");
+				projectName.setForeground(Color.BLACK);
+				}
+			}
+		});
+
+		projectDescription = new JTextArea(4, 50);
+		projectDescription.setMaximumSize(new Dimension(1000, 70));
+		projectDescription.setMinimumSize(new Dimension(100, 70));
+		projectDescription.setLineWrap(true);
+		projectDescription.setAutoscrolls(true);
+		projectDescription.setDocument(new JTextFieldLimit(300));
+		projectDescription.setText("Project Description");
+		projectDescription.setForeground(Color.GRAY);
+
+		projectDescription.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if (projectDescription.getText().isEmpty()) {
+					projectDescription.setText("Project Description");
+					projectDescription.setForeground(Color.GRAY);
+
+				}
+			}
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+			if(	projectDescription.getText().equals("Project Description")){
+				projectDescription.setText("");
+				projectDescription.setForeground(Color.BLACK);
+				}
+			}
+		});
+		
 
 		setComponentsPosition();
 	}
@@ -129,9 +184,11 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		if (projectsTable.getSelectedRow() >= 0) {
 
-			int index = projectsTable.convertRowIndexToModel(projectsTable.getSelectedRow());
+			int index = projectsTable.convertRowIndexToModel(projectsTable
+					.getSelectedRow());
 
-			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
+					.getModel();
 			return tableModel.getData().get(index);
 		}
 		return null;
@@ -139,9 +196,19 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	@Override
 	public void removeProjectFromList(Project project) {
-		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
+				.getModel();
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
 
 	}
+
+	@Override
+	public void setNameAndDescription(Project project) {
+
+		project.setName(projectName.getText());
+		project.setDescription(projectDescription.getText());
+
+	}
+
 }

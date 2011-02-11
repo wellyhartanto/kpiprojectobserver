@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.Model;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
@@ -40,12 +41,16 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Project pr = new Project();
-				pr.setName("persistedproject");
-				pr.setCreationDate(new Date());
-				pr.setDescription("desc");
+				Project project = new Project();
+
+				display.setNameAndDescription(project);
 				
-				ProjectService.saveProject(pr);
+				project.setCreationDate(new Date());
+				project.setModel(new Model());
+				
+				ProjectService.saveProject(project);
+				
+				MainFrame.getMainFrame().setPanel(new MainPanelPresenter(project).getDisplay().asComponent());
 				
 				
 			}

@@ -1,5 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration;
 
-public class Model{
+import java.io.Serializable;
+
+public class Model implements Serializable{
 
 }

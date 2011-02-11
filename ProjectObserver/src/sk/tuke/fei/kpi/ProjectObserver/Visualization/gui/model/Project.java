@@ -12,7 +12,7 @@ public class Project implements Serializable{
 	private String name;
 	private String description;
 	// model of the project source and uml;
-//	private Model model;
+	private Model model;
 
 	private Date creationDate;
 
@@ -32,13 +32,13 @@ public class Project implements Serializable{
 		this.description = description;
 	}
 
-//	public Model getModel() {
-//		return model;
-//	}
-//
-//	public void setModel(Model model) {
-//		this.model = model;
-//	}
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
 
 	public Date getCreationDate() {
 		return creationDate;
