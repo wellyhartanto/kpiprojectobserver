@@ -47,12 +47,16 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private JButton loadSourceCode;
 	private JButton loadUmlModel;
 
+	private JLabel sourceCodeFileLbl;
+	private JLabel umlFileLbl;
+
 	private JTextField projectName;
 	private JTextArea projectDescription;
 
 	String descriptionBackgroundText;
 	String nameBackgroundText;
 	Color backgroundTextColor = Color.GRAY;
+	Color forgroundTextColor = Color.BLACK;
 
 	public LoginPanelView() {
 
@@ -85,6 +89,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loadSourceCode.setFont(buttonsFont);
 		loadUmlModel.setFont(buttonsFont);
 
+		sourceCodeFileLbl = new JLabel();
+		umlFileLbl = new JLabel();
+
 		openProject.setMinimumSize(buttonsSize);
 		deleteProject.setMinimumSize(buttonsSize);
 		createProject.setMinimumSize(buttonsSize);
@@ -111,7 +118,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 			public void focusGained(FocusEvent arg0) {
 				if (projectName.getText().equals(nameBackgroundText)) {
 					projectName.setText("");
-					projectName.setForeground(backgroundTextColor);
+					projectName.setForeground(forgroundTextColor);
 				}
 			}
 		});
@@ -142,7 +149,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 				if (projectDescription.getText().equals(
 						descriptionBackgroundText)) {
 					projectDescription.setText("");
-					projectDescription.setForeground(backgroundTextColor);
+					projectDescription.setForeground(forgroundTextColor);
 				}
 			}
 		});
@@ -163,8 +170,10 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		add(projectName);
 		add(createProject, "wrap");
 		add(projectDescription, "wrap");
-		add(loadSourceCode, "wrap");
-		add(loadUmlModel, "wrap");
+		add(loadSourceCode, "split 2");
+		add(sourceCodeFileLbl, "wrap");
+		add(loadUmlModel, "split 2");
+		add(umlFileLbl, "wrap");
 
 	}
 
@@ -224,6 +233,16 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	@Override
 	public void setLoadUmlAction(ActionListener actionListener) {
 		loadUmlModel.addActionListener(actionListener);
+	}
+
+	@Override
+	public void setSourceCodeFileLabel(String filename) {
+		sourceCodeFileLbl.setText(filename);
+	}
+
+	@Override
+	public void setUmlFileLabel(String filename) {
+		umlFileLbl.setText(filename);
 	}
 
 }
