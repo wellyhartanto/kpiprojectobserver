@@ -216,4 +216,14 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	}
 
+	@Override
+	public void setLoadSourceAction(ActionListener actionListener) {
+		loadSourceCode.addActionListener(actionListener);
+	}
+
+	@Override
+	public void setLoadUmlAction(ActionListener actionListener) {
+		loadUmlModel.addActionListener(actionListener);
+	}
+
 }
