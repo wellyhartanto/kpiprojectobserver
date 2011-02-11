@@ -11,9 +11,11 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 	
 	
 	
-	public MainPanelPresenter() {
+	public MainPanelPresenter(Project project) {
 
-		display = new MainPanelView();
+		this.project = project;
+		
+		display = new MainPanelView(this.project);
 		bind();
 	}
 }
