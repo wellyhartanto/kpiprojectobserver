@@ -87,6 +87,7 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				fileChooser.setMultiSelectionEnabled(false);
 				fileChooser.showOpenDialog(display.asComponent());
 				sourceCodeFile = fileChooser.getSelectedFile();
+				display.setSourceCodeFileLabel(sourceCodeFile.getName());
 			}
 		});
 
@@ -98,6 +99,8 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				fileChooser.setMultiSelectionEnabled(false);
 				fileChooser.showOpenDialog(display.asComponent());
 				umlFile = fileChooser.getSelectedFile();
+				
+				display.setUmlFileLabel(umlFile.getName());
 			}
 		});
 
