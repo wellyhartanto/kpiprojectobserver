@@ -34,8 +34,9 @@ public class ClassPanel extends JPanel {
 		super();
 
 		setBackground(Color.WHITE);
+		
 
-		graphComponent = new SchemaGraphComponent(new mxGraph());
+		graphComponent = new ClassGraphComponent(new mxGraph());
 		graphComponent.getGraph().setCellsResizable(true);
 		mxGraph graph = graphComponent.getGraph();
 

@@ -29,11 +29,10 @@ public class ProjectService {
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		try {
-			fos = new FileOutputStream(projectDir + File.separator + project.getName() + project.getCreationDate().getTime() + ".txt");
+			fos = new FileOutputStream(projectDir + File.separator + project.getName() + project.getCreationDate().getTime() + ".observer");
 			out = new ObjectOutputStream(fos);
 			out.writeObject(project);
 			out.close();
-			System.out.println("Object Persisted");
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -77,7 +76,7 @@ public class ProjectService {
 		File projectDir = new File(userHome, projectsFolderName);
 		if (projectDir.exists() && projectDir.isDirectory()) {
 
-			File f = new File(projectDir, project.getName() + project.getCreationDate().getTime() + ".txt");
+			File f = new File(projectDir, project.getName() + project.getCreationDate().getTime() + ".observer");
 
 			f.delete();
 

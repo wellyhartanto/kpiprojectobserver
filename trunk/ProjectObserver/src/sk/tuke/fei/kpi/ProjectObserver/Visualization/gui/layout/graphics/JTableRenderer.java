@@ -83,7 +83,6 @@ public class JTableRenderer extends JPanel {
 		add(fields, "wrap");
 		add(separator1, "wrap,span,growx");
 		add(methods, "wrap");
-		setBorder(new LineBorder(Color.BLACK));
 		
 	}
 	

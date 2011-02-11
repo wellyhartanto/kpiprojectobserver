@@ -17,4 +17,5 @@ public interface LoginPanelDisplay extends DisplayComponent {
 	
 	void removeProjectFromList(Project project);
 
+	void setNameAndDescription(Project project);
 }

@@ -40,7 +40,7 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 
 		JXTable packagesTable = new JXTable(packagesTableModel);
 
-		packagesTable.setShowGrid(true, true);
+	//	packagesTable.setShowGrid(true, true);
 
 		packagesTable.getTableHeader().setFont(MyFonts.font3);
 		packagesTable.setRolloverEnabled(true);

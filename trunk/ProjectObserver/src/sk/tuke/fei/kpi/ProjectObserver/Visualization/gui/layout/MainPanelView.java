@@ -1,5 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 
@@ -10,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -85,11 +88,14 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
 		leftScrollPane.setViewportView(navigationTree);
-		rightPanel = new JPanel(new MigLayout("fill,insets 0,wrap 3", "[grow,fill,left]", "[grow,fill]2[grow,fill]"));
+		rightPanel = new JPanel();
 		rightPanel.setName("rightPanel");
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(MyFonts.font2);
+		
+		//tabbedPane.setMaximumSize(new Dimension(1000, 350));
+		
 
 		iconPackage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
 		iconInterface = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "int_obj.gif"));
@@ -114,8 +120,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0"));
-		rightPanel.add(tabbedPane, "span,wrap");
-		rightPanel.add(new ClassPanel(), "wrap,span");
+
+		rightPanel.setLayout(new MigLayout("fill,insets 0"));
+		
+		rightPanel.add(tabbedPane, "span,wrap,growx,top");
+		rightPanel.add(new ClassPanel(), "wrap,span,growx,growy,top");
 		add(splitPane, "span,growx,growy");
 
 	}
@@ -254,7 +263,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void createTree() {
 
 		Application app = TestData.createTestData();
-		app.setName(project.getName());
+		app.setName("testproject");
 		DefaultMutableTreeNode root = createApplicationTree(app);
 
 		navigationTree = new JTree(root);

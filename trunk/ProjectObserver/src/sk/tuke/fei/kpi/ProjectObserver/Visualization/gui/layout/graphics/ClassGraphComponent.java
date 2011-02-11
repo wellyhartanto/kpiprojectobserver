@@ -13,7 +13,7 @@ import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 
-public class SchemaGraphComponent extends mxGraphComponent {
+public class ClassGraphComponent extends mxGraphComponent {
 
 	/**
 	 * 
@@ -24,14 +24,14 @@ public class SchemaGraphComponent extends mxGraphComponent {
 	 * 
 	 * @param graph
 	 */
-	public SchemaGraphComponent(mxGraph graph) {
+	public ClassGraphComponent(mxGraph graph) {
 		super(graph);
 
 		mxGraphView graphView = new mxGraphView(graph);
 
 		mxCodec codec = new mxCodec();
 		Document doc = mxUtils
-				.loadDocument(SchemaGraphComponent.class
+				.loadDocument(ClassGraphComponent.class
 						.getResource(
 								"/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/layout/graphics/default-style.xml")
 						.toString());
