@@ -50,6 +50,10 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private JTextField projectName;
 	private JTextArea projectDescription;
 
+	String descriptionBackgroundText;
+	String nameBackgroundText;
+	Color backgroundTextColor = Color.GRAY;
+
 	public LoginPanelView() {
 
 		initComponents();
@@ -89,25 +93,25 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		projectName = new JTextField(50);
 		projectName.setDocument(new JTextFieldLimit(20));
-
-		projectName.setText("Project Name");
-		projectName.setForeground(Color.GRAY);
+		nameBackgroundText = "Project Name";
+		projectName.setText(nameBackgroundText);
+		projectName.setForeground(backgroundTextColor);
 		projectName.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				if (projectName.getText().isEmpty()) {
-					projectName.setText("Project Name");
-					projectName.setForeground(Color.GRAY);
+					projectName.setText(nameBackgroundText);
+					projectName.setForeground(backgroundTextColor);
 
 				}
 			}
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
-			if(	projectName.getText().equals("Project Name")){
-				projectName.setText("");
-				projectName.setForeground(Color.BLACK);
+				if (projectName.getText().equals(nameBackgroundText)) {
+					projectName.setText("");
+					projectName.setForeground(backgroundTextColor);
 				}
 			}
 		});
@@ -118,29 +122,30 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectDescription.setLineWrap(true);
 		projectDescription.setAutoscrolls(true);
 		projectDescription.setDocument(new JTextFieldLimit(300));
-		projectDescription.setText("Project Description");
-		projectDescription.setForeground(Color.GRAY);
+		descriptionBackgroundText = "Project Description";
+		projectDescription.setText(descriptionBackgroundText);
+		projectDescription.setForeground(backgroundTextColor);
 
 		projectDescription.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				if (projectDescription.getText().isEmpty()) {
-					projectDescription.setText("Project Description");
-					projectDescription.setForeground(Color.GRAY);
+					projectDescription.setText(descriptionBackgroundText);
+					projectDescription.setForeground(backgroundTextColor);
 
 				}
 			}
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
-			if(	projectDescription.getText().equals("Project Description")){
-				projectDescription.setText("");
-				projectDescription.setForeground(Color.BLACK);
+				if (projectDescription.getText().equals(
+						descriptionBackgroundText)) {
+					projectDescription.setText("");
+					projectDescription.setForeground(backgroundTextColor);
 				}
 			}
 		});
-		
 
 		setComponentsPosition();
 	}
