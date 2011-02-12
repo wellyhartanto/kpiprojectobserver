@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/swingx-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/AppFramework.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/swing-worker.jar"/>
-	<classpathentry kind="lib" path="lib/jgraphx.jar">
+	<classpathentry exported="true" kind="lib" path="lib/jgraphx.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/ProjectObserver/lib/jGraphXapi.zip!/"/>
 		</attributes>

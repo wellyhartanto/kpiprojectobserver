@@ -6,17 +6,20 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-
-import net.miginfocom.swing.MigLayout;
+import javax.swing.border.LineBorder;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -24,6 +27,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
+
+import net.miginfocom.swing.MigLayout;
 
 public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
@@ -38,6 +43,10 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	private JButton openProject;
 	private JButton deleteProject;
+
+	private JButton importProject;
+	private JButton exportProject;
+
 	private JButton createProject;
 	private JButton loadSourceCode;
 	private JButton loadUmlModel;
@@ -74,12 +83,17 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		openProject = new JButton("open");
 		deleteProject = new JButton("delete");
+		importProject = new JButton("import");
+		exportProject = new JButton("export");
+
 		createProject = new JButton("create");
 		loadSourceCode = new JButton("load s");
 		loadUmlModel = new JButton("load uml");
 
 		openProject.setFont(buttonsFont);
 		deleteProject.setFont(buttonsFont);
+		importProject.setFont(buttonsFont);
+		exportProject.setFont(buttonsFont);
 		createProject.setFont(buttonsFont);
 		loadSourceCode.setFont(buttonsFont);
 		loadUmlModel.setFont(buttonsFont);
@@ -89,6 +103,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		openProject.setMinimumSize(buttonsSize);
 		deleteProject.setMinimumSize(buttonsSize);
+		importProject.setMinimumSize(buttonsSize);
+		exportProject.setMinimumSize(buttonsSize);
 		createProject.setMinimumSize(buttonsSize);
 		loadSourceCode.setMinimumSize(buttonsSize);
 		loadUmlModel.setMinimumSize(buttonsSize);
@@ -153,14 +169,19 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	}
 
 	private void setComponentsPosition() {
-		setLayout(new MigLayout("", "50[]50[]", "60[][]150[][][][]"));
+		setLayout(new MigLayout("", "50[]50[]", "60[]150[][][][]"));
 
 		JScrollPane scroll = new JScrollPane(projectsTable);
 		scroll.setMaximumSize(new Dimension(1000, 200));
 
-		add(scroll, "span 1 2,growx");
-		add(openProject, "wrap");
-		add(deleteProject, "wrap");
+		JPanel buttonsPanel = new JPanel(new MigLayout("insets 0"));
+		buttonsPanel.add(openProject, "wrap");
+		buttonsPanel.add(deleteProject, "wrap");
+		buttonsPanel.add(importProject, "wrap");
+		buttonsPanel.add(exportProject, "wrap");
+
+		add(scroll, "growx");
+		add(buttonsPanel, "wrap");
 
 		add(projectName);
 		add(createProject, "wrap");
@@ -186,6 +207,16 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	@Override
 	public void setDeleteAction(ActionListener actionListener) {
 		deleteProject.addActionListener(actionListener);
+	}
+
+	@Override
+	public void setExportAction(ActionListener actionListener) {
+		exportProject.addActionListener(actionListener);
+	}
+
+	@Override
+	public void setImportAction(ActionListener actionListener) {
+		importProject.addActionListener(actionListener);
 	}
 
 	@Override
@@ -240,4 +271,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		umlFileLbl.setText(filename);
 	}
 
+	
+	
+	
 }

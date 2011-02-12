@@ -11,6 +11,10 @@ public interface LoginPanelDisplay extends DisplayComponent {
 
 	void setCreateAction(ActionListener actionListener);
 
+	void setImportAction(ActionListener actionListener);
+
+	void setExportAction(ActionListener actionListener);
+
 	void setDeleteAction(ActionListener actionListener);
 
 	void setLoadSourceAction(ActionListener actionListener);

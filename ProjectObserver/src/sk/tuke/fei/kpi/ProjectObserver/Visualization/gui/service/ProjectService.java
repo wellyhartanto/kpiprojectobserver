@@ -8,23 +8,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 
-/**
- * Load a save potom prehodime do triedy Model, po novom Project, serializovat budem ja 
- * Tvoju triedu project som zmazal a veci z  nej presunul do mojej Project
- * Delete si obstaravaj ty, to je len zmazanie suboru cize so serializaciou to nema nic
- * Po precitani tento komentar mozes zmazat :)
- * @author Maroš Tyrpák
- * 
- */
+
 public class ProjectService {
 
 	private static String userHome = System.getProperty("user.home");
 
 	private static String projectsFolderName = "projectObserver";
+
+	private static String projectFileExtension = ".observer";
 
 	public static void saveProject(Project project) {
 
@@ -36,13 +32,16 @@ public class ProjectService {
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		try {
-			fos = new FileOutputStream(projectDir + File.separator + project.getName() + project.getCreationDate().getTime() + ".observer");
+			fos = new FileOutputStream(projectDir + File.separator
+					+ project.getName() + project.getCreationDate().getTime()
+					+ projectFileExtension);
 			out = new ObjectOutputStream(fos);
 			out.writeObject(project);
 			out.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+
 	}
 
 	public static List<Project> loadProjects() {
@@ -55,8 +54,9 @@ public class ProjectService {
 			List<File> files = Arrays.asList(projectDir.listFiles());
 
 			for (File file : files) {
+
 				Project project;
-				
+
 				FileInputStream fis = null;
 				ObjectInputStream in = null;
 				try {
@@ -70,7 +70,9 @@ public class ProjectService {
 					ex.printStackTrace();
 				}
 			}
+
 		}
+
 		return projects;
 	}
 
@@ -78,8 +80,29 @@ public class ProjectService {
 
 		File projectDir = new File(userHome, projectsFolderName);
 		if (projectDir.exists() && projectDir.isDirectory()) {
-			File f = new File(projectDir, project.getName() + project.getCreationDate().getTime() + ".observer");
+
+			File f = new File(projectDir, project.getName()
+					+ project.getCreationDate().getTime() + projectFileExtension);
+
 			f.delete();
-			}
+
+		}
 	}
+
+	public static void exportProject(Project project,File file) {
+
+
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
+		try {
+			fos = new FileOutputStream(file + projectFileExtension);
+			out = new ObjectOutputStream(fos);
+			out.writeObject(project);
+			out.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
 }
