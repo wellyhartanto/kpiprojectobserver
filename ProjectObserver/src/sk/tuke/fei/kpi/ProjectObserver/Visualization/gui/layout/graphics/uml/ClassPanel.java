@@ -1,4 +1,4 @@
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -30,14 +32,14 @@ public class ClassPanel extends JPanel {
 
 	protected mxGraphComponent graphComponent;
 
-	public ClassPanel() {
+	public ClassPanel(Class umlclass) {
 		super();
 
 		setBackground(Color.WHITE);
 		
 
-		graphComponent = new ClassGraphComponent(new mxGraph());
-		graphComponent.getGraph().setCellsResizable(true);
+		graphComponent = new ClassGraphComponent(umlclass,new mxGraph());
+	//	graphComponent.getGraph().setCellsResizable(true);
 		mxGraph graph = graphComponent.getGraph();
 
 		 //graph.setBorder(0);
