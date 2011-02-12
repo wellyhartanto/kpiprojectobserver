@@ -6,10 +6,6 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public abstract class GenericTableModel<T> extends AbstractTableModel {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2436272229115341013L;
 
 	protected String[] columnNames;
@@ -18,12 +14,10 @@ public abstract class GenericTableModel<T> extends AbstractTableModel {
 
 	public GenericTableModel() {
 		super();
-
 	}
 
 	@Override
 	public int getColumnCount() {
-
 		return columnNames.length;
 	}
 
@@ -34,7 +28,6 @@ public abstract class GenericTableModel<T> extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int column) {
-
 		return data.get(row).toString();
 	}
 
@@ -56,5 +49,4 @@ public abstract class GenericTableModel<T> extends AbstractTableModel {
 	public List<T> getData() {
 		return data;
 	}
-
 }

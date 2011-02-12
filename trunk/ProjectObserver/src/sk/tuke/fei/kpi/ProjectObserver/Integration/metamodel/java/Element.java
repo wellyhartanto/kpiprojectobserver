@@ -1,57 +1,60 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java;
 
-public abstract class Element {
-    public enum Visibility {
-	PRIVATE, DEFAULT, PROTECTED, PUBLIC
-    };
+import java.io.Serializable;
 
-    public enum Modifiers {
-	FINAL, ABSTRACT, STATIC, NATIVE, TRANSIENT, VOLATILE, SYNCHRONIZED, STRICTFP
-    };
+public abstract class Element implements Serializable {
+	private static final long serialVersionUID = -6146256352210642770L;
 
-    private String name;
-    private Visibility visibility = Visibility.DEFAULT;
-    private Modifiers[] modifiers;
-    private Annotation[] anotations;
+	public enum Visibility {
+		PRIVATE, DEFAULT, PROTECTED, PUBLIC
+	};
 
-    public Element() {
-    }
+	public enum Modifiers {
+		FINAL, ABSTRACT, STATIC, NATIVE, TRANSIENT, VOLATILE, SYNCHRONIZED, STRICTFP
+	};
 
-    public String getName() {
-	return name;
-    }
+	private String name;
+	private Visibility visibility = Visibility.DEFAULT;
+	private Modifiers[] modifiers;
+	private Annotation[] anotations;
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public Element() {
+	}
 
-    public Visibility getVisibility() {
-	return visibility;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setVisibility(Visibility visibility) {
-	this.visibility = visibility;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Modifiers[] getModifiers() {
-	return modifiers;
-    }
+	public Visibility getVisibility() {
+		return visibility;
+	}
 
-    public void setModifiers(Modifiers[] modifiers) {
-	this.modifiers = modifiers;
-    }
+	public void setVisibility(Visibility visibility) {
+		this.visibility = visibility;
+	}
 
-    public Annotation[] getAnotations() {
-	return anotations;
-    }
+	public Modifiers[] getModifiers() {
+		return modifiers;
+	}
 
-    public void setAnotations(Annotation[] anotations) {
-	this.anotations = anotations;
-    }
+	public void setModifiers(Modifiers[] modifiers) {
+		this.modifiers = modifiers;
+	}
 
-    @Override
-    public String toString() {
-	return getName();
-    }
+	public Annotation[] getAnotations() {
+		return anotations;
+	}
 
+	public void setAnotations(Annotation[] anotations) {
+		this.anotations = anotations;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

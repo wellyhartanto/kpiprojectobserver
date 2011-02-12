@@ -1,9 +1,11 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model {
+public class ClassDiagram implements Serializable {
+	private static final long serialVersionUID = -1965268218122677260L;
 	private List<Class> classes;
 	private List<Enum> enums;
 	private List<Package> packages;
@@ -11,7 +13,7 @@ public class Model {
 	private String name;
 	private List<Interface> interfaces;
 
-	public Model() {
+	public ClassDiagram() {
 		classes = new ArrayList<Class>();
 		enums = new ArrayList<Enum>();
 		packages = new ArrayList<Package>();
