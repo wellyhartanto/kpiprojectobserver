@@ -9,9 +9,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Cl
 import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
 
 /**
- * Citaj komentar v triede project service Po precitani tento komentar mozes zmazat :)
  * 
- * @author Maroš Tyrpák
+ * @author Maroï¿½ Tyrpï¿½k
  * 
  */
 public class Project implements Serializable, Disposable {

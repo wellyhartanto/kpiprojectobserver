@@ -7,21 +7,16 @@
  * See LICENSE file for license details. If you are unable to locate
  * this file please contact info (at) jgraph (dot) com.
  */
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -43,7 +38,7 @@ public class JTableRenderer extends JPanel {
 	public JTable table;
 
 	public JTableRenderer(final Object cell,
-			final mxGraphComponent graphContainer) {
+			final mxGraphComponent graphContainer,sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass) {
 
 		setLayout(new MigLayout("insets 0", "", "[]0[]0[]"));
 		setOpaque(false);
@@ -72,9 +67,18 @@ public class JTableRenderer extends JPanel {
 		JLabel classNameLbl = new JLabel("Class");
 		name.add(classNameLbl);
 
-		MyTable fieldsTable = new MyTable();
-		MyTable methodsTable = new MyTable();
+		ClassFieldsTable fieldsTable = new ClassFieldsTable();
+		ClassMethodsTable methodsTable = new ClassMethodsTable();
 
+		ClassFieldsTableModel fieldsTableModel = new ClassFieldsTableModel();
+		fieldsTableModel.setData(umlClass.getFields());
+		ClassMethodsTableModel methodsTableModel = new ClassMethodsTableModel();
+		methodsTableModel.setData(umlClass.getMethods());
+		
+		fieldsTable.setModel(fieldsTableModel);
+		methodsTable.setModel(methodsTableModel);
+		
+		
 		fields.add(fieldsTable);
 		methods.add(methodsTable);
 
@@ -89,95 +93,6 @@ public class JTableRenderer extends JPanel {
 	
 	
 
-	public class MyTable extends JTable {
-
-		private static final long serialVersionUID = 5841175227984561071L;
-
-		Object[][] data;
-
-		String[] colNames = new String[] { "A", "B"};
-
-		public MyTable() {
-			data = new Object[5][2];
-			for (int i = 0; i < 5; i++) {
-				data[i][0] = "Co " + i + 2;
-				data[i][1] = "Col " + i;
-		//		data[i][2] = "Colu " + i / 2;
-			}
-
-			setOpaque(false);
-			Color alphaZero = new Color(0, true);
-			setBackground(alphaZero);
-
-			setEnabled(false);
-
-			setModel(createModel());
-			setTableHeader(null);
-			setAutoscrolls(true);
-			setGridColor(Color.WHITE);
-
-			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		}
-		
-		public Object[][] getData() {
-			return data;
-		}
-
-		/**
-		 * 
-		 * @return the created table model
-		 */
-		public TableModel createModel() {
-			return new AbstractTableModel() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = -3642207266816170738L;
-
-				public int getColumnCount() {
-					return colNames.length;
-				}
-
-				public int getRowCount() {
-					return data.length;
-				}
-
-				public String getColumnName(int col) {
-					return colNames[col];
-				}
-
-				public Object getValueAt(int row, int col) {
-					return data[row][col];
-				}
-
-				@SuppressWarnings("unchecked")
-				public Class getColumnClass(int c) {
-					Object value = getValueAt(0, c);
-					return (value != null) ? value.getClass() : ImageIcon.class;
-				}
-
-				/*
-				 * Don't need to implement this method unless your table's
-				 * editable.
-				 */
-				public boolean isCellEditable(int row, int col) {
-					return col == 0;
-				}
-
-				/*
-				 * Don't need to implement this method unless your table's data
-				 * can change.
-				 */
-				public void setValueAt(Object value, int row, int col) {
-					data[row][col] = value;
-					fireTableCellUpdated(row, col);
-				}
-			};
-
-		}
-
-	}
 
 	/**
 	 * 

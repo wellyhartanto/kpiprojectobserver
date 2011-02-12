@@ -32,7 +32,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.TestData;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.ClassPanel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.ClassPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.ClassesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumValuesPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumsPanelPresenter;
@@ -70,6 +70,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private ImageIcon iconInfo;
 	private Project project;
 
+	private ClassPanel umlClassPanel;
+	
 	public MainPanelView(Project project) {
 		this.project = project;
 		initComponents();
@@ -111,6 +113,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		TreePath tp = navigationTree.getPathForRow(0);
 		navigationTree.setSelectionPath(tp);
 
+		umlClassPanel = new ClassPanel(new sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class());
+		
 		setComponentsPosition();
 
 	}
@@ -121,7 +125,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		rightPanel.setLayout(new MigLayout("fill,insets 0"));
 		
 		rightPanel.add(tabbedPane, "span,wrap,growx,top");
-		rightPanel.add(new ClassPanel(), "wrap,span,growx,growy,top");
+		rightPanel.add(umlClassPanel, "wrap,span,growx,growy,top");
 		add(splitPane, "span,growx,growy");
 
 	}
