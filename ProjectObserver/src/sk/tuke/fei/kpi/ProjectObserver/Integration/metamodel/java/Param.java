@@ -1,6 +1,9 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java;
 
-public class Param {
+import java.io.Serializable;
+
+public class Param implements Serializable {
+	private static final long serialVersionUID = -4982603891161171221L;
 	private String name;
 	private String type;
 
@@ -27,5 +30,4 @@ public class Param {
 	public void setType(String type) {
 		this.type = type;
 	}
-
 }

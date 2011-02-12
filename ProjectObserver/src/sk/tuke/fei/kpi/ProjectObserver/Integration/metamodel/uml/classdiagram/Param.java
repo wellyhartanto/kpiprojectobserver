@@ -1,6 +1,9 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram;
 
-public class Param {
+import java.io.Serializable;
+
+public class Param implements Serializable {
+	private static final long serialVersionUID = -6610602685289634372L;
 	private String name;
 	private String type;
 
@@ -27,5 +30,4 @@ public class Param {
 	public void setType(String type) {
 		this.type = type;
 	}
-
 }
