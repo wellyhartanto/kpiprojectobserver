@@ -90,6 +90,10 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				fileChooser.setMultiSelectionEnabled(false);
 				fileChooser.showOpenDialog(display.asComponent());
 
+				ProjectService.importProject(fileChooser.getSelectedFile());
+				
+				display.refreshTableModel();
+				
 			}
 		});
 
