@@ -30,4 +30,6 @@ public interface LoginPanelDisplay extends DisplayComponent {
 	void setSourceCodeFileLabel(String filename);
 
 	void setUmlFileLabel(String filename);
+	
+	void refreshTableModel();
 }

@@ -271,7 +271,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		umlFileLbl.setText(filename);
 	}
 
-	
-	
-	
+	@Override
+	public void refreshTableModel() {
+		projectsTable.setModel(new ProjectsTableModel());
+	}
+
 }

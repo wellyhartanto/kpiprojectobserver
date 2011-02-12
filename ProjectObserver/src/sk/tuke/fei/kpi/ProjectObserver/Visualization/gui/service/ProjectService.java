@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -104,5 +106,36 @@ public class ProjectService {
 		}
 
 	}
+	
+	public static void importProject(File file) {
 
+		File projectDir = new File(userHome, projectsFolderName);
+		if (!projectDir.isDirectory()) {
+			projectDir.mkdir();
+		}
+
+		File f = new File(projectDir, file.getName());
+		
+		copyfile(file, f);
+		
+
+	}
+
+	 private static  void copyfile(File srFile, File dtFile){
+		    try{
+		      InputStream in = new FileInputStream(srFile);
+		      OutputStream out = new FileOutputStream(dtFile);
+
+		      byte[] buf = new byte[1024];
+		      int len;
+		      while ((len = in.read(buf)) > 0){
+		        out.write(buf, 0, len);
+		      }
+		      in.close();
+		      out.close();
+		    }
+		    catch(Exception ex){
+		    }
+		  }
+	
 }
