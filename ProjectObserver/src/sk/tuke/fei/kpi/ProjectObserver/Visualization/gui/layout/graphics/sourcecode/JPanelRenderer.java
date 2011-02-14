@@ -7,7 +7,7 @@
  * See LICENSE file for license details. If you are unable to locate
  * this file please contact info (at) jgraph (dot) com.
  */
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.sourcecode;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -17,17 +17,13 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
-
 import net.miginfocom.swing.MigLayout;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element.Visibility;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
 
 /**
  * @author MV
@@ -37,8 +33,7 @@ public class JPanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public JPanelRenderer(
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass) {
+	public JPanelRenderer(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class sourceClass) {
 
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
 		setOpaque(false);
@@ -67,26 +62,24 @@ public class JPanelRenderer extends JPanel {
 
 		List<Field> fields = new ArrayList<Field>();
 		fields.add(m);
-		umlClass.setFields(fields);
+		sourceClass.setFields(fields);
 
 		List<Method> methods = new ArrayList<Method>();
 		methods.add(m1);
-		umlClass.setMethods(methods);
+		sourceClass.setMethods(methods);
 
-		for (Field field : umlClass.getFields()) {
+		for (Field field : sourceClass.getFields()) {
 
 			JLabel fieldLbl = new JLabel();
-			fieldLbl.setText(field.getVisibility() + " " + field.getType()
-					+ " " + field.getName());
+			fieldLbl.setText(field.getVisibility() + " " + field.getType() + " " + field.getName());
 			add(fieldLbl, "wrap");
 		}
 		add(separator1, "wrap,span,growx");
 
-		for (Method method : umlClass.getMethods()) {
+		for (Method method : sourceClass.getMethods()) {
 
 			JLabel methodLbl = new JLabel();
-			methodLbl.setText(method.getVisibility() + " "
-					+ method.getReturnType() + " " + method.getName());
+			methodLbl.setText(method.getVisibility() + " " + method.getReturnType() + " " + method.getName());
 
 			add(methodLbl, "wrap");
 

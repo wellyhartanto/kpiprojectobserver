@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 
@@ -10,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -18,6 +20,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
@@ -68,10 +71,14 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private ImageIcon iconField;
 	private ImageIcon iconEnumValue;
 	private ImageIcon iconInfo;
+
+	private ImageIcon iconClose;
+	private JXHyperlink linkClose;
+
 	private Project project;
 
 	private ClassPanel umlClassPanel;
-	
+
 	public MainPanelView(Project project) {
 		this.project = project;
 		initComponents();
@@ -92,9 +99,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(MyFonts.font2);
-		
-		//tabbedPane.setMaximumSize(new Dimension(1000, 350));
-		
+
+		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
 
 		iconPackage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
 		iconInterface = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "int_obj.gif"));
@@ -104,6 +110,9 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		iconField = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "field_obj.gif"));
 		iconEnumValue = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
 		iconInfo = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "information.gif"));
+		iconClose = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "close.png"));
+		linkClose = new JXHyperlink();
+		linkClose.setIcon(iconClose);
 
 		splitPane = new JSplitPane();
 		splitPane.setName("splitPane");
@@ -114,18 +123,18 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		navigationTree.setSelectionPath(tp);
 
 		umlClassPanel = new ClassPanel(new sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class());
-		
+
 		setComponentsPosition();
 
 	}
 
 	private void setComponentsPosition() {
-		setLayout(new MigLayout("fill,insets 0"));
+		setLayout(new MigLayout("fill,insets 0", "", ""));
 
 		rightPanel.setLayout(new MigLayout("fill,insets 0"));
-		
 		rightPanel.add(tabbedPane, "span,wrap,growx,top");
 		rightPanel.add(umlClassPanel, "wrap,span,growx,growy,top");
+
 		add(splitPane, "span,growx,growy");
 
 	}
@@ -304,8 +313,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 					.getDisplay().asComponent());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, new ClassesPanelPresenter(((Application) nodeInfo).getClasses())
 					.getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface,
-					new InterfacesPanelPresenter(((Application) nodeInfo).getInterfaces()).getDisplay().asComponent());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface, new InterfacesPanelPresenter(((Application) nodeInfo)
+					.getInterfaces()).getDisplay().asComponent());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, new EnumsPanelPresenter(((Application) nodeInfo).getEnums()).getDisplay()
 					.asComponent());
 

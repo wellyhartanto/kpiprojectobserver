@@ -1,10 +1,12 @@
-package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
+package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.sourcecode;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.util.Hashtable;
 
 import org.w3c.dom.Document;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.swing.mxGraphComponent;
@@ -20,41 +22,33 @@ public class ClassGraphComponent extends mxGraphComponent {
 	 */
 	private static final long serialVersionUID = -1152655782652932774L;
 
-	
 	private Class umlClass;
-	
-	
+
 	/**
 	 * 
 	 * @param graph
 	 */
-	public ClassGraphComponent(Class umlClass,mxGraph graph) {
+	public ClassGraphComponent(Class sourceClass, mxGraph graph) {
 		super(graph);
 
-		this.umlClass = umlClass;
+		this.umlClass = sourceClass;
 		mxGraphView graphView = new mxGraphView(graph);
 
 		mxCodec codec = new mxCodec();
-		Document doc = mxUtils
-				.loadDocument(ClassGraphComponent.class
-						.getResource(
-								"/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/layout/graphics/default-style.xml")
-						.toString());
+		Document doc = mxUtils.loadDocument(ClassGraphComponent.class.getResource(
+				"/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/layout/graphics/default-style.xml").toString());
 		codec.decode(doc.getDocumentElement(), graph.getStylesheet());
 		getViewport().setOpaque(false);
 		graph.setView(graphView);
-		
+
 	}
 
 	public Component[] createComponents(mxCellState state) {
 		if (getGraph().getModel().isVertex(state.getCell())) {
-			return new Component[] {  new JPanelRenderer(umlClass) };
+			return new Component[] { new JPanelRenderer(umlClass) };
 		}
 
 		return null;
 	}
-	
-	
-		
-	
+
 }
