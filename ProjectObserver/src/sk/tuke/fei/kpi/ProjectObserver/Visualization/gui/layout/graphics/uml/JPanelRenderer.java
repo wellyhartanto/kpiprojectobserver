@@ -33,27 +33,15 @@ import com.mxgraph.view.mxGraph;
  * @author Administrator
  * 
  */
-public class JTableRenderer extends JPanel {
+public class JPanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
-	protected static JTableRenderer dragSource = null;
-	protected static int sourceRow = 0;
-	protected Object cell;
-	protected mxGraphComponent graphContainer;
-	protected mxGraph graph;
-	public JTable table;
 
-	public JTableRenderer(
-			final Object cell,
-			final mxGraphComponent graphContainer,
+	public JPanelRenderer(
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass) {
 
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
 		setOpaque(false);
-
-		this.cell = cell;
-		this.graphContainer = graphContainer;
-		this.graph = graphContainer.getGraph();
 
 		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
 		separator.setBackground(Color.BLACK);
@@ -106,10 +94,10 @@ public class JTableRenderer extends JPanel {
 
 	}
 
-	public static JTableRenderer getVertex(Component component) {
+	public static JPanelRenderer getVertex(Component component) {
 		while (component != null) {
-			if (component instanceof JTableRenderer) {
-				return (JTableRenderer) component;
+			if (component instanceof JPanelRenderer) {
+				return (JPanelRenderer) component;
 			}
 			component = component.getParent();
 		}

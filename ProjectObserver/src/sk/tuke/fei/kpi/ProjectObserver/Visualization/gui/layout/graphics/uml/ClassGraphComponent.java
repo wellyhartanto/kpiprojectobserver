@@ -50,7 +50,7 @@ public class ClassGraphComponent extends mxGraphComponent {
 
 	public Component[] createComponents(mxCellState state) {
 		if (getGraph().getModel().isVertex(state.getCell())) {
-			return new Component[] {  new JTableRenderer(state.getCell(), this,umlClass) };
+			return new Component[] {  new JPanelRenderer(umlClass) };
 		}
 
 		return null;
