@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
 
 public class ProjectsTableModel extends GenericTableModel<Project> {
@@ -9,7 +10,8 @@ public class ProjectsTableModel extends GenericTableModel<Project> {
 	public ProjectsTableModel() {
 		super();
 		data = ProjectService.loadProjects();
-		columnNames = new String[] { "Name", "Date", "Description" };
+		columnNames = new String[] { MyResourceBundle.getMessage("table.projectstable.column.name"),
+				MyResourceBundle.getMessage("table.projectstable.column.creationdate"), MyResourceBundle.getMessage("table.projectstable.column.description") };
 	}
 
 	@Override

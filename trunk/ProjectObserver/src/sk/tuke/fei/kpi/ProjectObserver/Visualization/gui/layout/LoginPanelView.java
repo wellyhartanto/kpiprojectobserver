@@ -26,6 +26,7 @@ import org.jdesktop.swingx.JXTable;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -79,16 +80,16 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		Font buttonsFont = MyFonts.font2;
-		Dimension buttonsSize = new Dimension(100, 30);
+		Dimension buttonsSize = new Dimension(120, 30);
 
-		openProject = new JButton("open");
-		deleteProject = new JButton("delete");
-		importProject = new JButton("import");
-		exportProject = new JButton("export");
+		openProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.open"));
+		deleteProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.delete"));
+		importProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.import"));
+		exportProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.export"));
 
-		createProject = new JButton("create");
-		loadSourceCode = new JButton("load s");
-		loadUmlModel = new JButton("load uml");
+		createProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.create"));
+		loadSourceCode = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadsourcefile"));
+		loadUmlModel = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadumlfile"));
 
 		openProject.setFont(buttonsFont);
 		deleteProject.setFont(buttonsFont);
@@ -111,7 +112,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		projectName = new JTextField(50);
 		projectName.setDocument(new JTextFieldLimit(20));
-		nameBackgroundText = "Project Name";
+		nameBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.name");
 		projectName.setText(nameBackgroundText);
 		projectName.setForeground(backgroundTextColor);
 		projectName.addFocusListener(new FocusListener() {
@@ -140,7 +141,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectDescription.setLineWrap(true);
 		projectDescription.setAutoscrolls(true);
 		projectDescription.setDocument(new JTextFieldLimit(300));
-		descriptionBackgroundText = "Project Description";
+		descriptionBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.description");
 		projectDescription.setText(descriptionBackgroundText);
 		projectDescription.setForeground(backgroundTextColor);
 
@@ -157,8 +158,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				if (projectDescription.getText().equals(
-						descriptionBackgroundText)) {
+				if (projectDescription.getText().equals(descriptionBackgroundText)) {
 					projectDescription.setText("");
 					projectDescription.setForeground(forgroundTextColor);
 				}
@@ -224,11 +224,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		if (projectsTable.getSelectedRow() >= 0) {
 
-			int index = projectsTable.convertRowIndexToModel(projectsTable
-					.getSelectedRow());
+			int index = projectsTable.convertRowIndexToModel(projectsTable.getSelectedRow());
 
-			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
-					.getModel();
+			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
 			return tableModel.getData().get(index);
 		}
 		return null;
@@ -236,8 +234,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	@Override
 	public void removeProjectFromList(Project project) {
-		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
-				.getModel();
+		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
 

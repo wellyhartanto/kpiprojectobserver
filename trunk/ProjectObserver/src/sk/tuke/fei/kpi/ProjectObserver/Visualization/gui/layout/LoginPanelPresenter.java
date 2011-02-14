@@ -6,11 +6,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Date;
 
-import javax.jnlp.FileContents;
-import javax.jnlp.FileSaveService;
-import javax.jnlp.ServiceManager;
-import javax.jnlp.ServiceManagerStub;
-import javax.jnlp.UnavailableServiceException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
