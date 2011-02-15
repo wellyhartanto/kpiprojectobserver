@@ -20,6 +20,8 @@ public interface LoginPanelDisplay extends DisplayComponent {
 	void setLoadSourceAction(ActionListener actionListener);
 
 	void setLoadUmlAction(ActionListener actionListener);
+	
+	boolean isNewProjectCorrect();
 
 	Project getSelectedProject();
 
