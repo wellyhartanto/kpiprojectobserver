@@ -19,6 +19,8 @@ public class ClassDiagram implements Serializable {
 		packages = new ArrayList<Package>();
 		interfaces = new ArrayList<Interface>();
 	}
+	
+	
 
 	public List<Class> getClasses() {
 		return classes;
