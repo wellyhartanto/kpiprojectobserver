@@ -6,6 +6,8 @@ import java.util.Date;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.classDiagram.ClassDiagramParser;
 import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
 
 /**
@@ -32,17 +34,18 @@ public class Project implements Serializable, Disposable {
 	}
 
 	public Project(String umlFile, String javaFile) {
-		this(new File(umlFile), new File(javaFile));
+		this(new File(umlFile), new File(javaFile));		
 	}
 
 	public Project(File umlFile, File javaFile) {
+		this();
 		this.umlFile = umlFile;
 		this.javaFile = javaFile;
-		creationDate = new Date();
 	}
 
-	public boolean createModel() throws AlignmentException {
-		// TODO
+	public boolean createModel() throws AlignmentException, ParserException {
+		classDiagram = new ClassDiagramParser().parse(umlFile);
+		//javaModel = new JavaParser().parse(javaFile);
 		return false;
 	}
 
@@ -97,5 +100,16 @@ public class Project implements Serializable, Disposable {
 		javaModel = null;
 		umlFile = null;
 		javaFile = null;
+	}
+	
+	public static void main(String[] args) {		
+		Project project = new Project("exp1.1.xml", "full.owl");
+		try {
+			project.createModel();
+		} catch (AlignmentException e) {
+			e.printStackTrace();
+		} catch (ParserException e) {
+			e.printStackTrace();
+		}
 	}
 }
