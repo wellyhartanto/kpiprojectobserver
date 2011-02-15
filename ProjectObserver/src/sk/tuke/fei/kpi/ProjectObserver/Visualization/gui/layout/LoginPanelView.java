@@ -243,6 +243,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	@Override
 	public void setNameAndDescription(Project project) {
 
+		
+		
 		project.setName(projectName.getText());
 		project.setDescription(projectDescription.getText());
 
@@ -273,4 +275,20 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectsTable.setModel(new ProjectsTableModel());
 	}
 
+	@Override
+	public boolean isNewProjectCorrect() {
+
+		boolean isCorrect = true;
+		if(projectName.getText().isEmpty() || projectName.getBackground()==backgroundTextColor){
+			isCorrect= false;
+		}
+		
+		if(projectDescription.getText().isEmpty() || projectDescription.getBackground()==backgroundTextColor){
+			isCorrect= false;
+		}
+		
+		
+		
+		return isCorrect;
+	}
 }

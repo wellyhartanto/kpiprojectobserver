@@ -35,9 +35,7 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			public void actionPerformed(ActionEvent e) {
 				Project selectedProject = display.getSelectedProject();
 				if (selectedProject != null) {
-					MainFrame.getMainFrame().setPanel(
-							new MainPanelPresenter(selectedProject)
-									.getDisplay().asComponent());
+					MainFrame.getMainFrame().setPanel(new MainPanelPresenter(selectedProject).getDisplay().asComponent());
 				}
 			}
 		});
@@ -47,16 +45,15 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Project project = new Project(sourceCodeFile, umlFile);
+				if (display.isNewProjectCorrect()) {
 
-				display.setNameAndDescription(project);
+					Project project = new Project(sourceCodeFile, umlFile);
+					display.setNameAndDescription(project);
 
+					ProjectService.saveProject(project);
 
-				ProjectService.saveProject(project);
-
-				MainFrame.getMainFrame().setPanel(
-						new MainPanelPresenter(project).getDisplay()
-								.asComponent());
+					MainFrame.getMainFrame().setPanel(new MainPanelPresenter(project).getDisplay().asComponent());
+				}
 
 			}
 		});
@@ -86,9 +83,9 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				fileChooser.showOpenDialog(display.asComponent());
 
 				ProjectService.importProject(fileChooser.getSelectedFile());
-				
+
 				display.refreshTableModel();
-				
+
 			}
 		});
 
@@ -99,14 +96,12 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.setSelectedFile(new File(display
-						.getSelectedProject().getName()));
+				fileChooser.setSelectedFile(new File(display.getSelectedProject().getName()));
 
 				fileChooser.showSaveDialog(display.asComponent());
 
 				File file = fileChooser.getSelectedFile();
-				ProjectService
-						.exportProject(display.getSelectedProject(), file);
+				ProjectService.exportProject(display.getSelectedProject(), file);
 			}
 
 		});
