@@ -17,7 +17,7 @@ public class Message {
 
 	JDialog popup;
 
-	private final Timer timer = new Timer(3000, new ActionListener() {
+	private final Timer timer = new Timer(2000, new ActionListener() {
 		public void actionPerformed(ActionEvent event) {
 			popup.setVisible(false);
 			timer.stop();
@@ -27,7 +27,7 @@ public class Message {
 	public void pushMessage(String message, JComponent c) {
 		JDialog error = new JDialog();
 		popup = new JDialog(error);
-		JLabel image = new JLabel();
+	//	JLabel image = new JLabel();
 //		image
 //				.setIcon(new ImageIcon(
 //						getClass()
