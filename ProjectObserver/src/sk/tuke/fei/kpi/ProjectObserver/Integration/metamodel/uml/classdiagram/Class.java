@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Class extends AssociationElement {
@@ -9,6 +10,8 @@ public class Class extends AssociationElement {
 
 	public Class() {
 		super();
+		fields = new ArrayList<Field>();
+		methods = new ArrayList<Method>();
 	}
 
 	public List<Method> getMethods() {

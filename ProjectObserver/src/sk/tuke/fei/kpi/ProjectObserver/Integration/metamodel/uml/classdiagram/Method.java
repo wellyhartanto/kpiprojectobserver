@@ -33,4 +33,9 @@ public class Method extends Element {
 	public void setParams(Param[] params) {
 		this.params = params;
 	}
+	
+	@Override
+	public String toString() {
+		return visibility + " " + modifiers + " void " + name + "()";
+	}
 }

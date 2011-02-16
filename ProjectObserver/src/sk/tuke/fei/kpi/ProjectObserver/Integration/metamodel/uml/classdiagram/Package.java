@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Package implements Serializable {
+public class Package  extends Element implements Serializable {
 	private static final long serialVersionUID = -4748629040047693896L;
 	private List<Class> classes;
 	private List<Enum> enums;
 	private List<Package> packages;
-	private String name;
 	private List<Interface> interfaces;
 
 	public Package() {
@@ -43,19 +42,16 @@ public class Package implements Serializable {
 		this.packages = packages;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
 	public void setInterfaces(List<Interface> interfaces) {
 		this.interfaces = interfaces;
 	}
 
 	public List<Interface> getInterfaces() {
 		return interfaces;
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 }
