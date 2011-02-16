@@ -25,6 +25,7 @@ import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Message;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
@@ -82,14 +83,21 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		Font buttonsFont = MyFonts.font2;
 		Dimension buttonsSize = new Dimension(120, 30);
 
-		openProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.open"));
-		deleteProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.delete"));
-		importProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.import"));
-		exportProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.export"));
+		openProject = new JButton(MyResourceBundle
+				.getMessage("loginpanel.buttons.open"));
+		deleteProject = new JButton(MyResourceBundle
+				.getMessage("loginpanel.buttons.delete"));
+		importProject = new JButton(MyResourceBundle
+				.getMessage("loginpanel.buttons.import"));
+		exportProject = new JButton(MyResourceBundle
+				.getMessage("loginpanel.buttons.export"));
 
-		createProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.create"));
-		loadSourceCode = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadsourcefile"));
-		loadUmlModel = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadumlfile"));
+		createProject = new JButton(MyResourceBundle
+				.getMessage("loginpanel.buttons.create"));
+		loadSourceCode = new JButton(MyResourceBundle
+				.getMessage("loginpanel.buttons.loadsourcefile"));
+		loadUmlModel = new JButton(MyResourceBundle
+				.getMessage("loginpanel.buttons.loadumlfile"));
 
 		openProject.setFont(buttonsFont);
 		deleteProject.setFont(buttonsFont);
@@ -112,7 +120,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		projectName = new JTextField(50);
 		projectName.setDocument(new JTextFieldLimit(20));
-		nameBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.name");
+		nameBackgroundText = MyResourceBundle
+				.getMessage("loginpanel.newproject.name");
 		projectName.setText(nameBackgroundText);
 		projectName.setForeground(backgroundTextColor);
 		projectName.addFocusListener(new FocusListener() {
@@ -141,7 +150,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectDescription.setLineWrap(true);
 		projectDescription.setAutoscrolls(true);
 		projectDescription.setDocument(new JTextFieldLimit(300));
-		descriptionBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.description");
+		descriptionBackgroundText = MyResourceBundle
+				.getMessage("loginpanel.newproject.description");
 		projectDescription.setText(descriptionBackgroundText);
 		projectDescription.setForeground(backgroundTextColor);
 
@@ -158,7 +168,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				if (projectDescription.getText().equals(descriptionBackgroundText)) {
+				if (projectDescription.getText().equals(
+						descriptionBackgroundText)) {
 					projectDescription.setText("");
 					projectDescription.setForeground(forgroundTextColor);
 				}
@@ -224,9 +235,11 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		if (projectsTable.getSelectedRow() >= 0) {
 
-			int index = projectsTable.convertRowIndexToModel(projectsTable.getSelectedRow());
+			int index = projectsTable.convertRowIndexToModel(projectsTable
+					.getSelectedRow());
 
-			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
+					.getModel();
 			return tableModel.getData().get(index);
 		}
 		return null;
@@ -234,7 +247,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	@Override
 	public void removeProjectFromList(Project project) {
-		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
+				.getModel();
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
 
@@ -243,8 +257,6 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	@Override
 	public void setNameAndDescription(Project project) {
 
-		
-		
 		project.setName(projectName.getText());
 		project.setDescription(projectDescription.getText());
 
@@ -279,16 +291,26 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	public boolean isNewProjectCorrect() {
 
 		boolean isCorrect = true;
-		if(projectName.getText().isEmpty() || projectName.getBackground()==backgroundTextColor){
-			isCorrect= false;
+		
+		
+		if (projectName.getText().isEmpty()
+				|| projectName.getForeground() == backgroundTextColor) {
+			isCorrect = false;
+
+			new Message().pushMessage(MyResourceBundle
+					.getMessage("message.error.fillproject"), projectName);
+
 		}
-		
-		if(projectDescription.getText().isEmpty() || projectDescription.getBackground()==backgroundTextColor){
-			isCorrect= false;
+
+		if (projectDescription.getText().isEmpty()
+				|| projectDescription.getForeground() == backgroundTextColor) {
+			isCorrect = false;
+
+			new Message().pushMessage(MyResourceBundle
+					.getMessage("message.error.fillproject"),
+					projectDescription);
 		}
-		
-		
-		
+
 		return isCorrect;
 	}
 }
