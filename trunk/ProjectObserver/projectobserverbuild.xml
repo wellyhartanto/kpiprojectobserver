@@ -11,7 +11,7 @@
 		
 	
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../Users/Mathews/java/eclipseG"/>
+    <property name="ECLIPSE_HOME" value="C:/Program Files (x86)/eclipse"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>

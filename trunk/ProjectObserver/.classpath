@@ -11,5 +11,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/ProjectObserver/lib/jGraphXapi.zip!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

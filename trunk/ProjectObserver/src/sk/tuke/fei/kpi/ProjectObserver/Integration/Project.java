@@ -44,7 +44,9 @@ public class Project implements Serializable, Disposable {
 	}
 
 	public boolean createModel() throws AlignmentException, ParserException {
+		System.out.println("strt");
 		classDiagram = new ClassDiagramParser().parse(umlFile);
+		//System.out.println(classDiagram);
 		//javaModel = new JavaParser().parse(javaFile);
 		return false;
 	}
@@ -102,7 +104,7 @@ public class Project implements Serializable, Disposable {
 		javaFile = null;
 	}
 	
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		Project project = new Project("exp1.1.xml", "full.owl");
 		try {
 			project.createModel();

@@ -18,9 +18,7 @@ public class ClassDiagram implements Serializable {
 		enums = new ArrayList<Enum>();
 		packages = new ArrayList<Package>();
 		interfaces = new ArrayList<Interface>();
-	}
-	
-	
+	}	
 
 	public List<Class> getClasses() {
 		return classes;
@@ -68,5 +66,9 @@ public class ClassDiagram implements Serializable {
 
 	public void setInterfaces(List<Interface> interfaces) {
 		this.interfaces = interfaces;
+	}
+	@Override
+	public String toString() {
+		return name + packages.toString();
 	}
 }

@@ -15,4 +15,9 @@ public class Field extends Element {
 	public String getType() {
 		return type;
 	}
+
+	@Override
+	public String toString() {
+		return visibility + " " + modifiers + " " + name;
+	}
 }
