@@ -2,7 +2,11 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration;
 
 import java.io.File;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
@@ -10,14 +14,9 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.classDiagram.ClassDiagramParser;
 import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
 
-/**
- * 
- * @author Maro� Tyrp�k
- * 
- */
 public class Project implements Serializable, Disposable {
 	private static final long serialVersionUID = -8116395605534346529L;
-
+	private Logger logger = Logger.getLogger(Project.class);
 	private File umlFile;
 	private File javaFile;
 
@@ -31,10 +30,13 @@ public class Project implements Serializable, Disposable {
 
 	private Project() {
 		creationDate = new Date();
+		logger.info("info");
+		logger.debug("debug");
+		logger.warn("warn");
 	}
 
 	public Project(String umlFile, String javaFile) {
-		this(new File(umlFile), new File(javaFile));		
+		this(new File(umlFile), new File(javaFile));
 	}
 
 	public Project(File umlFile, File javaFile) {
@@ -44,10 +46,9 @@ public class Project implements Serializable, Disposable {
 	}
 
 	public boolean createModel() throws AlignmentException, ParserException {
-		System.out.println("strt");
 		classDiagram = new ClassDiagramParser().parse(umlFile);
-		//System.out.println(classDiagram);
-		//javaModel = new JavaParser().parse(javaFile);
+		// System.out.println(classDiagram);
+		// javaModel = new JavaParser().parse(javaFile);
 		return false;
 	}
 
@@ -103,8 +104,10 @@ public class Project implements Serializable, Disposable {
 		umlFile = null;
 		javaFile = null;
 	}
-	
+
 	public static void main(String[] args) {
+		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
+		DOMConfigurator.configure(configFileResource.getFile());
 		Project project = new Project("exp1.1.xml", "full.owl");
 		try {
 			project.createModel();

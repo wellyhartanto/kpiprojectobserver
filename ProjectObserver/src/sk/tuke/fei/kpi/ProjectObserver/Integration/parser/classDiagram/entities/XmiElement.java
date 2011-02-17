@@ -4,6 +4,10 @@ public class XmiElement {
 
 	String name;
 	String xmiId;
+	
+	public XmiElement(String xmiId) {
+		this(null,xmiId);
+	}
 
 	public XmiElement(String name, String xmiId) {
 		this.name = name;
