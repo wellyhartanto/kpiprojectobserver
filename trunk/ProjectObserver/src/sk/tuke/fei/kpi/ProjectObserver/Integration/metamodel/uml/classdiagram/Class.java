@@ -3,30 +3,29 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Class extends AssociationElement {
+public class Class extends TypeElement {
 	private static final long serialVersionUID = 5698993126415179350L;
-	private List<Method> methods;
-	private List<Field> fields;
+	private List<Constructor> constructors;
+	private Class superClass;
 
 	public Class() {
 		super();
-		fields = new ArrayList<Field>();
-		methods = new ArrayList<Method>();
+		constructors = new ArrayList<Constructor>();
 	}
 
-	public List<Method> getMethods() {
-		return methods;
+	public List<Constructor> getConstructors() {
+		return constructors;
 	}
 
-	public void setMethods(List<Method> methods) {
-		this.methods = methods;
+	public void setConstructors(List<Constructor> constructors) {
+		this.constructors = constructors;
 	}
 
-	public List<Field> getFields() {
-		return fields;
+	public void setSuperClass(Class superClass) {
+		this.superClass = superClass;
 	}
 
-	public void setFields(List<Field> fields) {
-		this.fields = fields;
+	public Class getSuperClass() {
+		return superClass;
 	}
 }

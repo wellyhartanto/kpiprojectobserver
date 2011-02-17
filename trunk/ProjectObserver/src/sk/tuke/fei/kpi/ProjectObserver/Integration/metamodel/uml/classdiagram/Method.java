@@ -1,13 +1,17 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Method extends Element {
 	private static final long serialVersionUID = 7860060186187411059L;
 	private String returnType;
 	private String[] exceptions;
-	private Param[] params;
+	private List<Param> params;
 
 	public Method() {
 		super();
+		params = new ArrayList<Param>();
 	}
 
 	public String getReturnType() {
@@ -26,16 +30,16 @@ public class Method extends Element {
 		this.exceptions = exceptions;
 	}
 
-	public Param[] getParams() {
+	public List<Param> getParams() {
 		return params;
 	}
 
-	public void setParams(Param[] params) {
+	public void setParams(List<Param> params) {
 		this.params = params;
 	}
-	
+
 	@Override
 	public String toString() {
-		return visibility + " " + modifiers + " void " + name + "()";
+		return visibility + " " + modifiers + " " + returnType + " " + name + "(" + params + ")";
 	}
 }
