@@ -12,5 +12,31 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="lib/jena/arq-2.8.7.jar"/>
+	<classpathentry kind="lib" path="lib/jena/icu4j-3.4.4.jar"/>
+	<classpathentry kind="lib" path="lib/jena/iri-0.8.jar"/>
+	<classpathentry kind="lib" path="lib/jena/jena-2.6.4-tests.jar"/>
+	<classpathentry kind="lib" path="lib/jena/jena-2.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/jena/junit-4.5.jar"/>
+	<classpathentry kind="lib" path="lib/jena/lucene-core-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/jena/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="lib/jena/slf4j-log4j12-1.5.8.jar"/>
+	<classpathentry kind="lib" path="lib/jena/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jena/wstx-asl-3.2.9.jar"/>
+	<classpathentry kind="lib" path="lib/jena/xercesImpl-2.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-cli-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-core-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-datatypes-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-dig-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-el-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-explanation-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-jena-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-modularity-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-owlapi-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-owlapiv3-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-pellint-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-query-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-rules-src.jar"/>
+	<classpathentry kind="lib" path="lib/pellet/pellet-test-src.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

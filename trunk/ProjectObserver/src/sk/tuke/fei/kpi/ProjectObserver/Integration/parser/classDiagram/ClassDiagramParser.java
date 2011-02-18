@@ -17,6 +17,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Association;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Constructor;
@@ -27,6 +28,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Me
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.TypeElement;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Association.AssociationType;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Association.Cardinality;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Modifiers;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.Parser;
@@ -69,6 +72,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			loadDatatypes();
 			loadComments();
 			loadModel();
+
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -87,19 +91,97 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			Package pack = processPackage(node);
 			classDiagram.getPackages().add(pack);
 		}
+		processGeneralizations();
+		processAssociations();
 
-//		NodeList generalizations = document.getElementsByTagName(PREFIX + "Generalization");
-//		logger.info(generalizations.getLength());
-//		logger.info(elements.size());
 		for (TypeElement element : elements) {
-			logger.info(element.getName() + " " + element.getSuperclassesIds());
-			for (String xmiId : element.getSuperclassesIds()) {
-				element.getSuperClasses().add(findByXmiId(xmiId));
-			}
-			logger.info(element.toString());
-			logger.info(element.getMethods().toString());
-			logger.info(element.getFields().toString());
+			
+				logger.info(element.toString());
+				logger.info(element.getFields());
+				logger.info(element.getMethods());
+				logger.info(element.getAssociations());
 		}
+		logger.info(elements.size() + " classes and interfaces were loaded from repository.");
+
+		releaseResources();
+	}
+
+	private void processGeneralizations() {
+		NodeList generalizations = document.getElementsByTagName(PREFIX + "Generalization");
+		for (int i = 0; i < generalizations.getLength(); i++) {
+			Node childNode = getNode("Generalization.child", "GeneralizableElement", generalizations.item(i));
+			if (childNode != null) {
+				Node parentNode = getNode("Generalization.parent", "GeneralizableElement", generalizations.item(i));
+				XmiElement child = getXmiElement(childNode);
+				XmiElement parent = getXmiElement(parentNode);
+				TypeElement superClass = findByXmiId(parent.getXmiId());
+				TypeElement subClass = findByXmiId(child.getXmiId());
+				subClass.getSuperClasses().add(superClass);
+			}
+		}
+	}
+
+	private void processAssociations() {
+		NodeList associations = document.getElementsByTagName(PREFIX + "Association");
+		for (int i = 0; i < associations.getLength(); i++) {
+			XmiElement name = getXmiElement(associations.item(i), "name");
+			List<Node> taggedValue = getNodeList("ModelElement.taggedValue", "TaggedValue", associations.item(i));
+			XmiElement aContainer = getElement(taggedValue.get(0), "tag", "value");
+			XmiElement aImpl = getElement(taggedValue.get(1), "tag", "value");
+			XmiElement bContainer = getElement(taggedValue.get(2), "tag", "value");
+			XmiElement bImpl = getElement(taggedValue.get(3), "tag", "value");
+
+			List<Node> ends = getNodeList("Association.connection", "AssociationEnd", associations.item(i));
+			XmiElement a = getXmiElement(ends.get(0), "visibility");
+			XmiElement b = getXmiElement(ends.get(1), "visibility");
+
+			XmiElement aAgregation = getElement("xmi.value", XMLUtils.getNodeByName(PREFIX + "AssociationEnd.aggregation", ends.get(0)));
+			XmiElement bAgregation = getElement("xmi.value", XMLUtils.getNodeByName(PREFIX + "AssociationEnd.aggregation", ends.get(1)));
+
+			XmiElement aType = getXmiElement(getNode("AssociationEnd.type", "Classifier", ends.get(0)));
+			XmiElement bType = getXmiElement(getNode("AssociationEnd.type", "Classifier", ends.get(1)));
+
+			Node multiplicityA = getNode("AssociationEnd.multiplicity", "Multiplicity", ends.get(0));
+			Integer aLower = null;
+			Integer aUpper = null;
+			if (multiplicityA != null) {
+				Node range = getNode("Multiplicity.range", "MultiplicityRange", multiplicityA);
+				aLower = Integer.parseInt(range.getChildNodes().item(1).getTextContent());
+				aUpper = Integer.parseInt(range.getChildNodes().item(3).getTextContent());
+			}
+			Integer bLower = null;
+			Integer bUpper = null;
+			Node multiplicityB = getNode("AssociationEnd.multiplicity", "Multiplicity", ends.get(1));
+			if (multiplicityB != null) {
+				Node range = getNode("Multiplicity.range", "MultiplicityRange", multiplicityB);
+				bLower = Integer.parseInt(range.getChildNodes().item(1).getTextContent());
+				bUpper = Integer.parseInt(range.getChildNodes().item(3).getTextContent());
+			}
+			Association association = new Association();
+			association.setName(name.getName());
+			association.setFrom(findByXmiId(aType.getXmiId()));
+			association.setTo(findByXmiId(bType.getXmiId()));
+			if (!aAgregation.getXmiId().equals("none")) {
+				association.setType(AssociationType.fromString(aAgregation.getXmiId()));
+			} else {
+				association.setType(AssociationType.fromString(bAgregation.getXmiId()));
+			}
+			association.setCardinalityFrom(Cardinality.get(aLower, aUpper));
+			association.setCardinalityTo(Cardinality.get(bLower, bUpper));
+			association.getFrom().getAssociations().add(association);
+			
+			association.getTo().getAssociations().add(association);
+
+		}
+	}
+
+	private void releaseResources() {
+		document = null;
+		datatypes.clear();
+		datatypes = null;
+		comments.clear();
+		comments = null;
+		elements = null;
 	}
 
 	private Package processPackage(Node node, String parentName) {
@@ -124,6 +206,19 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class clazz = getElement(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class.class, n);
 			clazz.setParent(pack);
 			pack.getClasses().add(clazz);
+			elements.add(clazz);
+			processFields(n, clazz);
+			processMethods(n, clazz);
+			processSuperClasses(n, clazz);
+			processClasses(n, clazz);
+		}
+	}
+	private void processClasses(Node node, Class ownerClass) {
+		List<Node> classes = getNodeList(OWNED_ELEMENT, "Class", node);
+		for (Node n : classes) {
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class clazz = getElement(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class.class, n);
+			clazz.setParent(ownerClass.getParent());
+			ownerClass.getInnerClasses().add(clazz);
 			elements.add(clazz);
 			processFields(n, clazz);
 			processMethods(n, clazz);
@@ -223,9 +318,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 	private void processSuperClasses(Node n, TypeElement typeElement) {
 		List<Node> nodes = getNodeList("GeneralizableElement.generalization", "Generalization", n);
 		for (Node node : nodes) {
-			System.out.println("tafads");
 			XmiElement element = getXmiElement(node);
-			System.out.println(element.getXmiId());
 			typeElement.getSuperclassesIds().add(element.getXmiId());
 		}
 	}
@@ -262,6 +355,16 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			XmiElement element = getXmiElement(node, "name");
 			datatypes.put(element.getXmiId(), new DataType(element.getName(), element.getXmiId()));
 		}
+	}
+
+	private XmiElement getElement(Node node, String attribute1, String attribute2) {
+		NamedNodeMap attributes = node.getAttributes();
+		return new XmiElement(attributes.getNamedItem(attribute1).getNodeValue(), attributes.getNamedItem(attribute2).getNodeValue());
+	}
+
+	private XmiElement getElement(String attribute, Node node) {
+		NamedNodeMap attributes = node.getAttributes();
+		return new XmiElement(attributes.getNamedItem(attribute).getNodeValue());
 	}
 
 	private XmiElement getXmiElement(Node node, String attribute) {

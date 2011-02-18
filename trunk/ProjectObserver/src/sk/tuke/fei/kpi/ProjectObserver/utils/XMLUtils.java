@@ -58,4 +58,12 @@ public class XMLUtils {
 		}
 		return null;
 	}
+
+	public static Node getNodeByName(String name, Node node) {
+		return getNodeByName(name, node.getChildNodes());
+	}
+	
+	public static List<Node> getNodesByName(String name, Node node) {
+		return getNodesByName(name, node.getChildNodes());
+	}
 }

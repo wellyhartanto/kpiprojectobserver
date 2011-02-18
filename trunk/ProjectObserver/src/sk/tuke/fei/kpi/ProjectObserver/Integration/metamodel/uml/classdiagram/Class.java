@@ -7,10 +7,12 @@ public class Class extends TypeElement {
 	private static final long serialVersionUID = 5698993126415179350L;
 	private List<Constructor> constructors;
 	private Class superClass;
+	private List <Class> innerClasses;
 
 	public Class() {
 		super();
 		constructors = new ArrayList<Constructor>();
+		innerClasses = new ArrayList<Class>();
 	}
 
 	public List<Constructor> getConstructors() {
@@ -28,4 +30,12 @@ public class Class extends TypeElement {
 	public Class getSuperClass() {
 		return superClass;
 	}
+	
+	public List<Class> getInnerClasses() {
+		return innerClasses;
+	}
+	
+	public void setInnerClasses(List<Class> innerClasses) {
+		this.innerClasses = innerClasses;
+	}	
 }
