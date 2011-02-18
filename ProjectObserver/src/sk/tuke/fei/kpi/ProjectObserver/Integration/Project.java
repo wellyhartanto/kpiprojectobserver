@@ -30,9 +30,6 @@ public class Project implements Serializable, Disposable {
 
 	private Project() {
 		creationDate = new Date();
-		logger.info("info");
-		logger.debug("debug");
-		logger.warn("warn");
 	}
 
 	public Project(String umlFile, String javaFile) {
@@ -47,9 +44,7 @@ public class Project implements Serializable, Disposable {
 
 	public boolean createModel() throws AlignmentException, ParserException {
 		classDiagram = new ClassDiagramParser().parse(umlFile);
-		// System.out.println(classDiagram);
-		// javaModel = new JavaParser().parse(javaFile);
-		return false;
+		return true;
 	}
 
 	public void save(String pathname) {
@@ -108,9 +103,11 @@ public class Project implements Serializable, Disposable {
 	public static void main(String[] args) {
 		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
 		DOMConfigurator.configure(configFileResource.getFile());
-		Project project = new Project("exp1.1.xml", "full.owl");
+		Date start= new Date();
+		Project project = new Project("test2.xml", "full.owl");
 		try {
 			project.createModel();
+			Logger.getLogger(project.getClass()).info(new Date().getTime()-start.getTime());
 		} catch (AlignmentException e) {
 			e.printStackTrace();
 		} catch (ParserException e) {

@@ -3,12 +3,13 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TypeElement extends AssociationElement {
+public abstract class TypeElement extends Element {
 	private static final long serialVersionUID = -4697238786269383432L;
 	List<Method> methods;
 	List<Field> fields;
 	private List<TypeElement> superClasses;
 	private List<String> superclassesIds;
+	private List<Association> associations;
 
 	public TypeElement() {
 		super();
@@ -16,6 +17,7 @@ public abstract class TypeElement extends AssociationElement {
 		fields = new ArrayList<Field>();
 		superClasses = new ArrayList<TypeElement>();
 		superclassesIds = new ArrayList<String>();
+		associations = new ArrayList<Association>();
 	}
 
 	public List<Method> getMethods() {
@@ -54,5 +56,13 @@ public abstract class TypeElement extends AssociationElement {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return visibility + " " + modifiers + " " + name + " " + superClasses;
+	}
+
+	public void setAssociations(List<Association> associations) {
+		this.associations = associations;
+	}
+
+	public List<Association> getAssociations() {
+		return associations;
 	}
 }
