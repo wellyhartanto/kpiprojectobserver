@@ -50,28 +50,28 @@ public class JPanelRenderer extends JPanel {
 		separator1.setBackground(Color.BLACK);
 		separator1.setOpaque(true);
 
-		JLabel classNameLbl = new JLabel("Class");
+		JLabel classNameLbl = new JLabel(umlClass.getName());
 		add(classNameLbl, "wrap,span,center");
 
 		add(separator, "wrap,span,growx");
 
-		Field m = new Field();
-		m.setName("testdieldname");
-		m.setVisibility(Visibility.PUBLIC);
-		m.setType("String");
-
-		Method m1 = new Method();
-		m1.setName("testmethodname");
-		m1.setVisibility(Visibility.PUBLIC);
-		m1.setReturnType("String");
-
-		List<Field> fields = new ArrayList<Field>();
-		fields.add(m);
-		umlClass.setFields(fields);
-
-		List<Method> methods = new ArrayList<Method>();
-		methods.add(m1);
-		umlClass.setMethods(methods);
+//		Field m = new Field();
+//		m.setName("testdieldname");
+//		m.setVisibility(Visibility.PUBLIC);
+//		m.setType("String");
+//
+//		Method m1 = new Method();
+//		m1.setName("testmethodname");
+//		m1.setVisibility(Visibility.PUBLIC);
+//		m1.setReturnType("String");
+//
+//		List<Field> fields = new ArrayList<Field>();
+//		fields.add(m);
+//		umlClass.setFields(fields);
+//
+//		List<Method> methods = new ArrayList<Method>();
+//		methods.add(m1);
+//		umlClass.setMethods(methods);
 
 		for (Field field : umlClass.getFields()) {
 

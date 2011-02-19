@@ -11,7 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.AlignmentException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
 
@@ -35,7 +37,9 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			public void actionPerformed(ActionEvent e) {
 				Project selectedProject = display.getSelectedProject();
 				if (selectedProject != null) {
-					MainFrame.getMainFrame().setPanel(new MainPanelPresenter(selectedProject).getDisplay().asComponent());
+					MainFrame.getMainFrame().setPanel(
+							new MainPanelPresenter(selectedProject)
+									.getDisplay().asComponent());
 				}
 			}
 		});
@@ -47,12 +51,19 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 				if (display.isNewProjectCorrect()) {
 
-					Project project = new Project(sourceCodeFile, umlFile);
+					Project project = new Project(umlFile, sourceCodeFile);
+					try {
+						project.createModel();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 					display.setNameAndDescription(project);
 
 					ProjectService.saveProject(project);
 
-					MainFrame.getMainFrame().setPanel(new MainPanelPresenter(project).getDisplay().asComponent());
+					MainFrame.getMainFrame().setPanel(
+							new MainPanelPresenter(project).getDisplay()
+									.asComponent());
 				}
 
 			}
@@ -96,12 +107,14 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.setSelectedFile(new File(display.getSelectedProject().getName()));
+				fileChooser.setSelectedFile(new File(display
+						.getSelectedProject().getName()));
 
 				fileChooser.showSaveDialog(display.asComponent());
 
 				File file = fileChooser.getSelectedFile();
-				ProjectService.exportProject(display.getSelectedProject(), file);
+				ProjectService
+						.exportProject(display.getSelectedProject(), file);
 			}
 
 		});
