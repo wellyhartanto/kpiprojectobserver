@@ -16,7 +16,7 @@ import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
 
 public class Project implements Serializable, Disposable {
 	private static final long serialVersionUID = -8116395605534346529L;
-	private Logger logger = Logger.getLogger(Project.class);
+	//private Logger logger = Logger.getLogger(Project.class);
 	private File umlFile;
 	private File javaFile;
 
@@ -100,18 +100,18 @@ public class Project implements Serializable, Disposable {
 		javaFile = null;
 	}
 
-	public static void main(String[] args) {
-		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
-		DOMConfigurator.configure(configFileResource.getFile());
-		Date start= new Date();
-		Project project = new Project("test2.xml", "full.owl");
-		try {
-			project.createModel();
-			Logger.getLogger(project.getClass()).info(new Date().getTime()-start.getTime());
-		} catch (AlignmentException e) {
-			e.printStackTrace();
-		} catch (ParserException e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
+//		DOMConfigurator.configure(configFileResource.getFile());
+//		Date start= new Date();
+//		Project project = new Project("test2.xml", "full.owl");
+//		try {
+//			project.createModel();
+//			Logger.getLogger(project.getClass()).info(new Date().getTime()-start.getTime());
+//		} catch (AlignmentException e) {
+//			e.printStackTrace();
+//		} catch (ParserException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
