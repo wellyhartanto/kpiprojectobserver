@@ -46,6 +46,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 	private static final String STRUCTURAL_FEATURE = "StructuralFeature.type";
 	private static final String ATTRIBUTE_VALUE = "Attribute.initialValue";
 	private static final String PREFIX = "UML:";
+	private static final String ENUM = "EnumConstant";
 	private Document document;
 	private ClassDiagram classDiagram;
 	private Map<String, DataType> datatypes;
@@ -72,7 +73,6 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			loadDatatypes();
 			loadComments();
 			loadModel();
-
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -94,13 +94,12 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		processGeneralizations();
 		processAssociations();
 
-		for (TypeElement element : elements) {
-			
-				logger.info(element.toString());
-				logger.info(element.getFields());
-				logger.info(element.getMethods());
-				logger.info(element.getAssociations());
-		}
+		 for (TypeElement element : elements) {
+		 logger.info(element.toString());
+		// logger.info(element.getFields());
+		// logger.info(element.getMethods());
+		// logger.info(element.getAssociations());
+		 }
 		logger.info(elements.size() + " classes and interfaces were loaded from repository.");
 
 		releaseResources();
@@ -169,7 +168,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			association.setCardinalityFrom(Cardinality.get(aLower, aUpper));
 			association.setCardinalityTo(Cardinality.get(bLower, bUpper));
 			association.getFrom().getAssociations().add(association);
-			
+
 			association.getTo().getAssociations().add(association);
 
 		}
@@ -186,14 +185,17 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 
 	private Package processPackage(Node node, String parentName) {
 		Package pack = getElement(Package.class, node);
-		if (parentName != null)
-			pack.setName(parentName + "." + pack.getName());
-
+		if (parentName != null) {
+			pack.setFullName(parentName + "." + pack.getName());
+		} else {
+			pack.setFullName(pack.getName());
+		}
+		logger.info(pack);
 		processClasses(node, pack);
 		processInterfaces(node, pack);
 		List<Node> packages = getNodeList(OWNED_ELEMENT, "Package", node);
 		for (Node n : packages) {
-			Package subPackage = processPackage(n, pack.getName());
+			Package subPackage = processPackage(n, pack.getFullName());
 			subPackage.setParent(pack);
 			pack.getPackages().add(subPackage);
 		}
@@ -213,11 +215,13 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			processClasses(n, clazz);
 		}
 	}
-	private void processClasses(Node node, Class ownerClass) {
+
+	private void processClasses(Node node, TypeElement ownerClass) {
 		List<Node> classes = getNodeList(OWNED_ELEMENT, "Class", node);
 		for (Node n : classes) {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class clazz = getElement(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class.class, n);
-			clazz.setParent(ownerClass.getParent());
+			logger.info(ownerClass);
+			clazz.setParent(ownerClass);
 			ownerClass.getInnerClasses().add(clazz);
 			elements.add(clazz);
 			processFields(n, clazz);
@@ -272,7 +276,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		List<Node> attributes = getNodeList(CLASSIFIER_FEATURE, "Attribute", node);
 		for (Node n : attributes) {
 			Field field = getElement(Field.class, n);
-			element.setParent(element);
+			field.setParent(element);
 			element.getFields().add(field);
 			Node type = getNode(STRUCTURAL_FEATURE, "Classifier", n);
 			XmiElement el = getXmiElement(type);
@@ -281,6 +285,9 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			if (value != null) {
 				XmiElement e = getXmiElement(value, "body");
 				field.setDefaultValue(e.getName());
+			}
+			if(ENUM.equals(field.getType())){
+				element.setEnumClass(true);
 			}
 			setMultiplicity(n, field);
 		}
@@ -297,10 +304,6 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		}
 	}
 
-	private void processEnums(Node node, Package pack) {
-		List<Node> enums = getNodeList(OWNED_ELEMENT, "Package", node);
-	}
-
 	private void processInterfaces(Node node, Package pack) {
 		List<Node> interfaces = getNodeList(OWNED_ELEMENT, "Interface", node);
 		for (Node n : interfaces) {
@@ -311,6 +314,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 
 			processFields(n, inter);
 			processMethods(n, inter);
+			processClasses(n, inter);
 			processSuperClasses(n, inter);
 		}
 	}
