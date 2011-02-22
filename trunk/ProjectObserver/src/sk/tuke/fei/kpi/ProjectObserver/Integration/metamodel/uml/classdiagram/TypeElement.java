@@ -10,6 +10,8 @@ public abstract class TypeElement extends Element {
 	private List<TypeElement> superClasses;
 	private List<String> superclassesIds;
 	private List<Association> associations;
+	private List <TypeElement> innerClasses;
+	private boolean enumClass;
 
 	public TypeElement() {
 		super();
@@ -18,6 +20,7 @@ public abstract class TypeElement extends Element {
 		superClasses = new ArrayList<TypeElement>();
 		superclassesIds = new ArrayList<String>();
 		associations = new ArrayList<Association>();
+		innerClasses = new ArrayList<TypeElement>();
 	}
 
 	public List<Method> getMethods() {
@@ -55,7 +58,7 @@ public abstract class TypeElement extends Element {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return visibility + " " + modifiers + " " + name + " " + superClasses;
+		return visibility + " " + modifiers + " " + (isEnumClass() ? "enum" : getClass().getName().substring( getClass().getName().lastIndexOf('.')+1)) + " " + name + " " + superClasses +  " "+parent.getName();
 	}
 
 	public void setAssociations(List<Association> associations) {
@@ -64,5 +67,21 @@ public abstract class TypeElement extends Element {
 
 	public List<Association> getAssociations() {
 		return associations;
+	}
+
+	public boolean isEnumClass() {
+		return enumClass;
+	}
+
+	public void setEnumClass(boolean enumClass) {
+		this.enumClass = enumClass;
+	}
+	
+	public List<TypeElement> getInnerClasses() {
+		return innerClasses;
+	}
+	
+	public void setInnerClasses(List<TypeElement> innerClasses) {
+		this.innerClasses = innerClasses;
 	}
 }

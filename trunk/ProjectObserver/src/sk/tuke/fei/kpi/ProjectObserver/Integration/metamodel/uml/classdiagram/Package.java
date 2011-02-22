@@ -10,7 +10,7 @@ public class Package  extends Element implements Serializable {
 	private List<Enum> enums;
 	private List<Package> packages;
 	private List<Interface> interfaces;
-
+	private String fullName;
 	public Package() {
 		classes = new ArrayList<Class>();
 		enums = new ArrayList<Enum>();
@@ -50,8 +50,16 @@ public class Package  extends Element implements Serializable {
 		return interfaces;
 	}
 	
+	public String getFullName() {
+		return fullName;
+	}
+	
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
 	@Override
 	public String toString() {
-		return getName();
+		return getFullName();
 	}
 }
