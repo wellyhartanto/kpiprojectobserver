@@ -6,7 +6,19 @@ public abstract class Element implements Serializable {
 	private static final long serialVersionUID = -6146256352210642770L;
 
 	public enum Visibility {
-		PRIVATE, DEFAULT, PROTECTED, PUBLIC
+		PRIVATE, DEFAULT, PROTECTED, PUBLIC;
+
+		public static Visibility fromString(String string) {
+			if("public".equals(string)){
+				return PUBLIC;
+			} else if("protected".equals(string)){
+				return PROTECTED;
+			} else if("private".equals(string)){
+				return PRIVATE;
+			} else {
+				return DEFAULT;
+			}
+		}
 	};
 
 	public enum Modifiers {
@@ -17,6 +29,7 @@ public abstract class Element implements Serializable {
 	private Visibility visibility = Visibility.DEFAULT;
 	private Modifiers[] modifiers;
 	private Annotation[] anotations;
+	private Element parent;
 
 	public Element() {
 	}
@@ -51,6 +64,14 @@ public abstract class Element implements Serializable {
 
 	public void setAnotations(Annotation[] anotations) {
 		this.anotations = anotations;
+	}
+	
+	public Element getParent() {
+		return parent;
+	}
+	
+	public void setParent(Element parent) {
+		this.parent = parent;
 	}
 
 	@Override
