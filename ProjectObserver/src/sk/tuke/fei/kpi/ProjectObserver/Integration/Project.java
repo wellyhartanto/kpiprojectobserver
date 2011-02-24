@@ -12,6 +12,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.classDiagram.ClassDiagramParser;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.java.JavaParser;
 import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
 
 public class Project implements Serializable, Disposable {
@@ -44,6 +45,7 @@ public class Project implements Serializable, Disposable {
 
 	public boolean createModel() throws AlignmentException, ParserException {
 		classDiagram = new ClassDiagramParser().parse(umlFile);
+		javaModel = new JavaParser().parse(javaFile);
 		return true;
 	}
 

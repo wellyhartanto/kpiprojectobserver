@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Package implements Serializable {
+public class Package extends Element implements Serializable {
 	private static final long serialVersionUID = 1980055108799234195L;
 	private List<Class> classes = new ArrayList<Class>();
 	private List<Enum> enums = new ArrayList<Enum>();
 	private List<Package> packages = new ArrayList<Package>();
-	private String name;
+	private String fullName;
 	private List<Interface> interfaces = new ArrayList<Interface>();
-
+	private transient String parentName;
 	public Package() {
 		classes = new ArrayList<Class>();
 		enums = new ArrayList<Enum>();
@@ -43,20 +43,28 @@ public class Package implements Serializable {
 		this.packages = packages;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
 	public void setInterfaces(List<Interface> interfaces) {
 		this.interfaces = interfaces;
 	}
 
 	public List<Interface> getInterfaces() {
 		return interfaces;
+	}
+	
+	public String getParentName() {
+		return parentName;
+	}
+	
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+	
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
+	public String getFullName() {
+		return fullName;
 	}
 
 	@Override

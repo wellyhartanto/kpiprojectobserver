@@ -94,12 +94,12 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		processGeneralizations();
 		processAssociations();
 
-		 for (TypeElement element : elements) {
-		 logger.info(element.toString());
+		// for (TypeElement element : elements) {
+		// logger.info(element.toString());
 		// logger.info(element.getFields());
 		// logger.info(element.getMethods());
 		// logger.info(element.getAssociations());
-		 }
+		// }
 		logger.info(elements.size() + " classes and interfaces were loaded from repository.");
 
 		releaseResources();
@@ -220,7 +220,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		List<Node> classes = getNodeList(OWNED_ELEMENT, "Class", node);
 		for (Node n : classes) {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class clazz = getElement(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class.class, n);
-			logger.info(ownerClass);
+			//logger.info(ownerClass);
 			clazz.setParent(ownerClass);
 			ownerClass.getInnerClasses().add(clazz);
 			elements.add(clazz);
