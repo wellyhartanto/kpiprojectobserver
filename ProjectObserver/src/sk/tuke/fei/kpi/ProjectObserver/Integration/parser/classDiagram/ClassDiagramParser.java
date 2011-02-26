@@ -190,7 +190,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		} else {
 			pack.setFullName(pack.getName());
 		}
-		logger.info(pack);
+		//logger.info(pack);
 		processClasses(node, pack);
 		processInterfaces(node, pack);
 		List<Node> packages = getNodeList(OWNED_ELEMENT, "Package", node);

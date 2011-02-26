@@ -129,10 +129,10 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 			JLabel paramsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofparams"));
 
 			add(exceptionsNumber);
-			add(new JLabel(String.valueOf(me.getExceptions().length)), "wrap");
+			add(new JLabel(String.valueOf(me.getExceptions().size())), "wrap");
 
 			add(paramsNumber);
-			add(new JLabel(String.valueOf(me.getParams().length)), "wrap");
+			add(new JLabel(String.valueOf(me.getParams().size())), "wrap");
 
 		}
 		if (object instanceof Field) {

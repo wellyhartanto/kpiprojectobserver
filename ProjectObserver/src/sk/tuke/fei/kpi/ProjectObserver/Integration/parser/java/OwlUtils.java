@@ -10,7 +10,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class OwlUtils {
-	private static String defaultNamespace = "http://www.jscc.sk/ontology/OOMOntology";
+	private static String defaultNamespace = "http://www.jscc.sk/ontology/OOMOntology.owl#";
 
 	public OwlUtils() {
 		// TODO Auto-generated constructor stub
@@ -19,10 +19,10 @@ public class OwlUtils {
 	public void runQuery(String queryRequest, Model model) {
 		StringBuffer queryStr = new StringBuffer();
 		// Establish Prefixs
-		queryStr.append("PREFIX swp2" + ": <" + defaultNamespace + "> ");
-		queryStr.append("PREFIX foaf" + ": <" + "http://xmlns.com/foaf/0.1/" + "> ");
+		queryStr.append("PREFIX jscc" + ": <" + defaultNamespace + "> ");
 		// Now add query
 		queryStr.append(queryRequest);
+		System.out.println(queryStr.toString());
 		Query query = QueryFactory.create(queryStr.toString());
 		QueryExecution qexec = QueryExecutionFactory.create(query, model);
 		// Run Select

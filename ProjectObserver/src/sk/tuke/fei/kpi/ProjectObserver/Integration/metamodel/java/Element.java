@@ -1,6 +1,8 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Element implements Serializable {
 	private static final long serialVersionUID = -6146256352210642770L;
@@ -22,16 +24,39 @@ public abstract class Element implements Serializable {
 	};
 
 	public enum Modifiers {
-		FINAL, ABSTRACT, STATIC, NATIVE, TRANSIENT, VOLATILE, SYNCHRONIZED, STRICTFP
+		FINAL, ABSTRACT, STATIC, NATIVE, TRANSIENT, VOLATILE, SYNCHRONIZED, STRICTFP,NONE;
+		
+		public static Modifiers fromString(String value){
+			if("final".equals(value)){
+				return FINAL;
+			} else if ("static".equals(value)){
+				return STATIC;
+			} else if ("abstract".equals(value)){
+				return ABSTRACT;
+			} else if ("native".equals(value)){
+				return NATIVE;
+			} else if ("volatile".equals(value)){
+				return VOLATILE;
+			} else if ("synchronized".equals(value)){
+				return SYNCHRONIZED;
+			}  else if ("strictfp".equals(value)){
+				return STRICTFP;
+			} else {
+				return NONE;
+			}
+		}		
 	};
 
 	private String name;
+	private String fullName;
 	private Visibility visibility = Visibility.DEFAULT;
-	private Modifiers[] modifiers;
-	private Annotation[] anotations;
+	private List<Modifiers> modifiers;
+	private List<Annotation> anotations;
 	private Element parent;
 
 	public Element() {
+		modifiers = new ArrayList<Modifiers>();
+		anotations = new ArrayList<Annotation>();
 	}
 
 	public String getName() {
@@ -49,20 +74,20 @@ public abstract class Element implements Serializable {
 	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
-
-	public Modifiers[] getModifiers() {
+	
+	public List<Modifiers> getModifiers() {
 		return modifiers;
 	}
-
-	public void setModifiers(Modifiers[] modifiers) {
+	
+	public void setModifiers(List<Modifiers> modifiers) {
 		this.modifiers = modifiers;
 	}
-
-	public Annotation[] getAnotations() {
+	
+	public List<Annotation> getAnotations() {
 		return anotations;
 	}
-
-	public void setAnotations(Annotation[] anotations) {
+	
+	public void setAnotations(List<Annotation> anotations) {
 		this.anotations = anotations;
 	}
 	
@@ -72,6 +97,14 @@ public abstract class Element implements Serializable {
 	
 	public void setParent(Element parent) {
 		this.parent = parent;
+	}
+	
+	public String getFullName() {
+		return fullName;
+	}
+	
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	@Override

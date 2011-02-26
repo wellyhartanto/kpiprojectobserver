@@ -9,8 +9,12 @@ public class TypeElement extends Element {
 	private List<Field> fields = new ArrayList<Field>();
 	private List<Enum> enums = new ArrayList<Enum>();
 	private List<Class> classes = new ArrayList<Class>();
+	private List<TypeElement> implemented = new ArrayList<TypeElement>();
+	private transient List<String> implementedNames = new ArrayList<String>();
+	private TypeElement superClass;
+	private transient String superClassName;
+	
 	private boolean external;
-	private String fullName;
 	
 	public TypeElement() {
 		super();
@@ -60,11 +64,35 @@ public class TypeElement extends Element {
 		this.external = external;
 	}
 	
-	public String getFullName() {
-		return fullName;
+	public TypeElement getSuperClass() {
+		return superClass;
 	}
 	
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setSuperClass(TypeElement superClass) {
+		this.superClass = superClass;
+	}
+	
+	public List<TypeElement> getImplemented() {
+		return implemented;
+	}
+	
+	public void setImplemented(List<TypeElement> implemented) {
+		this.implemented = implemented;
+	}
+	
+	public String getSuperClassName() {
+		return superClassName;
+	}
+	
+	public void setSuperClassName(String superClassName) {
+		this.superClassName = superClassName;
+	}
+	
+	public List<String> getImplementedNames() {
+		return implementedNames;
+	}
+	
+	public void setImplementedNames(List<String> implementedNames) {
+		this.implementedNames = implementedNames;
 	}
 }

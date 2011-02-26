@@ -9,12 +9,12 @@ public abstract class Element implements Serializable {
 	public enum Visibility {
 		PRIVATE, DEFAULT, PROTECTED, PUBLIC;
 
-		public static Visibility fromString(String name) {
-			if (name.equalsIgnoreCase("private")) {
+		public static Visibility fromString(String value) {
+			if ("private".equalsIgnoreCase(value)) {
 				return PRIVATE;
-			} else if (name.equalsIgnoreCase("public")) {
+			} else if ("public".equalsIgnoreCase(value)) {
 				return PUBLIC;
-			} else if (name.equalsIgnoreCase("protected")) {
+			} else if ("protected".equalsIgnoreCase(value)) {
 				return PROTECTED;
 			} else {
 				return DEFAULT;
@@ -23,7 +23,19 @@ public abstract class Element implements Serializable {
 	};
 
 	public enum Modifiers {
-		FINAL, ABSTRACT, STATIC;
+		FINAL, ABSTRACT, STATIC, NONE;
+		
+		public static Modifiers fromString(String value){
+			if("".equals(value)){
+				return FINAL;
+			} else if ("".equals(value)){
+				return STATIC;
+			} else if ("".equals(value)){
+				return ABSTRACT;
+			} else {
+				return NONE;
+			}
+		}
 	};
 
 	String name;
