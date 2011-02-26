@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -21,6 +22,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.
 public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 
 	private static final long serialVersionUID = 6261755584520980692L;
+	private JXTable methodsTable;
+	private MethodsTableModel methodsTableModel;
 
 	public MethodsPanelView(List<Method> methods) {
 		setLayout(new MigLayout("fillx"));
@@ -34,10 +37,10 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 
 	private JXTable createMethodsTable(List<Method> methods) {
 
-		MethodsTableModel methodsTableModel = new MethodsTableModel();
+		methodsTableModel = new MethodsTableModel();
 		methodsTableModel.setData(methods);
 
-		JXTable methodsTable = new JXTable(methodsTableModel);
+		methodsTable = new JXTable(methodsTableModel);
 		methodsTable.getTableHeader().setFont(MyFonts.font3);
 		methodsTable.setRolloverEnabled(true);
 		methodsTable.setHorizontalScrollEnabled(true);
@@ -57,5 +60,22 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		});
 		return methodsTable;
 
+	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		methodsTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return methodsTable;
+
+	};
+
+	@Override
+	public void setData(List<Method> methods) {
+		methodsTableModel.setData(methods);
+		methodsTableModel.fireTableDataChanged();
 	}
 }

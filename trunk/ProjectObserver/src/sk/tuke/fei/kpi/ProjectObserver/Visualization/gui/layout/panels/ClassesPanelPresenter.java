@@ -6,8 +6,29 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 
 public class ClassesPanelPresenter extends BasicPresenter<ClassesPanelDisplay> {
-	public ClassesPanelPresenter(List<Class> classes) {
+
+	private static ClassesPanelPresenter instance;
+
+	public static ClassesPanelPresenter getInstance(List<Class> classes) {
+		if (instance == null) {
+			instance = new ClassesPanelPresenter(classes);
+		} else {
+			instance.getDisplay().setData(classes);
+		}
+		return instance;
+	}
+
+	private ClassesPanelPresenter(List<Class> classes) {
+
 		display = new ClassesPanelView(classes);
 		bind();
+
 	}
+
+	@Override
+	protected void onBind() {
+		super.onBind();
+
+	}
+
 }

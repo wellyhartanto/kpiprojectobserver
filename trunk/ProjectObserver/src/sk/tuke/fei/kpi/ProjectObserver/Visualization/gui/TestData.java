@@ -13,9 +13,6 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 
 public class TestData {
 
-    public TestData() {
-	// TODO Auto-generated constructor stub
-    }
 
     public static Application createTestData() {
 

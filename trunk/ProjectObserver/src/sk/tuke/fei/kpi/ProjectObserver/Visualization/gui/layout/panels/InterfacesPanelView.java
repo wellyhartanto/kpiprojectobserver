@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -21,6 +22,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.
 public class InterfacesPanelView extends JPanel implements InterfacesPanelDisplay {
 
 	private static final long serialVersionUID = -4309355923133943804L;
+	private JXTable interfacesTable;
+	private InterfacesTableModel interfacesTableModel;
 
 	public InterfacesPanelView(List<Interface> interfaces) {
 		setLayout(new MigLayout("fillx"));
@@ -34,10 +37,10 @@ public class InterfacesPanelView extends JPanel implements InterfacesPanelDispla
 
 	private JXTable createInterfacesTable(List<Interface> interfaces) {
 
-		InterfacesTableModel interfacesTableModel = new InterfacesTableModel();
+		interfacesTableModel = new InterfacesTableModel();
 		interfacesTableModel.setData(interfaces);
 
-		JXTable interfacesTable = new JXTable(interfacesTableModel);
+		interfacesTable = new JXTable(interfacesTableModel);
 		interfacesTable.getTableHeader().setFont(MyFonts.font3);
 		interfacesTable.setRolloverEnabled(true);
 		interfacesTable.setHorizontalScrollEnabled(true);
@@ -58,4 +61,22 @@ public class InterfacesPanelView extends JPanel implements InterfacesPanelDispla
 
 		return interfacesTable;
 	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		interfacesTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return interfacesTable;
+
+	};
+
+	@Override
+	public void setData(List<Interface> interfaces) {
+		interfacesTableModel.setData(interfaces);
+		interfacesTableModel.fireTableDataChanged();
+	}
+
 }

@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,8 @@ import javax.swing.border.LineBorder;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JErrorPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Message;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
@@ -59,6 +62,11 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private JTextField projectName;
 	private JTextArea projectDescription;
 
+	private JErrorPanel namePanel;
+	private JErrorPanel descriptionPanel;
+	private JErrorPanel umlFilePanel;
+	private JErrorPanel sourceCodeFilePanel;
+
 	String descriptionBackgroundText;
 	String nameBackgroundText;
 	Color backgroundTextColor = Color.GRAY;
@@ -83,21 +91,14 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		Font buttonsFont = MyFonts.font2;
 		Dimension buttonsSize = new Dimension(120, 30);
 
-		openProject = new JButton(MyResourceBundle
-				.getMessage("loginpanel.buttons.open"));
-		deleteProject = new JButton(MyResourceBundle
-				.getMessage("loginpanel.buttons.delete"));
-		importProject = new JButton(MyResourceBundle
-				.getMessage("loginpanel.buttons.import"));
-		exportProject = new JButton(MyResourceBundle
-				.getMessage("loginpanel.buttons.export"));
+		openProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.open"));
+		deleteProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.delete"));
+		importProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.import"));
+		exportProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.export"));
 
-		createProject = new JButton(MyResourceBundle
-				.getMessage("loginpanel.buttons.create"));
-		loadSourceCode = new JButton(MyResourceBundle
-				.getMessage("loginpanel.buttons.loadsourcefile"));
-		loadUmlModel = new JButton(MyResourceBundle
-				.getMessage("loginpanel.buttons.loadumlfile"));
+		createProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.create"));
+		loadSourceCode = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadsourcefile"));
+		loadUmlModel = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadumlfile"));
 
 		openProject.setFont(buttonsFont);
 		deleteProject.setFont(buttonsFont);
@@ -120,8 +121,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		projectName = new JTextField(50);
 		projectName.setDocument(new JTextFieldLimit(20));
-		nameBackgroundText = MyResourceBundle
-				.getMessage("loginpanel.newproject.name");
+		nameBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.name");
 		projectName.setText(nameBackgroundText);
 		projectName.setForeground(backgroundTextColor);
 		projectName.addFocusListener(new FocusListener() {
@@ -150,8 +150,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectDescription.setLineWrap(true);
 		projectDescription.setAutoscrolls(true);
 		projectDescription.setDocument(new JTextFieldLimit(300));
-		descriptionBackgroundText = MyResourceBundle
-				.getMessage("loginpanel.newproject.description");
+		descriptionBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.description");
 		projectDescription.setText(descriptionBackgroundText);
 		projectDescription.setForeground(backgroundTextColor);
 
@@ -168,13 +167,26 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				if (projectDescription.getText().equals(
-						descriptionBackgroundText)) {
+				if (projectDescription.getText().equals(descriptionBackgroundText)) {
 					projectDescription.setText("");
 					projectDescription.setForeground(forgroundTextColor);
 				}
 			}
 		});
+
+		namePanel = new JErrorPanel(projectName, MyResourceBundle.getMessage("message.error.fillproject"));
+		descriptionPanel = new JErrorPanel(projectDescription, MyResourceBundle.getMessage("message.error.fillproject"));
+		umlFilePanel = new JErrorPanel(loadUmlModel, MyResourceBundle.getMessage("message.error.selectfile"));
+		sourceCodeFilePanel = new JErrorPanel(loadSourceCode, MyResourceBundle.getMessage("message.error.selectfile"));
+		
+		
+		Dimension scBtnSize = loadSourceCode.getPreferredSize();
+		Dimension umlBtnSize = loadUmlModel.getPreferredSize();
+		
+		
+		loadSourceCode.setMinimumSize(umlBtnSize.getWidth()>scBtnSize.getWidth()? umlBtnSize:scBtnSize);
+		loadUmlModel.setMinimumSize(umlBtnSize.getWidth()>scBtnSize.getWidth()?umlBtnSize:scBtnSize);
+		
 
 		setComponentsPosition();
 	}
@@ -193,14 +205,13 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		add(scroll, "growx");
 		add(buttonsPanel, "wrap");
-
-		add(projectName);
+		add(namePanel);
 		add(createProject, "wrap");
-		add(projectDescription, "wrap");
-		add(loadSourceCode, "split 2");
-		add(sourceCodeFileLbl, "wrap");
-		add(loadUmlModel, "split 2");
-		add(umlFileLbl, "wrap");
+		add(descriptionPanel, "wrap");
+		add(sourceCodeFilePanel, "split 2");
+		add(sourceCodeFileLbl, "span,gaptop 7,top,wrap");
+		add(umlFilePanel, "split 2");
+		add(umlFileLbl, "span,gaptop 7,top,wrap");
 
 	}
 
@@ -235,11 +246,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		if (projectsTable.getSelectedRow() >= 0) {
 
-			int index = projectsTable.convertRowIndexToModel(projectsTable
-					.getSelectedRow());
+			int index = projectsTable.convertRowIndexToModel(projectsTable.getSelectedRow());
 
-			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
-					.getModel();
+			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
 			return tableModel.getData().get(index);
 		}
 		return null;
@@ -247,8 +256,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	@Override
 	public void removeProjectFromList(Project project) {
-		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
-				.getModel();
+		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
 
@@ -288,29 +296,38 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	}
 
 	@Override
-	public boolean isNewProjectCorrect() {
+	public boolean isNewProjectCorrect(File umlFile, File sourceCodeFile) {
 
 		boolean isCorrect = true;
-		
-		
-		if (projectName.getText().isEmpty()
-				|| projectName.getForeground() == backgroundTextColor) {
+
+		if (projectName.getText().isEmpty() || projectName.getForeground() == backgroundTextColor) {
 			isCorrect = false;
-
-			new Message().pushMessage(MyResourceBundle
-					.getMessage("message.error.fillproject"), projectName);
-
+			namePanel.showErrorMessage(true);
+		} else {
+			namePanel.showErrorMessage(false);
 		}
 
-		if (projectDescription.getText().isEmpty()
-				|| projectDescription.getForeground() == backgroundTextColor) {
+		if (projectDescription.getText().isEmpty() || projectDescription.getForeground() == backgroundTextColor) {
 			isCorrect = false;
+			descriptionPanel.showErrorMessage(true);
+		} else {
+			descriptionPanel.showErrorMessage(false);
+		}
 
-			new Message().pushMessage(MyResourceBundle
-					.getMessage("message.error.fillproject"),
-					projectDescription);
+		if (umlFile == null) {
+			isCorrect = false;
+			umlFilePanel.showErrorMessage(true);
+		} else {
+			umlFilePanel.showErrorMessage(false);
+		}
+		if (sourceCodeFile == null) {
+			isCorrect = false;
+			sourceCodeFilePanel.showErrorMessage(true);
+		} else {
+			sourceCodeFilePanel.showErrorMessage(false);
 		}
 
 		return isCorrect;
 	}
+
 }
