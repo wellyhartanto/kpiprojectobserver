@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.jdesktop.swingx.JXTable;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
 
@@ -15,5 +13,5 @@ void setMouseListener(MouseListener l);
 	
 	JXTable getTable();
 	
-	void setData(Param[] params);
+	void setData(List<Param> params);
 }

@@ -3,7 +3,6 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -25,7 +24,7 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 	private JXTable exceptionsTable;
 	private ExceptionsTableModel exceptionsTableModel;
 
-	public ExceptionsPanelView(String[] exceptions) {
+	public ExceptionsPanelView(List<String> exceptions) {
 		setLayout(new MigLayout("fillx"));
 		add(new JScrollPane(createExceptionsTable(exceptions)), "growx");
 	}
@@ -35,11 +34,10 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 		return this;
 	}
 
-	private JXTable createExceptionsTable(String[] exceptions) {
+	private JXTable createExceptionsTable(List<String> exceptions) {
 
-		List<String> exceptionstmp = Arrays.asList(exceptions);
 		exceptionsTableModel = new ExceptionsTableModel();
-		exceptionsTableModel.setData(exceptionstmp);
+		exceptionsTableModel.setData(exceptions);
 
 		exceptionsTable = new JXTable(exceptionsTableModel);
 		exceptionsTable.getTableHeader().setFont(MyFonts.font3);
@@ -75,10 +73,8 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 	};
 	
 	@Override
-	public void setData(String[] exceptions) {
-
-		List<String> exceptionstmp = Arrays.asList(exceptions);
-		exceptionsTableModel.setData(exceptionstmp);	
+	public void setData(List<String> exceptions) {
+		exceptionsTableModel.setData(exceptions);	
 		exceptionsTableModel.fireTableDataChanged();
 	}
 }

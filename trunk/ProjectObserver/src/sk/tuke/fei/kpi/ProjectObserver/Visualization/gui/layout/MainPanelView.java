@@ -1,7 +1,5 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -12,7 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
-import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -24,8 +21,6 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
-import com.sun.corba.se.impl.util.PackagePrefixChecker;
-
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
@@ -35,8 +30,6 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.TestData;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
@@ -148,8 +141,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		methodsPanelPresenter = MethodsPanelPresenter.getInstance(new ArrayList<Method>());
 		fieldsPanelPresenter = FieldsPanelPresenter.getInstance(new ArrayList<Field>());
 		enumValuesPresenter = EnumValuesPresenter.getInstance(new String[] {});
-		methodParamsPresenter = MethodParamsPresenter.getInstance(new Param[] {});
-		exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(new String[] {});
+		methodParamsPresenter = MethodParamsPresenter.getInstance(new ArrayList<Param>());
+		exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(new ArrayList<String>());
 
 		setComponentsPosition();
 

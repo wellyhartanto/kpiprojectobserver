@@ -106,7 +106,7 @@ public class Project implements Serializable, Disposable {
 		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
 		DOMConfigurator.configure(configFileResource.getFile());
 		Date start= new Date();
-		Project project = new Project("test2.xml", "full.owl");
+		Project project = new Project("test2.xml", "full2.owl");
 		try {
 			project.createModel();
 			Logger.getLogger(project.getClass()).info(new Date().getTime()-start.getTime());

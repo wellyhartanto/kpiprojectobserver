@@ -3,7 +3,6 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -26,11 +25,9 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 
 	private JXTable paramsTable;
 	private ParamsTableModel paramsTableModel ;
-	public MethodParamsView(Param[] parameters) {
+	public MethodParamsView(List<Param> parameters) {
 		setLayout(new MigLayout("fillx"));
-
 		add(new JScrollPane(createParamsTable(parameters)), "growx");
-
 	}
 
 	@Override
@@ -38,12 +35,10 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 		return this;
 	}
 
-	private JXTable createParamsTable(Param[] parameters) {
-
-		List<Param> params = Arrays.asList(parameters);
+	private JXTable createParamsTable(List<Param> parameters) {
 		// List<Param> params = null;
 		 paramsTableModel = new ParamsTableModel();
-		paramsTableModel.setData(params);
+		paramsTableModel.setData(parameters);
 
 		paramsTable = new JXTable(paramsTableModel);
 		paramsTable.getTableHeader().setFont(MyFonts.font3);
@@ -77,12 +72,10 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 		return paramsTable;
 
 	};
-@Override
-public void setData(Param[] params) {
-	List<Param> parameters = Arrays.asList(params);
-	paramsTableModel.setData(parameters);
-	paramsTableModel.fireTableDataChanged();
-	
-}
 
+	@Override
+	public void setData(List<Param> params) {
+		paramsTableModel.setData(params);
+		paramsTableModel.fireTableDataChanged();
+	}
 }
