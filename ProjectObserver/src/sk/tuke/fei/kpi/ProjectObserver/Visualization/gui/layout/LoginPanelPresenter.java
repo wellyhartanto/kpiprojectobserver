@@ -49,7 +49,7 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (display.isNewProjectCorrect()) {
+				if (display.isNewProjectCorrect(umlFile,sourceCodeFile)) {
 
 					Project project = new Project(umlFile, sourceCodeFile);
 					try {

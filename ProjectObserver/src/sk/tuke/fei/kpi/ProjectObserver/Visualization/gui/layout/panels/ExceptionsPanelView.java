@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.
 public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDisplay {
 
 	private static final long serialVersionUID = 2225947043959574746L;
+	private JXTable exceptionsTable;
+	private ExceptionsTableModel exceptionsTableModel;
 
 	public ExceptionsPanelView(String[] exceptions) {
 		setLayout(new MigLayout("fillx"));
@@ -35,10 +38,10 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 	private JXTable createExceptionsTable(String[] exceptions) {
 
 		List<String> exceptionstmp = Arrays.asList(exceptions);
-		ExceptionsTableModel exceptionsTableModel = new ExceptionsTableModel();
+		exceptionsTableModel = new ExceptionsTableModel();
 		exceptionsTableModel.setData(exceptionstmp);
 
-		JXTable exceptionsTable = new JXTable(exceptionsTableModel);
+		exceptionsTable = new JXTable(exceptionsTableModel);
 		exceptionsTable.getTableHeader().setFont(MyFonts.font3);
 		exceptionsTable.setRolloverEnabled(true);
 		exceptionsTable.setHorizontalScrollEnabled(true);
@@ -58,5 +61,24 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 		});
 		return exceptionsTable;
 
+	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		exceptionsTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return exceptionsTable;
+
+	};
+	
+	@Override
+	public void setData(String[] exceptions) {
+
+		List<String> exceptionstmp = Arrays.asList(exceptions);
+		exceptionsTableModel.setData(exceptionstmp);	
+		exceptionsTableModel.fireTableDataChanged();
 	}
 }

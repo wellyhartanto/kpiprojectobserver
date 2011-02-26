@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.
 public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 
 	private static final long serialVersionUID = -1081591320587590117L;
+	private JXTable enumValuesTable;
+	private EnumValuesTableModel enumValuesTableModel;
 
 	public EnumValuesView(String[] values) {
 		setLayout(new MigLayout("fillx"));
@@ -36,10 +39,10 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 
 		List<String> valuestmp = Arrays.asList(values);
 
-		EnumValuesTableModel enumValuesTableModel = new EnumValuesTableModel();
+		enumValuesTableModel = new EnumValuesTableModel();
 		enumValuesTableModel.setData(valuestmp);
 
-		JXTable enumValuesTable = new JXTable(enumValuesTableModel);
+		enumValuesTable = new JXTable(enumValuesTableModel);
 		enumValuesTable.getTableHeader().setFont(MyFonts.font3);
 		enumValuesTable.setRolloverEnabled(true);
 		enumValuesTable.setHorizontalScrollEnabled(true);
@@ -60,5 +63,24 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 
 		return enumValuesTable;
 
+	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		enumValuesTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return enumValuesTable;
+
+	};
+
+	@Override
+	public void setData(String[] values) {
+		List<String> valuestmp = Arrays.asList(values);
+		enumValuesTableModel.setData(valuestmp);
+
+		enumValuesTableModel.fireTableDataChanged();
 	}
 }

@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -22,6 +23,9 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 
 	private static final long serialVersionUID = 6922425165656739899L;
 
+	private JXTable enumsTable;
+	private EnumsTableModel enumsTableModel;
+
 	public EnumsPanelView(List<Enum> enums) {
 		setLayout(new MigLayout("fillx"));
 		add(new JScrollPane(createEnumsTable(enums)), "growx");
@@ -34,10 +38,10 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 
 	private JXTable createEnumsTable(List<Enum> enums) {
 
-		EnumsTableModel enumsTableModel = new EnumsTableModel();
+		enumsTableModel = new EnumsTableModel();
 		enumsTableModel.setData(enums);
 
-		JXTable enumsTable = new JXTable(enumsTableModel);
+		enumsTable = new JXTable(enumsTableModel);
 		enumsTable.getTableHeader().setFont(MyFonts.font3);
 		enumsTable.setRolloverEnabled(true);
 		enumsTable.setHorizontalScrollEnabled(true);
@@ -58,4 +62,22 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 
 		return enumsTable;
 	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		enumsTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return enumsTable;
+
+	};
+
+	@Override
+	public void setData(List<Enum> enums) {
+		enumsTableModel.setData(enums);
+		enumsTableModel.fireTableDataChanged();
+	}
+
 }

@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -21,6 +22,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.
 public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 
 	private static final long serialVersionUID = -7778417156272491486L;
+	private JXTable packagesTable;
+	private PackagesTableModel packagesTableModel;
 
 	public PackagesPanelView(List<Package> packages) {
 		setLayout(new MigLayout("fillx"));
@@ -35,12 +38,12 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 
 	private JXTable createPackagesTable(List<Package> packages) {
 
-		PackagesTableModel packagesTableModel = new PackagesTableModel();
+		packagesTableModel = new PackagesTableModel();
 		packagesTableModel.setData(packages);
 
-		JXTable packagesTable = new JXTable(packagesTableModel);
+		packagesTable = new JXTable(packagesTableModel);
 
-	//	packagesTable.setShowGrid(true, true);
+		// packagesTable.setShowGrid(true, true);
 
 		packagesTable.getTableHeader().setFont(MyFonts.font3);
 		packagesTable.setRolloverEnabled(true);
@@ -62,5 +65,22 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 			}
 		});
 		return packagesTable;
+	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		packagesTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return packagesTable;
+
+	};
+
+	@Override
+	public void setData(List<Package> packages) {
+		packagesTableModel.setData(packages);
+		packagesTableModel.fireTableDataChanged();
 	}
 }

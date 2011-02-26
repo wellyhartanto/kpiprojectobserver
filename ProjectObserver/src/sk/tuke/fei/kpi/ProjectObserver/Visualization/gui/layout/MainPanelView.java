@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.swing.ImageIcon;
@@ -23,6 +24,8 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
+import com.sun.corba.se.impl.util.PackagePrefixChecker;
+
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
@@ -31,6 +34,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.TestData;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
@@ -72,9 +76,19 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private ImageIcon iconField;
 	private ImageIcon iconEnumValue;
 	private ImageIcon iconInfo;
-
 	private ImageIcon iconClose;
 	private JXHyperlink linkClose;
+
+	private InfoPanelPresenter infoPanelPresenter;
+	private PackagesPanelPresenter packagesPanelPresenter;
+	private MethodsPanelPresenter methodsPanelPresenter;
+	private ClassesPanelPresenter classesPanelPresenter;
+	private FieldsPanelPresenter fieldsPanelPresenter;
+	private InterfacesPanelPresenter interfacesPanelPresenter;
+	private EnumsPanelPresenter enumsPanelPresenter;
+	private EnumValuesPresenter enumValuesPresenter;
+	private ExceptionsPanelPresenter exceptionsPanelPresenter;
+	private MethodParamsPresenter methodParamsPresenter;
 
 	private Project project;
 
@@ -82,19 +96,15 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	public MainPanelView(Project project) {
 		this.project = project;
-		initComponents();
 
-		setVisible(true);
+		initComponents();
 
 	}
 
 	private void initComponents() {
 
-		createTree();
-
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
-		leftScrollPane.setViewportView(navigationTree);
 		rightPanel = new JPanel();
 		rightPanel.setName("rightPanel");
 
@@ -103,24 +113,15 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
 
-		iconPackage = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
-		iconInterface = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "int_obj.gif"));
-		iconClass = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "classes.gif"));
-		iconEnum = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "enum_obj.gif"));
-		iconMethod = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "method_obj.gif"));
-		iconField = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "field_obj.gif"));
-		iconEnumValue = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
-		iconInfo = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "information.gif"));
-		iconClose = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "close.png"));
+		iconPackage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
+		iconInterface = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "int_obj.gif"));
+		iconClass = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "classes.gif"));
+		iconEnum = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "enum_obj.gif"));
+		iconMethod = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "method_obj.gif"));
+		iconField = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "field_obj.gif"));
+		iconEnumValue = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
+		iconInfo = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "information.gif"));
+		iconClose = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "close.png"));
 		linkClose = new JXHyperlink();
 		linkClose.setIcon(iconClose);
 
@@ -129,17 +130,26 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
 
-		TreePath tp = navigationTree.getPathForRow(0);
-		navigationTree.setSelectionPath(tp);
-
-		sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pack = project
-				.getClassDiagram().getPackages().get(0);
+		sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pack = project.getClassDiagram().getPackages().get(0);
 		while (!pack.getPackages().isEmpty()) {
 
-				pack = pack.getPackages().get(0);
+			pack = pack.getPackages().get(0);
 		}
 
 		umlClassPanel = new ClassPanel(pack.getClasses().get(0));
+		setVisible(true);
+
+		// to initialize
+
+		packagesPanelPresenter = PackagesPanelPresenter.getInstance(new ArrayList<Package>());
+		classesPanelPresenter = ClassesPanelPresenter.getInstance(new ArrayList<Class>());
+		interfacesPanelPresenter = InterfacesPanelPresenter.getInstance(new ArrayList<Interface>());
+		enumsPanelPresenter = EnumsPanelPresenter.getInstance(new ArrayList<Enum>());
+		methodsPanelPresenter = MethodsPanelPresenter.getInstance(new ArrayList<Method>());
+		fieldsPanelPresenter = FieldsPanelPresenter.getInstance(new ArrayList<Field>());
+		enumValuesPresenter = EnumValuesPresenter.getInstance(new String[] {});
+		methodParamsPresenter = MethodParamsPresenter.getInstance(new Param[] {});
+		exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(new String[] {});
 
 		setComponentsPosition();
 
@@ -156,152 +166,13 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	}
 
-	private void documentTableMouseClicked(MouseEvent e, JXTable table) {
-		if (e.getClickCount() == 2) {
-			setDetailSelection(table);
-		}
-	}
-
-	private void setDetailSelection(JXTable table) {
-
-		int selectedrow = table.getSelectedRow();
-		if (selectedrow != -1) {
-
-			GenericTableModel<Object> p = (GenericTableModel<Object>) table
-					.getModel();
-
-			setSelected(p.getData().get(selectedrow));
-		}
-	}
-
-	private void setSelected(Object o) {
-
-		DefaultMutableTreeNode parentNode = null;
-		TreePath parentPath = navigationTree.getPathForRow(0);
-
-		parentNode = (DefaultMutableTreeNode) (parentPath
-				.getLastPathComponent());
-
-		parentNode.getLeafCount();
-
-		parentNode.getUserObjectPath();
-
-		Enumeration<DefaultMutableTreeNode> e = parentNode
-				.breadthFirstEnumeration();
-		while (e.hasMoreElements()) {
-
-			DefaultMutableTreeNode dmtn = e.nextElement();
-			if (dmtn.getUserObject().equals(o)) {
-				parentPath = new TreePath(dmtn.getPath());
-				navigationTree.getSelectionModel().setSelectionPath(parentPath);
-			}
-
-		}
-
-	}
-
-	private DefaultMutableTreeNode createPackageTree(Package p) {
-		DefaultMutableTreeNode packagex = new DefaultMutableTreeNode(p);
-
-		for (Package s2 : p.getPackages()) {
-			DefaultMutableTreeNode subpackagex = createPackageTree(s2);
-			packagex.add(subpackagex);
-
-		}
-
-		for (Class s2 : p.getClasses()) {
-			DefaultMutableTreeNode classx = createClassTree(s2);
-			packagex.add(classx);
-
-		}
-
-		for (Interface s2 : p.getInterfaces()) {
-			DefaultMutableTreeNode interfacex = createInterfaceTree(s2);
-			packagex.add(interfacex);
-
-		}
-
-		for (Enum s2 : p.getEnums()) {
-			DefaultMutableTreeNode enumx = new DefaultMutableTreeNode(s2);
-			packagex.add(enumx);
-
-		}
-
-		return packagex;
-	}
-
-	private DefaultMutableTreeNode createClassTree(Class c) {
-		DefaultMutableTreeNode classx = new DefaultMutableTreeNode(c);
-
-		for (Method m : c.getMethods()) {
-			DefaultMutableTreeNode methodx = new DefaultMutableTreeNode(m);
-			classx.add(methodx);
-		}
-		for (Field f : c.getFields()) {
-			DefaultMutableTreeNode fieldx = new DefaultMutableTreeNode(f);
-			classx.add(fieldx);
-		}
-
-		return classx;
-	}
-
-	private DefaultMutableTreeNode createInterfaceTree(Interface c) {
-		DefaultMutableTreeNode classx = new DefaultMutableTreeNode(c);
-
-		for (Method m : c.getMethods()) {
-			DefaultMutableTreeNode methodx = new DefaultMutableTreeNode(m);
-			classx.add(methodx);
-		}
-		for (Field f : c.getFields()) {
-			DefaultMutableTreeNode fieldx = new DefaultMutableTreeNode(f);
-			classx.add(fieldx);
-		}
-
-		return classx;
-	}
-
-	private DefaultMutableTreeNode createApplicationTree(Application p) {
-		DefaultMutableTreeNode packagex = new DefaultMutableTreeNode(p);
-
-		for (Package s2 : p.getPackages()) {
-			DefaultMutableTreeNode subpackagex = createPackageTree(s2);
-			packagex.add(subpackagex);
-
-		}
-
-		for (Class s2 : p.getClasses()) {
-			DefaultMutableTreeNode classx = createClassTree(s2);
-			packagex.add(classx);
-
-		}
-
-		for (Interface s2 : p.getInterfaces()) {
-			DefaultMutableTreeNode interfacex = createInterfaceTree(s2);
-			packagex.add(interfacex);
-
-		}
-
-		for (Enum s2 : p.getEnums()) {
-			DefaultMutableTreeNode enumx = new DefaultMutableTreeNode(s2);
-			packagex.add(enumx);
-
-		}
-
-		return packagex;
-	}
-
-	private void createTree() {
-
-		Application app = TestData.createTestData();
-		app.setName("testproject");
-		DefaultMutableTreeNode root = createApplicationTree(app);
-
-		navigationTree = new JTree(root);
+	@Override
+	public void setNavigationTree(JTree tree) {
+		navigationTree = tree;
 
 		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer());
 
-		navigationTree.getSelectionModel().setSelectionMode(
-				TreeSelectionModel.SINGLE_TREE_SELECTION);
+		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
 		navigationTree.addTreeSelectionListener(new TreeSelectionListener() {
 
@@ -313,12 +184,13 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		});
 
+		leftScrollPane.setViewportView(navigationTree);
+
 	}
 
 	private void treeValueChangedAction() {
 
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) navigationTree
-				.getLastSelectedPathComponent();
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) navigationTree.getLastSelectedPathComponent();
 
 		/* if nothing is selected */
 		if (node == null)
@@ -330,117 +202,207 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		if (nodeInfo instanceof Application) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"),
-					iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"),
-					iconPackage, new PackagesPanelPresenter(
-							((Application) nodeInfo).getPackages())
-							.getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"),
-					iconClass, new ClassesPanelPresenter(
-							((Application) nodeInfo).getClasses()).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"),
-					iconInterface, new InterfacesPanelPresenter(
-							((Application) nodeInfo).getInterfaces())
-							.getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"),
-					iconEnum, new EnumsPanelPresenter(((Application) nodeInfo)
-							.getEnums()).getDisplay().asComponent());
+			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+
+			packagesPanelPresenter = PackagesPanelPresenter.getInstance(((Application) nodeInfo).getPackages());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, packagesPanelPresenter.getDisplay().asComponent());
+
+			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Application) nodeInfo).getClasses());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+
+			interfacesPanelPresenter = InterfacesPanelPresenter.getInstance(((Application) nodeInfo).getInterfaces());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface, interfacesPanelPresenter.getDisplay().asComponent());
+
+			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Application) nodeInfo).getEnums());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
 		}
 
 		if (nodeInfo instanceof Package) {
 			tabbedPane.removeAll();
+			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"),
-					iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"),
-					iconPackage, new PackagesPanelPresenter(
-							((Package) nodeInfo).getPackages()).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"),
-					iconClass, new ClassesPanelPresenter(((Package) nodeInfo)
-							.getClasses()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"),
-					iconInterface, new InterfacesPanelPresenter(
-							((Package) nodeInfo).getInterfaces()).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"),
-					iconEnum, new EnumsPanelPresenter(((Package) nodeInfo)
-							.getEnums()).getDisplay().asComponent());
+			packagesPanelPresenter = PackagesPanelPresenter.getInstance(((Package) nodeInfo).getPackages());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, packagesPanelPresenter.getDisplay().asComponent());
+
+			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Package) nodeInfo).getClasses());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+
+			interfacesPanelPresenter = InterfacesPanelPresenter.getInstance(((Package) nodeInfo).getInterfaces());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface, interfacesPanelPresenter.getDisplay().asComponent());
+
+			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
 		}
 		if (nodeInfo instanceof Class) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"),
-					iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"),
-					iconMethod, new MethodsPanelPresenter(((Class) nodeInfo)
-							.getMethods()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"),
-					iconField, new FieldsPanelPresenter(((Class) nodeInfo)
-							.getFields()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"),
-					iconClass, new ClassesPanelPresenter(((Class) nodeInfo)
-							.getClasses()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"),
-					iconEnum, new EnumsPanelPresenter(((Class) nodeInfo)
-							.getEnums()).getDisplay().asComponent());
+			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+
+			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Class) nodeInfo).getMethods());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+
+			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Class) nodeInfo).getFields());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
+
+			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Class) nodeInfo).getClasses());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+
+			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Class) nodeInfo).getEnums());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
 		}
 		if (nodeInfo instanceof Interface) {
 			tabbedPane.removeAll();
+			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"),
-					iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"),
-					iconMethod, new MethodsPanelPresenter(
-							((Interface) nodeInfo).getMethods()).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"),
-					iconField, new FieldsPanelPresenter(((Interface) nodeInfo)
-							.getFields()).getDisplay().asComponent());
+			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Interface) nodeInfo).getMethods());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+
+			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
 		}
 		if (nodeInfo instanceof Enum) {
 			tabbedPane.removeAll();
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"),
-					iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.values"),
-					iconEnumValue, new EnumValuesPresenter(((Enum) nodeInfo)
-							.getValues()).getDisplay().asComponent());
+			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+
+			enumValuesPresenter = EnumValuesPresenter.getInstance(((Enum) nodeInfo).getValues());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.values"), iconEnumValue, enumValuesPresenter.getDisplay().asComponent());
 
 		}
 
 		if (nodeInfo instanceof Method) {
 			tabbedPane.removeAll();
+			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"),
-					iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-							.asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.params"),
-					iconInfo, new MethodParamsPresenter(((Method) nodeInfo)
-							.getParams()).getDisplay().asComponent());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.exceptions"),
-					iconInfo, new ExceptionsPanelPresenter(((Method) nodeInfo)
-							.getExceptions()).getDisplay().asComponent());
+			methodParamsPresenter = MethodParamsPresenter.getInstance(((Method) nodeInfo).getParams());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.params"), iconInfo, methodParamsPresenter.getDisplay().asComponent());
+
+			exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(((Method) nodeInfo).getExceptions());
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.exceptions"), iconInfo, exceptionsPanelPresenter.getDisplay().asComponent());
 
 		}
 		if (nodeInfo instanceof Field) {
 			tabbedPane.removeAll();
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"),
-					iconInfo, new InfoPanelPresenter(nodeInfo).getDisplay()
-							.asComponent());
+
+			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
+			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+
 		}
 
+	}
+
+	@Override
+	public void setDetailSelection(JXTable table) {
+
+		int selectedrow = table.getSelectedRow();
+		if (selectedrow != -1) {
+
+			GenericTableModel<Object> p = (GenericTableModel<Object>) table.getModel();
+
+			selectElement(p.getData().get(selectedrow));
+		}
+	}
+
+	private void selectElement(Object object) {
+
+		DefaultMutableTreeNode parentNode = null;
+		TreePath parentPath = navigationTree.getPathForRow(0);
+
+		parentNode = (DefaultMutableTreeNode) (parentPath.getLastPathComponent());
+
+		parentNode.getLeafCount();
+
+		parentNode.getUserObjectPath();
+
+		Enumeration<DefaultMutableTreeNode> e = parentNode.breadthFirstEnumeration();
+		while (e.hasMoreElements()) {
+
+			DefaultMutableTreeNode dmtn = e.nextElement();
+			if (dmtn.getUserObject().equals(object)) {
+				parentPath = new TreePath(dmtn.getPath());
+				navigationTree.getSelectionModel().setSelectionPath(parentPath);
+			}
+
+		}
+
+	}
+
+	@Override
+	public void setTreeValueChangedAction() {
+
+		navigationTree.addTreeSelectionListener(new TreeSelectionListener() {
+
+			@Override
+			public void valueChanged(TreeSelectionEvent e) {
+				treeValueChangedAction();
+
+			}
+
+		});
+
+		TreePath tp = navigationTree.getPathForRow(0);
+		navigationTree.setSelectionPath(tp);
+
+	}
+
+	@Override
+	public ClassesPanelPresenter getClassesPanelPresenter() {
+		return classesPanelPresenter;
+	}
+
+	@Override
+	public EnumValuesPresenter getEnumValuesPresenter() {
+		return enumValuesPresenter;
+	}
+
+	@Override
+	public EnumsPanelPresenter getEnumsPanelPresenter() {
+		return enumsPanelPresenter;
+	}
+
+	@Override
+	public ExceptionsPanelPresenter getExceptionsPanelPresenter() {
+		return exceptionsPanelPresenter;
+	}
+
+	@Override
+	public FieldsPanelPresenter getFieldsPanelPresenter() {
+		return fieldsPanelPresenter;
+	}
+
+	@Override
+	public InfoPanelPresenter getInfoPanelPresenter() {
+		return infoPanelPresenter;
+	}
+
+	@Override
+	public InterfacesPanelPresenter getInterfacesPanelPresenter() {
+		return interfacesPanelPresenter;
+	}
+
+	@Override
+	public MethodParamsPresenter getMethodParamsPresenter() {
+		return methodParamsPresenter;
+	}
+
+	@Override
+	public MethodsPanelPresenter getMethodsPanelPresenter() {
+		return methodsPanelPresenter;
+	}
+
+	@Override
+	public PackagesPanelPresenter getPackagesPanelPresenter() {
+		return packagesPanelPresenter;
 	}
 
 }

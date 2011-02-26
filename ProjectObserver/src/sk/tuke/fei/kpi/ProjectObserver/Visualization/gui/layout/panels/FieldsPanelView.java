@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -21,7 +22,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.
 public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 
 	private static final long serialVersionUID = -8763946371835046265L;
-
+	private JXTable fieldsTable;
+	private FieldsTableModel fieldsTableModel;
 	public FieldsPanelView(List<Field> fields) {
 		setLayout(new MigLayout("fillx"));
 		add(new JScrollPane(createFieldsTable(fields)), "growx");
@@ -34,10 +36,10 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 
 	private JXTable createFieldsTable(List<Field> fields) {
 
-		FieldsTableModel fieldsTableModel = new FieldsTableModel();
+		 fieldsTableModel = new FieldsTableModel();
 		fieldsTableModel.setData(fields);
 
-		JXTable fieldsTable = new JXTable(fieldsTableModel);
+		fieldsTable = new JXTable(fieldsTableModel);
 		fieldsTable.getTableHeader().setFont(MyFonts.font3);
 		fieldsTable.setRolloverEnabled(true);
 		fieldsTable.setHorizontalScrollEnabled(true);
@@ -57,4 +59,21 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 		});
 		return fieldsTable;
 	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		fieldsTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return fieldsTable;
+
+	};
+@Override
+public void setData(List<Field> fields) {
+	 fieldsTableModel.setData(fields);	
+	 fieldsTableModel.fireTableDataChanged();
+	 
+}
 }

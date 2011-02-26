@@ -156,5 +156,8 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 	public JComponent asComponent() {
 		return this;
 	}
+	
+	
+	
 
 }

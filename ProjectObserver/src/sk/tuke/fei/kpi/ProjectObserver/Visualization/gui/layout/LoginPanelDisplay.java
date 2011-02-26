@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
@@ -21,7 +22,7 @@ public interface LoginPanelDisplay extends DisplayComponent {
 
 	void setLoadUmlAction(ActionListener actionListener);
 	
-	boolean isNewProjectCorrect();
+	boolean isNewProjectCorrect(File umlFile,File sourceCodeFile);
 
 	Project getSelectedProject();
 

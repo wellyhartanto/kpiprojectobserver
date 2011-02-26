@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 
 	private static final long serialVersionUID = 3168521799892831140L;
 
+	private JXTable paramsTable;
+	private ParamsTableModel paramsTableModel ;
 	public MethodParamsView(Param[] parameters) {
 		setLayout(new MigLayout("fillx"));
 
@@ -39,10 +42,10 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 
 		List<Param> params = Arrays.asList(parameters);
 		// List<Param> params = null;
-		ParamsTableModel paramsTableModel = new ParamsTableModel();
+		 paramsTableModel = new ParamsTableModel();
 		paramsTableModel.setData(params);
 
-		JXTable paramsTable = new JXTable(paramsTableModel);
+		paramsTable = new JXTable(paramsTableModel);
 		paramsTable.getTableHeader().setFont(MyFonts.font3);
 		paramsTable.setRolloverEnabled(true);
 		paramsTable.setHorizontalScrollEnabled(true);
@@ -63,4 +66,23 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 		return paramsTable;
 
 	}
+
+	@Override
+	public void setMouseListener(MouseListener l) {
+		paramsTable.addMouseListener(l);
+	}
+
+	@Override
+	public JXTable getTable() {
+		return paramsTable;
+
+	};
+@Override
+public void setData(Param[] params) {
+	List<Param> parameters = Arrays.asList(params);
+	paramsTableModel.setData(parameters);
+	paramsTableModel.fireTableDataChanged();
+	
+}
+
 }
