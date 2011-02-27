@@ -11,7 +11,8 @@ public class ProjectsTableModel extends GenericTableModel<Project> {
 		super();
 		data = ProjectService.loadProjects();
 		columnNames = new String[] { MyResourceBundle.getMessage("table.projectstable.column.name"),
-				MyResourceBundle.getMessage("table.projectstable.column.creationdate"), MyResourceBundle.getMessage("table.projectstable.column.description") };
+				MyResourceBundle.getMessage("table.projectstable.column.sourcecodefile"), MyResourceBundle.getMessage("table.projectstable.column.umlfile"),
+				MyResourceBundle.getMessage("table.projectstable.column.creationdate") };
 	}
 
 	@Override
@@ -20,12 +21,15 @@ public class ProjectsTableModel extends GenericTableModel<Project> {
 		case 0:
 			return data.get(row).getName();
 		case 1:
-			return data.get(row).getCreationDate();
+			return data.get(row).getJavaFile().getName();
 		case 2:
-			return data.get(row).getDescription();
+			return data.get(row).getUmlFile().getName();
+		case 3:
+			return data.get(row).getCreationDate();
 		default:
 			break;
 		}
 		return "";
 	}
+
 }

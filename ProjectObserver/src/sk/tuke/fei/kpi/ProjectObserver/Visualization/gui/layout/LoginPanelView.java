@@ -3,9 +3,11 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,8 +21,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
+import javax.swing.text.TabableView;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -45,6 +52,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	}
 
 	private JXTable projectsTable;
+	private JTextPane infoProjectDescription;
 
 	private JButton openProject;
 	private JButton deleteProject;
@@ -81,12 +89,26 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private void initComponents() {
 
 		projectsTable = new JXTable(new ProjectsTableModel());
+
 		projectsTable.getTableHeader().setFont(MyFonts.font3);
 		projectsTable.setRolloverEnabled(true);
 		projectsTable.setHorizontalScrollEnabled(true);
 		projectsTable.setFillsViewportHeight(true);
 		projectsTable.setEditable(true);
 		projectsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		projectsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				Project p = getSelectedProject();
+				if (p != null) {
+					infoProjectDescription.setText(p.getDescription());
+				}
+
+			}
+		});
 
 		Font buttonsFont = MyFonts.font2;
 		Dimension buttonsSize = new Dimension(120, 30);
@@ -174,25 +196,35 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 			}
 		});
 
+		// infoProjectDescription = new JTextArea(4, 50);
+
+		infoProjectDescription = new JTextPane();
+		infoProjectDescription.setMaximumSize(projectDescription.getPreferredSize());
+		infoProjectDescription.setMinimumSize(new Dimension(100, 70));
+		// infoProjectDescription.setLineWrap(true);
+		// infoProjectDescription.setAutoscrolls(true);
+		// infoProjectDescription.setDocument(new JTextFieldLimit(300));
+		// infoProjectDescription.setEditable(false);
+		infoProjectDescription.setBackground(Color.red);
+		infoProjectDescription.setOpaque(true);
+		infoProjectDescription.setBackground(new Color(255, 255, 255, 0));
+
 		namePanel = new JErrorPanel(projectName, MyResourceBundle.getMessage("message.error.fillproject"));
 		descriptionPanel = new JErrorPanel(projectDescription, MyResourceBundle.getMessage("message.error.fillproject"));
 		umlFilePanel = new JErrorPanel(loadUmlModel, MyResourceBundle.getMessage("message.error.selectfile"));
 		sourceCodeFilePanel = new JErrorPanel(loadSourceCode, MyResourceBundle.getMessage("message.error.selectfile"));
-		
-		
+
 		Dimension scBtnSize = loadSourceCode.getPreferredSize();
 		Dimension umlBtnSize = loadUmlModel.getPreferredSize();
-		
-		
-		loadSourceCode.setMinimumSize(umlBtnSize.getWidth()>scBtnSize.getWidth()? umlBtnSize:scBtnSize);
-		loadUmlModel.setMinimumSize(umlBtnSize.getWidth()>scBtnSize.getWidth()?umlBtnSize:scBtnSize);
-		
+
+		loadSourceCode.setMinimumSize(umlBtnSize.getWidth() > scBtnSize.getWidth() ? umlBtnSize : scBtnSize);
+		loadUmlModel.setMinimumSize(umlBtnSize.getWidth() > scBtnSize.getWidth() ? umlBtnSize : scBtnSize);
 
 		setComponentsPosition();
 	}
 
 	private void setComponentsPosition() {
-		setLayout(new MigLayout("", "50[]50[]", "60[]150[][][][]"));
+		setLayout(new MigLayout("", "50[]50[]", "60[][]80[][][][]"));
 
 		JScrollPane scroll = new JScrollPane(projectsTable);
 		scroll.setMaximumSize(new Dimension(1000, 200));
@@ -205,8 +237,11 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		add(scroll, "growx");
 		add(buttonsPanel, "wrap");
+
+		add(infoProjectDescription, "wrap");
+
 		add(namePanel);
-		add(createProject, "wrap");
+		add(createProject, "wrap,top");
 		add(descriptionPanel, "wrap");
 		add(sourceCodeFilePanel, "split 2");
 		add(sourceCodeFileLbl, "span,gaptop 7,top,wrap");

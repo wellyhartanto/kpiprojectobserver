@@ -168,7 +168,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		Application app = TestData.createTestData();
 		app.setName("testproject");
 
-		// app = project.getJavaModel();
+		 app = project.getJavaModel();
 
 		DefaultMutableTreeNode root = createApplicationTree(app);
 
