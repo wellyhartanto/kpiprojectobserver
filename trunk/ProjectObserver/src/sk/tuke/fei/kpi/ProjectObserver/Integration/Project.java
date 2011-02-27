@@ -116,4 +116,14 @@ public class Project implements Serializable, Disposable {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public File getJavaFile() {
+		return javaFile;
+	}
+	
+	public File getUmlFile() {
+		return umlFile;
+	}
+	
 }
