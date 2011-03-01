@@ -211,27 +211,38 @@ public class JavaParser implements Parser<Application>, Disposable {
 			// if(method.getFullName()!=null){
 			// logger.info(method.getFullName());
 			// }
+			RDFNode returnType = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasReturnType"));
+			if (returnType != null)
+				method.setReturnType(OwlUtils.getValue(returnType.toString(), '#'));
+			// StmtIterator iterator = individual.listProperties();
+			//			
+			// while (iterator.hasNext()) {
+			// logger.info(iterator.next());
+			// }
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isDefiningBehaviorOf"));
 			if (node != null) {
 				TypeElement element = classes.get(OwlUtils.getValue(node.toString(), '#'));
-				method.setParent(element);
-				element.getMethods().add(method);
+				if (element != null) {
+					method.setParent(element);
+					element.getMethods().add(method);
+				}
 			}
 			setParams(method);
 		}
 	}
 
 	private void setParams(BehavioralElement element) {
-//		try {
-			if (element.getFullName()!=null && element.getFullName().charAt(element.getFullName().length() - 1) != ':') {
-				List<Param> list = utils.runParamQuery(PREFIX + element.getFullName());
-//				for (Param param : list) {
-//					logger.info(param.getName() + param.getType());
-//				}
-			}
-//		} catch (NullPointerException ex) {
-//			ex.printStackTrace();
-//		}
+		// try {
+		if (element.getFullName() != null && element.getFullName().charAt(element.getFullName().length() - 1) != ':') {
+			List<Param> list = utils.runParamQuery(PREFIX + element.getFullName());
+			// for (Param param : list) {
+			// logger.info(param.getName() + param.getType());
+			// }
+			element.setParams(list);
+		}
+		// } catch (NullPointerException ex) {
+		// ex.printStackTrace();
+		// }
 	}
 
 	private void loadAttributes() {
