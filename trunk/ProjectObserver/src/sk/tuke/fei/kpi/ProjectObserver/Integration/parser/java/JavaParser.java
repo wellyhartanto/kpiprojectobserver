@@ -3,11 +3,13 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.parser.java;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.BehavioralElement;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Constructor;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element;
@@ -55,6 +57,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 	public Application parse(File file) throws ParserException {
 		initModel(file.getPath());
 		application = new Application();
+		utils = new OwlUtils(ontology);
 		loadModel();
 		// new ClassHierarchy().showHierarchy(System.out, ontology);
 		return application;
@@ -84,21 +87,29 @@ public class JavaParser implements Parser<Application>, Disposable {
 			}
 			// logger.info(p.getFullName() + " -> " + p.getParent() + " " + p.getVisibility());
 		}
-		// loadMethods();
-		// loadAttributes();
+
+		loadMethods();
+		loadAttributes();
 		// loadParameters();
 		loadConstructors();
 	}
 
 	private void loadConstructors() {
-		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Contructor")); i.hasNext();) {
+		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Constructor")); i.hasNext();) {
 			Individual individual = i.next();
 			Constructor constructor = new Constructor();
 			StmtIterator iterator = individual.listProperties();
 			setElement(constructor, individual);
-			while (iterator.hasNext()) {
-				logger.info(iterator.next());
-			}
+			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isConstructorOf"));
+			String className = OwlUtils.getValue(node.toString(), '#');
+			TypeElement parent = classes.get(className);
+			constructor.setParent(parent);
+			parent.getConstructors().add(constructor);
+			logger.info(constructor.getName() + constructor.getParent().getName());
+			setParams(constructor);
+			// while (iterator.hasNext()) {
+			// logger.info(iterator.next());
+			// }
 		}
 	}
 
@@ -188,22 +199,39 @@ public class JavaParser implements Parser<Application>, Disposable {
 		// }
 	}
 
-	private OwlUtils util = new OwlUtils();
+	private OwlUtils utils;
 
+	// PREFIX jscc: <http://www.jscc.sk/ontology/OOMOntology.owl#> SELECT * WHERE {?param a jscc:Parameter; jscc:hasName ?name;jscc:hasType ?type; jscc:isParameterOf
+	// <'de.softproject.elos.model.web.ServiceMobile$setDfZeit:Date'>.}
 	private void loadMethods() {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Method")); i.hasNext();) {
 			Individual individual = i.next();
 			Method method = new Method();
 			setElement(method, individual);
-			StringBuilder query = new StringBuilder("SELECT * WHERE {?name jscc:hasName ");
-			query.append("'setValue'").append(".}");
-			// query.append("?")
-			util.runQuery(query.toString(), ontology);
-			StmtIterator iterator = individual.listProperties();
-			while (iterator.hasNext()) {
-				logger.info(iterator.next());
+			// if(method.getFullName()!=null){
+			// logger.info(method.getFullName());
+			// }
+			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isDefiningBehaviorOf"));
+			if (node != null) {
+				TypeElement element = classes.get(OwlUtils.getValue(node.toString(), '#'));
+				method.setParent(element);
+				element.getMethods().add(method);
 			}
+			setParams(method);
 		}
+	}
+
+	private void setParams(BehavioralElement element) {
+//		try {
+			if (element.getFullName()!=null && element.getFullName().charAt(element.getFullName().length() - 1) != ':') {
+				List<Param> list = utils.runParamQuery(PREFIX + element.getFullName());
+//				for (Param param : list) {
+//					logger.info(param.getName() + param.getType());
+//				}
+			}
+//		} catch (NullPointerException ex) {
+//			ex.printStackTrace();
+//		}
 	}
 
 	private void loadAttributes() {
@@ -211,10 +239,14 @@ public class JavaParser implements Parser<Application>, Disposable {
 			Individual individual = i.next();
 			Field field = new Field();
 			setElement(field, individual);
-			// StmtIterator iterator = individual.listProperties();
-			// while (iterator.hasNext()) {
-			// logger.info(iterator.next());
-			// }
+			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isFieldOf"));
+			if (node != null) {
+				TypeElement element = classes.get(OwlUtils.getValue(node.toString(), '#'));
+				field.setParent(element);
+				element.getFields().add(field);
+			}
+			field.setType(OwlUtils.getValue(individual.getPropertyValue(new PropertyImpl(PREFIX + "hasType")).toString(), '#'));
+			logger.info(field.getName() + " " + field.getParent());
 		}
 	}
 
@@ -222,19 +254,15 @@ public class JavaParser implements Parser<Application>, Disposable {
 		try {
 			return packages.get(value.substring(0, value.lastIndexOf(separator)));
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			// ex.printStackTrace();
 			return null;
 		}
 	}
 
-	private String getValue(String value, char separator) {
-		return value.substring(value.lastIndexOf(separator) + 1, value.length());
-	}
-
-	private void setModifiers(Element element, Individual individual) {
+	private static void setModifiers(Element element, Individual individual) {
 		NodeIterator iterator = individual.listPropertyValues(new PropertyImpl(PREFIX + "hasModifier"));
 		while (iterator.hasNext()) {
-			String mod = getValue(iterator.next().toString(), '$');
+			String mod = OwlUtils.getValue(iterator.next().toString(), '$');
 			Modifiers modifier = Modifiers.fromString(mod);
 			if (modifier != Modifiers.NONE) {
 				element.getModifiers().add(modifier);
@@ -248,26 +276,27 @@ public class JavaParser implements Parser<Application>, Disposable {
 	private void setSuperClasses(TypeElement element, Individual individual) {
 		NodeIterator iterator = individual.listPropertyValues(new PropertyImpl(PREFIX + "implements"));
 		while (iterator.hasNext()) {
-			String iface = getValue(iterator.next().toString(), '#');
+			String iface = OwlUtils.getValue(iterator.next().toString(), '#');
 			logger.info(iface);
 			element.getImplemented().add(classes.get(iface));
 			element.getImplementedNames().add(iface);
 		}
 		RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isExtending"));
 		if (node != null) {
-			element.setSuperClassName(getValue(node.toString(), '#'));
+			element.setSuperClassName(OwlUtils.getValue(node.toString(), '#'));
 			logger.info(element.getSuperClassName());
 		}
 	}
 
-	private void setElement(Element element, Individual individual) {
+	private static void setElement(Element element, Individual individual) {
 		RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasName"));
 		if (node != null) {
-			element.setName(node.toString());
+			element.setName(node.toString().replace("]", ""));
+
 		}
 		node = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasFullName"));
 		if (node != null) {
-			element.setFullName(node.toString());
+			element.setFullName(node.toString().replace("]", ""));
 		}
 		setModifiers(element, individual);
 

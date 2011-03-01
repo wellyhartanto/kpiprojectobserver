@@ -10,6 +10,7 @@ public class TypeElement extends Element {
 	private List<Enum> enums = new ArrayList<Enum>();
 	private List<Class> classes = new ArrayList<Class>();
 	private List<TypeElement> implemented = new ArrayList<TypeElement>();
+	private List<Constructor> constructors = new ArrayList<Constructor>();
 	private transient List<String> implementedNames = new ArrayList<String>();
 	private TypeElement superClass;
 	private transient String superClassName;
@@ -18,10 +19,6 @@ public class TypeElement extends Element {
 	
 	public TypeElement() {
 		super();
-		methods = new ArrayList<Method>();
-		fields = new ArrayList<Field>();
-		enums = new ArrayList<Enum>();
-		classes = new ArrayList<Class>();
 	}
 	
 	public List<Field> getFields() {
@@ -94,5 +91,13 @@ public class TypeElement extends Element {
 	
 	public void setImplementedNames(List<String> implementedNames) {
 		this.implementedNames = implementedNames;
+	}
+	
+	public List<Constructor> getConstructors() {
+		return constructors;
+	}
+	
+	public void setConstructors(List<Constructor> constructors) {
+		this.constructors = constructors;
 	}
 }
