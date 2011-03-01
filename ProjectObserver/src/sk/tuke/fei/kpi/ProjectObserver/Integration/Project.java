@@ -8,6 +8,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.MappingHolder;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
@@ -24,10 +25,16 @@ public class Project implements Serializable, Disposable {
 	private ClassDiagram classDiagram;
 
 	private Application javaModel;
+	
+	private MappingHolder mappingHolder;
 
 	private Date creationDate;
 	private String name;
 	private String description;
+	static {
+		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
+		DOMConfigurator.configure(configFileResource.getFile());
+	}
 
 	private Project() {
 		creationDate = new Date();
@@ -46,6 +53,7 @@ public class Project implements Serializable, Disposable {
 	public boolean createModel() throws AlignmentException, ParserException {
 		classDiagram = new ClassDiagramParser().parse(umlFile);
 		javaModel = new JavaParser().parse(javaFile);
+		mappingHolder = new MappingHolder();
 		return true;
 	}
 
@@ -103,27 +111,31 @@ public class Project implements Serializable, Disposable {
 	}
 
 	public static void main(String[] args) {
-		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
-		DOMConfigurator.configure(configFileResource.getFile());
-		Date start= new Date();
-		Project project = new Project("test2.xml", "full2.owl");
+		Date start = new Date();
+		Project project = new Project("test2.xml", "full.owl");
 		try {
 			project.createModel();
-			Logger.getLogger(project.getClass()).info(new Date().getTime()-start.getTime());
+			Logger.getLogger(project.getClass()).info(new Date().getTime() - start.getTime());
 		} catch (AlignmentException e) {
 			e.printStackTrace();
 		} catch (ParserException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public File getJavaFile() {
 		return javaFile;
 	}
-	
+
 	public File getUmlFile() {
 		return umlFile;
 	}
 	
+	public MappingHolder getMappingHolder() {
+		return mappingHolder;
+	}
+	
+	public void setMappingHolder(MappingHolder mappingHolder) {
+		this.mappingHolder = mappingHolder;
+	}
 }
