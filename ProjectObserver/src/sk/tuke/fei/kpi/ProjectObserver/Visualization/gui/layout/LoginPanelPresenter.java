@@ -1,19 +1,26 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Component;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Date;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
 
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ProgressDialog;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.AlignmentException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
 
@@ -37,9 +44,7 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			public void actionPerformed(ActionEvent e) {
 				Project selectedProject = display.getSelectedProject();
 				if (selectedProject != null) {
-					MainFrame.getMainFrame().setPanel(
-							new MainPanelPresenter(selectedProject)
-									.getDisplay().asComponent());
+					MainFrame.getMainFrame().setPanel(new MainPanelPresenter(selectedProject).getDisplay().asComponent());
 				}
 			}
 		});
@@ -49,21 +54,46 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (display.isNewProjectCorrect(umlFile,sourceCodeFile)) {
+				if (display.isNewProjectCorrect(umlFile, sourceCodeFile)) {
 
-					Project project = new Project(umlFile, sourceCodeFile);
-					try {
-						project.createModel();
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					display.setNameAndDescription(project);
+					String label = MyResourceBundle.getMessage("message.info.creatingproject");
+					final ProgressDialog progressDialog = new ProgressDialog(label, label, findParentFrame());
+					final SwingWorker<String, String> sw = new SwingWorker<String, String>() {
+						Project project = new Project(umlFile, sourceCodeFile);
 
-					ProjectService.saveProject(project);
+						@Override
+						protected String doInBackground() throws Exception {
+							  progressDialog.setVisible(true);
+							
+							try {
+								project.createModel();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+							display.setNameAndDescription(project);
 
-					MainFrame.getMainFrame().setPanel(
-							new MainPanelPresenter(project).getDisplay()
-									.asComponent());
+							ProjectService.saveProject(project);
+							return "";
+						}
+
+						protected void done() {
+							  progressDialog.setVisible(false);
+							MainFrame.getMainFrame().setPanel(new MainPanelPresenter(project).getDisplay().asComponent());
+
+							
+						};
+
+					};
+					  progressDialog.addWindowListener(new WindowAdapter() {
+							@Override
+							public void windowClosing(WindowEvent e) {
+							    super.windowClosing(e);
+							    sw.cancel(true);
+
+							}
+						    });
+					sw.execute();
+
 				}
 
 			}
@@ -107,14 +137,12 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.setSelectedFile(new File(display
-						.getSelectedProject().getName()));
+				fileChooser.setSelectedFile(new File(display.getSelectedProject().getName()));
 
 				fileChooser.showSaveDialog(display.asComponent());
 
 				File file = fileChooser.getSelectedFile();
-				ProjectService
-						.exportProject(display.getSelectedProject(), file);
+				ProjectService.exportProject(display.getSelectedProject(), file);
 			}
 
 		});
@@ -145,5 +173,16 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			}
 		});
 
+	}
+
+	private Frame findParentFrame() {
+		Component c = display.asComponent().getParent();
+
+		while (true) {
+			if (c instanceof Frame)
+				return (Frame) c;
+
+			c = c.getParent();
+		}
 	}
 }
