@@ -205,9 +205,11 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// infoProjectDescription.setAutoscrolls(true);
 		// infoProjectDescription.setDocument(new JTextFieldLimit(300));
 		// infoProjectDescription.setEditable(false);
-		infoProjectDescription.setBackground(Color.red);
 		infoProjectDescription.setOpaque(true);
 		infoProjectDescription.setBackground(new Color(255, 255, 255, 0));
+		infoProjectDescription.setEditable(false);
+	//	infoProjectDescription.setDisabledTextColor(Color.BLACK);
+		infoProjectDescription.setEnabled(false);
 
 		namePanel = new JErrorPanel(projectName, MyResourceBundle.getMessage("message.error.fillproject"));
 		descriptionPanel = new JErrorPanel(projectDescription, MyResourceBundle.getMessage("message.error.fillproject"));
