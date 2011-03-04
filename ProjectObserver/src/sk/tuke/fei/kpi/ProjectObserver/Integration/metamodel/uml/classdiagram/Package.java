@@ -62,4 +62,9 @@ public class Package  extends Element implements Serializable {
 	public String toString() {
 		return getFullName();
 	}
+	
+	@Override
+	public String getFullyQualifiedName() {
+		return fullName;
+	}
 }

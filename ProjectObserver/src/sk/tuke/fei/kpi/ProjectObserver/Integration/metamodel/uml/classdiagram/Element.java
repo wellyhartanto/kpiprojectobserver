@@ -24,13 +24,13 @@ public abstract class Element implements Serializable {
 
 	public enum Modifiers {
 		FINAL, ABSTRACT, STATIC, NONE;
-		
-		public static Modifiers fromString(String value){
-			if("".equals(value)){
+
+		public static Modifiers fromString(String value) {
+			if ("".equals(value)) {
 				return FINAL;
-			} else if ("".equals(value)){
+			} else if ("".equals(value)) {
 				return STATIC;
-			} else if ("".equals(value)){
+			} else if ("".equals(value)) {
 				return ABSTRACT;
 			} else {
 				return NONE;
@@ -81,7 +81,7 @@ public abstract class Element implements Serializable {
 
 	@Override
 	public String toString() {
-		return name + "," + visibility + modifiers;
+		return name;
 	}
 
 	public void setParent(Element parent) {
@@ -90,5 +90,9 @@ public abstract class Element implements Serializable {
 
 	public Element getParent() {
 		return parent;
+	}
+
+	public String getFullyQualifiedName() {
+		return parent == null?name : parent.getFullyQualifiedName()+"."+name;
 	}
 }

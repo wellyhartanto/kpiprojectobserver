@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.parser.java;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -85,12 +86,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 				p.setSuperClass(classes.get(p.getSuperClassName()));
 				// logger.info(p.getSuperClass());
 			}
-			// logger.info(p.getFullName() + " -> " + p.getParent() + " " + p.getVisibility());
+			logger.info(p.getFullyQualifiedName());
 		}
 
 		loadMethods();
 		loadAttributes();
-		// loadParameters();
 		loadConstructors();
 	}
 
@@ -105,23 +105,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 			TypeElement parent = classes.get(className);
 			constructor.setParent(parent);
 			parent.getConstructors().add(constructor);
-			logger.info(constructor.getName() + constructor.getParent().getName());
+			logger.info(constructor.getFullyQualifiedName());
 			setParams(constructor);
 			// while (iterator.hasNext()) {
 			// logger.info(iterator.next());
 			// }
-		}
-	}
-
-	private void loadParameters() {
-		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Parameter")); i.hasNext();) {
-			Individual individual = i.next();
-			Param param = new Param();
-			StmtIterator iterator = individual.listProperties();
-			setElement(param, individual);
-			while (iterator.hasNext()) {
-				logger.info(iterator.next());
-			}
 		}
 	}
 
@@ -136,6 +124,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 				p.setParentName(node.toString());
 			}
 			packages.put(p.getFullName(), p);
+			logger.info(p.getFullyQualifiedName());
 		}
 		for (String key : packages.keySet()) {
 			Package p = packages.get(key);
@@ -186,6 +175,9 @@ public class JavaParser implements Parser<Application>, Disposable {
 				clazz.setParent(parent);
 			} else if (!clazz.getName().equals(clazz.getFullName())) {
 				clazz.setExternal(true);
+				logger.info(clazz.getName()+ " " +clazz.getFullName());
+			} else {
+				logger.info(clazz.getName()+ " " +clazz.getFullName());
 			}
 			// TODO isExtending
 
@@ -227,7 +219,10 @@ public class JavaParser implements Parser<Application>, Disposable {
 					element.getMethods().add(method);
 				}
 			}
+			logger.info(method.getFullyQualifiedName());
 			setParams(method);
+			Collections.sort(method.getParams());
+			logger.info(method.getParams());
 		}
 	}
 
@@ -288,14 +283,14 @@ public class JavaParser implements Parser<Application>, Disposable {
 		NodeIterator iterator = individual.listPropertyValues(new PropertyImpl(PREFIX + "implements"));
 		while (iterator.hasNext()) {
 			String iface = OwlUtils.getValue(iterator.next().toString(), '#');
-			logger.info(iface);
+			//logger.info(iface);
 			element.getImplemented().add(classes.get(iface));
 			element.getImplementedNames().add(iface);
 		}
 		RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isExtending"));
 		if (node != null) {
 			element.setSuperClassName(OwlUtils.getValue(node.toString(), '#'));
-			logger.info(element.getSuperClassName());
+			//logger.info(element.getSuperClassName());
 		}
 	}
 
