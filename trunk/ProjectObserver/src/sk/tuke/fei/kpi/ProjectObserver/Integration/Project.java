@@ -112,7 +112,7 @@ public class Project implements Serializable, Disposable {
 
 	public static void main(String[] args) {
 		Date start = new Date();
-		Project project = new Project("test2.xml", "full2.owl");
+		Project project = new Project("test2.xml", "full.owl");
 		try {
 			project.createModel();
 			Logger.getLogger(project.getClass()).info(new Date().getTime() - start.getTime());

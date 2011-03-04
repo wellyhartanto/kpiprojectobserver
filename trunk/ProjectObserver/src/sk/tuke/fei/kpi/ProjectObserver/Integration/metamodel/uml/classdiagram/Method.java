@@ -40,6 +40,11 @@ public class Method extends Element {
 
 	@Override
 	public String toString() {
-		return visibility + " " + modifiers + " " + returnType + " " + name + "(" + params + ")";
+		return parent + "." + name;
+	}
+
+	@Override
+	public String getFullyQualifiedName() {
+		return parent == null ? name : parent.getFullyQualifiedName() + "." + name;
 	}
 }

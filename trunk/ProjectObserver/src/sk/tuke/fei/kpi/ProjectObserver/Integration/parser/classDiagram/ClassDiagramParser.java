@@ -37,9 +37,10 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.classDiagram.entities.Comment;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.classDiagram.entities.DataType;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.classDiagram.entities.XmiElement;
+import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
 import sk.tuke.fei.kpi.ProjectObserver.utils.XMLUtils;
 
-public class ClassDiagramParser implements Parser<ClassDiagram> {
+public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 	private Logger logger = Logger.getLogger(ClassDiagramParser.class);
 	private static final String OWNED_ELEMENT = "Namespace.ownedElement";
 	private static final String CLASSIFIER_FEATURE = "Classifier.feature";
@@ -51,7 +52,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 	private ClassDiagram classDiagram;
 	private Map<String, DataType> datatypes;
 	private List<Comment> comments;
-
+	private List<Package> packages;
 	private List<TypeElement> elements;
 
 	public ClassDiagramParser() {
@@ -59,6 +60,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		datatypes = new HashMap<String, DataType>();
 		comments = new ArrayList<Comment>();
 		elements = new ArrayList<TypeElement>();
+		packages = new ArrayList<Package>();
 	}
 
 	@Override
@@ -90,6 +92,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		for (Node node : packages) {
 			Package pack = processPackage(node);
 			classDiagram.getPackages().add(pack);
+			this.packages.add(pack);
 		}
 		processGeneralizations();
 		processAssociations();
@@ -102,7 +105,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		// }
 		logger.info(elements.size() + " classes and interfaces were loaded from repository.");
 
-		releaseResources();
+		dispose();
 	}
 
 	private void processGeneralizations() {
@@ -174,13 +177,13 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		}
 	}
 
-	private void releaseResources() {
+	@Override
+	public void dispose() {
 		document = null;
 		datatypes.clear();
 		datatypes = null;
 		comments.clear();
 		comments = null;
-		elements = null;
 	}
 
 	private Package processPackage(Node node, String parentName) {
@@ -190,7 +193,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		} else {
 			pack.setFullName(pack.getName());
 		}
-		//logger.info(pack);
+		packages.add(pack);
 		processClasses(node, pack);
 		processInterfaces(node, pack);
 		List<Node> packages = getNodeList(OWNED_ELEMENT, "Package", node);
@@ -207,6 +210,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		for (Node n : classes) {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class clazz = getElement(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class.class, n);
 			clazz.setParent(pack);
+			logger.info(clazz.getFullyQualifiedName());
 			pack.getClasses().add(clazz);
 			elements.add(clazz);
 			processFields(n, clazz);
@@ -222,6 +226,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class clazz = getElement(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class.class, n);
 			//logger.info(ownerClass);
 			clazz.setParent(ownerClass);
+			logger.info(clazz.getFullyQualifiedName());
 			ownerClass.getInnerClasses().add(clazz);
 			elements.add(clazz);
 			processFields(n, clazz);
@@ -251,11 +256,14 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 					c.setParams(method.getParams());
 					c.setVisibility(method.getVisibility());
 					((Class) element).getConstructors().add(c);
+					c.setParent(element);
+					logger.info(c.getFullyQualifiedName());
 				}
 			} else {
 				method.setParent(element);
 				element.getMethods().add(method);
 			}
+			logger.info(method.getFullyQualifiedName());
 		}
 	}
 
@@ -430,5 +438,13 @@ public class ClassDiagramParser implements Parser<ClassDiagram> {
 		} else {
 			return null;
 		}
+	}
+	
+	public List<TypeElement> getElements() {
+		return elements;
+	}
+	
+	public List<Package> getPackages() {
+		return packages;
 	}
 }
