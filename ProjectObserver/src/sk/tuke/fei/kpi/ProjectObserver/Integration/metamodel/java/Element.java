@@ -21,6 +21,11 @@ public abstract class Element implements Serializable {
 				return DEFAULT;
 			}
 		}
+
+		@Override
+		public String toString() {
+			return super.toString().toLowerCase();
+		}
 	};
 
 	public enum Modifiers {

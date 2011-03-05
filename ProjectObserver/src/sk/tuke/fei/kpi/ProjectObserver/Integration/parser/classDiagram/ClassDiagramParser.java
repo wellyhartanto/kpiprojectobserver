@@ -257,13 +257,13 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 					c.setVisibility(method.getVisibility());
 					((Class) element).getConstructors().add(c);
 					c.setParent(element);
-					logger.info(c.getFullyQualifiedName());
+					//logger.info(c.getFullyQualifiedName());
 				}
 			} else {
 				method.setParent(element);
 				element.getMethods().add(method);
 			}
-			logger.info(method.getFullyQualifiedName());
+			//logger.info(method.getFullyQualifiedName());
 		}
 	}
 
@@ -319,7 +319,7 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 			inter.setParent(pack);
 			pack.getInterfaces().add(inter);
 			elements.add(inter);
-
+			logger.info(inter.getFullyQualifiedName());
 			processFields(n, inter);
 			processMethods(n, inter);
 			processClasses(n, inter);
