@@ -8,7 +8,10 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.MappingHolder;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.PrimaryModel;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
@@ -112,9 +115,11 @@ public class Project implements Serializable, Disposable {
 
 	public static void main(String[] args) {
 		Date start = new Date();
-		Project project = new Project("test2.xml", "full.owl");
+		Project project = new Project("test.xml", "full2.owl");
 		try {
 			project.createModel();
+			Aligner aligner = new Aligner(PrimaryModel.JAVA, AlignStrategy.EXACT);
+			aligner.alignModels(project.classDiagram, project.javaModel);
 			Logger.getLogger(project.getClass()).info(new Date().getTime() - start.getTime());
 		} catch (AlignmentException e) {
 			e.printStackTrace();
