@@ -7,6 +7,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Cl
 
 public class Aligner {
 	private static Logger logger = Logger.getLogger(Aligner.class);
+
 	public enum PrimaryModel {
 		JAVA, UML
 	}
@@ -34,9 +35,6 @@ public class Aligner {
 		this.application = app;
 		classDiagramFinder = new ClassDiagramFinder(cd);
 		javaFinder = new JavaFinder(app);
-		logger.info(classDiagramFinder.findPackage("de.softproject.elos"));
-		logger.info(classDiagramFinder.findClass("de.softproject.elos.model.geoData.Town"));
-		logger.info(classDiagramFinder.findInterface("de.softproject.elos.model.geoData.Localizable"));
 		if (primaryModel == PrimaryModel.JAVA) {
 			alignFromJavaModel();
 		} else {
@@ -46,10 +44,15 @@ public class Aligner {
 	}
 
 	private void alignFromJavaModel() {
-
-	}
+		JavaAligner javaAligner = new JavaAligner(mappingHolder,classDiagram);
+		javaAligner.alignJavaPackages(application.getPackages());
+		javaAligner.alignJavaClass(application.getClasses());
+		javaAligner.alignJavaClasses(application.getPackages());
+		javaAligner.alignJavaInterfaces(application.getInterfaces());
+		javaAligner.alignJavaInterface(application.getPackages());
+	}	
 
 	private void alignFromUmlModel() {
-		
+
 	}
 }

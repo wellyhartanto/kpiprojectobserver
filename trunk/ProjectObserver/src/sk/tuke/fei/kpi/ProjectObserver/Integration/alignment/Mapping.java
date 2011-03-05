@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @param <C> type of classes
  * @param <P> type of packages
  */
-public interface Mapping <C, P>  extends Serializable{
+public interface Mapping <C, P, I>  extends Serializable{
 	/**
 	 * Finds corresponding class according to classname
 	 * @param className full name of class including package name
@@ -23,7 +23,11 @@ public interface Mapping <C, P>  extends Serializable{
 	 */
 	P getPackage(String packageName);
 	
+	I getInterface(String interfaceName);
+	
 	void addClassPair(String className,C clazz);
 	
 	void addPackagePair(String packageName, P pack);
+	
+	void addInterfacePair(String interfaceName, I iface);
 }
