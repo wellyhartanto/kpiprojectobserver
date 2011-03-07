@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
@@ -15,67 +16,67 @@ public class JavaAligner {
 	private MappingHolder mappingHolder;
 
 	private ClassDiagramFinder classDiagramFinder;
-	public JavaAligner(MappingHolder mappingHolder,ClassDiagram cd) {
+	public JavaAligner(MappingHolder mappingHolder,ClassDiagram cd,AlignStrategy alignStrategy) {
 		this.mappingHolder = mappingHolder;
-		this.classDiagramFinder = new ClassDiagramFinder(cd);
+		this.classDiagramFinder = new ClassDiagramFinder(cd,alignStrategy);
 	}
 	
-	public void alignJavaPackages(List<Package> packages) {
+	public void alignPackages(List<Package> packages) {
 		for (Package p : packages) {
 			logger.info("Aligning package " + p.getFullyQualifiedName());
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pair = classDiagramFinder.findPackage(p.getFullyQualifiedName());
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pair = classDiagramFinder.findPackage(p);
 			if (pair != null) {
 				mappingHolder.getJava2UmlMapping().addPackagePair(p.getFullyQualifiedName(), pair);
 				mappingHolder.getUml2JavaMapping().addPackagePair(pair.getFullyQualifiedName(), p);
 				logger.info("Paired with " + pair.getFullyQualifiedName());
 			}
 			if (!p.getPackages().isEmpty()) {
-				alignJavaPackages(p.getPackages());
+				alignPackages(p.getPackages());
 			}
 		}
 	}
 	
-	public void alignJavaClasses(List<Package> packages) {
+	public void alignClassesInPackage(List<Package> packages) {
 		for (Package p : packages) {
 			if(!p.getClasses().isEmpty()){
-				alignJavaClass(p.getClasses());
+				alignClasses(p.getClasses());
 			}
 			if (!p.getPackages().isEmpty()) {
-				alignJavaClasses(p.getPackages());
+				alignClassesInPackage(p.getPackages());
 			}
 		}
 	}
 	
-	public void alignJavaClass(List<Class> classes) {
+	public void alignClasses(List<Class> classes) {
 		for (Class c : classes) {
 			logger.info("Aligning classs " + c.getFullyQualifiedName());
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class pair = classDiagramFinder.findClass(c.getFullyQualifiedName());
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class pair = classDiagramFinder.findClass(c);
 			if (pair != null) {
 				mappingHolder.getJava2UmlMapping().addClassPair(c.getFullyQualifiedName(), pair);
 				mappingHolder.getUml2JavaMapping().addClassPair(pair.getFullyQualifiedName(), c);
 				logger.info("Paired with " + pair.getFullyQualifiedName());
 			}
 			if (!c.getClasses().isEmpty()) {
-				alignJavaClass(c.getClasses());
+				alignClasses(c.getClasses());
 			}
 		}
 	}
 	
-	public void alignJavaInterface(List<Package> packages) {
+	public void alignInterfaceInPackage(List<Package> packages) {
 		for (Package p : packages) {
 			if(!p.getInterfaces().isEmpty()){
-				alignJavaInterfaces(p.getInterfaces());
+				alignInterfaces(p.getInterfaces());
 			}
 			if (!p.getPackages().isEmpty()) {
-				alignJavaInterface(p.getPackages());
+				alignInterfaceInPackage(p.getPackages());
 			}
 		}
 	}
 	
-	public void alignJavaInterfaces(List<Interface> classes) {
+	public void alignInterfaces(List<Interface> classes) {
 		for (Interface c : classes) {
 			logger.info("Aligning interface " + c.getFullyQualifiedName());
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface pair = classDiagramFinder.findInterface(c.getFullyQualifiedName());
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface pair = classDiagramFinder.findInterface(c);
 			if (pair != null) {
 				mappingHolder.getJava2UmlMapping().addInterfacePair(c.getFullyQualifiedName(), pair);
 				mappingHolder.getUml2JavaMapping().addInterfacePair(pair.getFullyQualifiedName(), c);

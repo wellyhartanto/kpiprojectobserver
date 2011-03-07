@@ -115,7 +115,7 @@ public class Project implements Serializable, Disposable {
 
 	public static void main(String[] args) {
 		Date start = new Date();
-		Project project = new Project("test.xml", "full.owl");
+		Project project = new Project("test2.xml", "full2aprox.owl");
 		try {
 			project.createModel();
 			Aligner aligner = new Aligner(PrimaryModel.JAVA, AlignStrategy.EXACT);
