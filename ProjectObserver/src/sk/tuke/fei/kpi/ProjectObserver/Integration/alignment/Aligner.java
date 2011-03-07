@@ -13,7 +13,7 @@ public class Aligner {
 	}
 
 	public enum AlignStrategy {
-		EXACT, APPROXIMATION, MANUAL
+		EXACT,HEURISTIC,IGNORE_PACKAGE, APPROXIMATION, MANUAL
 	}
 
 	private MappingHolder mappingHolder;
@@ -21,8 +21,6 @@ public class Aligner {
 	private AlignStrategy alignStrategy;
 	private ClassDiagram classDiagram;
 	private Application application;
-	private JavaFinder javaFinder;
-	private ClassDiagramFinder classDiagramFinder;
 
 	public Aligner(PrimaryModel primaryModel, AlignStrategy alignStrategy) {
 		this.primaryModel = primaryModel;
@@ -33,8 +31,6 @@ public class Aligner {
 	public MappingHolder alignModels(ClassDiagram cd, Application app) {
 		this.classDiagram = cd;
 		this.application = app;
-		classDiagramFinder = new ClassDiagramFinder(cd);
-		javaFinder = new JavaFinder(app);
 		if (primaryModel == PrimaryModel.JAVA) {
 			alignFromJavaModel();
 		} else {
@@ -44,12 +40,12 @@ public class Aligner {
 	}
 
 	private void alignFromJavaModel() {
-		JavaAligner javaAligner = new JavaAligner(mappingHolder,classDiagram);
-		javaAligner.alignJavaPackages(application.getPackages());
-		javaAligner.alignJavaClass(application.getClasses());
-		javaAligner.alignJavaClasses(application.getPackages());
-		javaAligner.alignJavaInterfaces(application.getInterfaces());
-		javaAligner.alignJavaInterface(application.getPackages());
+		JavaAligner javaAligner = new JavaAligner(mappingHolder,classDiagram,alignStrategy);
+		javaAligner.alignPackages(application.getPackages());
+		javaAligner.alignClasses(application.getClasses());
+		javaAligner.alignClassesInPackage(application.getPackages());
+		javaAligner.alignInterfaces(application.getInterfaces());
+		javaAligner.alignInterfaceInPackage(application.getPackages());
 	}	
 
 	private void alignFromUmlModel() {

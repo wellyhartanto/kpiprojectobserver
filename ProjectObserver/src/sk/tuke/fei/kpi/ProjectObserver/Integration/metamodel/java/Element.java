@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Element implements Serializable {
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Alignable;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
+
+public abstract class Element implements Serializable, Alignable {
 	private static final long serialVersionUID = -6146256352210642770L;
 
 	public enum Visibility {
@@ -119,5 +122,26 @@ public abstract class Element implements Serializable {
 
 	public String getFullyQualifiedName() {
 		return parent == null ? name : parent.getFullyQualifiedName() + "." + name;
+	}
+	
+	@Override
+	public boolean matches(Object object, AlignStrategy alignStrategy) {
+		if (object == null) {
+			return false;
+		}
+		if (object instanceof sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element) {
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element element = (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element) object;
+			switch (alignStrategy) {
+			case EXACT:
+				return getFullyQualifiedName().equalsIgnoreCase(element.getFullyQualifiedName());
+			case IGNORE_PACKAGE:
+				return getName().equalsIgnoreCase(element.getName());
+			case MANUAL:
+				return false;
+			default:
+				throw new IllegalStateException("Align strategy " + alignStrategy + "is not supported ");
+			}
+		}
+		return false;
 	}
 }

@@ -205,7 +205,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 			// }
 			RDFNode returnType = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasReturnType"));
 			if (returnType != null)
-				method.setReturnType(OwlUtils.getValue(returnType.toString(), '#'));
+				method.setReturnType(filterType(OwlUtils.getValue(returnType.toString(), '#')));
 			// StmtIterator iterator = individual.listProperties();
 			//			
 			// while (iterator.hasNext()) {
@@ -251,7 +251,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 				field.setParent(element);
 				element.getFields().add(field);
 			}
-			field.setType(OwlUtils.getValue(individual.getPropertyValue(new PropertyImpl(PREFIX + "hasType")).toString(), '#'));
+			field.setType(filterType(OwlUtils.getValue(individual.getPropertyValue(new PropertyImpl(PREFIX + "hasType")).toString(), '#')));
 			logger.info(field.getName() + " " + field.getParent());
 		}
 	}
@@ -316,5 +316,13 @@ public class JavaParser implements Parser<Application>, Disposable {
 		ontology = null;
 		packages = null;
 		classes = null;
+	}
+	
+	private static String filterType(String value){
+		if(value !=null && value.contains("$")){
+			return value.substring(value.indexOf('$')+1,value.length());
+		} else {
+			return value;
+		}
 	}
 }
