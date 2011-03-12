@@ -59,7 +59,6 @@ public class Project implements Serializable, Disposable {
 		return true;
 	}
 	public boolean alignModels(){
-		mappingHolder = new MappingHolder();
 		Aligner aligner = new Aligner(PrimaryModel.JAVA, AlignStrategy.EXACT);
 		mappingHolder = aligner.alignModels(classDiagram, javaModel);
 		return true;
@@ -120,11 +119,11 @@ public class Project implements Serializable, Disposable {
 
 	public static void main(String[] args) {
 		Date start = new Date();
-		Project project = new Project("test2.xml", "full2aprox.owl");
+		Project project = new Project("test.xml", "full.owl");
 		try {
 			project.createModel();
-			Aligner aligner = new Aligner(PrimaryModel.JAVA, AlignStrategy.EXACT);
-			aligner.alignModels(project.classDiagram, project.javaModel);
+			project.alignModels();
+			System.out.println(project.mappingHolder.getJava2UmlMapping().getClass("de.softproject.elos.model.web.Pannenursachen"));
 			Logger.getLogger(project.getClass()).info(new Date().getTime() - start.getTime());
 		} catch (AlignmentException e) {
 			e.printStackTrace();
