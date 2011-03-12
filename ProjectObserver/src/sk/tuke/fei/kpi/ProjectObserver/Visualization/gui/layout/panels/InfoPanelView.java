@@ -18,6 +18,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util.StringUtil;
 
 public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 
@@ -86,6 +87,7 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 			JLabel methodsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofmethods"));
 			JLabel classesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofclasses"));
 			JLabel enumsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofenums"));
+
 			add(classesNumber);
 			add(new JLabel(String.valueOf(cl.getClasses().size())), "wrap");
 			add(methodsNumber);
@@ -121,6 +123,13 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 
 		if (object instanceof Method) {
 			Method me = ((Method) object);
+
+			String fullnametext = me.getVisibility() + " " + me.getReturnType() + " " + me.getName() + "(" + StringUtil.prepareMethodParameters(me.getParams())
+					+ ")";
+			JLabel fullname = new JLabel(fullnametext);
+			fullname.setFont(MyFonts.font3);
+			add(fullname, "wrap");
+
 			JLabel name = new JLabel(me.getName());
 			name.setFont(MyFonts.font3);
 			add(name, "wrap");
@@ -156,8 +165,5 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 	public JComponent asComponent() {
 		return this;
 	}
-	
-	
-	
 
 }

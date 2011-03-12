@@ -1,5 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -10,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -22,6 +25,7 @@ import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.MappingHolder;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
@@ -104,6 +108,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(MyFonts.font2);
 
+
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
 
 		iconPackage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
@@ -128,9 +133,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			pack = pack.getPackages().get(0);
 		}
+		umlClassPanel = new ClassPanel();
 
-		umlClassPanel = new ClassPanel(pack.getClasses().get(0));
-		setVisible(true);
 
 		// to initialize
 
@@ -152,10 +156,10 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		setLayout(new MigLayout("fill,insets 0", "", ""));
 
 		rightPanel.setLayout(new MigLayout("fill,insets 0"));
-		rightPanel.add(tabbedPane, "span,wrap,growx,top");
-		rightPanel.add(umlClassPanel, "wrap,span,growx,growy,top");
+		rightPanel.add(tabbedPane, "growx,growy,wrap");
+		rightPanel.add(umlClassPanel, "growx,growy");
 
-		add(splitPane, "span,growx,growy");
+		add(splitPane, "growx,growy");
 
 	}
 
@@ -191,6 +195,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		/* retrieve the node that was selected */
 		Object nodeInfo = node.getUserObject();
+
+		rightPanel.remove(umlClassPanel);
 
 		if (nodeInfo instanceof Application) {
 			tabbedPane.removeAll();
@@ -228,7 +234,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
-
 		}
 		if (nodeInfo instanceof Class) {
 			tabbedPane.removeAll();
@@ -248,6 +253,18 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Class) nodeInfo).getEnums());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping().getClass(
+
+			((Class) nodeInfo).getFullyQualifiedName());
+
+			if (umlclass != null) {
+
+				umlClassPanel = new ClassPanel(umlclass);
+				umlClassPanel.setVisible(true);
+				rightPanel.add(umlClassPanel, "growx,growy");
+				// wrap,span,,top
+			}
+
 		}
 		if (nodeInfo instanceof Interface) {
 			tabbedPane.removeAll();
@@ -259,7 +276,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
-
 		}
 		if (nodeInfo instanceof Enum) {
 			tabbedPane.removeAll();
@@ -269,7 +285,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			enumValuesPresenter = EnumValuesPresenter.getInstance(((Enum) nodeInfo).getValues());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.values"), iconEnumValue, enumValuesPresenter.getDisplay().asComponent());
-
 		}
 
 		if (nodeInfo instanceof Method) {
@@ -282,15 +297,15 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(((Method) nodeInfo).getExceptions());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.exceptions"), iconInfo, exceptionsPanelPresenter.getDisplay().asComponent());
-
 		}
 		if (nodeInfo instanceof Field) {
 			tabbedPane.removeAll();
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
-
 		}
+
+		repaint();
 
 	}
 

@@ -19,6 +19,9 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ProgressDialog;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.AlignmentException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.PrimaryModel;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
@@ -63,10 +66,11 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 						@Override
 						protected String doInBackground() throws Exception {
-							  progressDialog.setVisible(true);
-							
+							progressDialog.setVisible(true);
+
 							try {
 								project.createModel();
+								project.alignModels();
 							} catch (Exception e1) {
 								e1.printStackTrace();
 							}
@@ -77,21 +81,20 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 						}
 
 						protected void done() {
-							  progressDialog.setVisible(false);
+							progressDialog.setVisible(false);
 							MainFrame.getMainFrame().setPanel(new MainPanelPresenter(project).getDisplay().asComponent());
 
-							
 						};
 
 					};
-					  progressDialog.addWindowListener(new WindowAdapter() {
-							@Override
-							public void windowClosing(WindowEvent e) {
-							    super.windowClosing(e);
-							    sw.cancel(true);
+					progressDialog.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosing(WindowEvent e) {
+							super.windowClosing(e);
+							sw.cancel(true);
 
-							}
-						    });
+						}
+					});
 					sw.execute();
 
 				}

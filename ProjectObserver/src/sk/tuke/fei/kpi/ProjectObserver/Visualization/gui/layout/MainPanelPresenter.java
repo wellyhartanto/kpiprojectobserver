@@ -165,8 +165,9 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 	private JTree createTree() {
 
-		Application app = TestData.createTestData();
-		app.setName("testproject");
+		Application app = null;
+//			TestData.createTestData();
+//		app.setName("testproject");
 
 		 app = project.getJavaModel();
 
