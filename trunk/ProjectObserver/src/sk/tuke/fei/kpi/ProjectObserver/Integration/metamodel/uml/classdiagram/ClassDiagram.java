@@ -12,12 +12,22 @@ public class ClassDiagram implements Serializable {
 	private String filename;
 	private String name;
 	private List<Interface> interfaces;
+	/**
+	 * All packages of model.
+	 */
+	private List<Package> allPackages;
+	/**
+	 * All classes and interfaces of model.
+	 */
+	private List<TypeElement> allClasses;
 
 	public ClassDiagram() {
 		classes = new ArrayList<Class>();
 		enums = new ArrayList<Enum>();
 		packages = new ArrayList<Package>();
 		interfaces = new ArrayList<Interface>();
+		allPackages = new ArrayList<Package>();
+		allClasses = new ArrayList<TypeElement>();		
 	}	
 
 	public List<Class> getClasses() {
@@ -67,6 +77,23 @@ public class ClassDiagram implements Serializable {
 	public void setInterfaces(List<Interface> interfaces) {
 		this.interfaces = interfaces;
 	}
+	
+	public List<Package> getAllPackages() {
+		return allPackages;
+	}
+	
+	public void setAllPackages(List<Package> allPackages) {
+		this.allPackages = allPackages;
+	}
+	
+	public List<TypeElement> getAllClasses() {
+		return allClasses;
+	}
+	
+	public void setAllClasses(List<TypeElement> allClasses) {
+		this.allClasses = allClasses;
+	}
+	
 	@Override
 	public String toString() {
 		return name + packages.toString();

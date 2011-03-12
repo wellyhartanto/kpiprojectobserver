@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Application implements Serializable {
 	private static final long serialVersionUID = 1754398216708453319L;
 	private List<Class> classes = new ArrayList<Class>();
@@ -12,7 +13,14 @@ public class Application implements Serializable {
 	private String filename;
 	private String name;
 	private List<Interface> interfaces = new ArrayList<Interface>();
-
+	/**
+	 * All packages of model.
+	 */
+	private List<Package> allPackages;
+	/**
+	 * All classes and interfaces of model.
+	 */
+	private List<TypeElement> allClasses;
 	public Application() {
 		classes = new ArrayList<Class>();
 		enums = new ArrayList<Enum>();
@@ -71,6 +79,22 @@ public class Application implements Serializable {
 
 	public List<Interface> getInterfaces() {
 		return interfaces;
+	}
+	
+	public List<TypeElement> getAllClasses() {
+		return allClasses;
+	}
+	
+	public void setAllClasses(List<TypeElement> allClasses) {
+		this.allClasses = allClasses;
+	}
+	
+	public List<Package> getAllPackages() {
+		return allPackages;
+	}
+	
+	public void setAllPackages(List<Package> allPackages) {
+		this.allPackages = allPackages;
 	}
 
 	@Override

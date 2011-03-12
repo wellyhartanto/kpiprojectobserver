@@ -104,7 +104,8 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		// logger.info(element.getAssociations());
 		// }
 		logger.info(elements.size() + " classes and interfaces were loaded from repository.");
-
+		classDiagram.setAllPackages(this.packages);
+		classDiagram.setAllClasses(elements);
 		dispose();
 	}
 

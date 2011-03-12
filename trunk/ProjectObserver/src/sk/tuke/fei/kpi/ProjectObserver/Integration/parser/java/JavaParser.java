@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.parser.java;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -61,6 +62,8 @@ public class JavaParser implements Parser<Application>, Disposable {
 		utils = new OwlUtils(ontology);
 		loadModel();
 		// new ClassHierarchy().showHierarchy(System.out, ontology);
+		application.setAllClasses(new ArrayList<TypeElement>(classes.values()));
+		application.setAllPackages(new ArrayList<Package>(packages.values()));
 		return application;
 	}
 
