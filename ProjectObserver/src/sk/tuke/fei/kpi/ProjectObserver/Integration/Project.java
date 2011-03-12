@@ -56,7 +56,12 @@ public class Project implements Serializable, Disposable {
 	public boolean createModel() throws AlignmentException, ParserException {
 		classDiagram = new ClassDiagramParser().parse(umlFile);
 		javaModel = new JavaParser().parse(javaFile);
+		return true;
+	}
+	public boolean alignModels(){
 		mappingHolder = new MappingHolder();
+		Aligner aligner = new Aligner(PrimaryModel.JAVA, AlignStrategy.EXACT);
+		mappingHolder = aligner.alignModels(classDiagram, javaModel);
 		return true;
 	}
 
