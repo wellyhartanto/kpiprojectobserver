@@ -204,11 +204,10 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// infoProjectDescription.setLineWrap(true);
 		// infoProjectDescription.setAutoscrolls(true);
 		// infoProjectDescription.setDocument(new JTextFieldLimit(300));
-		// infoProjectDescription.setEditable(false);
 		infoProjectDescription.setOpaque(true);
 		infoProjectDescription.setBackground(new Color(255, 255, 255, 0));
 		infoProjectDescription.setEditable(false);
-	//	infoProjectDescription.setDisabledTextColor(Color.BLACK);
+		infoProjectDescription.setDisabledTextColor(Color.BLACK);
 		infoProjectDescription.setEnabled(false);
 
 		namePanel = new JErrorPanel(projectName, MyResourceBundle.getMessage("message.error.fillproject"));
@@ -296,6 +295,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
+		infoProjectDescription.setText(null);
 
 	}
 

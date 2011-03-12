@@ -2,10 +2,12 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
+import sun.misc.Perf.GetPerfAction;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -20,6 +22,10 @@ public class ClassPanel extends JPanel {
 	private static final long serialVersionUID = -7007225006753337933L;
 
 	protected mxGraphComponent graphComponent;
+
+	public ClassPanel() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public ClassPanel(Class umlclass) {
 		super();
@@ -56,6 +62,6 @@ public class ClassPanel extends JPanel {
 
 		add(graphComponent, BorderLayout.CENTER);
 
-	}
 
+	}
 }

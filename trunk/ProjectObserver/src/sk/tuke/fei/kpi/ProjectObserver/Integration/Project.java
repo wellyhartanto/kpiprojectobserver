@@ -28,7 +28,7 @@ public class Project implements Serializable, Disposable {
 	private ClassDiagram classDiagram;
 
 	private Application javaModel;
-	
+
 	private MappingHolder mappingHolder;
 
 	private Date creationDate;
@@ -58,7 +58,8 @@ public class Project implements Serializable, Disposable {
 		javaModel = new JavaParser().parse(javaFile);
 		return true;
 	}
-	public boolean alignModels(){
+
+	public boolean alignModels() {
 		Aligner aligner = new Aligner(PrimaryModel.JAVA, AlignStrategy.EXACT);
 		mappingHolder = aligner.alignModels(classDiagram, javaModel);
 		return true;
@@ -139,11 +140,11 @@ public class Project implements Serializable, Disposable {
 	public File getUmlFile() {
 		return umlFile;
 	}
-	
+
 	public MappingHolder getMappingHolder() {
 		return mappingHolder;
 	}
-	
+
 	public void setMappingHolder(MappingHolder mappingHolder) {
 		this.mappingHolder = mappingHolder;
 	}
