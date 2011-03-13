@@ -38,6 +38,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.ClassPanel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.InterfacePanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.ClassesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumValuesPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumsPanelPresenter;
@@ -90,6 +91,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private Project project;
 
 	private ClassPanel umlClassPanel;
+	private InterfacePanel umlInterfacePanel;
 
 	public MainPanelView(Project project) {
 		this.project = project;
@@ -107,7 +109,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(MyFonts.font2);
-
 
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
 
@@ -134,7 +135,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			pack = pack.getPackages().get(0);
 		}
 		umlClassPanel = new ClassPanel();
-
+		umlInterfacePanel = new InterfacePanel();
 
 		// to initialize
 
@@ -197,6 +198,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		Object nodeInfo = node.getUserObject();
 
 		rightPanel.remove(umlClassPanel);
+		rightPanel.remove(umlInterfacePanel);
 
 		if (nodeInfo instanceof Application) {
 			tabbedPane.removeAll();
@@ -276,6 +278,20 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
+
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlinterface = project.getMappingHolder().getJava2UmlMapping()
+					.getInterface(
+
+					((Interface) nodeInfo).getFullyQualifiedName());
+
+			if (umlinterface != null) {
+
+				umlInterfacePanel = new InterfacePanel(umlinterface);
+				umlInterfacePanel.setVisible(true);
+				rightPanel.add(umlInterfacePanel, "growx,growy");
+				// wrap,span,,top
+			}
+
 		}
 		if (nodeInfo instanceof Enum) {
 			tabbedPane.removeAll();

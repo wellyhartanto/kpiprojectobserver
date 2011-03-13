@@ -33,11 +33,11 @@ import com.mxgraph.view.mxGraph;
  * @author MV
  * 
  */
-public class JPanelRenderer extends JPanel {
+public class ClassPanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public JPanelRenderer(
+	public ClassPanelRenderer(
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass) {
 
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
@@ -94,10 +94,10 @@ public class JPanelRenderer extends JPanel {
 
 	}
 
-	public static JPanelRenderer getVertex(Component component) {
+	public static ClassPanelRenderer getVertex(Component component) {
 		while (component != null) {
-			if (component instanceof JPanelRenderer) {
-				return (JPanelRenderer) component;
+			if (component instanceof ClassPanelRenderer) {
+				return (ClassPanelRenderer) component;
 			}
 			component = component.getParent();
 		}
