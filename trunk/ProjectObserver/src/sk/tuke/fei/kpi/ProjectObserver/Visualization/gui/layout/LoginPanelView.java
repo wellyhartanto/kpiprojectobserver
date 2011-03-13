@@ -297,6 +297,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		tableModel.fireTableDataChanged();
 		infoProjectDescription.setText(null);
 
+		repaint();
 	}
 
 	@Override

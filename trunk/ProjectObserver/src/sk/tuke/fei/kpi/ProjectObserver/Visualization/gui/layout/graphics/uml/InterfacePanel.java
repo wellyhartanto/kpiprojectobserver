@@ -6,7 +6,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface;
 import sun.misc.Perf.GetPerfAction;
 
 import com.mxgraph.model.mxCell;
@@ -14,8 +14,7 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 
-public class ClassPanel extends JPanel {
-
+public class InterfacePanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -23,16 +22,16 @@ public class ClassPanel extends JPanel {
 
 	protected mxGraphComponent graphComponent;
 
-	public ClassPanel() {
+	public InterfacePanel() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ClassPanel(Class umlclass) {
+	public InterfacePanel(Interface umlInterface) {
 		super();
 
 		setBackground(Color.WHITE);
 
-		graphComponent = new ClassGraphComponent(umlclass, new mxGraph());
+		graphComponent = new InterfaceGraphComponent(umlInterface, new mxGraph());
 		// graphComponent.getGraph().setCellsResizable(true);
 		mxGraph graph = graphComponent.getGraph();
 
@@ -61,6 +60,7 @@ public class ClassPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		add(graphComponent, BorderLayout.CENTER);
+
 		repaint();
 	}
 }
