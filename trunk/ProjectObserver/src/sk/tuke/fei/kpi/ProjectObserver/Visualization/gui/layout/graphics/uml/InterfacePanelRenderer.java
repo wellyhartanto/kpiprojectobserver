@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -40,7 +42,7 @@ public class InterfacePanelRenderer extends JPanel {
 	public InterfacePanelRenderer(
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlInterface) {
 
-		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
+		setLayout(new MigLayout("insets 3", "", "[]0[]0[]"));
 		setOpaque(false);
 
 		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
@@ -55,24 +57,7 @@ public class InterfacePanelRenderer extends JPanel {
 
 		add(separator, "wrap,span,growx");
 
-//		Field m = new Field();
-//		m.setName("testdieldname");
-//		m.setVisibility(Visibility.PUBLIC);
-//		m.setType("String");
-//
-//		Method m1 = new Method();
-//		m1.setName("testmethodname");
-//		m1.setVisibility(Visibility.PUBLIC);
-//		m1.setReturnType("String");
-//
-//		List<Field> fields = new ArrayList<Field>();
-//		fields.add(m);
-//		umlClass.setFields(fields);
-//
-//		List<Method> methods = new ArrayList<Method>();
-//		methods.add(m1);
-//		umlClass.setMethods(methods);
-
+		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.fields")), "center,span");
 		for (Field field : umlInterface.getFields()) {
 
 			JLabel fieldLbl = new JLabel();
@@ -81,6 +66,7 @@ public class InterfacePanelRenderer extends JPanel {
 			add(fieldLbl, "wrap");
 		}
 		add(separator1, "wrap,span,growx");
+		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.methods")), "center,span");
 
 		for (Method method : umlInterface.getMethods()) {
 

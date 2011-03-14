@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -37,8 +39,7 @@ public class ClassPanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public ClassPanelRenderer(
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass) {
+	public ClassPanelRenderer(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass) {
 
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
 		setOpaque(false);
@@ -52,44 +53,20 @@ public class ClassPanelRenderer extends JPanel {
 
 		JLabel classNameLbl = new JLabel(umlClass.getName());
 		add(classNameLbl, "wrap,span,center");
-
 		add(separator, "wrap,span,growx");
-
-//		Field m = new Field();
-//		m.setName("testdieldname");
-//		m.setVisibility(Visibility.PUBLIC);
-//		m.setType("String");
-//
-//		Method m1 = new Method();
-//		m1.setName("testmethodname");
-//		m1.setVisibility(Visibility.PUBLIC);
-//		m1.setReturnType("String");
-//
-//		List<Field> fields = new ArrayList<Field>();
-//		fields.add(m);
-//		umlClass.setFields(fields);
-//
-//		List<Method> methods = new ArrayList<Method>();
-//		methods.add(m1);
-//		umlClass.setMethods(methods);
+		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.fields")), "center,span");
 
 		for (Field field : umlClass.getFields()) {
-
 			JLabel fieldLbl = new JLabel();
-			fieldLbl.setText(field.getVisibility() + " " + field.getType()
-					+ " " + field.getName());
+			fieldLbl.setText(field.getVisibility() + " " + field.getType() + " " + field.getName());
 			add(fieldLbl, "wrap");
 		}
 		add(separator1, "wrap,span,growx");
-
+		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.methods")), "center,span");
 		for (Method method : umlClass.getMethods()) {
-
 			JLabel methodLbl = new JLabel();
-			methodLbl.setText(method.getVisibility() + " "
-					+ method.getReturnType() + " " + method.getName());
-
+			methodLbl.setText(method.getVisibility() + " " + method.getReturnType() + " " + method.getName());
 			add(methodLbl, "wrap");
-
 		}
 
 	}
