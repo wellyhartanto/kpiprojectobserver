@@ -39,6 +39,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.ClassPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.InterfacePanel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.PackagePanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.ClassesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumValuesPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumsPanelPresenter;
@@ -92,6 +93,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	private ClassPanel umlClassPanel;
 	private InterfacePanel umlInterfacePanel;
+	private PackagePanel umlPackagePanel;
 
 	public MainPanelView(Project project) {
 		this.project = project;
@@ -136,6 +138,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		}
 		umlClassPanel = new ClassPanel();
 		umlInterfacePanel = new InterfacePanel();
+		umlPackagePanel = new PackagePanel();
 
 		// to initialize
 
@@ -199,6 +202,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		rightPanel.remove(umlClassPanel);
 		rightPanel.remove(umlInterfacePanel);
+		rightPanel.remove(umlPackagePanel);
 
 		if (nodeInfo instanceof Application) {
 			tabbedPane.removeAll();
@@ -236,6 +240,20 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
 			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
+
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlpackage = project.getMappingHolder().getJava2UmlMapping()
+					.getPackage(
+
+					((Package) nodeInfo).getFullyQualifiedName());
+
+			if (umlpackage != null) {
+
+				umlPackagePanel = new PackagePanel(umlpackage);
+				umlPackagePanel.setVisible(true);
+				rightPanel.add(umlPackagePanel, "growx,growy");
+				// wrap,span,,top
+			}
+
 		}
 		if (nodeInfo instanceof Class) {
 			tabbedPane.removeAll();

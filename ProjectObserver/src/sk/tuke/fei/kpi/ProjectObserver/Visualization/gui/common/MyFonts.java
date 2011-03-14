@@ -11,4 +11,5 @@ public class MyFonts {
 	public static Font font5 = new Font("sansserif", Font.PLAIN, 14);
 	public static Font font6 = new Font("Tahoma", Font.PLAIN, 12);
 	public static Font font7 = new Font("Tahoma", Font.PLAIN, 11);
+	public static Font font8 = new Font("Tahoma", Font.BOLD, 10);
 }
