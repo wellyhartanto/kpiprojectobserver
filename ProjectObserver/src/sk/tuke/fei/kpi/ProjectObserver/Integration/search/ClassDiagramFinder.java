@@ -1,4 +1,4 @@
-package sk.tuke.fei.kpi.ProjectObserver.Integration.alignment;
+package sk.tuke.fei.kpi.ProjectObserver.Integration.search;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;

@@ -1,8 +1,15 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URL;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -35,8 +42,7 @@ public class Project implements Serializable, Disposable {
 	private String name;
 	private String description;
 	static {
-		URL configFileResource = Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml");
-		DOMConfigurator.configure(configFileResource.getFile());
+		DOMConfigurator.configure(Project.class.getClassLoader().getResource("sk/tuke/fei/kpi/ProjectObserver/log4j.xml").getFile());
 	}
 
 	private Project() {
@@ -65,21 +71,71 @@ public class Project implements Serializable, Disposable {
 		return true;
 	}
 
-	public void save(String pathname) {
+	public void save(String pathname) throws FileNotFoundException, IOException {
 		save(new File(pathname));
 	}
 
-	public void save(File file) {
-		// TODO
-	}
+	public void save(File file) throws FileNotFoundException, IOException {
+		ObjectOutputStream out = null;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(file));
+			out.writeObject(this);
 
-	public static Project load(String pathname) {
+		} finally {
+			if (out != null) {
+				out.close();
+			}
+		}
+	}
+	@Deprecated
+	public void saveToXml(String pathname,Object object) throws FileNotFoundException, IOException {
+		saveToXml(new File(pathname),object);
+	}
+	@Deprecated
+	public void saveToXml(File file,Object object) throws FileNotFoundException, IOException {
+		XMLEncoder xmlEncoder = null;
+		try {
+			xmlEncoder = new XMLEncoder(new FileOutputStream(file));
+			xmlEncoder.writeObject(object);
+		} finally {
+			if (xmlEncoder != null) {
+				xmlEncoder.close();
+			}
+		}
+	}
+	
+	public static Project load(String pathname) throws IOException, ClassNotFoundException {
 		return load(new File(pathname));
 	}
+	
+	public static Project load(File file) throws IOException, ClassNotFoundException {
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(file));
+			return (Project) in.readObject();
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+		}
+	}
 
-	public static Project load(File file) {
-		// TODO
-		return new Project();
+	@Deprecated
+	public static Project loadFromXml(String pathname) throws FileNotFoundException {
+		return loadFromXml(new File(pathname));
+	}
+
+	@Deprecated
+	public static Project loadFromXml(File file) throws FileNotFoundException {
+		XMLDecoder xmlDecoder = null;
+		try {
+			xmlDecoder = new XMLDecoder(new FileInputStream(file));
+			return (Project) xmlDecoder.readObject();
+		} finally {
+			if (xmlDecoder != null) {
+				xmlDecoder.close();
+			}
+		}
 	}
 
 	public ClassDiagram getClassDiagram() {
@@ -118,13 +174,13 @@ public class Project implements Serializable, Disposable {
 		javaFile = null;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Date start = new Date();
-		Project project = new Project("test.xml", "full.owl");
+		Project project = new Project("test2.xml", "full2.owl");
 		try {
 			project.createModel();
 			project.alignModels();
-			System.out.println(project.mappingHolder.getJava2UmlMapping().getClass("de.softproject.elos.model.web.Pannenursachen"));
+			System.out.println(project.mappingHolder.getJava2UmlMapping().getClass("de.softproject.elos.model.web.Pannenursachen"));			
 			Logger.getLogger(project.getClass()).info(new Date().getTime() - start.getTime());
 		} catch (AlignmentException e) {
 			e.printStackTrace();

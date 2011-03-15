@@ -5,12 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
@@ -25,25 +22,16 @@ public class ProjectService {
 	private static String projectFileExtension = ".observer";
 
 	public static void saveProject(Project project) {
-
 		File projectDir = new File(userHome, projectsFolderName);
 		if (!projectDir.isDirectory()) {
 			projectDir.mkdir();
 		}
-
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
 		try {
-			fos = new FileOutputStream(projectDir + File.separator
-					+ project.getName() + project.getCreationDate().getTime()
-					+ projectFileExtension);
-			out = new ObjectOutputStream(fos);
-			out.writeObject(project);
-			out.close();
+			project.save(projectDir + File.separator + project.getName() + 
+					project.getCreationDate().getTime() + projectFileExtension);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-
 	}
 
 	public static List<Project> loadProjects() {
@@ -56,23 +44,12 @@ public class ProjectService {
 			List<File> files = Arrays.asList(projectDir.listFiles());
 
 			for (File file : files) {
-
-				Project project;
-
-				FileInputStream fis = null;
-				ObjectInputStream in = null;
 				try {
-					fis = new FileInputStream(file);
-					in = new ObjectInputStream(fis);
-					project = (Project) in.readObject();
-					in.close();
-
-					projects.add(project);
+					projects.add(Project.load(file));
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
-
 		}
 
 		return projects;
@@ -92,19 +69,11 @@ public class ProjectService {
 	}
 
 	public static void exportProject(Project project,File file) {
-
-
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
 		try {
-			fos = new FileOutputStream(file + projectFileExtension);
-			out = new ObjectOutputStream(fos);
-			out.writeObject(project);
-			out.close();
+			project.save(file);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-
 	}
 	
 	public static void importProject(File file) {

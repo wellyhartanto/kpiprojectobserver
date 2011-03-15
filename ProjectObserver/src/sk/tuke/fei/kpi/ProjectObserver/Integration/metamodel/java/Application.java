@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.search.Finder;
+
 
 public class Application implements Serializable {
 	private static final long serialVersionUID = 1754398216708453319L;
@@ -100,5 +102,13 @@ public class Application implements Serializable {
 	@Override
 	public String toString() {
 		return getName();
+	}
+	
+	public List<TypeElement> searchClasses(String name){
+		return Finder.searchJavaElements(name, allClasses);
+	}
+	
+	public List<Package> searchPackages(String name){
+		return Finder.searchJavaElements(name, allPackages);
 	}
 }
