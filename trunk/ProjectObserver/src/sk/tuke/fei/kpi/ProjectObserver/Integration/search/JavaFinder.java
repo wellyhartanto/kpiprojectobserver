@@ -1,11 +1,11 @@
-package sk.tuke.fei.kpi.ProjectObserver.Integration.alignment;
+package sk.tuke.fei.kpi.ProjectObserver.Integration.search;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 
-public class JavaFinder {
+class JavaFinder {
 	private Application application;
 
 	public JavaFinder( Application app) {

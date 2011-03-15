@@ -9,6 +9,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.search.ClassDiagramFinder;
 
 public class JavaAligner {
 	private static Logger logger = Logger.getLogger(JavaAligner.class);
@@ -52,8 +53,7 @@ public class JavaAligner {
 			logger.info("Aligning classs " + c.getFullyQualifiedName());
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class pair = classDiagramFinder.findClass(c);
 			if (pair != null) {
-				mappingHolder.getJava2UmlMapping().addClassPair(c.getFullyQualifiedName(), pair);
-				mappingHolder.getUml2JavaMapping().addClassPair(pair.getFullyQualifiedName(), c);
+				mappingHolder.addClassPair(pair,c);
 				logger.info("Paired with " + pair.getFullyQualifiedName());
 			}
 			if (!c.getClasses().isEmpty()) {
@@ -78,8 +78,7 @@ public class JavaAligner {
 			logger.info("Aligning interface " + c.getFullyQualifiedName());
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface pair = classDiagramFinder.findInterface(c);
 			if (pair != null) {
-				mappingHolder.getJava2UmlMapping().addInterfacePair(c.getFullyQualifiedName(), pair);
-				mappingHolder.getUml2JavaMapping().addInterfacePair(pair.getFullyQualifiedName(), c);
+				mappingHolder.addInterfacePair(pair, c);
 				logger.info("Paired with " + pair.getFullyQualifiedName());
 			}
 		}

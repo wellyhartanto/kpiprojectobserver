@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.search.Finder;
+
 public class ClassDiagram implements Serializable {
 	private static final long serialVersionUID = -1965268218122677260L;
 	private List<Class> classes;
@@ -97,5 +99,14 @@ public class ClassDiagram implements Serializable {
 	@Override
 	public String toString() {
 		return name + packages.toString();
+	}
+	
+
+	public List<TypeElement> searchClasses(String name){
+		return Finder.searchUmlElements(name, allClasses);
+	}
+	
+	public List<Package> searchPackages(String name){
+		return Finder.searchUmlElements(name, allPackages);
 	}
 }

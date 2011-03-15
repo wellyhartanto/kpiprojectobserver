@@ -29,4 +29,22 @@ public class MappingHolder implements Serializable {
 	public void setJava2UmlMapping(Java2UmlMapping java2UmlMapping) {
 		this.java2UmlMapping = java2UmlMapping;
 	}
+	
+	public void addPackagePair(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package p1,
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package p2){
+		getJava2UmlMapping().addPackagePair(p2.getFullyQualifiedName(), p1);
+		getUml2JavaMapping().addPackagePair(p1.getFullyQualifiedName(), p2);
+	}
+	
+	public void addClassPair(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class c1,
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class c2){
+		getJava2UmlMapping().addClassPair(c2.getFullyQualifiedName(), c1);
+		getUml2JavaMapping().addClassPair(c1.getFullyQualifiedName(), c2);
+	}
+	
+	public void addInterfacePair(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface i1,
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface i2){
+		getJava2UmlMapping().addInterfacePair(i2.getFullyQualifiedName(), i1);
+		getUml2JavaMapping().addInterfacePair(i1.getFullyQualifiedName(), i2);
+	}
 }
