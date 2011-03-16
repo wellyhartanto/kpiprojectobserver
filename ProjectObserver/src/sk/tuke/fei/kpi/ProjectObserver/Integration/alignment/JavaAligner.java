@@ -10,18 +10,31 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.search.ClassDiagramFinder;
-
+/**
+ * Align
+ */
 public class JavaAligner {
 	private static Logger logger = Logger.getLogger(JavaAligner.class);
 	
 	private MappingHolder mappingHolder;
 
 	private ClassDiagramFinder classDiagramFinder;
+	
+	/**
+	 * Constructor
+	 * @param mappingHolder mapping holder where align result are stored.
+	 * @param cd class diagram finder
+	 * @param alignStrategy align strategy
+	 */
 	public JavaAligner(MappingHolder mappingHolder,ClassDiagram cd,AlignStrategy alignStrategy) {
 		this.mappingHolder = mappingHolder;
 		this.classDiagramFinder = new ClassDiagramFinder(cd,alignStrategy);
 	}
 	
+	/**
+	 * 
+	 * @param packages
+	 */
 	public void alignPackages(List<Package> packages) {
 		for (Package p : packages) {
 			logger.info("Aligning package " + p.getFullyQualifiedName());
