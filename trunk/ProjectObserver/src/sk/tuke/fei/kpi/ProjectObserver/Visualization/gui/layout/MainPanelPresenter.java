@@ -19,6 +19,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.TestData;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialog;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 
@@ -31,6 +32,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		display = new MainPanelView(this.project);
 
 		bind();
+		
+		new SearchDialog(this.project).setVisible(true);
 	}
 
 	@Override
