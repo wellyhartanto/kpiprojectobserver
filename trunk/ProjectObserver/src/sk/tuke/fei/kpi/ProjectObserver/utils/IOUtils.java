@@ -9,15 +9,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-
+/**
+ * Contains method for reading and writing to files.
+ *
+ */
 public class IOUtils {
 	/**
-	 * Writes specified text to file
-	 * 
-	 * @param string
-	 *            text
-	 * @param filename
-	 *            filename
+	 * Writes specified text to file. If file doesn't exist it will be created.
+	 * @param string text to write
+	 * @param filename name of file (without path)
+	 * @return flag which signalizes whether operation was successful or not
 	 */
 	public static boolean writeToFile(String string, String filename) {
 		try {
@@ -37,12 +38,10 @@ public class IOUtils {
 	}
 
 	/**
-	 * Writes specified bytes to file
-	 * 
-	 * @param string
-	 *            text
-	 * @param filename
-	 *            filename
+	 * Writes bytes in array to specified file
+	 * @param bytes file content in byte format
+	 * @param filename name of file (without path)
+	 * @return flag which signalizes whether operation was successful or not
 	 */
 	public static boolean writeToFile(byte[] bytes, String filename) {
 		try {
@@ -60,10 +59,9 @@ public class IOUtils {
 	}
 
 	/**
-	 * Reads the file
-	 * 
-	 * @param filename
-	 * @return Text content of file
+	 * Read text content from file
+	 * @param filename name of file (without path)
+	 * @return content of file as string
 	 */
 	public static String readFile(String filename) {
 		try {
@@ -83,10 +81,15 @@ public class IOUtils {
 			return "";
 		}
 	}
-
-	public static byte[] getBytesFromFile(String fileName) {
+	
+	/**
+	 * Read content of file as byte array
+	 * @param pathname pathname
+	 * @return content of file
+	 */
+	public static byte[] getBytesFromFile(String pathname) {
 		try {
-			File file = new File(fileName);
+			File file = new File(pathname);
 			InputStream is = new FileInputStream(file);
 			long length = file.length();
 			if (length > Integer.MAX_VALUE) {
@@ -102,7 +105,7 @@ public class IOUtils {
 
 			// Ensure all the bytes have been read in
 			if (offset < bytes.length) {
-				throw new IOException("Could not completely read file " + fileName);
+				throw new IOException("Could not completely read file " + pathname);
 			}
 			is.close();
 			return bytes;
@@ -112,10 +115,20 @@ public class IOUtils {
 		}
 	}
 
+	/**
+	 * Check whether specified file exists in home directory
+	 * @param filename name of file (without path)
+	 * @return true if file exist
+	 */
 	public static boolean fileExist(String filename) {
 		return new File(HOME_DIR, filename).exists();
 	}
 
+	/**
+	 * Prepares file to write. If file does not exist the new one is created.
+	 * @param filename name of file (without path)
+	 * @return file
+	 */
 	public static File prepareFileForWrite(String filename) {
 		try {
 			createHomeDirectory();
@@ -128,15 +141,26 @@ public class IOUtils {
 			return null;
 		}
 	}
+	
+	/**
+	 * Application directory in UserName/Aplication Data folder
+	 */
+	public static final String HOME_DIR = System.getenv("APPDATA") + File.separator + "ProjectObserver";
 
-	private static final String HOME_DIR = System.getenv("APPDATA") + File.separator + "ProjectObserver";
-
+	/**
+	 * Creates application directory
+	 */
 	private static void createHomeDirectory() {
 		File f = new File(System.getenv("APPDATA"), "ProjectObserver");
 		if (!f.exists())
 			f.mkdirs();
 	}
 
+	/**
+	 * Gets file in Home directory of application
+	 * @param filename name of file (without path)
+	 * @return file
+	 */
 	public static File getFile(String filename) {
 		return new File(HOME_DIR, filename);
 	}

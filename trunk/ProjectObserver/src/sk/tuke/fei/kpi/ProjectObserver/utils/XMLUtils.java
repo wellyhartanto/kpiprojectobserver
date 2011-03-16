@@ -16,8 +16,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Utilities for operations with XML documents.
+ *
+ */
 public class XMLUtils {
 
+	/**
+	 * Reads XML document as raw string.
+	 * @param document XML document
+	 * @return Text content of XML document.
+	 */
 	public static String XMLToString(Document document) {
 		try {
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -31,6 +40,11 @@ public class XMLUtils {
 		}
 	}
 
+	/**
+	 * Reads XML document as raw string.
+	 * @param file XML file
+	 * @return Text content of XML document.
+	 */
 	public static String readXmlDocument(File file) {
 		try {
 			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
@@ -41,6 +55,12 @@ public class XMLUtils {
 		}
 	}
 	
+	/**
+	 * Finds nodes by its name in list of nodes.
+	 * @param name node name
+	 * @param nodeList list of nodes
+	 * @return collection of nodes
+	 */
 	public static List<Node> getNodesByName(String name, NodeList nodeList){
 		List<Node> list = new ArrayList<Node>();
 		for(int i =0; i < nodeList.getLength();i++){
@@ -50,6 +70,13 @@ public class XMLUtils {
 		}
 		return list;
 	}
+	
+	/**
+	 * Finds node by name in list of nodes
+	 * @param name node name
+	 * @param nodeList list of nodes
+	 * @return node
+	 */
 	public static Node getNodeByName(String name, NodeList nodeList){		
 		for(int i =0; i < nodeList.getLength();i++){
 			if(name.equals(nodeList.item(i).getNodeName())){
@@ -59,10 +86,22 @@ public class XMLUtils {
 		return null;
 	}
 
+	/**
+	 * Finds node by name between child nodes of parent node.
+	 * @param name node name
+	 * @param node parent node
+	 * @return nodes
+	 */
 	public static Node getNodeByName(String name, Node node) {
 		return getNodeByName(name, node.getChildNodes());
 	}
 	
+	/**
+	 * Finds nodes by name between child nodes of parent node.
+	 * @param name node name
+	 * @param node parent node
+	 * @return collection of nodes
+	 */
 	public static List<Node> getNodesByName(String name, Node node) {
 		return getNodesByName(name, node.getChildNodes());
 	}

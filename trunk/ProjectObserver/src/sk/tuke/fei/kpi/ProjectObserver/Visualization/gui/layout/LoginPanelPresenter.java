@@ -17,9 +17,9 @@ import javax.swing.filechooser.FileFilter;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ProgressDialog;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.AlignmentException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.AlignmentException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.PrimaryModel;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
