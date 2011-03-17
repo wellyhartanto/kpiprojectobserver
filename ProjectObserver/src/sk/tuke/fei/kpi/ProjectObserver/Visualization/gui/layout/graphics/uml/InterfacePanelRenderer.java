@@ -24,7 +24,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Fi
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -57,7 +57,7 @@ public class InterfacePanelRenderer extends JPanel {
 
 		add(separator, "wrap,span,growx");
 
-		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.fields")), "center,span");
+		add(ComponentsBuilder.createDiagramLabel(Messages.getMessage("title.fields")), "center,span");
 		for (Field field : umlInterface.getFields()) {
 
 			JLabel fieldLbl = new JLabel();
@@ -66,7 +66,7 @@ public class InterfacePanelRenderer extends JPanel {
 			add(fieldLbl, "wrap");
 		}
 		add(separator1, "wrap,span,growx");
-		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.methods")), "center,span");
+		add(ComponentsBuilder.createDiagramLabel(Messages.getMessage("title.methods")), "center,span");
 
 		for (Method method : umlInterface.getMethods()) {
 

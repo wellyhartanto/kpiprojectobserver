@@ -3,7 +3,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java
 import java.util.ArrayList;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
 
 public class PackagesTableModel extends GenericTableModel<Package> {
@@ -16,7 +16,7 @@ public class PackagesTableModel extends GenericTableModel<Package> {
 		super();
 		data = new ArrayList<Package>();
 
-		columnNames = new String[] { MyResourceBundle.getMessage("table.packagestable.column.name") };
+		columnNames = new String[] { Messages.getMessage("table.packagestable.column.name") };
 	}
 
 }

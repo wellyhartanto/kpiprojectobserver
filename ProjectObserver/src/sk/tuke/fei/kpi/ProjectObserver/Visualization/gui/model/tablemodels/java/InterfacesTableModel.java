@@ -3,7 +3,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java
 import java.util.ArrayList;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
 
 public class InterfacesTableModel extends GenericTableModel<Interface> {
@@ -17,9 +17,9 @@ public class InterfacesTableModel extends GenericTableModel<Interface> {
 		super();
 		data = new ArrayList<Interface>();
 
-		columnNames = new String[] { MyResourceBundle.getMessage("table.interfacestable.column.name"),
+		columnNames = new String[] { Messages.getMessage("table.interfacestable.column.name"),
 
-		MyResourceBundle.getMessage("table.interfacestable.column.visibility") };
+		Messages.getMessage("table.interfacestable.column.visibility") };
 
 	}
 

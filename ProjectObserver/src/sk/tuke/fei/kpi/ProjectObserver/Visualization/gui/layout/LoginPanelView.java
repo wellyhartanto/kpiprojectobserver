@@ -37,7 +37,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JErrorPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Message;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -113,14 +113,14 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		Font buttonsFont = MyFonts.font2;
 		Dimension buttonsSize = new Dimension(120, 30);
 
-		openProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.open"));
-		deleteProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.delete"));
-		importProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.import"));
-		exportProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.export"));
+		openProject = new JButton(Messages.getMessage("loginpanel.buttons.open"));
+		deleteProject = new JButton(Messages.getMessage("loginpanel.buttons.delete"));
+		importProject = new JButton(Messages.getMessage("loginpanel.buttons.import"));
+		exportProject = new JButton(Messages.getMessage("loginpanel.buttons.export"));
 
-		createProject = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.create"));
-		loadSourceCode = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadsourcefile"));
-		loadUmlModel = new JButton(MyResourceBundle.getMessage("loginpanel.buttons.loadumlfile"));
+		createProject = new JButton(Messages.getMessage("loginpanel.buttons.create"));
+		loadSourceCode = new JButton(Messages.getMessage("loginpanel.buttons.loadsourcefile"));
+		loadUmlModel = new JButton(Messages.getMessage("loginpanel.buttons.loadumlfile"));
 
 		openProject.setFont(buttonsFont);
 		deleteProject.setFont(buttonsFont);
@@ -143,7 +143,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		projectName = new JTextField(50);
 		projectName.setDocument(new JTextFieldLimit(20));
-		nameBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.name");
+		nameBackgroundText = Messages.getMessage("loginpanel.newproject.name");
 		projectName.setText(nameBackgroundText);
 		projectName.setForeground(backgroundTextColor);
 		projectName.addFocusListener(new FocusListener() {
@@ -172,7 +172,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectDescription.setLineWrap(true);
 		projectDescription.setAutoscrolls(true);
 		projectDescription.setDocument(new JTextFieldLimit(300));
-		descriptionBackgroundText = MyResourceBundle.getMessage("loginpanel.newproject.description");
+		descriptionBackgroundText = Messages.getMessage("loginpanel.newproject.description");
 		projectDescription.setText(descriptionBackgroundText);
 		projectDescription.setForeground(backgroundTextColor);
 
@@ -210,10 +210,10 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		infoProjectDescription.setDisabledTextColor(Color.BLACK);
 		infoProjectDescription.setEnabled(false);
 
-		namePanel = new JErrorPanel(projectName, MyResourceBundle.getMessage("message.error.fillproject"));
-		descriptionPanel = new JErrorPanel(projectDescription, MyResourceBundle.getMessage("message.error.fillproject"));
-		umlFilePanel = new JErrorPanel(loadUmlModel, MyResourceBundle.getMessage("message.error.selectfile"));
-		sourceCodeFilePanel = new JErrorPanel(loadSourceCode, MyResourceBundle.getMessage("message.error.selectfile"));
+		namePanel = new JErrorPanel(projectName, Messages.getMessage("message.error.fillproject"));
+		descriptionPanel = new JErrorPanel(projectDescription, Messages.getMessage("message.error.fillproject"));
+		umlFilePanel = new JErrorPanel(loadUmlModel, Messages.getMessage("message.error.selectfile"));
+		sourceCodeFilePanel = new JErrorPanel(loadSourceCode, Messages.getMessage("message.error.selectfile"));
 
 		Dimension scBtnSize = loadSourceCode.getPreferredSize();
 		Dimension umlBtnSize = loadUmlModel.getPreferredSize();

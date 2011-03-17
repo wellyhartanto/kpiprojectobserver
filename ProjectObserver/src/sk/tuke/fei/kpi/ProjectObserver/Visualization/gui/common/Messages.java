@@ -3,7 +3,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class MyResourceBundle {
+public class Messages {
 
 	public static String getMessage(String key) {
 

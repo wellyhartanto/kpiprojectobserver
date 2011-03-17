@@ -23,7 +23,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.AlignmentException;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.PrimaryModel;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.ParserException;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
 
@@ -59,7 +59,7 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 				if (display.isNewProjectCorrect(umlFile, sourceCodeFile)) {
 
-					String label = MyResourceBundle.getMessage("message.info.creatingproject");
+					String label = Messages.getMessage("message.info.creatingproject");
 					final ProgressDialog progressDialog = new ProgressDialog(label, label, findParentFrame());
 					final SwingWorker<String, String> sw = new SwingWorker<String, String>() {
 						Project project = new Project(umlFile, sourceCodeFile);
