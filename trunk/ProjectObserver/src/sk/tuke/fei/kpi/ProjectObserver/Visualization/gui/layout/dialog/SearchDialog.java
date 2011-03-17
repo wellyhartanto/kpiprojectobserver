@@ -2,6 +2,8 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -25,8 +27,13 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDocument;
+import org.jdesktop.swingx.autocomplete.ListAdaptor;
+
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
 public class SearchDialog extends JDialog implements DocumentListener {
 
@@ -44,7 +51,6 @@ public class SearchDialog extends JDialog implements DocumentListener {
 	final Highlighter hilit;
 	final Highlighter.HighlightPainter painter;
 
-	private DefaultListModel listModel;
 	private JList list;
 	private Project project;
 
@@ -70,14 +76,14 @@ public class SearchDialog extends JDialog implements DocumentListener {
 		jLabel1 = new JLabel();
 
 		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-		setTitle("TextFieldDemo");
+		setTitle(Messages.getMessage("dialog.search.title"));
 
-		listModel = new DefaultListModel();
+		
 		list = new JList();
 
 		jScrollPane1 = new JScrollPane(list);
 
-		jLabel1.setText("Enter text to search:");
+		jLabel1.setText(Messages.getMessage("dialog.search.searchtext"));
 
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -137,13 +143,40 @@ public class SearchDialog extends JDialog implements DocumentListener {
 		// Create the vertical group
 		layout.setVerticalGroup(vGroup);
 		pack();
+
+		entry.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					list.requestFocus();
+				}
+			}
+		});
+
 		search();
+
 	}
 
 	public void search() {
 		String searchtext = entry.getText();
 		List<TypeElement> li = project.getJavaModel().searchClasses(searchtext);
 		this.list.setListData(li.toArray());
+		if (this.list.getModel().getSize() > 0) {
+			this.list.setSelectedIndex(0);
+		}
 	}
 
 	void message(String msg) {
@@ -166,7 +199,6 @@ public class SearchDialog extends JDialog implements DocumentListener {
 
 	class CancelAction extends AbstractAction {
 		public void actionPerformed(ActionEvent ev) {
-			hilit.removeAllHighlights();
 			entry.setText("");
 			entry.setBackground(entryBg);
 		}

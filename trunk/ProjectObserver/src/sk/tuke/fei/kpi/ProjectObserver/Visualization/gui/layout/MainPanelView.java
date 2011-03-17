@@ -36,7 +36,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.ClassPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.InterfacePanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.PackagePanel;
@@ -208,38 +208,38 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.removeAll();
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
 			packagesPanelPresenter = PackagesPanelPresenter.getInstance(((Application) nodeInfo).getPackages());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, packagesPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.packages"), iconPackage, packagesPanelPresenter.getDisplay().asComponent());
 
 			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Application) nodeInfo).getClasses());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
 
 			interfacesPanelPresenter = InterfacesPanelPresenter.getInstance(((Application) nodeInfo).getInterfaces());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface, interfacesPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.interfaces"), iconInterface, interfacesPanelPresenter.getDisplay().asComponent());
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Application) nodeInfo).getEnums());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
 		}
 
 		if (nodeInfo instanceof Package) {
 			tabbedPane.removeAll();
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
 			packagesPanelPresenter = PackagesPanelPresenter.getInstance(((Package) nodeInfo).getPackages());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.packages"), iconPackage, packagesPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.packages"), iconPackage, packagesPanelPresenter.getDisplay().asComponent());
 
 			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Package) nodeInfo).getClasses());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
 
 			interfacesPanelPresenter = InterfacesPanelPresenter.getInstance(((Package) nodeInfo).getInterfaces());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.interfaces"), iconInterface, interfacesPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.interfaces"), iconInterface, interfacesPanelPresenter.getDisplay().asComponent());
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlpackage = project.getMappingHolder().getJava2UmlMapping()
 					.getPackage(
@@ -259,19 +259,19 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.removeAll();
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
 			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Class) nodeInfo).getMethods());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
 
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Class) nodeInfo).getFields());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
 			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Class) nodeInfo).getClasses());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Class) nodeInfo).getEnums());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping().getClass(
 
@@ -289,13 +289,13 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		if (nodeInfo instanceof Interface) {
 			tabbedPane.removeAll();
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
 			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Interface) nodeInfo).getMethods());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
 
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlinterface = project.getMappingHolder().getJava2UmlMapping()
 					.getInterface(
@@ -315,28 +315,28 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.removeAll();
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
 			enumValuesPresenter = EnumValuesPresenter.getInstance(((Enum) nodeInfo).getValues());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.values"), iconEnumValue, enumValuesPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.values"), iconEnumValue, enumValuesPresenter.getDisplay().asComponent());
 		}
 
 		if (nodeInfo instanceof Method) {
 			tabbedPane.removeAll();
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
 			methodParamsPresenter = MethodParamsPresenter.getInstance(((Method) nodeInfo).getParams());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.params"), iconInfo, methodParamsPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.params"), iconInfo, methodParamsPresenter.getDisplay().asComponent());
 
 			exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(((Method) nodeInfo).getExceptions());
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.exceptions"), iconInfo, exceptionsPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.exceptions"), iconInfo, exceptionsPanelPresenter.getDisplay().asComponent());
 		}
 		if (nodeInfo instanceof Field) {
 			tabbedPane.removeAll();
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
-			tabbedPane.addTab(MyResourceBundle.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 		}
 
 		repaint();

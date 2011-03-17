@@ -17,7 +17,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util.StringUtil;
 
 public class InfoPanelView extends JPanel implements InfoPanelDisplay {
@@ -35,10 +35,10 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 			name.setFont(MyFonts.font3);
 			add(name, "wrap");
 
-			JLabel classesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofclasses"));
-			JLabel interfacesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofinterfaces"));
-			JLabel packagesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofpackages"));
-			JLabel enumsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofenums"));
+			JLabel classesNumber = new JLabel(Messages.getMessage("info.numberofclasses"));
+			JLabel interfacesNumber = new JLabel(Messages.getMessage("info.numberofinterfaces"));
+			JLabel packagesNumber = new JLabel(Messages.getMessage("info.numberofpackages"));
+			JLabel enumsNumber = new JLabel(Messages.getMessage("info.numberofenums"));
 			add(packagesNumber);
 			add(new JLabel(String.valueOf(app.getPackages().size())), "wrap");
 
@@ -59,10 +59,10 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 			name.setFont(MyFonts.font3);
 			add(name, "wrap");
 
-			JLabel classesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofclasses"));
-			JLabel interfacesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofinterfaces"));
-			JLabel packagesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofpackages"));
-			JLabel enumsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofenums"));
+			JLabel classesNumber = new JLabel(Messages.getMessage("info.numberofclasses"));
+			JLabel interfacesNumber = new JLabel(Messages.getMessage("info.numberofinterfaces"));
+			JLabel packagesNumber = new JLabel(Messages.getMessage("info.numberofpackages"));
+			JLabel enumsNumber = new JLabel(Messages.getMessage("info.numberofenums"));
 			add(packagesNumber);
 			add(new JLabel(String.valueOf(pa.getPackages().size())), "wrap");
 
@@ -83,10 +83,10 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 			name.setFont(MyFonts.font3);
 			add(name, "wrap");
 
-			JLabel fieldsNumber = new JLabel(MyResourceBundle.getMessage("info.numberoffields"));
-			JLabel methodsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofmethods"));
-			JLabel classesNumber = new JLabel(MyResourceBundle.getMessage("info.numberofclasses"));
-			JLabel enumsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofenums"));
+			JLabel fieldsNumber = new JLabel(Messages.getMessage("info.numberoffields"));
+			JLabel methodsNumber = new JLabel(Messages.getMessage("info.numberofmethods"));
+			JLabel classesNumber = new JLabel(Messages.getMessage("info.numberofclasses"));
+			JLabel enumsNumber = new JLabel(Messages.getMessage("info.numberofenums"));
 
 			add(classesNumber);
 			add(new JLabel(String.valueOf(cl.getClasses().size())), "wrap");
@@ -103,8 +103,8 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 			JLabel name = new JLabel(in.getName());
 			name.setFont(MyFonts.font3);
 			add(name, "wrap");
-			JLabel fieldsNumber = new JLabel(MyResourceBundle.getMessage("info.numberoffields"));
-			JLabel methodsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofmethods"));
+			JLabel fieldsNumber = new JLabel(Messages.getMessage("info.numberoffields"));
+			JLabel methodsNumber = new JLabel(Messages.getMessage("info.numberofmethods"));
 
 			add(methodsNumber);
 			add(new JLabel(String.valueOf(in.getMethods().size())), "wrap");
@@ -134,8 +134,8 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 			name.setFont(MyFonts.font3);
 			add(name, "wrap");
 
-			JLabel exceptionsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofexceptions"));
-			JLabel paramsNumber = new JLabel(MyResourceBundle.getMessage("info.numberofparams"));
+			JLabel exceptionsNumber = new JLabel(Messages.getMessage("info.numberofexceptions"));
+			JLabel paramsNumber = new JLabel(Messages.getMessage("info.numberofparams"));
 
 			add(exceptionsNumber);
 			add(new JLabel(String.valueOf(me.getExceptions().size())), "wrap");

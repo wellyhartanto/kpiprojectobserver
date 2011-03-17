@@ -28,7 +28,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Me
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyResourceBundle;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -62,7 +62,7 @@ public class PackagePanelRenderer extends JPanel {
 		add(classNameLbl, "wrap,span,center");
 
 		add(separator, "wrap,span,growx");
-		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.packages")), "center,span");
+		add(ComponentsBuilder.createDiagramLabel(Messages.getMessage("title.packages")), "center,span");
 
 		for (Package packagee : umlPackage.getPackages()) {
 
@@ -73,7 +73,7 @@ public class PackagePanelRenderer extends JPanel {
 		}
 
 		add(separator1, "wrap,span,growx");
-		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.interfaces")), "center,span");
+		add(ComponentsBuilder.createDiagramLabel(Messages.getMessage("title.interfaces")), "center,span");
 		for (Interface interfacee : umlPackage.getInterfaces()) {
 
 			JLabel interfaceLbl = new JLabel();
@@ -84,7 +84,7 @@ public class PackagePanelRenderer extends JPanel {
 		}
 
 		add(separator2, "wrap,span,growx");
-		add(ComponentsBuilder.createDiagramLabel(MyResourceBundle.getMessage("title.classes")), "center,span");
+		add(ComponentsBuilder.createDiagramLabel(Messages.getMessage("title.classes")), "center,span");
 		for (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class classs : umlPackage.getClasses()) {
 
 			JLabel classLbl = new JLabel();
