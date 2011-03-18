@@ -40,8 +40,8 @@ public class JavaAligner {
 			logger.info("Aligning package " + p.getFullyQualifiedName());
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pair = classDiagramFinder.findPackage(p);
 			if (pair != null) {
-				mappingHolder.getJava2UmlMapping().addPackagePair(p.getFullyQualifiedName(), pair);
-				mappingHolder.getUml2JavaMapping().addPackagePair(pair.getFullyQualifiedName(), p);
+				mappingHolder.getJava2UmlMapping().setPackagePair(p.getFullyQualifiedName(), pair);
+				mappingHolder.getUml2JavaMapping().setPackagePair(pair.getFullyQualifiedName(), p);
 				logger.info("Paired with " + pair.getFullyQualifiedName());
 			}
 			if (!p.getPackages().isEmpty()) {

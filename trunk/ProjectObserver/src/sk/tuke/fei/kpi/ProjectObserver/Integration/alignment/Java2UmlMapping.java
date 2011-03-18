@@ -35,23 +35,26 @@ public class Java2UmlMapping implements Mapping<Class, Package,Interface> {
 	}
 
 	@Override
-	public void addClassPair(String className, Class clazz) {
-		if (!classMap.containsKey(className)) {
-			classMap.put(className, clazz);
+	public void setClassPair(String className, Class clazz) {
+		if (classMap.containsKey(className)) {
+			classMap.remove(className);
 		}
+		classMap.put(className, clazz);		
 	}
 
 	@Override
-	public void addPackagePair(String packageName, Package pack) {
-		if (!packageMap.containsKey(packageName)) {
-			packageMap.put(packageName, pack);
-		}
+	public void setPackagePair(String packageName, Package pack) {
+		if (packageMap.containsKey(packageName)) {
+			packageMap.remove(packageName);
+		}	
+		packageMap.put(packageName, pack);		
 	}
 	
 	@Override
-	public void addInterfacePair(String interfaceName, Interface iface) {
-		if (!interfaceMap.containsKey(interfaceName)) {
-			interfaceMap.put(interfaceName, iface);
+	public void setInterfacePair(String interfaceName, Interface iface) {
+		if (interfaceMap.containsKey(interfaceName)) {
+			interfaceMap.remove(interfaceName);
 		}		
+		interfaceMap.put(interfaceName, iface);				
 	}
 }

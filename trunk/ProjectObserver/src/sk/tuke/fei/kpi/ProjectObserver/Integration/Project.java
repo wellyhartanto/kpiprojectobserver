@@ -282,11 +282,13 @@ public class Project implements Serializable, Disposable {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Date start = new Date();
-		Project project = new Project("test2.xml", "full2.owl");
+		Project project = new Project("testdif.xml", "fulldif.owl");
 		try {
 			project.createModel();
 			project.alignModels();
-			System.out.println(project.mappingHolder.getJava2UmlMapping().getClass("de.softproject.elos.model.web.Pannenursachen"));			
+			System.out.println(project.mappingHolder.getDifference("de.softproject.elos.model.web.Dienstleister"));
+			System.out.println(project.mappingHolder.getJava2UmlMapping().getClass("de.softproject.elos.model.web.Pannenursachen"));
+			System.out.println(project.getJavaModel().searchClasses("PA"));
 			Logger.getLogger(project.getClass()).info(new Date().getTime() - start.getTime());
 		} catch (AlignmentException e) {
 			e.printStackTrace();

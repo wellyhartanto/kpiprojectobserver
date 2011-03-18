@@ -13,7 +13,7 @@ public interface Mapping <C, P, I>  extends Serializable {
 	/**
 	 * Finds corresponding class according to className.
 	 * @param className full name of class including package name
-	 * @return class
+	 * @return class class
 	 */
 	C getClass(String className);
 	/**
@@ -25,26 +25,26 @@ public interface Mapping <C, P, I>  extends Serializable {
 	/**
 	 * Finds corresponding interface according to interfaceName.
 	 * @param interfaceName full name of interface including package name
-	 * @return interface
+	 * @return interface interface
 	 */
 	I getInterface(String interfaceName);
 	
 	/**
-	 * Adds class pair to mapping.
+	 * Adds class pair to mapping. If pair for specified name alreay exist it will be replaced.
 	 * @param className fully qualified name
 	 * @param clazz class
 	 */
-	void addClassPair(String className,C clazz);
+	void setClassPair(String className,C clazz);
 	/**
-	 * Adds package pair to mapping.
+	 * Adds package pair to mapping. If pair for specified name alreay exist it will be replaced.
 	 * @param packageName fully qualified name
 	 * @param pack package
 	 */
-	void addPackagePair(String packageName, P pack);
+	void setPackagePair(String packageName, P pack);
 	/**
-	 * Adds interface pair to mapping
+	 * Adds interface pair to mapping. If pair for specified name alreay exist it will be replaced.
 	 * @param interfaceName fully qualified name
 	 * @param iface interface
 	 */
-	void addInterfacePair(String interfaceName, I iface);
+	void setInterfacePair(String interfaceName, I iface);
 }

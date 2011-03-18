@@ -3,11 +3,23 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.search;
 import java.util.ArrayList;
 import java.util.List;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Alignable;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 
+/**
+ * Contains methods for finding elements in collection according to its name or using some other strategies.
+ */
 public class Finder {
 
+	/**
+	 * Finds {@link Application} element in list of elements by its name.
+	 * @param <T> Type of elements in collections and return type 
+	 * @param name name of element to find
+	 * @param list list of elements
+	 * @return element
+	 */
 	public static <T extends sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element> T findJavaElement(String name, List<T> list) {
 		for (T t : list) {
 			if (t.getFullyQualifiedName().equals(name)) {
@@ -17,6 +29,12 @@ public class Finder {
 		return null;
 	}
 	
+	/**
+	 * Finds {@link Application} elements in in list which name starts with parameter name.
+	 * @param name name of element to find
+	 * @param list list of elements
+	 * @return list of elements
+	 */
 	public static <T extends sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element> List<T> searchJavaElements(String name, List<T> list) {
 		List<T> result = new ArrayList<T>();
 		String searchString = name.toUpperCase();
@@ -28,6 +46,13 @@ public class Finder {
 		return result;
 	}
 
+	/**
+	 * Finds {@link ClassDiagram} element in list of elements by its name.
+	 * @param <T> Type of elements in collections and return type 
+	 * @param name name of element to find
+	 * @param list list of elements
+	 * @return element
+	 */
 	public static <T extends sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element> T findUmlElement(String name, List<T> list) {
 		for (T t : list) {
 			if (t.getFullyQualifiedName().equals(name)) {
@@ -37,6 +62,12 @@ public class Finder {
 		return null;
 	}
 
+	/**
+	 * Finds {@link ClassDiagram} elements in in list which name starts with parameter name.
+	 * @param name name of element to find
+	 * @param list list of elements
+	 * @return list of elements
+	 */
 	public static <T extends sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element> List<T> searchUmlElements(String name, List<T> list) {
 		List<T> result = new ArrayList<T>();
 		String searchString = name.toUpperCase();
@@ -48,6 +79,13 @@ public class Finder {
 		return result;
 	}
 
+	/**
+	 * Finds {@link ClassDiagram} element in list of elements by its name. Search is based on align strategy and  {@link Alignable#matches} method.
+	 * @param <T> Type of elements in collections and return type 
+	 * @param name name of element to find
+	 * @param list list of elements
+	 * @return element
+	 */
 	public static <T extends sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element> T findUmlElement(
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element object, List<T> list, AlignStrategy alignStrategy) {
 		for (T t : list) {

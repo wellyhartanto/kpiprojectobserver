@@ -27,12 +27,13 @@ public class Method extends BehavioralElement {
 		if (object instanceof sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method) {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method method = (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method) object;
 			switch (alignStrategy) {
-			default:				
-				boolean value = getVisibility().toString().equals(method.getVisibility().toString()) && getName().equals(method.getName()) && returnType.equals(method.getReturnType()) && getParams().size() == method.getParams().size();
-				if(value){
+			default:
+				boolean value = getVisibility().toString().equalsIgnoreCase(method.getVisibility().toString()) && getName().equals(method.getName()) && returnType.endsWith(method.getReturnType())
+						&& getParams().size() == method.getParams().size();
+				if (value && getParams().size() != 0) {
 					return testParams(method);
 				} else {
-					return false;
+					return value;
 				}
 			}
 		}
@@ -40,8 +41,8 @@ public class Method extends BehavioralElement {
 	}
 
 	private boolean testParams(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method method) {
-		for(int i =0; i<getParams().size();i++){
-			if(!getParams().get(i).getType().equals(method.getParams().get(i).getType())){
+		for (int i = 0; i < getParams().size(); i++) {
+			if (!getParams().get(i).getType().endsWith(method.getParams().get(i).getType())) {
 				return false;
 			}
 		}

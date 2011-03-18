@@ -15,15 +15,32 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 
+/**
+ * OWL Utils.
+ * Contains method for running and processing SPARQL queries on given Ontology model.
+ */
 public class OwlUtils {
-	private static String defaultNamespace = "http://www.jscc.sk/ontology/OOMOntology.owl#";
+	/**
+	 * Default namespace of OWL ontology, which contains application model.
+	 * It is used for executing SPARQL queries.
+	 */
+	public static String defaultNamespace = "http://www.jscc.sk/ontology/OOMOntology.owl#";
 	private Logger logger = Logger.getLogger(OwlUtils.class);
 	private Model model;
 
+	/**
+	 * COntructor
+	 * @param model ontology model
+	 */
 	public OwlUtils(Model model) {
 		this.model = model;
 	}
 
+	/**
+	 * Creates SPARQL query.
+	 * @param queryRequest query string
+	 * @return Query object
+	 */
 	private Query createQuery(String queryRequest) {
 		StringBuffer queryStr = new StringBuffer();
 		// Establish Prefixs
@@ -34,11 +51,16 @@ public class OwlUtils {
 		return QueryFactory.create(queryStr.toString());
 	}
 
-	public List<Param> runParamQuery(String entityName) {
+	/**
+	 * Runs query which selects method params.
+	 * @param method method URI
+	 * @return List of parameters
+	 */
+	public List<Param> runParamQuery(String method) {
 		StringBuilder query = new StringBuilder("SELECT * WHERE {?param a jscc:Parameter; ");
 		query.append("jscc:hasName ?name;");
 		query.append("jscc:hasType ?type; ");
-		query.append("jscc:isParameterOf <").append(entityName).append(">");
+		query.append("jscc:isParameterOf <").append(method).append(">");
 		query.append(".}");
 		Query q = createQuery(query.toString());
 		QueryExecution qexec = QueryExecutionFactory.create(q, model);
@@ -60,7 +82,18 @@ public class OwlUtils {
 		return result;
 	}
 
+	/**
+	 * Gets value from URI. 
+	 * Finds last occurence of separator and return string which starts after separator.
+	 * @param value URI
+	 * @param separator value separator
+	 * @return value
+	 */
 	public static String getValue(String value, char separator) {
-		return value.substring(value.lastIndexOf(separator) + 1, value.length());
+		if(value!=null &&value.contains(String.valueOf(separator))){
+			return value.substring(value.lastIndexOf(separator) + 1, value.length());
+		} else {
+			return value;
+		}
 	}
 }

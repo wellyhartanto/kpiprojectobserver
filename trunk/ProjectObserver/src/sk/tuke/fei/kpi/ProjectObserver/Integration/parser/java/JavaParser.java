@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -19,7 +18,6 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element.Modifiers;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element.Visibility;
@@ -33,7 +31,6 @@ import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
@@ -45,6 +42,9 @@ public class JavaParser implements Parser<Application>, Disposable {
 	private OntModel ontology;
 	private Application application;
 
+	/**
+	 * Constructor
+	 */
 	public JavaParser() {
 		packages = new HashMap<String, sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package>(20);
 		classes = new HashMap<String, TypeElement>(150);
@@ -67,55 +67,69 @@ public class JavaParser implements Parser<Application>, Disposable {
 		return application;
 	}
 
-	private void initModel(String path) {
+	/**
+	 * Initialize ontology model from input file specified by its pathname.
+	 * @param pathname pathname
+	 */
+	private void initModel(String pathname) {
 		ontology = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, null);
-		ontology.getDocumentManager().addAltEntry("http://www.jscc.sk/ontology/OOMOntology", "file:" + path);
-		ontology.getDocumentManager().addAltEntry("http://www.jscc.sk/ontology/OOMOntology.owl", "file:" + path);
+		ontology.getDocumentManager().addAltEntry("http://www.jscc.sk/ontology/OOMOntology", "file:" + pathname);
+		ontology.getDocumentManager().addAltEntry("http://www.jscc.sk/ontology/OOMOntology.owl", "file:" + pathname);
 		ontology.read("http://www.jscc.sk/ontology/OOMOntology");
 	}
 
+	/**
+	 * Loads application model.
+	 */
 	private void loadModel() {
-		loadPackages();
+		loadPackages();		
 		loadInterfaces();
 		loadClasses();
-
+		loadMethods();
+		loadAttributes();
+		loadConstructors();
 		for (String key : classes.keySet()) {
 			TypeElement p = classes.get(key);
 			for (String value : p.getImplementedNames()) {
 				p.getImplemented().add(classes.get(value));
-				// logger.info(classes.get(value));
 			}
 			if (p.getSuperClassName() != null) {
 				p.setSuperClass(classes.get(p.getSuperClassName()));
-				// logger.info(p.getSuperClass());
 			}
 			logger.info(p.getFullyQualifiedName());
+			Collections.sort(p.getClasses());
+			Collections.sort(p.getImplemented());
+			Collections.sort(p.getMethods());
+			Collections.sort(p.getFields());
 		}
-
-		loadMethods();
-		loadAttributes();
-		loadConstructors();
+		for (String key : packages.keySet()) {
+			Package p = packages.get(key);
+			Collections.sort(p.getClasses());
+			Collections.sort(p.getPackages());
+			Collections.sort(p.getInterfaces());			
+		}
 	}
 
+	/**
+	 * Loads constructors from ontology.
+	 */
 	private void loadConstructors() {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Constructor")); i.hasNext();) {
 			Individual individual = i.next();
 			Constructor constructor = new Constructor();
-			StmtIterator iterator = individual.listProperties();
 			setElement(constructor, individual);
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isConstructorOf"));
 			String className = OwlUtils.getValue(node.toString(), '#');
 			TypeElement parent = classes.get(className);
 			constructor.setParent(parent);
 			parent.getConstructors().add(constructor);
-			logger.info(constructor.getFullyQualifiedName());
 			setParams(constructor);
-			// while (iterator.hasNext()) {
-			// logger.info(iterator.next());
-			// }
 		}
 	}
-
+	
+	/**
+	 * Loads packages from ontology.
+	 */
 	private void loadPackages() {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Package")); i.hasNext();) {
 			Individual individual = i.next();
@@ -127,7 +141,6 @@ public class JavaParser implements Parser<Application>, Disposable {
 				p.setParentName(node.toString());
 			}
 			packages.put(p.getFullName(), p);
-			logger.info(p.getFullyQualifiedName());
 		}
 		for (String key : packages.keySet()) {
 			Package p = packages.get(key);
@@ -136,18 +149,15 @@ public class JavaParser implements Parser<Application>, Disposable {
 				Package parent = packages.get(p.getParentName().split("#")[1]);
 				parent.getPackages().add(p);
 				p.setParent(parent);
-				logger.info(p.getFullName());
 			} else {
 				application.getPackages().add(p);
 			}
 		}
-		//		
-		// for (String key:packages.keySet()){
-		// Package p = packages.get(key);
-		// logger.info(p.getFullName()+" -> "+p.getParent());
-		// }
 	}
 
+	/**
+	 * Load iterfaces from ontology.
+	 */
 	private void loadInterfaces() {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Interface")); i.hasNext();) {
 			Individual individual = i.next();
@@ -167,6 +177,9 @@ public class JavaParser implements Parser<Application>, Disposable {
 		}
 	}
 
+	/**
+	 * Loads classes from ontology.
+	 */
 	private void loadClasses() {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Class")); i.hasNext();) {
 			Individual individual = i.next();
@@ -178,42 +191,27 @@ public class JavaParser implements Parser<Application>, Disposable {
 				clazz.setParent(parent);
 			} else if (!clazz.getName().equals(clazz.getFullName())) {
 				clazz.setExternal(true);
-				logger.info(clazz.getName()+ " " +clazz.getFullName());
 			} else {
-				logger.info(clazz.getName()+ " " +clazz.getFullName());
 			}
 			// TODO isExtending
 
 			setSuperClasses(clazz, individual);
 			classes.put(clazz.getFullName(), clazz);
 		}
-
-		// for (String key : classes.keySet()) {
-		// TypeElement p = classes.get(key);
-		// logger.info(p.getVisibility() + " " + p.getFullName() + " -> " + p.getParent());
-		// }
 	}
 
 	private OwlUtils utils;
 
-	// PREFIX jscc: <http://www.jscc.sk/ontology/OOMOntology.owl#> SELECT * WHERE {?param a jscc:Parameter; jscc:hasName ?name;jscc:hasType ?type; jscc:isParameterOf
-	// <'de.softproject.elos.model.web.ServiceMobile$setDfZeit:Date'>.}
+	/**
+	 * Load methods from ontology.
+	 */
 	private void loadMethods() {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Method")); i.hasNext();) {
 			Individual individual = i.next();
 			Method method = new Method();
-			setElement(method, individual);
-			// if(method.getFullName()!=null){
-			// logger.info(method.getFullName());
-			// }
 			RDFNode returnType = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasReturnType"));
 			if (returnType != null)
 				method.setReturnType(filterType(OwlUtils.getValue(returnType.toString(), '#')));
-			// StmtIterator iterator = individual.listProperties();
-			//			
-			// while (iterator.hasNext()) {
-			// logger.info(iterator.next());
-			// }
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isDefiningBehaviorOf"));
 			if (node != null) {
 				TypeElement element = classes.get(OwlUtils.getValue(node.toString(), '#'));
@@ -222,27 +220,24 @@ public class JavaParser implements Parser<Application>, Disposable {
 					element.getMethods().add(method);
 				}
 			}
-			logger.info(method.getFullyQualifiedName());
 			setParams(method);
 			Collections.sort(method.getParams());
-			logger.info(method.getParams());
 		}
 	}
 
+	/**
+	 * Sets params of behavioral element(Method or constructor). 
+	 * @param element method or constructor
+	 */
 	private void setParams(BehavioralElement element) {
-		// try {
 		if (element.getFullName() != null && element.getFullName().charAt(element.getFullName().length() - 1) != ':') {
-			List<Param> list = utils.runParamQuery(PREFIX + element.getFullName());
-			// for (Param param : list) {
-			// logger.info(param.getName() + param.getType());
-			// }
-			element.setParams(list);
+			element.setParams(utils.runParamQuery(PREFIX + element.getFullName()));
 		}
-		// } catch (NullPointerException ex) {
-		// ex.printStackTrace();
-		// }
 	}
 
+	/**
+	 * Loads field from ontology
+	 */
 	private void loadAttributes() {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Attribute")); i.hasNext();) {
 			Individual individual = i.next();
@@ -255,10 +250,15 @@ public class JavaParser implements Parser<Application>, Disposable {
 				element.getFields().add(field);
 			}
 			field.setType(filterType(OwlUtils.getValue(individual.getPropertyValue(new PropertyImpl(PREFIX + "hasType")).toString(), '#')));
-			logger.info(field.getName() + " " + field.getParent());
 		}
 	}
 
+	/**
+	 * Gets package from element URI.
+	 * @param value URI of element
+	 * @param separator separator
+	 * @return Package of object with specified URI
+	 */
 	private Package getPackage(String value, char separator) {
 		try {
 			return packages.get(value.substring(0, value.lastIndexOf(separator)));
@@ -268,6 +268,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 		}
 	}
 
+	/**
+	 * Sets modifiers of element.
+	 * @param element element to set
+	 * @param individual individual which is ontology representation of element
+	 */
 	private static void setModifiers(Element element, Individual individual) {
 		NodeIterator iterator = individual.listPropertyValues(new PropertyImpl(PREFIX + "hasModifier"));
 		while (iterator.hasNext()) {
@@ -282,6 +287,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 		}
 	}
 
+	/**
+	 * Sets superclass of element
+	 * @param element element to set
+	 * @param individual individual which is ontology representation of element
+	 */
 	private void setSuperClasses(TypeElement element, Individual individual) {
 		NodeIterator iterator = individual.listPropertyValues(new PropertyImpl(PREFIX + "implements"));
 		while (iterator.hasNext()) {
@@ -297,6 +307,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 		}
 	}
 
+	/**
+	 * Sets element name, fullname and modifiers.
+	 * @param element element to set
+	 * @param individual individual which is ontology representation of element
+	 */
 	private static void setElement(Element element, Individual individual) {
 		RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasName"));
 		if (node != null) {
@@ -321,6 +336,12 @@ public class JavaParser implements Parser<Application>, Disposable {
 		classes = null;
 	}
 	
+	/**
+	 * Extract java Type from value.
+	 * For example value primitiveType$int id transformed to int.
+	 * @param value value
+	 * @return type
+	 */
 	private static String filterType(String value){
 		if(value !=null && value.contains("$")){
 			return value.substring(value.indexOf('$')+1,value.length());
