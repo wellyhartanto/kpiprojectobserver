@@ -1,5 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionListener;
 
@@ -19,6 +21,9 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
 
 public interface MainPanelDisplay extends DisplayComponent {
 
+	void setChangeProjectAction(ActionListener l);
+
+	void setSearchAction(ActionListener l);
 
 	void setTreeValueChangedAction();
 
