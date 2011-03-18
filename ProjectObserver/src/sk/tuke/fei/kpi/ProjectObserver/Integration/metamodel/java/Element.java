@@ -7,7 +7,7 @@ import java.util.List;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Alignable;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 
-public abstract class Element implements Serializable, Alignable {
+public abstract class Element implements Serializable, Alignable, Comparable<Element> {
 	private static final long serialVersionUID = -6146256352210642770L;
 
 	public enum Visibility {
@@ -59,12 +59,10 @@ public abstract class Element implements Serializable, Alignable {
 	private String fullName;
 	private Visibility visibility = Visibility.DEFAULT;
 	private List<Modifiers> modifiers;
-	private List<Annotation> anotations;
 	private Element parent;
 
 	public Element() {
 		modifiers = new ArrayList<Modifiers>();
-		anotations = new ArrayList<Annotation>();
 	}
 
 	public String getName() {
@@ -89,14 +87,6 @@ public abstract class Element implements Serializable, Alignable {
 
 	public void setModifiers(List<Modifiers> modifiers) {
 		this.modifiers = modifiers;
-	}
-
-	public List<Annotation> getAnotations() {
-		return anotations;
-	}
-
-	public void setAnotations(List<Annotation> anotations) {
-		this.anotations = anotations;
 	}
 
 	public Element getParent() {
@@ -143,5 +133,15 @@ public abstract class Element implements Serializable, Alignable {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public int compareTo(Element o) {
+		if(name==null)
+			return -1;
+		if(o.name == null){
+			return 1;
+		}
+		return name.compareTo(o.name);
 	}
 }

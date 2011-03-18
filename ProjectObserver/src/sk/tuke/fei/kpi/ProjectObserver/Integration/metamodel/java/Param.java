@@ -1,7 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java;
 
 
-public class Param extends Element implements Comparable<Param> {
+public class Param extends Element {
 	private static final long serialVersionUID = -4982603891161171221L;
 	private String type;
 	private int order;
@@ -30,8 +30,12 @@ public class Param extends Element implements Comparable<Param> {
 	public String toString() {
 		return type +" "+getName();
 	}
+	
 	@Override
-	public int compareTo(Param o) {
-		return new Integer(order).compareTo(o.order);
+	public int compareTo(Element o) {
+		if(!(o instanceof Param)){
+			return 1;
+		}
+		return new Integer(order).compareTo(((Param)o).order);
 	}
 }

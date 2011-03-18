@@ -40,6 +40,9 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.parser.classDiagram.entities.
 import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
 import sk.tuke.fei.kpi.ProjectObserver.utils.XMLUtils;
 
+/**
+ * Class diagram parser. Extract class diagram from file in XMI 1.1 format.
+ */
 public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 	private Logger logger = Logger.getLogger(ClassDiagramParser.class);
 	private static final String OWNED_ELEMENT = "Namespace.ownedElement";
@@ -55,6 +58,9 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 	private List<Package> packages;
 	private List<TypeElement> elements;
 
+	/**
+	 * Constructor.
+	 */
 	public ClassDiagramParser() {
 		classDiagram = new ClassDiagram();
 		datatypes = new HashMap<String, DataType>();
@@ -85,6 +91,9 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		return classDiagram;
 	}
 
+	/**
+	 * Loads class diagram from file.
+	 */
 	private void loadModel() {
 		NodeList nodes = document.getElementsByTagName(PREFIX + "Model");
 		classDiagram.setName(nodes.item(0).getAttributes().getNamedItem("name").getNodeValue());
@@ -96,19 +105,15 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		}
 		processGeneralizations();
 		processAssociations();
-
-		// for (TypeElement element : elements) {
-		// logger.info(element.toString());
-		// logger.info(element.getFields());
-		// logger.info(element.getMethods());
-		// logger.info(element.getAssociations());
-		// }
 		logger.info(elements.size() + " classes and interfaces were loaded from repository.");
 		classDiagram.setAllPackages(this.packages);
 		classDiagram.setAllClasses(elements);
 		dispose();
 	}
 
+	/**
+	 * Extracts generalizations from file.
+	 */
 	private void processGeneralizations() {
 		NodeList generalizations = document.getElementsByTagName(PREFIX + "Generalization");
 		for (int i = 0; i < generalizations.getLength(); i++) {
@@ -124,6 +129,9 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		}
 	}
 
+	/**
+	 * Extract associations from file. 
+	 */
 	private void processAssociations() {
 		NodeList associations = document.getElementsByTagName(PREFIX + "Association");
 		for (int i = 0; i < associations.getLength(); i++) {
@@ -187,6 +195,12 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		comments = null;
 	}
 
+	/**
+	 * Extracts package from XML node.
+	 * @param node parent node.
+	 * @param parentName name of parent package.
+	 * @return extracted package
+	 */
 	private Package processPackage(Node node, String parentName) {
 		Package pack = getElement(Package.class, node);
 		if (parentName != null) {
@@ -206,6 +220,11 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		return pack;
 	}
 
+	/**
+	 * Extracts Classes from XML node.
+	 * @param node XML node
+	 * @param pack parent package
+	 */
 	private void processClasses(Node node, Package pack) {
 		List<Node> classes = getNodeList(OWNED_ELEMENT, "Class", node);
 		for (Node n : classes) {
@@ -221,6 +240,11 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		}
 	}
 
+	/**
+	 * Extracts inner classes from XML node
+	 * @param node XML node
+	 * @param ownerClass parent class
+	 */
 	private void processClasses(Node node, TypeElement ownerClass) {
 		List<Node> classes = getNodeList(OWNED_ELEMENT, "Class", node);
 		for (Node n : classes) {
@@ -236,6 +260,11 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		}
 	}
 
+	/**
+	 * Extracts methods of specified class/interface in XML element
+	 * @param node XML node
+	 * @param element parent class/interface
+	 */
 	private void processMethods(Node node, TypeElement element) {
 		List<Node> methods = getNodeList(CLASSIFIER_FEATURE, "Operation", node);
 		for (Node n : methods) {
@@ -258,16 +287,19 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 					c.setVisibility(method.getVisibility());
 					((Class) element).getConstructors().add(c);
 					c.setParent(element);
-					//logger.info(c.getFullyQualifiedName());
 				}
 			} else {
 				method.setParent(element);
 				element.getMethods().add(method);
 			}
-			//logger.info(method.getFullyQualifiedName());
 		}
 	}
 
+	/**
+	 * Extracts param from XML node
+	 * @param node XML node which contains param.
+	 * @return extracted param.
+	 */
 	private Param extract(Node node) {
 		Param param = new Param();
 		if (node.getAttributes().getNamedItem("name") != null) {
@@ -281,6 +313,11 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		return param;
 	}
 
+	/**
+	 * Extracts fields of class/interface in XML node
+	 * @param node XML node 
+	 * @param element parent class/interface
+	 */
 	private void processFields(Node node, TypeElement element) {
 		List<Node> attributes = getNodeList(CLASSIFIER_FEATURE, "Attribute", node);
 		for (Node n : attributes) {
@@ -302,6 +339,11 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		}
 	}
 
+	/**
+	 * Sets field's multiplicity
+	 * @param node XML node
+	 * @param field field to set
+	 */
 	private void setMultiplicity(Node node, Field field) {
 		Node n = getNode("StructuralFeature.multiplicity", "Multiplicity", node);
 		if (n != null) {
@@ -313,6 +355,11 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		}
 	}
 
+	/**
+	 * Extract interfaces of specified package in XML node
+	 * @param node XML node
+	 * @param pack parent package.
+	 */
 	private void processInterfaces(Node node, Package pack) {
 		List<Node> interfaces = getNodeList(OWNED_ELEMENT, "Interface", node);
 		for (Node n : interfaces) {
@@ -441,10 +488,18 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		}
 	}
 	
+	/**
+	 * Gets all classes and interface in class diagram.
+	 * @return list of classes and interfaces
+	 */
 	public List<TypeElement> getElements() {
 		return elements;
 	}
 	
+	/**
+	 * Gets all packages in class diagram.
+	 * @return list of packages.
+	 */
 	public List<Package> getPackages() {
 		return packages;
 	}

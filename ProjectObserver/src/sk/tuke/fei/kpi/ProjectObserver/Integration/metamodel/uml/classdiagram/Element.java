@@ -3,7 +3,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class Element implements Serializable {
+public abstract class Element implements Serializable, Comparable<Element> {
 	private static final long serialVersionUID = 2140263151359000290L;
 
 	public enum Visibility {
@@ -99,5 +99,15 @@ public abstract class Element implements Serializable {
 
 	public String getFullyQualifiedName() {
 		return parent == null?name : parent.getFullyQualifiedName()+"."+name;
+	}
+	
+	@Override
+	public int compareTo(Element o) {
+		if(name==null)
+			return -1;
+		if(o.name == null){
+			return 1;
+		}
+		return name.compareTo(o.name);
 	}
 }
