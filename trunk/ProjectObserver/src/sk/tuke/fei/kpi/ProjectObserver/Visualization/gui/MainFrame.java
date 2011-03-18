@@ -23,30 +23,12 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		setBounds(100, 100, 1000, 750);
-		ImageIcon frameIcon = new ImageIcon(getClass().getResource(
-				CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
+		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
 		setIconImage(frameIcon.getImage());
 
-		actualcomponent = new JComponent(){};
-		setLayout(new MigLayout("insets 0,fill", "[]", "[]"));
-
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		WindowListener windowListener = new WindowAdapter() {
-			public void windowClosing(WindowEvent w) {
-
-				if (actualcomponent instanceof LoginPanelView) {
-					MainFrame.this.setVisible(false);
-					MainFrame.this.dispose();
-				}
-				if (actualcomponent instanceof MainPanelView) {
-					setPanel(new LoginPanelPresenter().getDisplay()
-							.asComponent());
-
-				}
-
-			}
+		actualcomponent = new JComponent() {
 		};
-		this.addWindowListener(windowListener);
+		setLayout(new MigLayout("insets 0,fill", "[]", "[]"));
 
 	}
 

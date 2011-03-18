@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -33,6 +34,7 @@ import org.jdesktop.swingx.autocomplete.ListAdaptor;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
 public class SearchDialog extends JDialog implements DocumentListener {
@@ -55,9 +57,14 @@ public class SearchDialog extends JDialog implements DocumentListener {
 	private Project project;
 
 	public SearchDialog(Project project) {
+		super(MainFrame.getMainFrame());
+		
 		this.project = project;
 		initComponents();
 
+		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+		
+		
 		hilit = new DefaultHighlighter();
 		painter = new DefaultHighlighter.DefaultHighlightPainter(HILIT_COLOR);
 
@@ -68,6 +75,8 @@ public class SearchDialog extends JDialog implements DocumentListener {
 		ActionMap am = entry.getActionMap();
 		im.put(KeyStroke.getKeyStroke("ESCAPE"), CANCEL_ACTION);
 		am.put(CANCEL_ACTION, new CancelAction());
+		
+		setLocationRelativeTo(MainFrame.getMainFrame());
 	}
 
 	private void initComponents() {
@@ -75,7 +84,7 @@ public class SearchDialog extends JDialog implements DocumentListener {
 		status = new JLabel();
 		jLabel1 = new JLabel();
 
-		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+	//	setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setTitle(Messages.getMessage("dialog.search.title"));
 
 		

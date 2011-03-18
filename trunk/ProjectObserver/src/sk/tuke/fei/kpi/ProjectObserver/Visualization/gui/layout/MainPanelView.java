@@ -2,11 +2,14 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -95,6 +98,12 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private InterfacePanel umlInterfacePanel;
 	private PackagePanel umlPackagePanel;
 
+	private JPanel actions;
+	private ImageIcon iconChangeProject;
+	private ImageIcon iconSearch;
+	private JXHyperlink changeProjectHl;
+	private JXHyperlink searchHl;
+
 	public MainPanelView(Project project) {
 		this.project = project;
 
@@ -103,6 +112,19 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	}
 
 	private void initComponents() {
+
+		actions = new JPanel(new MigLayout("insets 0", "", "[]"));
+
+		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "change24.png"));
+		iconSearch = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "search24.png"));
+		changeProjectHl = new JXHyperlink();
+		changeProjectHl.setIcon(iconChangeProject);
+		changeProjectHl.setSelected(false);
+		searchHl = new JXHyperlink();
+		searchHl.setIcon(iconSearch);
+		searchHl.setSelected(false);
+		actions.add(changeProjectHl, "gapleft 10");
+		actions.add(searchHl);
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
@@ -113,6 +135,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		tabbedPane.setFont(MyFonts.font2);
 
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
+
 
 		iconPackage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
 		iconInterface = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "int_obj.gif"));
@@ -157,14 +180,14 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	}
 
 	private void setComponentsPosition() {
-		setLayout(new MigLayout("fill,insets 0", "", ""));
+		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
 		rightPanel.setLayout(new MigLayout("fill,insets 0"));
 		rightPanel.add(tabbedPane, "growx,growy,wrap");
 		rightPanel.add(umlClassPanel, "growx,growy");
 
-		add(splitPane, "growx,growy");
-
+		add(actions, "top,wrap");
+		add(splitPane, "grow");
 	}
 
 	@Override
@@ -445,6 +468,16 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	@Override
 	public PackagesPanelPresenter getPackagesPanelPresenter() {
 		return packagesPanelPresenter;
+	}
+
+	@Override
+	public void setChangeProjectAction(ActionListener l) {
+		changeProjectHl.addActionListener(l);
+	}
+
+	@Override
+	public void setSearchAction(ActionListener l) {
+		searchHl.addActionListener(l);
 	}
 
 }

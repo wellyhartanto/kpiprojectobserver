@@ -1,12 +1,11 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -18,7 +17,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.TestData;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialog;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
@@ -32,8 +31,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		display = new MainPanelView(this.project);
 
 		bind();
-		
-		new SearchDialog(this.project).setVisible(true);
+
 	}
 
 	@Override
@@ -48,6 +46,23 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 	}
 
 	private void setListeners() {
+
+		display.setSearchAction(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new SearchDialog(project).setVisible(true);
+
+			}
+		});
+		display.setChangeProjectAction(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
+			}
+		});
+
 		display.getClassesPanelPresenter().getDisplay().setMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -169,10 +184,10 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 	private JTree createTree() {
 
 		Application app = null;
-//			TestData.createTestData();
-//		app.setName("testproject");
+		// TestData.createTestData();
+		// app.setName("testproject");
 
-		 app = project.getJavaModel();
+		app = project.getJavaModel();
 
 		DefaultMutableTreeNode root = createApplicationTree(app);
 
