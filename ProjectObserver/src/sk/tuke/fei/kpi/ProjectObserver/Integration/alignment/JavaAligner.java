@@ -5,13 +5,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.search.ClassDiagramFinder;
 /**
- * Align
+ * Aligns elements from {@link Application} to their models from {@link ClassDiagram}
  */
 public class JavaAligner {
 	private static Logger logger = Logger.getLogger(JavaAligner.class);
@@ -22,7 +23,7 @@ public class JavaAligner {
 	
 	/**
 	 * Constructor
-	 * @param mappingHolder mapping holder where align result are stored.
+	 * @param mappingHolder mapping holder where align results are stored.
 	 * @param cd class diagram finder
 	 * @param alignStrategy align strategy
 	 */
@@ -32,8 +33,8 @@ public class JavaAligner {
 	}
 	
 	/**
-	 * 
-	 * @param packages
+	 * Aligns packages.
+	 * @param packages packages from {@link Application} to align
 	 */
 	public void alignPackages(List<Package> packages) {
 		for (Package p : packages) {
@@ -50,6 +51,10 @@ public class JavaAligner {
 		}
 	}
 	
+	/**
+	 * Aligns classes in passed list of packages.
+	 * @param packages list of packages to process
+	 */
 	public void alignClassesInPackage(List<Package> packages) {
 		for (Package p : packages) {
 			if(!p.getClasses().isEmpty()){
@@ -61,6 +66,10 @@ public class JavaAligner {
 		}
 	}
 	
+	/**
+	 * Aligns classes in the list.
+	 * @param classes list of classes to align.
+	 */
 	public void alignClasses(List<Class> classes) {
 		for (Class c : classes) {
 			logger.info("Aligning classs " + c.getFullyQualifiedName());
@@ -75,6 +84,10 @@ public class JavaAligner {
 		}
 	}
 	
+	/**
+	 * Aligns interfaces in passed list of packages.
+	 * @param packages list of packages to process
+	 */
 	public void alignInterfaceInPackage(List<Package> packages) {
 		for (Package p : packages) {
 			if(!p.getInterfaces().isEmpty()){
@@ -86,8 +99,12 @@ public class JavaAligner {
 		}
 	}
 	
-	public void alignInterfaces(List<Interface> classes) {
-		for (Interface c : classes) {
+	/**
+	 * Aligns interfaces in the list.
+	 * @param interfaces list of interfaces to align.
+	 */
+	public void alignInterfaces(List<Interface> interfaces) {
+		for (Interface c : interfaces) {
 			logger.info("Aligning interface " + c.getFullyQualifiedName());
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface pair = classDiagramFinder.findInterface(c);
 			if (pair != null) {

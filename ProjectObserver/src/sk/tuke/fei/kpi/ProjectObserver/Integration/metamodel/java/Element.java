@@ -7,12 +7,38 @@ import java.util.List;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Alignable;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 
+/**
+ * Java Elements.
+ */
 public abstract class Element implements Serializable, Alignable, Comparable<Element> {
 	private static final long serialVersionUID = -6146256352210642770L;
 
+	/**
+	 * Java visibility modifier
+	 */
 	public enum Visibility {
-		PRIVATE, DEFAULT, PROTECTED, PUBLIC;
+		/**
+		 * Private visibility.
+		 */
+		PRIVATE,
+		/**
+		 * Default visibility.
+		 */
+		DEFAULT, 
+		/**
+		 * Protected visibility.
+		 */
+		PROTECTED, 
+		/**
+		 * Public visibility.
+		 */
+		PUBLIC;
 
+		/**
+		 * Creates visibility from string value. 
+		 * @param string lowercase value
+		 * @return visibility
+		 */
 		public static Visibility fromString(String string) {
 			if ("public".equals(string)) {
 				return PUBLIC;
@@ -31,9 +57,52 @@ public abstract class Element implements Serializable, Alignable, Comparable<Ele
 		}
 	};
 
+	/**
+	 * Java modifiers.
+	 */
 	public enum Modifiers {
-		FINAL, ABSTRACT, STATIC, NATIVE, TRANSIENT, VOLATILE, SYNCHRONIZED, STRICTFP, NONE;
+		/**
+		 * Final.
+		 */
+		FINAL,
+		/**
+		 * Abstract.
+		 */
+		ABSTRACT,
+		/**
+		 * Static.
+		 */
+		STATIC, 
+		/**
+		 * Native.
+		 */
+		NATIVE,
+		/**
+		 * Transient.
+		 */
+		TRANSIENT,
+		/**
+		 * Volatile.
+		 */
+		VOLATILE, 
+		/**
+		 * Synchronized.
+		 */
+		SYNCHRONIZED, 
+		/**
+		 * Strictfp.
+		 */
+		STRICTFP,
+		/**
+		 * Unknown. It is not java modifier. It is return if any modifier cannot be parsed from string value.
+		 */
+		UNKNOWN;
 
+		/**
+		 * Creates modifier from string value. 
+		 * @param value lowercase value.
+		 * @return Modifier
+		 */
 		public static Modifiers fromString(String value) {
 			if ("final".equals(value)) {
 				return FINAL;
@@ -50,7 +119,7 @@ public abstract class Element implements Serializable, Alignable, Comparable<Ele
 			} else if ("strictfp".equals(value)) {
 				return STRICTFP;
 			} else {
-				return NONE;
+				return UNKNOWN;
 			}
 		}
 	};
@@ -61,46 +130,89 @@ public abstract class Element implements Serializable, Alignable, Comparable<Ele
 	private List<Modifiers> modifiers;
 	private Element parent;
 
+	/**
+	 * Constructor.
+	 */
 	public Element() {
 		modifiers = new ArrayList<Modifiers>();
 	}
 
+	/**
+	 * Gets name.
+	 * @return name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets name.
+	 * @param name name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Gets Visibility.
+	 * @return visibility
+	 */
 	public Visibility getVisibility() {
 		return visibility;
 	}
 
+	/**
+	 * Sets visibility.
+	 * @param visibility visibility
+	 */
 	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
 
+	/**
+	 * Gets element's modifiers.
+	 * @return list of modifiers.
+	 */
 	public List<Modifiers> getModifiers() {
 		return modifiers;
 	}
 
+	/**
+	 * Sets element's modifiers.
+	 * @param modifiers modifiers
+	 */
 	public void setModifiers(List<Modifiers> modifiers) {
 		this.modifiers = modifiers;
 	}
 
+	/**
+	 * Gets parent element
+	 * @return parent
+	 */
 	public Element getParent() {
 		return parent;
 	}
 
+	/**
+	 * Sets parent element.
+	 * @param parent parent
+	 */
 	public void setParent(Element parent) {
 		this.parent = parent;
 	}
 
+	/**
+	 * Gets full name.
+	 * @return full name
+	 */
 	public String getFullName() {
 		return fullName;
 	}
 
+	/**
+	 * Sets fullname.
+	 * @param fullName full name
+	 */
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
@@ -110,6 +222,11 @@ public abstract class Element implements Serializable, Alignable, Comparable<Ele
 		return getName();
 	}
 
+	/**
+	 * Gets fully qualified name.
+	 * It includes fully qualified name of parent.
+	 * @return
+	 */
 	public String getFullyQualifiedName() {
 		return parent == null ? name : parent.getFullyQualifiedName() + "." + name;
 	}

@@ -6,37 +6,50 @@ import java.util.List;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Alignable;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 
+/**
+ * Method of {@link Class} or {@link Interface}. 
+ */
 public class Method extends Element implements Alignable {
 	private static final long serialVersionUID = 7860060186187411059L;
 	private String returnType;
-	private String[] exceptions;
 	private List<Param> params;
 
+	/**
+	 * Constructor
+	 */
 	public Method() {
 		super();
 		params = new ArrayList<Param>();
 	}
 
+	/**
+	 * Gets method's return type.
+	 * @return name of data type.
+	 */
 	public String getReturnType() {
 		return returnType;
 	}
 
+	/**
+	 * Sets method's return type.
+	 * @param returnType name of data type
+	 */
 	public void setReturnType(String returnType) {
 		this.returnType = returnType;
 	}
 
-	public String[] getExceptions() {
-		return exceptions;
-	}
-
-	public void setExceptions(String[] exceptions) {
-		this.exceptions = exceptions;
-	}
-
+	/**
+	 * Gets {@link Param}s list.
+	 * @return list of params.
+	 */
 	public List<Param> getParams() {
 		return params;
 	}
 
+	/**
+	 * Sets {@link Param}s list
+	 * @param params list of param.
+	 */
 	public void setParams(List<Param> params) {
 		this.params = params;
 	}

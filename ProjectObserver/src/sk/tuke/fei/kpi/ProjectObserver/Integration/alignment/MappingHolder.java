@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.ClassDifference;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 
@@ -19,7 +19,7 @@ public class MappingHolder implements Serializable {
 
 	private Java2UmlMapping java2UmlMapping;
 	
-	private Map<String,ClassDifference> difference;
+	private Map<String,Difference> difference;
 
 	/**
 	 * Constructor
@@ -27,7 +27,7 @@ public class MappingHolder implements Serializable {
 	public MappingHolder() {
 		uml2JavaMapping = new Uml2JavaMapping();
 		java2UmlMapping = new Java2UmlMapping();
-		difference = new HashMap<String, ClassDifference>();
+		difference = new HashMap<String, Difference>();
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class MappingHolder implements Serializable {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class c2){
 		getJava2UmlMapping().setClassPair(c2.getFullyQualifiedName(), c1);
 		getUml2JavaMapping().setClassPair(c1.getFullyQualifiedName(), c2);
-		difference.put(c2.getFullyQualifiedName(), new ClassDifference(c2, c1));
+		difference.put(c2.getFullyQualifiedName(), new Difference(c2, c1));
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class MappingHolder implements Serializable {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface i2){
 		getJava2UmlMapping().setInterfacePair(i2.getFullyQualifiedName(), i1);
 		getUml2JavaMapping().setInterfacePair(i1.getFullyQualifiedName(), i2);
-		difference.put(i2.getFullyQualifiedName(), new ClassDifference(i2, i1));
+		difference.put(i2.getFullyQualifiedName(), new Difference(i2, i1));
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class MappingHolder implements Serializable {
 	 * @param name fully qualified name of interface or class.
 	 * @return difference object
 	 */
-	public ClassDifference getDifference(String name){
+	public Difference getDifference(String name){
 		return difference.get(name);		
 	}
 }
