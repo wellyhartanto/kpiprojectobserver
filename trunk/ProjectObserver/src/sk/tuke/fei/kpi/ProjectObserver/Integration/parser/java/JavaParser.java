@@ -18,6 +18,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element.Modifiers;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element.Visibility;
@@ -121,9 +122,13 @@ public class JavaParser implements Parser<Application>, Disposable {
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isConstructorOf"));
 			String className = OwlUtils.getValue(node.toString(), '#');
 			TypeElement parent = classes.get(className);
+			if(parent!=null){
 			constructor.setParent(parent);
 			parent.getConstructors().add(constructor);
 			setParams(constructor);
+			} else{
+				System.out.println(className);
+			}
 		}
 	}
 	
@@ -167,12 +172,12 @@ public class JavaParser implements Parser<Application>, Disposable {
 			if (parent != null) {
 				parent.getInterfaces().add(iface);
 				iface.setParent(parent);
+				classes.put(iface.getFullName(), iface);
+				if (iface.getParent() == null) {
+					application.getInterfaces().add(iface);
+				}
 			} else if (!iface.getName().equals(iface.getFullName())) {
 				iface.setExternal(true);
-			}
-			classes.put(iface.getFullName(), iface);
-			if (iface.getParent() == null) {
-				application.getInterfaces().add(iface);
 			}
 		}
 	}
@@ -189,14 +194,12 @@ public class JavaParser implements Parser<Application>, Disposable {
 			if (parent != null) {
 				parent.getClasses().add(clazz);
 				clazz.setParent(parent);
+				classes.put(clazz.getFullName(), clazz);
+				setSuperClasses(clazz, individual);
 			} else if (!clazz.getName().equals(clazz.getFullName())) {
 				clazz.setExternal(true);
 			} else {
-			}
-			// TODO isExtending
-
-			setSuperClasses(clazz, individual);
-			classes.put(clazz.getFullName(), clazz);
+			}	
 		}
 	}
 
@@ -209,6 +212,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Method")); i.hasNext();) {
 			Individual individual = i.next();
 			Method method = new Method();
+			setElement(method, individual);
 			RDFNode returnType = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasReturnType"));
 			if (returnType != null)
 				method.setReturnType(filterType(OwlUtils.getValue(returnType.toString(), '#')));
@@ -232,7 +236,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 	private void setParams(BehavioralElement element) {
 		if (element.getFullName() != null && element.getFullName().charAt(element.getFullName().length() - 1) != ':') {
 			element.setParams(utils.runParamQuery(PREFIX + element.getFullName()));
+		} else {
+			element.setParams(new ArrayList<Param>());
 		}
+	
+		
 	}
 
 	/**
@@ -246,8 +254,12 @@ public class JavaParser implements Parser<Application>, Disposable {
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isFieldOf"));
 			if (node != null) {
 				TypeElement element = classes.get(OwlUtils.getValue(node.toString(), '#'));
-				field.setParent(element);
-				element.getFields().add(field);
+				if(element !=null){
+					field.setParent(element);
+					element.getFields().add(field);
+				} else {
+					System.out.println(node.toString());
+				}
 			}
 			field.setType(filterType(OwlUtils.getValue(individual.getPropertyValue(new PropertyImpl(PREFIX + "hasType")).toString(), '#')));
 		}
@@ -278,7 +290,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 		while (iterator.hasNext()) {
 			String mod = OwlUtils.getValue(iterator.next().toString(), '$');
 			Modifiers modifier = Modifiers.fromString(mod);
-			if (modifier != Modifiers.NONE) {
+			if (modifier != Modifiers.UNKNOWN) {
 				element.getModifiers().add(modifier);
 			} else {
 				Visibility visibility = Visibility.fromString(mod);
@@ -297,8 +309,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 		while (iterator.hasNext()) {
 			String iface = OwlUtils.getValue(iterator.next().toString(), '#');
 			//logger.info(iface);
-			element.getImplemented().add(classes.get(iface));
+			TypeElement te = classes.get(iface);
+			if(te!=null){
+			element.getImplemented().add(te);
 			element.getImplementedNames().add(iface);
+			}
 		}
 		RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isExtending"));
 		if (node != null) {
@@ -342,7 +357,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 	 * @param value value
 	 * @return type
 	 */
-	private static String filterType(String value){
+	public static String filterType(String value){
 		if(value !=null && value.contains("$")){
 			return value.substring(value.indexOf('$')+1,value.length());
 		} else {

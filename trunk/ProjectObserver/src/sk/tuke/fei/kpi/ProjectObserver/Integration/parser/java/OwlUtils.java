@@ -72,7 +72,7 @@ public class OwlUtils {
 				QuerySolution soln = response.nextSolution();
 				Param param = new Param();
 				param.setName(soln.get("name").toString());
-				param.setType(getValue(soln.get("type").toString(), '#'));
+				param.setType(getValue(JavaParser.filterType(soln.get("type").toString()),'#'));
 				param.setOrder(Integer.parseInt(getValue(soln.get("param").toString(), '$')));
 				result.add(param);
 			}

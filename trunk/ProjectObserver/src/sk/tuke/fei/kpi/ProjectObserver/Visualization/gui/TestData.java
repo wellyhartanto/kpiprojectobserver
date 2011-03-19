@@ -162,7 +162,6 @@ public class TestData {
 	app.setClasses(packages.get(0).getClasses());
 	app.setEnums(packages.get(0).getEnums());
 	app.setInterfaces(packages.get(0).getInterfaces());
-	app.setFilename("defaultfile.owl");
 	app.setName("MyExampleApplication");
 
 	return app;
@@ -317,7 +316,6 @@ public class TestData {
 	app.setClasses(packages.get(0).getClasses());
 	app.setEnums(packages.get(0).getEnums());
 	app.setInterfaces(packages.get(0).getInterfaces());
-	app.setFilename("defaultfile.owl");
 	app.setName("MyExampleApplication");
 
 	return app;

@@ -2,18 +2,32 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 
+/**
+ * Method of {@link Class} or {@link Interface}. 
+ */
 public class Method extends BehavioralElement {
 	private static final long serialVersionUID = 2015355208730487925L;
 	private String returnType;
 
+	/**
+	 * Constructor
+	 */
 	public Method() {
 		super();
 	}
 
+	/**
+	 * Gets method's return type.
+	 * @return name of data type.
+	 */
 	public String getReturnType() {
 		return returnType;
 	}
 
+	/**
+	 * Sets method's return type.
+	 * @param returnType name of data type
+	 */
 	public void setReturnType(String returnType) {
 		this.returnType = returnType;
 	}

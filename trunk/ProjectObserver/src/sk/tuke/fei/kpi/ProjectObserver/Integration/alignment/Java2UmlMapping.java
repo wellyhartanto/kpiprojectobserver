@@ -3,16 +3,23 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.alignment;
 import java.util.HashMap;
 import java.util.Map;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package;
-
+/**
+ * Maps {@link Application} classes, packages and interfaces to their equivalents from {@link ClassDiagram}.
+ */
 public class Java2UmlMapping implements Mapping<Class, Package,Interface> {
 	private static final long serialVersionUID = 6433956366664574971L;
 	private Map<String, Package> packageMap;
 	private Map<String, Class> classMap;
 	private Map<String, Interface> interfaceMap;
 
+	/**
+	 * Constructor.
+	 */
 	public Java2UmlMapping() {
 		packageMap = new HashMap<String, Package>();
 		classMap = new HashMap<String, Class>();
