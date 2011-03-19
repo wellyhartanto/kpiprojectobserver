@@ -16,6 +16,8 @@ public interface SearchDialogDisplay extends DisplayComponent {
 	void setEntryKeyAction(KeyListener l);
 
 	void setListClickedAction(MouseListener m);
+	
+	void setListEnterAction(KeyListener l);
 
 	void setCancelAction(ActionListener l);
 
