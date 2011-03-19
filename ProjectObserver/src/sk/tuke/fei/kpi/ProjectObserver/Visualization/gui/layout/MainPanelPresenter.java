@@ -48,6 +48,12 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 	}
 
+	private void findSelectedElement() {
+		TypeElement element = (TypeElement) searchDialog.getDisplay().getList().getSelectedValue();
+		display.searchAndSelectElement(element);
+		searchDialog.getDisplay().showDialog(false);
+	}
+
 	private void setListeners() {
 
 		display.setSearchAction(new ActionListener() {
@@ -55,18 +61,24 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				searchDialog = new SearchDialogPresenter(project);
-				searchDialog.getDisplay().setListClickedAction(
-				new MouseAdapter() {
+				searchDialog.getDisplay().setListClickedAction(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						super.mouseClicked(e);
 						if (e.getClickCount() >= 2) {
-
-							TypeElement element = (TypeElement) searchDialog.getDisplay().getList().getSelectedValue();
-							display.searchAndSelectElement(element);
+							findSelectedElement();
 						}
 					}
 				});
+
+				searchDialog.getDisplay().setOKAction(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						findSelectedElement();
+					}
+				});
+
 			}
 		});
 		display.setChangeProjectAction(new ActionListener() {

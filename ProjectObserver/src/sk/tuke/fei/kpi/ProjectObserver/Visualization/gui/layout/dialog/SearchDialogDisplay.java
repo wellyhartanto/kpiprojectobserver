@@ -17,8 +17,14 @@ public interface SearchDialogDisplay extends DisplayComponent {
 
 	void setListClickedAction(MouseListener m);
 
+	void setCancelAction(ActionListener l);
+
+	void setOKAction(ActionListener l);
+
 	void setStatus(String status);
 
 	JList getList();
 	
+	void showDialog(boolean visible);
+
 }
