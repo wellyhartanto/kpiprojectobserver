@@ -189,4 +189,9 @@ public class SearchDialogView extends JDialog implements DocumentListener, Searc
 		setVisible(visible);
 	}
 
+	@Override
+	public void setListEnterAction(KeyListener l) {
+		list.addKeyListener(l);
+	}
+
 }
