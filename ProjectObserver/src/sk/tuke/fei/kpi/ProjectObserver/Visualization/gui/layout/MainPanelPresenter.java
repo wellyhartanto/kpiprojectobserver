@@ -17,14 +17,17 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialog;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogView;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 
 public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 	private Project project;
+	private SearchDialogPresenter searchDialog;
 
 	public MainPanelPresenter(Project project) {
 		this.project = project;
@@ -51,8 +54,19 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new SearchDialog(project).setVisible(true);
+				searchDialog = new SearchDialogPresenter(project);
+				searchDialog.getDisplay().setListClickedAction(
+				new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						super.mouseClicked(e);
+						if (e.getClickCount() >= 2) {
 
+							TypeElement element = (TypeElement) searchDialog.getDisplay().getList().getSelectedValue();
+							display.searchAndSelectElement(element);
+						}
+					}
+				});
 			}
 		});
 		display.setChangeProjectAction(new ActionListener() {

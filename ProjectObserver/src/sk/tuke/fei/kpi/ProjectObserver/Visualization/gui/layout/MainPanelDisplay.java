@@ -7,6 +7,7 @@ import javax.swing.event.TreeSelectionListener;
 
 import org.jdesktop.swingx.JXTable;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.ClassesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumValuesPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumsPanelPresenter;
@@ -30,6 +31,8 @@ public interface MainPanelDisplay extends DisplayComponent {
 	void setDetailSelection(JXTable table);
 
 	void setNavigationTree(JTree tree);
+
+	void searchAndSelectElement(TypeElement element);
 
 	ClassesPanelPresenter getClassesPanelPresenter();
 

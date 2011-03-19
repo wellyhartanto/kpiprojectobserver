@@ -31,12 +31,14 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.MappingHolder;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
@@ -135,7 +137,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		tabbedPane.setFont(MyFonts.font2);
 
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
-
 
 		iconPackage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "package_obj.gif"));
 		iconInterface = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "int_obj.gif"));
@@ -400,6 +401,33 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		}
 
+	}
+
+	@Override
+	public void searchAndSelectElement(TypeElement element) {
+
+		DefaultMutableTreeNode parentNode = null;
+		TreePath parentPath = navigationTree.getPathForRow(0);
+
+		parentNode = (DefaultMutableTreeNode) (parentPath.getLastPathComponent());
+
+		parentNode.getLeafCount();
+
+		parentNode.getUserObjectPath();
+
+		Enumeration<DefaultMutableTreeNode> e = parentNode.breadthFirstEnumeration();
+		while (e.hasMoreElements()) {
+
+			DefaultMutableTreeNode dmtn = e.nextElement();
+			Object obj = dmtn.getUserObject();
+			if (obj instanceof Class || obj instanceof Interface) {
+				Element el = (Element) obj;
+				if (el.getFullName().equalsIgnoreCase(element.getFullName())) {
+					parentPath = new TreePath(dmtn.getPath());
+					navigationTree.getSelectionModel().setSelectionPath(parentPath);
+				}
+			}
+		}
 	}
 
 	@Override
