@@ -183,7 +183,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
-		rightPanel.setLayout(new MigLayout("fill,insets 0"));
+		rightPanel.setLayout(new MigLayout("fill,insets 0","","[growprio 50][]"));
 		rightPanel.add(tabbedPane, "growx,growy,wrap");
 		rightPanel.add(umlClassPanel, "growx,growy");
 

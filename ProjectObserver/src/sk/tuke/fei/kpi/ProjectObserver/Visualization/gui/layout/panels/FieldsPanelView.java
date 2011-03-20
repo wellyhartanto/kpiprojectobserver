@@ -25,8 +25,8 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 	private JXTable fieldsTable;
 	private FieldsTableModel fieldsTableModel;
 	public FieldsPanelView(List<Field> fields) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createFieldsTable(fields)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createFieldsTable(fields)), "grow");
 	}
 
 	@Override

@@ -32,9 +32,8 @@ public class ClassesPanelView extends JPanel implements ClassesPanelDisplay {
 	private ClassesTableModel classesTableModel;
 	
 	public ClassesPanelView(List<Class> classes) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createClassesTable(classes)), "growx");
-
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createClassesTable(classes)), "grow");
 	}
 
 	@Override

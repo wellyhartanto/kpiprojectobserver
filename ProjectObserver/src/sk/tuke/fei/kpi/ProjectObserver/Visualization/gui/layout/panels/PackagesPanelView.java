@@ -26,9 +26,8 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 	private PackagesTableModel packagesTableModel;
 
 	public PackagesPanelView(List<Package> packages) {
-		setLayout(new MigLayout("fillx"));
-
-		add(new JScrollPane(createPackagesTable(packages)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createPackagesTable(packages)), "grow");
 	}
 
 	@Override

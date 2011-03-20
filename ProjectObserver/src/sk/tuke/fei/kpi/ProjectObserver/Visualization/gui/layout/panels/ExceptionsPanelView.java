@@ -25,8 +25,8 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 	private ExceptionsTableModel exceptionsTableModel;
 
 	public ExceptionsPanelView(List<String> exceptions) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createExceptionsTable(exceptions)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createExceptionsTable(exceptions)), "grow");
 	}
 
 	@Override

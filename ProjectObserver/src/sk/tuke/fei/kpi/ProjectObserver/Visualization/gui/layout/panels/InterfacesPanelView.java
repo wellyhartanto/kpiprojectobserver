@@ -26,8 +26,8 @@ public class InterfacesPanelView extends JPanel implements InterfacesPanelDispla
 	private InterfacesTableModel interfacesTableModel;
 
 	public InterfacesPanelView(List<Interface> interfaces) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createInterfacesTable(interfaces)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createInterfacesTable(interfaces)), "grow");
 	}
 
 	@Override
