@@ -26,8 +26,8 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 	private JXTable paramsTable;
 	private ParamsTableModel paramsTableModel ;
 	public MethodParamsView(List<Param> parameters) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createParamsTable(parameters)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createParamsTable(parameters)), "grow");
 	}
 
 	@Override

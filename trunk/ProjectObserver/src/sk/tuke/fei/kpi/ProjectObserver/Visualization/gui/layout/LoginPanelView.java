@@ -105,6 +105,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 				Project p = getSelectedProject();
 				if (p != null) {
 					infoProjectDescription.setText(p.getDescription());
+					repaint();
 				}
 
 			}

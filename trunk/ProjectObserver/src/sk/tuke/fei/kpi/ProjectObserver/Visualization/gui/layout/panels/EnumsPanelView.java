@@ -27,8 +27,8 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 	private EnumsTableModel enumsTableModel;
 
 	public EnumsPanelView(List<Enum> enums) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createEnumsTable(enums)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createEnumsTable(enums)), "grow");
 	}
 
 	@Override

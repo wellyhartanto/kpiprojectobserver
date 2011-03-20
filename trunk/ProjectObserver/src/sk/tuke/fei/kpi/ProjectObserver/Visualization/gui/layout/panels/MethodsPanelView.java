@@ -26,8 +26,8 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 	private MethodsTableModel methodsTableModel;
 
 	public MethodsPanelView(List<Method> methods) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createMethodsTable(methods)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createMethodsTable(methods)), "grow");
 	}
 
 	@Override

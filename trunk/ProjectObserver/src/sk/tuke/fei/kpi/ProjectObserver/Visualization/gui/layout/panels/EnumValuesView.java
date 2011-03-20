@@ -26,8 +26,8 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 	private EnumValuesTableModel enumValuesTableModel;
 
 	public EnumValuesView(String[] values) {
-		setLayout(new MigLayout("fillx"));
-		add(new JScrollPane(createEnumValuesTable(values)), "growx");
+		setLayout(new MigLayout("fill"));
+		add(new JScrollPane(createEnumValuesTable(values)), "grow");
 	}
 
 	@Override
