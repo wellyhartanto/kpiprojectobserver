@@ -1,21 +1,23 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.InputMap;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
-import javax.swing.border.LineBorder;
+import javax.swing.KeyStroke;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -28,7 +30,6 @@ import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.MappingHolder;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element;
@@ -40,8 +41,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.ClassPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.InterfacePanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.PackagePanel;
@@ -183,7 +184,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
-		rightPanel.setLayout(new MigLayout("fill,insets 0","","[growprio 50][]"));
+		rightPanel.setLayout(new MigLayout("fill,insets 0", "", "[growprio 50][]"));
 		rightPanel.add(tabbedPane, "growx,growy,wrap");
 		rightPanel.add(umlClassPanel, "growx,growy");
 
