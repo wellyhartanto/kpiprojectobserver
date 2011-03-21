@@ -12,8 +12,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,9 +34,11 @@ import javax.swing.text.TabableView;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JErrorPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Languages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Message;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
@@ -50,6 +54,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	public JComponent asComponent() {
 		return this;
 	}
+
+	private JComboBox languages;
 
 	private JXTable projectsTable;
 	private JTextPane infoProjectDescription;
@@ -87,9 +93,14 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	}
 
 	private void initComponents() {
+		// String[] language = { LoginPanelPresenter.SK_LANGUAGE,
+		// LoginPanelPresenter.EN_LANGUAGE };
+		languages = new JComboBox(Languages.getlanguages());
+		Preferences p = Preferences.userNodeForPackage(LoginPanelPresenter.class);
+		int defaultLanguage = p.getInt(CommonConstants.DEFAULT_LANGUAGE, Languages.SK.ordinal());
+		languages.setSelectedIndex(defaultLanguage);
 
 		projectsTable = new JXTable(new ProjectsTableModel());
-
 		projectsTable.getTableHeader().setFont(MyFonts.font3);
 		projectsTable.setRolloverEnabled(true);
 		projectsTable.setHorizontalScrollEnabled(true);
@@ -226,7 +237,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	}
 
 	private void setComponentsPosition() {
-		setLayout(new MigLayout("", "50[]50[]", "60[][]80[][][][]"));
+		setLayout(new MigLayout("", "50[growprio 50]50[]", "60[][]80[][][][][]"));
 
 		JScrollPane scroll = new JScrollPane(projectsTable);
 		scroll.setMaximumSize(new Dimension(1000, 200));
@@ -250,6 +261,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		add(umlFilePanel, "split 2");
 		add(umlFileLbl, "span,gaptop 7,top,wrap");
 
+		add(languages, "skip 3,align right");
 	}
 
 	@Override
@@ -367,6 +379,17 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		}
 
 		return isCorrect;
+	}
+
+	@Override
+	public void setLanguageChangeAction(ActionListener actionListener) {
+		languages.addActionListener(actionListener);
+	}
+
+	@Override
+	public Object getSelectedLanguage() {
+
+		return languages.getSelectedItem();
 	}
 
 }

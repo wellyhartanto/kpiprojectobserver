@@ -9,12 +9,17 @@ import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Date;
+import java.util.Locale;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileFilter;
 
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Languages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ProgressDialog;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
@@ -34,6 +39,10 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 	public LoginPanelPresenter() {
 
+		Preferences p = Preferences.userNodeForPackage(LoginPanelPresenter.class);
+		int defaultLanguage = p.getInt(CommonConstants.DEFAULT_LANGUAGE, Languages.SK.ordinal());
+		Languages.setLanguage(defaultLanguage);
+
 		display = new LoginPanelView();
 		bind();
 	}
@@ -41,6 +50,26 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 	@Override
 	protected void onBind() {
 		super.onBind();
+
+		display.setLanguageChangeAction(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				Languages selectedLanguage = (Languages) display.getSelectedLanguage();
+//				Languages.setLanguage(selectedLanguage.ordinal());
+
+				Preferences p = Preferences.userNodeForPackage(LoginPanelPresenter.class);
+				p.putInt(CommonConstants.DEFAULT_LANGUAGE, selectedLanguage.ordinal());
+				try {
+					p.flush();
+				} catch (BackingStoreException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
+			}
+		});
 
 		display.setOpenAction(new ActionListener() {
 			@Override

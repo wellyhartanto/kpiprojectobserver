@@ -8,6 +8,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
 
 public interface LoginPanelDisplay extends DisplayComponent {
 
+	void setLanguageChangeAction(ActionListener actionListener);
+
 	void setOpenAction(ActionListener actionListener);
 
 	void setCreateAction(ActionListener actionListener);
@@ -21,8 +23,8 @@ public interface LoginPanelDisplay extends DisplayComponent {
 	void setLoadSourceAction(ActionListener actionListener);
 
 	void setLoadUmlAction(ActionListener actionListener);
-	
-	boolean isNewProjectCorrect(File umlFile,File sourceCodeFile);
+
+	boolean isNewProjectCorrect(File umlFile, File sourceCodeFile);
 
 	Project getSelectedProject();
 
@@ -33,6 +35,9 @@ public interface LoginPanelDisplay extends DisplayComponent {
 	void setSourceCodeFileLabel(String filename);
 
 	void setUmlFileLabel(String filename);
-	
+
 	void refreshTableModel();
+
+	Object getSelectedLanguage();
+	
 }

@@ -1,10 +1,13 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 
+import java.util.prefs.Preferences;
+
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Languages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.LoginPanelPresenter;
-
 
 public class Main {
 
@@ -26,8 +29,10 @@ public class Main {
 			e.printStackTrace();
 		}
 
-		//new MainFrame();
-		
+		// new MainFrame();
+
+	
+
 		MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
 
 		// Application.launch(Main.class, args);
