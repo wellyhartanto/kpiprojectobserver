@@ -2,13 +2,18 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JTree;
+import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -59,39 +64,21 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 	private void setListeners() {
 
+		InputMap inputMap = display.asComponent().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK), "search");
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK), "search");
+		display.asComponent().getActionMap().put("search", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				searchaction();
+			}
+		});
+
 		display.setSearchAction(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				searchDialog = new SearchDialogPresenter(project);
-				searchDialog.getDisplay().setListClickedAction(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						super.mouseClicked(e);
-						if (e.getClickCount() >= 2) {
-							findSelectedElement();
-						}
-					}
-				});
-
-				searchDialog.getDisplay().setOKAction(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						findSelectedElement();
-					}
-				});
-
-				searchDialog.getDisplay().setListEnterAction(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						super.keyPressed(e);
-						if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-							findSelectedElement();
-						}
-					}
-				});
-
+				searchaction();
 			}
 		});
 		display.setChangeProjectAction(new ActionListener() {
@@ -328,6 +315,39 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		}
 
 		return packagex;
+	}
+
+	private void searchaction() {
+
+		searchDialog = new SearchDialogPresenter(project);
+		searchDialog.getDisplay().setListClickedAction(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				if (e.getClickCount() >= 2) {
+					findSelectedElement();
+				}
+			}
+		});
+
+		searchDialog.getDisplay().setOKAction(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				findSelectedElement();
+			}
+		});
+
+		searchDialog.getDisplay().setListEnterAction(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					findSelectedElement();
+				}
+			}
+		});
+
 	}
 
 }
