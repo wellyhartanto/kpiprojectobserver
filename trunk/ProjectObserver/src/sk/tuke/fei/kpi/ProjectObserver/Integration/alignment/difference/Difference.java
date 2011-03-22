@@ -20,6 +20,10 @@ public class Difference implements Serializable {
 	private ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method> missingMethods;
 	private ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method> extraMethods;
 
+	
+	private ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field> missingFields;
+	private ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field> extraFields;
+
 	/**
 	 * Constructor.
 	 * Creates difference object by comparing passed java and uml element.
@@ -39,6 +43,9 @@ public class Difference implements Serializable {
 				missingMethods.add(method);
 			}
 		}
+		
+		missingFields = new ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field>();
+		extraFields = new ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field>();
 	}
 
 	private boolean findMethod(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method method, sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.TypeElement uml) {
@@ -64,7 +71,23 @@ public class Difference implements Serializable {
 	 * @return true if elements don't match
 	 */
 	public boolean differs(){
+		return differsInFields() && differsInMethods();
+	}
+	
+	/**
+	 * States whether elements passed to constructors have different methods
+	 * @return true if elements don't match
+	 */
+	public boolean differsInMethods(){
 		return hasExtraMethods() && hasMissingMethods();
+	}
+	
+	/**
+	 * States whether elements passed to constructors have different fields.
+	 * @return true if elements don't match
+	 */
+	public boolean differsInFields(){
+		return hasExtraFields() && hasMissingFields();
 	}
 	
 	/**
@@ -81,6 +104,53 @@ public class Difference implements Serializable {
 	 */
 	public boolean hasExtraMethods(){
 		return extraMethods.size()!=0;
+	}
+	
+	/**
+	 * States whether implemented element has some missing fields.
+	 * @return true if elements doesn't contain every method from its model.
+	 */
+	public boolean hasMissingFields(){
+		return missingFields.size()!=0;
+	}
+	
+	/**
+	 * States whether implemented element has some extra fields.
+	 * @return true if elements implements some fields that are not in model.
+	 */
+	public boolean hasExtraFields(){
+		return extraFields.size()!=0;
+	}
+	
+	/**
+	 * Gets list of extra fields, these fields are in class, but they are not in model.
+	 * @return list of extra fields
+	 */
+	public ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field> getExtraFields() {
+		return extraFields;
+	}
+	/**
+	 * Gets list of extra methods, these methods are in class, but they are not in model.
+	 * @return list of extra methods
+	 */
+	public ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method> getExtraMethods() {
+		return extraMethods;
+	}
+	
+	/**
+	 * Gets list of missing fields, this fields are in model, but they are not in implemented in class.
+	 * @return list of missing fields
+	 */
+	public ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field> getMissingFields() {
+		return missingFields;
+	}
+	
+	/**
+	 * Gets list of extra methods, these methods are in model, but they are not implemented in class.
+	 * @return list of extra methods
+	 */
+	public ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method> getMissingMethods() {
+		return missingMethods;
 	}
 	
 	@Override
