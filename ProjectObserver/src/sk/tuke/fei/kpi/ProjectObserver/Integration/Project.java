@@ -282,7 +282,7 @@ public class Project implements Serializable, Disposable {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Date start = new Date();
-		Project project = new Project("test.xml", "full.owl");
+		Project project = new Project("testdif.xml", "fulldif.owl");
 		try {
 			project.createModel();
 			project.alignModels();
