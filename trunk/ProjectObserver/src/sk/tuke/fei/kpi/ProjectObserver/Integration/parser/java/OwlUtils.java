@@ -3,8 +3,6 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.parser.java;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 
 import com.hp.hpl.jena.query.Query;
@@ -25,7 +23,6 @@ public class OwlUtils {
 	 * It is used for executing SPARQL queries.
 	 */
 	public static String defaultNamespace = "http://www.jscc.sk/ontology/OOMOntology.owl#";
-	private Logger logger = Logger.getLogger(OwlUtils.class);
 	private Model model;
 
 	/**

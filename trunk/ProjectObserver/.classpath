@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-3.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/swingx-1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/swingx-1.6.jar" sourcepath="C:/Users/Maroš Tyrpák/.m2/repository/org/swinglabs/swingx/1.6/swingx-1.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/AppFramework.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/swing-worker.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgraphx.jar">
@@ -16,7 +16,7 @@
 	<classpathentry kind="lib" path="lib/jena/icu4j-3.4.4.jar"/>
 	<classpathentry kind="lib" path="lib/jena/iri-0.8.jar"/>
 	<classpathentry kind="lib" path="lib/jena/jena-2.6.4-tests.jar"/>
-	<classpathentry kind="lib" path="lib/jena/jena-2.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/jena/jena-2.6.4.jar" sourcepath="C:/Users/Maroš Tyrpák/.m2/repository/com/hp/hpl/jena/jena/2.6.4/jena-2.6.4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jena/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="lib/jena/lucene-core-2.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/jena/slf4j-api-1.5.8.jar"/>

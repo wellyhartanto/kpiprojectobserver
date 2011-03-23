@@ -35,7 +35,6 @@ import sk.tuke.fei.kpi.ProjectObserver.utils.Disposable;
  */
 public class Project implements Serializable, Disposable {
 	private static final long serialVersionUID = -8116395605534346529L;
-	private transient Logger logger = Logger.getLogger(Project.class);
 	private File umlFile;
 	private File javaFile;
 
@@ -287,8 +286,8 @@ public class Project implements Serializable, Disposable {
 			project.createModel();
 			project.alignModels();
 			System.out.println(project.mappingHolder.getDifference("de.softproject.elos.model.web.Dienstleister"));
-			System.out.println(project.mappingHolder.getJava2UmlMapping().getClass("de.softproject.elos.model.web.Pannenursachen"));
-			System.out.println(project.getJavaModel().searchClasses("PA"));
+			System.out.println(project.mappingHolder.getJava2UmlMapping().getClass("de.softproject.elos.presenter.Display"));
+			//System.out.println(project.getJavaModel().searchClasses("Display").get(0).getClasses());
 			Logger.getLogger(project.getClass()).info(new Date().getTime() - start.getTime());
 		} catch (AlignmentException e) {
 			e.printStackTrace();

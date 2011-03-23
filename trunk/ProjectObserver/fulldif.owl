@@ -97,14 +97,6 @@
     <rdf:rest rdf:nodeID="A12"/>
     <rdf:first rdf:resource="http://www.jscc.sk/ontology/OOMOntology.owl#de.softproject.elos.model.Einsatz_old$getFkDienstleister:"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.jscc.sk/ontology/OOMOntology.owl#de.softproject.elos.model.web.Dienstleister@name">
-    <OOMOntology:hasModifier rdf:resource="http://www.jscc.sk/ontology/OOMOntology.owl#modifier$default"/>
-    <OOMOntology:hasType rdf:resource="http://www.jscc.sk/ontology/OOMOntology.owl#java.lang.String"/>
-    <OOMOntology:isFieldOf rdf:resource="http://www.jscc.sk/ontology/OOMOntology.owl#de.softproject.elos.model.web.Dienstleister"/>
-    <OOMOntology:hasFullName>de.softproject.elos.model.web.Dienstleister@name]</OOMOntology:hasFullName>
-    <OOMOntology:hasName>name]</OOMOntology:hasName>
-    <rdf:type rdf:resource="http://www.jscc.sk/ontology/OOMOntology.owl#Attribute"/>
-  </rdf:Description>
   <rdf:Description rdf:about="http://www.jscc.sk/ontology/OOMOntology.owl#de.softproject.elos.model.map.MapServiceResult$MapServiceResult:double&amp;double&amp;byte*$2">
     <OOMOntology:isParameterOf rdf:resource="http://www.jscc.sk/ontology/OOMOntology.owl#de.softproject.elos.model.map.MapServiceResult$MapServiceResult:double&amp;double&amp;byte*"/>
     <OOMOntology:hasType rdf:resource="http://www.jscc.sk/ontology/OOMOntology.owl#*B"/>

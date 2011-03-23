@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.Aligner.AlignStrategy;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
 
 /**
@@ -46,6 +47,16 @@ public class Difference implements Serializable {
 		
 		missingFields = new ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field>();
 		extraFields = new ArrayList<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field>();
+		for (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field field : java.getFields()) {
+			if (!findField(field, uml)) {
+				extraFields.add(field);
+			}
+		}
+		for (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field field : uml.getFields()) {
+			if (!findField(field, java)) {
+				missingFields.add(field);
+			}
+		}
 	}
 
 	private boolean findMethod(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method method, sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.TypeElement uml) {
@@ -66,12 +77,30 @@ public class Difference implements Serializable {
 		return false;
 	}
 	
+	private boolean findField(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field field, sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.TypeElement uml) {
+		for (Field f: uml.getFields()) {
+			if (field.getName().equals(f.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean findField(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field field, sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement java) {
+		for (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field f : java.getFields()) {
+			if (field.getName().equals(f.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * States whether elements passed to constructors are different.
 	 * @return true if elements don't match
 	 */
 	public boolean differs(){
-		return differsInFields() && differsInMethods();
+		return differsInFields() || differsInMethods();
 	}
 	
 	/**
@@ -79,7 +108,7 @@ public class Difference implements Serializable {
 	 * @return true if elements don't match
 	 */
 	public boolean differsInMethods(){
-		return hasExtraMethods() && hasMissingMethods();
+		return hasExtraMethods() || hasMissingMethods();
 	}
 	
 	/**
@@ -87,7 +116,7 @@ public class Difference implements Serializable {
 	 * @return true if elements don't match
 	 */
 	public boolean differsInFields(){
-		return hasExtraFields() && hasMissingFields();
+		return hasExtraFields() || hasMissingFields();
 	}
 	
 	/**
@@ -155,6 +184,6 @@ public class Difference implements Serializable {
 	
 	@Override
 	public String toString() {
-		return missingMethods.toString() + extraMethods.toString();
+		return missingMethods.toString() + extraMethods.toString()+missingFields.toString()+extraFields.toString();
 	}
 }

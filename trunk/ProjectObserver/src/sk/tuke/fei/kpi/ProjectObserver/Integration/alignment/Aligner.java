@@ -1,7 +1,5 @@
 package sk.tuke.fei.kpi.ProjectObserver.Integration.alignment;
 
-import org.apache.log4j.Logger;
-
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
 /**
@@ -9,7 +7,6 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Cl
  * Creates connections between classes, interfaces and packages in {@link Application} and {@link ClassDiagram}
  */
 public class Aligner {
-	private static Logger logger = Logger.getLogger(Aligner.class);
 
 	/**
 	 * Primary model for alignment..

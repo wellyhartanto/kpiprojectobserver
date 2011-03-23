@@ -136,15 +136,15 @@ public class ClassDiagramParser implements Parser<ClassDiagram>, Disposable {
 		NodeList associations = document.getElementsByTagName(PREFIX + "Association");
 		for (int i = 0; i < associations.getLength(); i++) {
 			XmiElement name = getXmiElement(associations.item(i), "name");
-			List<Node> taggedValue = getNodeList("ModelElement.taggedValue", "TaggedValue", associations.item(i));
-			XmiElement aContainer = getElement(taggedValue.get(0), "tag", "value");
-			XmiElement aImpl = getElement(taggedValue.get(1), "tag", "value");
-			XmiElement bContainer = getElement(taggedValue.get(2), "tag", "value");
-			XmiElement bImpl = getElement(taggedValue.get(3), "tag", "value");
+			//List<Node> taggedValue = getNodeList("ModelElement.taggedValue", "TaggedValue", associations.item(i));
+			//XmiElement aContainer = getElement(taggedValue.get(0), "tag", "value");
+			//XmiElement aImpl = getElement(taggedValue.get(1), "tag", "value");
+			//XmiElement bContainer = getElement(taggedValue.get(2), "tag", "value");
+			//XmiElement bImpl = getElement(taggedValue.get(3), "tag", "value");
 
 			List<Node> ends = getNodeList("Association.connection", "AssociationEnd", associations.item(i));
-			XmiElement a = getXmiElement(ends.get(0), "visibility");
-			XmiElement b = getXmiElement(ends.get(1), "visibility");
+			//XmiElement a = getXmiElement(ends.get(0), "visibility");
+			//XmiElement b = getXmiElement(ends.get(1), "visibility");
 
 			XmiElement aAgregation = getElement("xmi.value", XMLUtils.getNodeByName(PREFIX + "AssociationEnd.aggregation", ends.get(0)));
 			XmiElement bAgregation = getElement("xmi.value", XMLUtils.getNodeByName(PREFIX + "AssociationEnd.aggregation", ends.get(1)));
