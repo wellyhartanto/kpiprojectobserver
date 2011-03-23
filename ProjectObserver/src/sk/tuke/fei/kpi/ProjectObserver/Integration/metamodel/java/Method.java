@@ -42,9 +42,9 @@ public class Method extends BehavioralElement {
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method method = (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method) object;
 			switch (alignStrategy) {
 			default:
-				boolean value = getVisibility().toString().equalsIgnoreCase(method.getVisibility().toString()) && getName().equals(method.getName()) && returnType.endsWith(method.getReturnType())
+				boolean value = /*getVisibility().toString().equalsIgnoreCase(method.getVisibility().toString()) &&*/ getName().equals(method.getName()) && returnType.endsWith(method.getReturnType())
 						&& getParams().size() == method.getParams().size();
-				if (value && getParams().size() != 0) {
+				if (value && !getParams().isEmpty()) {
 					return testParams(method);
 				} else {
 					return value;
@@ -61,5 +61,11 @@ public class Method extends BehavioralElement {
 			}
 		}
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getVisibility()+" " +returnType+" "+getName()+getParams().toString();
 	}
 }

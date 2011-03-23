@@ -56,7 +56,8 @@ public class Method extends Element implements Alignable {
 
 	@Override
 	public String toString() {
-		return parent + "." + name;
+		// TODO Auto-generated method stub
+		return getVisibility()+" " +returnType+" "+getName()+getParams().toString();
 	}
 
 	@Override

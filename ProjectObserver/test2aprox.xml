@@ -116,17 +116,7 @@
                                                                     </UML:Generalization>
                                                                 </UML:Namespace.ownedElement>
                                                             </UML:Class>
-                                                            <UML:Class name="BasicPresenter_D" isLeaf="false" xmi.id="{1966BED3-E87C-419B-883D-99FFB581E071}" isAbstract="false" visibility="public">
-                                                                <UML:ModelElement.taggedValue>
-                                                                    <UML:TaggedValue tag="strictfp" value="false"/>
-                                                                </UML:ModelElement.taggedValue>
-                                                                <UML:GeneralizableElement.specialization>
-                                                                    <UML:Generalization xmi.idref="{02346433-E2A3-423B-B840-D8ABCF442F70}"/>
-                                                                </UML:GeneralizableElement.specialization>
-                                                                <UML:ModelElement.clientDependency>
-                                                                    <UML:Dependency xmi.idref="{9AD769C6-A0A1-4049-B38F-61443D7DACBF}"/>
-                                                                </UML:ModelElement.clientDependency>
-                                                            </UML:Class>
+                                                            
                                                             <UML:Interface name="DisplayContainer" isLeaf="false" xmi.id="{5578A1F2-87C1-4122-A057-394AD67E9296}" isAbstract="true" visibility="public">
                                                                 <UML:ModelElement.taggedValue>
                                                                     <UML:TaggedValue tag="Javadoc@author" value="@author pepow
@@ -175,6 +165,17 @@
                                                             <UML:TaggedValue tag="SoapBindingTransport" value="http://schemas.xmlsoap.org/soap/http"/>
                                                         </UML:ModelElement.taggedValue>
                                                         <UML:Namespace.ownedElement>
+<UML:Class name="BasicPresenter_D" isLeaf="false" xmi.id="{1966BED3-E87C-419B-883D-99FFB581E071}" isAbstract="false" visibility="public">
+                                                                <UML:ModelElement.taggedValue>
+                                                                    <UML:TaggedValue tag="strictfp" value="false"/>
+                                                                </UML:ModelElement.taggedValue>
+                                                                <UML:GeneralizableElement.specialization>
+                                                                    <UML:Generalization xmi.idref="{02346433-E2A3-423B-B840-D8ABCF442F70}"/>
+                                                                </UML:GeneralizableElement.specialization>
+                                                                <UML:ModelElement.clientDependency>
+                                                                    <UML:Dependency xmi.idref="{9AD769C6-A0A1-4049-B38F-61443D7DACBF}"/>
+                                                                </UML:ModelElement.clientDependency>
+                                                            </UML:Class>
                                                             <UML:Class name="BasicPresenter" isLeaf="false" xmi.id="{01AF1288-A66B-4AA8-AB1D-F004C8137129}" isAbstract="true" visibility="public">
                                                                 <UML:ModelElement.taggedValue>
                                                                     <UML:TaggedValue tag="Javadoc@author" value="@author pepow
@@ -6948,7 +6949,36 @@
                                                             <UML:Generalization xmi.idref="{0B13BE72-C37A-4A2B-8E0D-B350354BFA66}"/>
                                                         </UML:GeneralizableElement.specialization>
                                                     </UML:Interface>
-                                                    <UML:Interface name="Telephone" isLeaf="false" xmi.id="{0C78AC4D-98B7-4B1B-8E45-114F06F9A2E8}" isAbstract="true" visibility="public">
+                                                    
+                                                </UML:Namespace.ownedElement>
+                                            </UML:Package>
+                                            <UML:Package name="ui" xmi.id="{8FDF7B9A-2A34-4B97-BC88-DA26A6944EDE}">
+                                                <UML:ModelElement.taggedValue>
+                                                    <UML:TaggedValue tag="SchemaNamespace" value="http://www.w3.org/2001/XMLSchema"/>
+                                                    <UML:TaggedValue tag="SoapBindingTransport" value="http://schemas.xmlsoap.org/soap/http"/>
+                                                </UML:ModelElement.taggedValue>
+                                                <UML:Namespace.ownedElement>
+                                                    <UML:Package name="common" xmi.id="{3ABFF061-D8DD-4639-8713-AFA412D0ADD0}">
+                                                        <UML:ModelElement.taggedValue>
+                                                            <UML:TaggedValue tag="SchemaNamespace" value="http://www.w3.org/2001/XMLSchema"/>
+                                                            <UML:TaggedValue tag="SoapBindingTransport" value="http://schemas.xmlsoap.org/soap/http"/>
+                                                        </UML:ModelElement.taggedValue>
+                                                        <UML:Namespace.ownedElement>
+                                                            <UML:Package name="table" xmi.id="{391F4DF4-892E-4738-9AE1-3AF5E4F07301}">
+                                                                <UML:ModelElement.taggedValue>
+                                                                    <UML:TaggedValue tag="SchemaNamespace" value="http://www.w3.org/2001/XMLSchema"/>
+                                                                    <UML:TaggedValue tag="SoapBindingTransport" value="http://schemas.xmlsoap.org/soap/http"/>
+                                                                </UML:ModelElement.taggedValue>
+                                                                <UML:Namespace.ownedElement>
+                                                                    <UML:Class name="GenericTableModel" isLeaf="false" xmi.id="{2ED42DE2-B6EC-4847-A3BE-BFBE7578B080}" isAbstract="false" visibility="public">
+                                                                        <UML:ModelElement.taggedValue>
+                                                                            <UML:TaggedValue tag="strictfp" value="false"/>
+                                                                        </UML:ModelElement.taggedValue>
+                                                                        <UML:ModelElement.supplierDependency>
+                                                                            <UML:Dependency xmi.idref="{A243C880-E609-402E-9E66-1DC53B1FC68C}"/>
+                                                                        </UML:ModelElement.supplierDependency>
+                                                                    </UML:Class>
+<UML:Interface name="Telephone" isLeaf="false" xmi.id="{0C78AC4D-98B7-4B1B-8E45-114F06F9A2E8}" isAbstract="true" visibility="public">
                                                         <UML:ModelElement.taggedValue>
                                                             <UML:TaggedValue tag="Javadoc@author" value="@author pepow
 
@@ -7019,34 +7049,6 @@
                                                             <UML:Generalization xmi.idref="{2111CCDD-2663-4014-9D5E-A87BFD59044F}"/>
                                                         </UML:GeneralizableElement.specialization>
                                                     </UML:Interface>
-                                                </UML:Namespace.ownedElement>
-                                            </UML:Package>
-                                            <UML:Package name="ui" xmi.id="{8FDF7B9A-2A34-4B97-BC88-DA26A6944EDE}">
-                                                <UML:ModelElement.taggedValue>
-                                                    <UML:TaggedValue tag="SchemaNamespace" value="http://www.w3.org/2001/XMLSchema"/>
-                                                    <UML:TaggedValue tag="SoapBindingTransport" value="http://schemas.xmlsoap.org/soap/http"/>
-                                                </UML:ModelElement.taggedValue>
-                                                <UML:Namespace.ownedElement>
-                                                    <UML:Package name="common" xmi.id="{3ABFF061-D8DD-4639-8713-AFA412D0ADD0}">
-                                                        <UML:ModelElement.taggedValue>
-                                                            <UML:TaggedValue tag="SchemaNamespace" value="http://www.w3.org/2001/XMLSchema"/>
-                                                            <UML:TaggedValue tag="SoapBindingTransport" value="http://schemas.xmlsoap.org/soap/http"/>
-                                                        </UML:ModelElement.taggedValue>
-                                                        <UML:Namespace.ownedElement>
-                                                            <UML:Package name="table" xmi.id="{391F4DF4-892E-4738-9AE1-3AF5E4F07301}">
-                                                                <UML:ModelElement.taggedValue>
-                                                                    <UML:TaggedValue tag="SchemaNamespace" value="http://www.w3.org/2001/XMLSchema"/>
-                                                                    <UML:TaggedValue tag="SoapBindingTransport" value="http://schemas.xmlsoap.org/soap/http"/>
-                                                                </UML:ModelElement.taggedValue>
-                                                                <UML:Namespace.ownedElement>
-                                                                    <UML:Class name="GenericTableModel" isLeaf="false" xmi.id="{2ED42DE2-B6EC-4847-A3BE-BFBE7578B080}" isAbstract="false" visibility="public">
-                                                                        <UML:ModelElement.taggedValue>
-                                                                            <UML:TaggedValue tag="strictfp" value="false"/>
-                                                                        </UML:ModelElement.taggedValue>
-                                                                        <UML:ModelElement.supplierDependency>
-                                                                            <UML:Dependency xmi.idref="{A243C880-E609-402E-9E66-1DC53B1FC68C}"/>
-                                                                        </UML:ModelElement.supplierDependency>
-                                                                    </UML:Class>
                                                                 </UML:Namespace.ownedElement>
                                                             </UML:Package>
                                                         </UML:Namespace.ownedElement>

@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Integration.alignment;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.ClassDiagram;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 /**
  * Aligner.
  * Creates connections between classes, interfaces and packages in {@link Application} and {@link ClassDiagram}
@@ -73,6 +74,6 @@ public class Aligner {
 	 * Not implemented yet.
 	 */
 	private void alignFromUmlModel() {
-
+		throw new NotImplementedException();
 	}
 }
