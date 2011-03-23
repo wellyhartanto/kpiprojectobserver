@@ -5718,22 +5718,13 @@
                                                                         <UML:StructuralFeature.type>
                                                                             <UML:Classifier xmi.idref="Dttp0"/>
                                                                         </UML:StructuralFeature.type>
-                                                                    </UML:Attribute>
-                                                                    <UML:Attribute name="id" xmi.id="{803A72E2-F58D-4E14-B643-CF13906A5AA7}" ownerScope="instance" visibility="private" changeability="changeable">
-                                                                        <UML:StructuralFeature.type>
-                                                                            <UML:Classifier xmi.idref="Dttp1"/>
-                                                                        </UML:StructuralFeature.type>
-                                                                    </UML:Attribute>
+                                                                    </UML:Attribute>                                                                  
                                                                     <UML:Attribute name="name" xmi.id="{C52C7983-95FE-49BC-9BC0-EB6F1098E14B}" ownerScope="instance" visibility="private" changeability="changeable">
                                                                         <UML:StructuralFeature.type>
                                                                             <UML:Classifier xmi.idref="Dttp6"/>
                                                                         </UML:StructuralFeature.type>
                                                                     </UML:Attribute>
-                                                                    <UML:Attribute name="firma" xmi.id="{C2F85D2D-B52E-4266-B1B1-20A39B996759}" ownerScope="instance" visibility="private" changeability="changeable">
-                                                                        <UML:StructuralFeature.type>
-                                                                            <UML:Classifier xmi.idref="Dttp6"/>
-                                                                        </UML:StructuralFeature.type>
-                                                                    </UML:Attribute>
+                                                                   
                                                                     <UML:Attribute name="ort" xmi.id="{CFDC2EED-60EF-42DB-B01C-8C918E15C638}" ownerScope="instance" visibility="private" changeability="changeable">
                                                                         <UML:StructuralFeature.type>
                                                                             <UML:Classifier xmi.idref="Dttp6"/>
