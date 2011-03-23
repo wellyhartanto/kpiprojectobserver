@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -179,6 +180,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(new ArrayList<String>());
 
 		setComponentsPosition();
+
 
 	}
 
