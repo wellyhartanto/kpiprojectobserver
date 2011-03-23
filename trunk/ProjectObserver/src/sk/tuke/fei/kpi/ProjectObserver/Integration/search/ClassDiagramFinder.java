@@ -45,7 +45,7 @@ public class ClassDiagramFinder {
 	 * @param parent parent package
 	 * @return package
 	 */
-	public Package findPackage(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package javaPackage, Package parent) {
+	private Package findPackage(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package javaPackage, Package parent) {
 		Package pack = Finder.findUmlElement(javaPackage, parent.getPackages(),alignStrategy);
 		if (pack == null && !parent.getPackages().isEmpty()) {
 			for (Package p : parent.getPackages()) {
@@ -62,11 +62,19 @@ public class ClassDiagramFinder {
 	 * @param c class in application model
 	 * @return class in class diagram
 	 */
-	public Class findClass(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class c) {
-		Class clazz = Finder.findUmlElement(c, classDiagram.getClasses(), alignStrategy);
+	public Class findClass(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class c, AlignStrategy alignStrategy) {
+		Class clazz = null;
+		if(c.getParent() != null && c.getParent() instanceof sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package){
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package help = (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package) c.getParent();
+			clazz = findClass(c, findPackage(help),alignStrategy);
+			if(clazz !=null){
+				return clazz;
+			}
+		}
+		clazz = Finder.findUmlElement(c, classDiagram.getClasses(), alignStrategy);
 		if (clazz == null) {
 			for (Package p : classDiagram.getPackages()) {
-				clazz = findClass(c, p);
+				clazz = findClass(c, p,alignStrategy);
 				if (clazz != null) {
 					break;
 				}
@@ -81,11 +89,11 @@ public class ClassDiagramFinder {
 	 * @param parent parent package
 	 * @return class in class diagram
 	 */
-	public Class findClass(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class c, Package parent) {
+	private Class findClass(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class c, Package parent,AlignStrategy alignStrategy) {
 		Class clazz = Finder.findUmlElement(c, parent.getClasses(), alignStrategy);
 		if (clazz == null && !parent.getPackages().isEmpty()) {
 			for (Package p : parent.getPackages()) {
-				clazz = findClass(c, p);
+				clazz = findClass(c, p,alignStrategy);
 				if (clazz != null) {
 					break;
 				}
@@ -99,11 +107,19 @@ public class ClassDiagramFinder {
 	 * @param i interface in application model
 	 * @return interface from class diagram
 	 */
-	public Interface findInterface(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface i) {
-		Interface iface = Finder.findUmlElement(i, classDiagram.getInterfaces(),alignStrategy);
+	public Interface findInterface(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface i,AlignStrategy alignStrategy) {
+		Interface iface = null;
+		if(i.getParent() != null && i.getParent() instanceof sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package){
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package help = (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package) i.getParent();
+			iface = findInterface(i, findPackage(help),alignStrategy);
+			if(iface !=null){
+				return iface;
+			}
+		}
+		iface = Finder.findUmlElement(i, classDiagram.getInterfaces(),alignStrategy);
 		if (iface == null) {
 			for (Package p : classDiagram.getPackages()) {
-				iface = findInterface(i, p);
+				iface = findInterface(i, p,alignStrategy);
 				if (iface != null) {
 					break;
 				}
@@ -118,11 +134,11 @@ public class ClassDiagramFinder {
 	 * @param parent parent package
 	 * @return interface from class diagram
 	 */
-	public Interface findInterface(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface i, Package parent) {
+	private Interface findInterface(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface i, Package parent,AlignStrategy alignStrategy) {
 		Interface iface = Finder.findUmlElement(i, parent.getInterfaces(),alignStrategy);
 		if (iface == null && !parent.getPackages().isEmpty()) {
 			for (Package p : parent.getPackages()) {
-				iface = findInterface(i, p);
+				iface = findInterface(i, p,alignStrategy);
 				if (iface != null) {
 					break;
 				}

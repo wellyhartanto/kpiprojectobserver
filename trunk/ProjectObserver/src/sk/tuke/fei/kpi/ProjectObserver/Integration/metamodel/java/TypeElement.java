@@ -198,23 +198,28 @@ public class TypeElement extends Element implements Alignable {
 			case IGNORE_PACKAGE:
 				return getName().equalsIgnoreCase(element.getName());
 			case HEURISTIC:
-				boolean preCondition = this.getSuperClass().getFullyQualifiedName().equals(element.getFullyQualifiedName());
+				boolean preCondition = false;
+				if(getSuperClass()!=null){
+					preCondition = this.getSuperClass().getFullyQualifiedName().equals(element.getFullyQualifiedName());
+				}
 				return getFullyQualifiedName().equalsIgnoreCase(element.getFullyQualifiedName()) || preCondition;
 			case APPROXIMATION:
-				if(getName().equalsIgnoreCase("Calltest")){
-					System.out.println("ahoj");
-				}
-				boolean result = getMethods().size() == element.getMethods().size();
+				boolean result = getMethods().size() == element.getMethods().size() && !element.getMethods().isEmpty();
 				if (result) {
+					int found = 0;
 					for (int i = 0; i < getMethods().size(); i++) {
 						for (int j = 0; j < element.getMethods().size(); j++) {
-							if (!getMethods().get(i).matches(element.getMethods().get(j), AlignStrategy.APPROXIMATION)) {
-								return false;
+							if (getMethods().get(i).matches(element.getMethods().get(j), AlignStrategy.APPROXIMATION)) {
+								found++;
+								break;
 							}
 						}
+					}	
+					if(found == getMethods().size()){					
+						return true;
 					}
 				}
-				return result;
+				return false;
 			case MANUAL:
 				return false;
 			default:

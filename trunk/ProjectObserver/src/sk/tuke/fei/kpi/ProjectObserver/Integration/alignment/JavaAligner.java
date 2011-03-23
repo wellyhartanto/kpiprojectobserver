@@ -73,7 +73,16 @@ public class JavaAligner {
 	public void alignClasses(List<Class> classes) {
 		for (Class c : classes) {
 			logger.info("Aligning classs " + c.getFullyQualifiedName());
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class pair = classDiagramFinder.findClass(c);
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class pair = classDiagramFinder.findClass(c,AlignStrategy.EXACT);
+			if (pair == null) {
+				pair = classDiagramFinder.findClass(c,AlignStrategy.IGNORE_PACKAGE);
+			}
+			if (pair == null) {
+				pair = classDiagramFinder.findClass(c,AlignStrategy.HEURISTIC);
+			}
+			if (pair == null) {
+				pair = classDiagramFinder.findClass(c,AlignStrategy.APPROXIMATION);
+			}
 			if (pair != null) {
 				mappingHolder.addClassPair(pair,c);
 				logger.info("Paired with " + pair.getFullyQualifiedName());
@@ -106,9 +115,18 @@ public class JavaAligner {
 	public void alignInterfaces(List<Interface> interfaces) {
 		for (Interface c : interfaces) {
 			logger.info("Aligning interface " + c.getFullyQualifiedName());
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface pair = classDiagramFinder.findInterface(c);
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface pair = classDiagramFinder.findInterface(c,AlignStrategy.EXACT);
+			if (pair == null) {
+				pair = classDiagramFinder.findInterface(c,AlignStrategy.IGNORE_PACKAGE);
+			}			
+			if (pair == null) {
+				pair = classDiagramFinder.findInterface(c,AlignStrategy.HEURISTIC);
+			}
+			if (pair == null) {
+				pair = classDiagramFinder.findInterface(c,AlignStrategy.APPROXIMATION);
+			}
 			if (pair != null) {
-				mappingHolder.addInterfacePair(pair, c);
+				mappingHolder.addInterfacePair(pair,c);
 				logger.info("Paired with " + pair.getFullyQualifiedName());
 			}
 		}
