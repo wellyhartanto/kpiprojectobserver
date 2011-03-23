@@ -6,6 +6,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
 import sun.misc.Perf.GetPerfAction;
 
@@ -27,12 +28,12 @@ public class ClassPanel extends JPanel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ClassPanel(Class umlclass) {
+	public ClassPanel(Class umlclass, Difference difference) {
 		super();
 
 		setBackground(Color.WHITE);
 
-		graphComponent = new ClassGraphComponent(umlclass, new mxGraph());
+		graphComponent = new ClassGraphComponent(umlclass, new mxGraph(), difference);
 		// graphComponent.getGraph().setCellsResizable(true);
 		mxGraph graph = graphComponent.getGraph();
 

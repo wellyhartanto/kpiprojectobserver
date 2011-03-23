@@ -23,4 +23,10 @@ public class MethodsPanelPresenter extends BasicPresenter<MethodsPanelDisplay> {
 		bind();
 	}
 
+	public void setExtraMethods(List<Method> methods) {
+		if (instance != null) {
+			display.setExtraMethods(methods);
+		}
+	}
+
 }

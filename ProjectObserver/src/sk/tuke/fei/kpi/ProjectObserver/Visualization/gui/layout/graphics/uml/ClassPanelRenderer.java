@@ -20,6 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
@@ -39,7 +40,7 @@ public class ClassPanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public ClassPanelRenderer(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass) {
+	public ClassPanelRenderer(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass, Difference difference) {
 
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
 		setOpaque(false);
@@ -59,6 +60,11 @@ public class ClassPanelRenderer extends JPanel {
 		for (Field field : umlClass.getFields()) {
 			JLabel fieldLbl = new JLabel();
 			fieldLbl.setText(field.getVisibility() + " " + field.getType() + " " + field.getName());
+
+			if (difference.getMissingFields().contains(field)) {
+				fieldLbl.setForeground(Color.RED);
+			}
+
 			add(fieldLbl, "wrap");
 		}
 		add(separator1, "wrap,span,growx");
@@ -66,6 +72,10 @@ public class ClassPanelRenderer extends JPanel {
 		for (Method method : umlClass.getMethods()) {
 			JLabel methodLbl = new JLabel();
 			methodLbl.setText(method.getVisibility() + " " + method.getReturnType() + " " + method.getName());
+			if (difference.getMissingMethods().contains(method)) {
+				methodLbl.setForeground(Color.RED);
+			}
+
 			add(methodLbl, "wrap");
 		}
 

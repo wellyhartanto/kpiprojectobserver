@@ -1,14 +1,15 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common;
 
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXTable;
 
 public class SelectionListener implements ListSelectionListener {
-	JXTable table;
+	JTable table;
 
-	public SelectionListener(JXTable table) {
+	public SelectionListener(JTable table) {
 		this.table = table;
 	}
 
