@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.Properties;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -16,6 +18,10 @@ import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
+
+import org.jdesktop.*;
+import org.jdesktop.application.SessionStorage;
+import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
@@ -27,6 +33,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogView;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
@@ -37,9 +44,15 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 	private Project project;
 	private SearchDialogPresenter searchDialog;
 
+	private SessionStorage sessionStorage;
+
 	public MainPanelPresenter(Project project) {
 		this.project = project;
+		restoreTableProperties();
 		display = new MainPanelView(this.project);
+
+		restoreTableProperties();
+
 
 		bind();
 
@@ -85,7 +98,11 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				saveTableProperties();
+
 				MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
+
 			}
 		});
 
@@ -186,7 +203,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 				if (e.getClickCount() == 2) {
 
-					// display.setDetailSelection(display.getMethodsPanelPresenter().getDisplay().getTable());
+					display.setDetailSelection((JXTable) display.getMethodsPanelPresenter().getDisplay().getTable());
 
 				}
 			}
@@ -348,6 +365,36 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 			}
 		});
 
+	}
+
+	private static final String TABLE_PROPERTIES_FILE = "projectobserverprefs.xml";
+
+	private void initTableProperties() {
+		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage().setDirectory(new File(System.getProperty("user.home")));
+		sessionStorage = org.jdesktop.application.Application.getInstance().getContext().getSessionStorage();
+
+	}
+
+	private void saveTableProperties() {
+		initTableProperties();
+		try {
+			System.out.println("saving");
+			sessionStorage.save(display.asComponent(), TABLE_PROPERTIES_FILE);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void restoreTableProperties() {
+		initTableProperties();
+		System.out.println("restoring");
+
+		// restore here
+		try {
+			sessionStorage.restore(display.asComponent(), TABLE_PROPERTIES_FILE);
+		} catch (Exception e1) {
+		}
 	}
 
 }
