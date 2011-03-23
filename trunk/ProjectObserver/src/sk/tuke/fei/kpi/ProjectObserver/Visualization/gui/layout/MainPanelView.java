@@ -30,6 +30,7 @@ import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element;
@@ -70,7 +71,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	private JSplitPane splitPane;
 	private JScrollPane leftScrollPane;
-	private JPanel rightPanel;
+	private JSplitPane rightPanel;
 	private JTree navigationTree;
 	private JTabbedPane tabbedPane;
 	private ImageIcon iconPackage;
@@ -131,7 +132,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
-		rightPanel = new JPanel();
+		rightPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		rightPanel.setName("rightPanel");
 
 		tabbedPane = new JTabbedPane();
@@ -184,9 +185,13 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
-		rightPanel.setLayout(new MigLayout("fill,insets 0", "", "[growprio 50][]"));
-		rightPanel.add(tabbedPane, "growx,growy,wrap");
-		rightPanel.add(umlClassPanel, "growx,growy");
+		// rightPanel.setLayout(new MigLayout("fill,insets 0", "",
+		// "[growprio 50][]"));
+		// rightPanel.add(tabbedPane, "growx,growy,wrap");
+		// rightPanel.add(umlClassPanel, "growx,growy");
+
+		rightPanel.setTopComponent(tabbedPane);
+		rightPanel.setBottomComponent(umlClassPanel);
 
 		add(actions, "top,wrap");
 		add(splitPane, "grow");
@@ -272,11 +277,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 					((Package) nodeInfo).getFullyQualifiedName());
 
 			if (umlpackage != null) {
-
 				umlPackagePanel = new PackagePanel(umlpackage);
 				umlPackagePanel.setVisible(true);
-				rightPanel.add(umlPackagePanel, "growx,growy");
-				// wrap,span,,top
+				// rightPanel.add(umlPackagePanel, "growx,growy");
+
+				rightPanel.setBottomComponent(umlPackagePanel);
 			}
 
 		}
@@ -289,6 +294,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Class) nodeInfo).getMethods());
 			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
 
+			Difference difference = project.getMappingHolder().getDifference(((Class) nodeInfo).getFullyQualifiedName());
+			if (difference.differs()) {
+				methodsPanelPresenter.setExtraMethods(difference.getExtraMethods());
+			}
+
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Class) nodeInfo).getFields());
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
@@ -299,15 +309,14 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping().getClass(
-
-			((Class) nodeInfo).getFullyQualifiedName());
+					((Class) nodeInfo).getFullyQualifiedName());
 
 			if (umlclass != null) {
-
-				umlClassPanel = new ClassPanel(umlclass);
+				umlClassPanel = new ClassPanel(umlclass, difference);
 				umlClassPanel.setVisible(true);
-				rightPanel.add(umlClassPanel, "growx,growy");
-				// wrap,span,,top
+				// rightPanel.add(umlClassPanel, "growx,growy");
+
+				rightPanel.setBottomComponent(umlClassPanel);
 			}
 
 		}
@@ -331,8 +340,9 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 				umlInterfacePanel = new InterfacePanel(umlinterface);
 				umlInterfacePanel.setVisible(true);
-				rightPanel.add(umlInterfacePanel, "growx,growy");
-				// wrap,span,,top
+				// rightPanel.add(umlInterfacePanel, "growx,growy");
+				rightPanel.setBottomComponent(umlInterfacePanel);
+
 			}
 
 		}

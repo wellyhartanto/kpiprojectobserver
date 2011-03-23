@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
@@ -13,12 +14,14 @@ public class MethodsTableModel extends GenericTableModel<Method> {
 	 */
 	private static final long serialVersionUID = 872988681095105283L;
 
+	private List<Method> extraMethods;
+
 	public MethodsTableModel() {
 		super();
 		data = new ArrayList<Method>();
+		extraMethods = new ArrayList<Method>();
 
-		columnNames = new String[] { Messages.getMessage("table.methodstable.column.name"),
-				Messages.getMessage("table.methodstable.column.visibility"),
+		columnNames = new String[] { Messages.getMessage("table.methodstable.column.name"), Messages.getMessage("table.methodstable.column.visibility"),
 				Messages.getMessage("table.methodstable.column.returntype") };
 
 	}
@@ -41,6 +44,15 @@ public class MethodsTableModel extends GenericTableModel<Method> {
 		}
 
 		return "";
+	}
+
+	public void setExtraMethods(List<Method> extraMethods) {
+		this.extraMethods = extraMethods;
+		// this.data.addAll(extraMethods);
+	}
+
+	public List<Method> getExtraMethods() {
+		return extraMethods;
 	}
 
 }

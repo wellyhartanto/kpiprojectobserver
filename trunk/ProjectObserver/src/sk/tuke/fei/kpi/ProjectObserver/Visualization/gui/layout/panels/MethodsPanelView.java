@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -8,21 +9,27 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.Highlighter;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.MethodCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.MethodsTableModel;
 
 public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 
 	private static final long serialVersionUID = 6261755584520980692L;
-	private JXTable methodsTable;
+	private JTable methodsTable;
 	private MethodsTableModel methodsTableModel;
 
 	public MethodsPanelView(List<Method> methods) {
@@ -35,17 +42,17 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		return this;
 	}
 
-	private JXTable createMethodsTable(List<Method> methods) {
+	private JTable createMethodsTable(List<Method> methods) {
 
 		methodsTableModel = new MethodsTableModel();
 		methodsTableModel.setData(methods);
 
-		methodsTable = new JXTable(methodsTableModel);
+		methodsTable = new JTable(methodsTableModel);
 		methodsTable.getTableHeader().setFont(MyFonts.font3);
-		methodsTable.setRolloverEnabled(true);
-		methodsTable.setHorizontalScrollEnabled(true);
+		// methodsTable.setRolloverEnabled(true);
+		// methodsTable.setHorizontalScrollEnabled(true);
 		methodsTable.setFillsViewportHeight(true);
-		methodsTable.setEditable(true);
+		// methodsTable.setEditable(true);
 
 		methodsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(methodsTable);
@@ -58,6 +65,9 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 				// documentTableMouseClicked(e, methodsTable);
 			}
 		});
+
+		methodsTable.setDefaultRenderer(Object.class, new MethodCellRenderer());
+
 		return methodsTable;
 
 	}
@@ -67,15 +77,18 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		methodsTable.addMouseListener(l);
 	}
 
-	@Override
-	public JXTable getTable() {
+	public JTable getTable() {
 		return methodsTable;
-
 	};
 
 	@Override
 	public void setData(List<Method> methods) {
 		methodsTableModel.setData(methods);
 		methodsTableModel.fireTableDataChanged();
+	}
+
+	@Override
+	public void setExtraMethods(List<Method> methods) {
+		methodsTableModel.setExtraMethods(methods);
 	}
 }

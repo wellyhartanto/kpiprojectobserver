@@ -186,7 +186,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 				if (e.getClickCount() == 2) {
 
-					display.setDetailSelection(display.getMethodsPanelPresenter().getDisplay().getTable());
+					// display.setDetailSelection(display.getMethodsPanelPresenter().getDisplay().getTable());
 
 				}
 			}
