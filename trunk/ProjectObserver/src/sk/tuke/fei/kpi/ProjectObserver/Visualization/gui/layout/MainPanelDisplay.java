@@ -2,6 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JTable;
 import javax.swing.JTree;
 
 import org.jdesktop.swingx.JXTable;
@@ -27,7 +28,7 @@ public interface MainPanelDisplay extends DisplayComponent {
 
 	void setTreeValueChangedAction();
 
-	void setDetailSelection(JXTable table);
+	void setDetailSelection(JTable table);
 
 	void setNavigationTree(JTree tree);
 
@@ -53,8 +54,8 @@ public interface MainPanelDisplay extends DisplayComponent {
 
 	MethodParamsPresenter getMethodParamsPresenter();
 
-	public void saveTableProperties();
+	public void saveWindowPrefs();
 
-	public void restoreTableProperties();
+	public void restoreWindowPrefs();
 
 }
