@@ -5,11 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.Properties;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -19,8 +16,6 @@ import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.jdesktop.*;
-import org.jdesktop.application.SessionStorage;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
@@ -33,9 +28,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogView;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 
@@ -44,16 +37,9 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 	private Project project;
 	private SearchDialogPresenter searchDialog;
 
-	private SessionStorage sessionStorage;
-
 	public MainPanelPresenter(Project project) {
 		this.project = project;
-		restoreTableProperties();
 		display = new MainPanelView(this.project);
-
-		restoreTableProperties();
-
-
 		bind();
 
 	}
@@ -98,22 +84,17 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				saveTableProperties();
+				display.saveTableProperties();
 
 				MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
-
 			}
 		});
 
 		display.getClassesPanelPresenter().getDisplay().setMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getClassesPanelPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -122,11 +103,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getEnumsPanelPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -135,11 +113,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getEnumValuesPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -148,11 +123,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getExceptionsPanelPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -161,11 +133,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getFieldsPanelPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -174,11 +143,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getInterfacesPanelPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -187,11 +153,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getMethodParamsPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -200,11 +163,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection((JXTable) display.getMethodsPanelPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -213,11 +173,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (e.getClickCount() == 2) {
-
 					display.setDetailSelection(display.getPackagesPanelPresenter().getDisplay().getTable());
-
 				}
 			}
 		});
@@ -235,7 +192,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		DefaultMutableTreeNode root = createApplicationTree(app);
 
 		JTree navigationTree = new JTree(root);
-
+		navigationTree.setName("navigationTree");
 		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer());
 
 		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -365,36 +322,6 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 			}
 		});
 
-	}
-
-	private static final String TABLE_PROPERTIES_FILE = "projectobserverprefs.xml";
-
-	private void initTableProperties() {
-		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage().setDirectory(new File(System.getProperty("user.home")));
-		sessionStorage = org.jdesktop.application.Application.getInstance().getContext().getSessionStorage();
-
-	}
-
-	private void saveTableProperties() {
-		initTableProperties();
-		try {
-			System.out.println("saving");
-			sessionStorage.save(display.asComponent(), TABLE_PROPERTIES_FILE);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void restoreTableProperties() {
-		initTableProperties();
-		System.out.println("restoring");
-
-		// restore here
-		try {
-			sessionStorage.restore(display.asComponent(), TABLE_PROPERTIES_FILE);
-		} catch (Exception e1) {
-		}
 	}
 
 }

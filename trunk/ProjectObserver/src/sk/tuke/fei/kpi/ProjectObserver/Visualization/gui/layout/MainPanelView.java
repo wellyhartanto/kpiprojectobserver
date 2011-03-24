@@ -1,24 +1,17 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
-import javax.swing.KeyStroke;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -27,6 +20,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.jdesktop.application.SessionStorage;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
@@ -69,6 +63,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	public JComponent asComponent() {
 		return this;
 	}
+
+	private SessionStorage sessionStorage;
 
 	private JSplitPane splitPane;
 	private JScrollPane leftScrollPane;
@@ -137,6 +133,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		rightPanel.setName("rightPanel");
 
 		tabbedPane = new JTabbedPane();
+		tabbedPane.setName("tabbedPane");
 		tabbedPane.setFont(MyFonts.font2);
 
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
@@ -158,7 +155,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
 
-		sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pack = project.getClassDiagram().getPackages().get(0);
+		sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pack = project.getClassDiagram().getPackages()
+				.get(0);
 		while (!pack.getPackages().isEmpty()) {
 
 			pack = pack.getPackages().get(0);
@@ -180,7 +178,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(new ArrayList<String>());
 
 		setComponentsPosition();
-
 
 	}
 
@@ -273,8 +270,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlpackage = project.getMappingHolder().getJava2UmlMapping()
-					.getPackage(
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlpackage = project.getMappingHolder()
+					.getJava2UmlMapping().getPackage(
 
 					((Package) nodeInfo).getFullyQualifiedName());
 
@@ -310,8 +307,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Class) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping().getClass(
-					((Class) nodeInfo).getFullyQualifiedName());
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder()
+					.getJava2UmlMapping().getClass(((Class) nodeInfo).getFullyQualifiedName());
 
 			if (umlclass != null) {
 				umlClassPanel = new ClassPanel(umlclass, difference);
@@ -333,8 +330,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlinterface = project.getMappingHolder().getJava2UmlMapping()
-					.getInterface(
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlinterface = project.getMappingHolder()
+					.getJava2UmlMapping().getInterface(
 
 					((Interface) nodeInfo).getFullyQualifiedName());
 
@@ -519,6 +516,47 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	@Override
 	public void setSearchAction(ActionListener l) {
 		searchHl.addActionListener(l);
+	}
+
+	private static final String TABLE_PROPERTIES_FILE = "projectobserverprefs.xml";
+
+	private void initTableProperties() {
+		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage()
+				.setDirectory(new File(System.getProperty("user.home")));
+		sessionStorage = org.jdesktop.application.Application.getInstance().getContext().getSessionStorage();
+
+	}
+
+	@Override
+	public void saveTableProperties() {
+		initTableProperties();
+		try {
+			System.out.println("saving");
+			sessionStorage.save(this, TABLE_PROPERTIES_FILE);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void restoreTableProperties() {
+		initTableProperties();
+		System.out.println("restoring");
+
+		// restore here
+		try {
+			sessionStorage.restore(this, TABLE_PROPERTIES_FILE);
+		} catch (Exception e1) {
+		}
+	}
+
+	@Override
+	public void setVisible(boolean aFlag) {
+		super.setVisible(aFlag);
+
+		restoreTableProperties();
+
 	}
 
 }

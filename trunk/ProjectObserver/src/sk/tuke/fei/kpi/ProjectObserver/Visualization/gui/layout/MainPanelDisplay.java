@@ -1,10 +1,8 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionListener;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -54,5 +52,9 @@ public interface MainPanelDisplay extends DisplayComponent {
 	ExceptionsPanelPresenter getExceptionsPanelPresenter();
 
 	MethodParamsPresenter getMethodParamsPresenter();
+
+	public void saveTableProperties();
+
+	public void restoreTableProperties();
 
 }
