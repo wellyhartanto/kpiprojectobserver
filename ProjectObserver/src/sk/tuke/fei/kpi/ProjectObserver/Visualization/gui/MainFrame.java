@@ -1,11 +1,15 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.MainPanelDisplay;
 
 public class MainFrame extends JFrame {
 
@@ -22,6 +26,16 @@ public class MainFrame extends JFrame {
 		actualcomponent = new JComponent() {
 		};
 		setLayout(new MigLayout("insets 0,fill", "[]", "[]"));
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				super.windowClosing(e);
+				if (actualcomponent instanceof MainPanelDisplay) {
+					((MainPanelDisplay) actualcomponent).saveWindowPrefs();
+				}
+			}
+		});
 
 	}
 

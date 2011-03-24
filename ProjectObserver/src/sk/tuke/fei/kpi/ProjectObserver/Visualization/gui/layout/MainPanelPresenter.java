@@ -84,7 +84,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				display.saveTableProperties();
+				display.saveWindowPrefs();
 
 				MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
 			}
@@ -164,7 +164,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					display.setDetailSelection((JXTable) display.getMethodsPanelPresenter().getDisplay().getTable());
+					display.setDetailSelection(display.getMethodsPanelPresenter().getDisplay().getTable());
 				}
 			}
 		});

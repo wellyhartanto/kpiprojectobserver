@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -378,7 +379,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	}
 
 	@Override
-	public void setDetailSelection(JXTable table) {
+	public void setDetailSelection(JTable table) {
 
 		int selectedrow = table.getSelectedRow();
 		if (selectedrow != -1) {
@@ -528,7 +529,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	}
 
 	@Override
-	public void saveTableProperties() {
+	public void saveWindowPrefs() {
 		initTableProperties();
 		try {
 			System.out.println("saving");
@@ -540,7 +541,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	}
 
 	@Override
-	public void restoreTableProperties() {
+	public void restoreWindowPrefs() {
 		initTableProperties();
 		System.out.println("restoring");
 
@@ -555,7 +556,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	public void setVisible(boolean aFlag) {
 		super.setVisible(aFlag);
 
-		restoreTableProperties();
+		restoreWindowPrefs();
 
 	}
 
