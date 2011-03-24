@@ -1,18 +1,11 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.LoginPanelPresenter;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.LoginPanelView;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.MainPanelView;
 
 public class MainFrame extends JFrame {
 
@@ -48,6 +41,8 @@ public class MainFrame extends JFrame {
 		actualcomponent = jComponent;
 		add(jComponent, "span,growx,growy,top");
 		setVisible(true);
+		actualcomponent.setVisible(true);
+
 	}
 
 }
