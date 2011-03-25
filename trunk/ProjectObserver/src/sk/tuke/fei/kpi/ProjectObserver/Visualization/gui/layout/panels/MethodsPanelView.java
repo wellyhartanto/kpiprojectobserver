@@ -53,7 +53,7 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		// methodsTable.setHorizontalScrollEnabled(true);
 		methodsTable.setFillsViewportHeight(true);
 		// methodsTable.setEditable(true);
-
+		methodsTable.setAutoCreateRowSorter(true);
 		methodsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(methodsTable);
 		methodsTable.getSelectionModel().addListSelectionListener(listener);

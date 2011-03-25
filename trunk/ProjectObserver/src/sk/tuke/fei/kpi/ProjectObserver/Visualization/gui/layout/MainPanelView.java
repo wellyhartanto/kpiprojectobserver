@@ -1,6 +1,10 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -156,8 +160,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
 
-		sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pack = project.getClassDiagram().getPackages()
-				.get(0);
+		sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pack = project.getClassDiagram().getPackages().get(0);
 		while (!pack.getPackages().isEmpty()) {
 
 			pack = pack.getPackages().get(0);
@@ -193,6 +196,17 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		rightPanel.setTopComponent(tabbedPane);
 		rightPanel.setBottomComponent(umlClassPanel);
 
+		rightPanel.getTopComponent().addComponentListener(new ComponentAdapter() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				super.componentResized(e);
+
+				saveWindowPrefs();
+			}
+
+		});
+
 		add(actions, "top,wrap");
 		add(splitPane, "grow");
 	}
@@ -210,7 +224,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
 				treeValueChangedAction();
-
 			}
 
 		});
@@ -271,8 +284,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlpackage = project.getMappingHolder()
-					.getJava2UmlMapping().getPackage(
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlpackage = project.getMappingHolder().getJava2UmlMapping()
+					.getPackage(
 
 					((Package) nodeInfo).getFullyQualifiedName());
 
@@ -308,8 +321,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Class) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder()
-					.getJava2UmlMapping().getClass(((Class) nodeInfo).getFullyQualifiedName());
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping().getClass(
+					((Class) nodeInfo).getFullyQualifiedName());
 
 			if (umlclass != null) {
 				umlClassPanel = new ClassPanel(umlclass, difference);
@@ -331,8 +344,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlinterface = project.getMappingHolder()
-					.getJava2UmlMapping().getInterface(
+			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlinterface = project.getMappingHolder().getJava2UmlMapping()
+					.getInterface(
 
 					((Interface) nodeInfo).getFullyQualifiedName());
 
@@ -373,7 +386,9 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 		}
-
+		if ((nodeInfo instanceof Package) || (nodeInfo instanceof Class) || (nodeInfo instanceof Interface)) {
+			restoreWindowPrefs();
+		}
 		repaint();
 
 	}
@@ -522,21 +537,30 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private static final String TABLE_PROPERTIES_FILE = "projectobserverprefs.xml";
 
 	private void initTableProperties() {
-		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage()
-				.setDirectory(new File(System.getProperty("user.home")));
+		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage().setDirectory(new File(System.getProperty("user.home")));
 		sessionStorage = org.jdesktop.application.Application.getInstance().getContext().getSessionStorage();
 
 	}
 
 	@Override
 	public void saveWindowPrefs() {
-		initTableProperties();
-		try {
-			System.out.println("saving");
-			sessionStorage.save(this, TABLE_PROPERTIES_FILE);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) navigationTree.getLastSelectedPathComponent();
+		/* if nothing is selected */
+		if (node == null)
+			return;
+		/* retrieve the node that was selected */
+		Object nodeInfo = node.getUserObject();
+
+		if ((nodeInfo instanceof Package) || (nodeInfo instanceof Class) || (nodeInfo instanceof Interface)) {
+
+			initTableProperties();
+			try {
+				System.out.println("saving");
+				sessionStorage.save(this, TABLE_PROPERTIES_FILE);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
