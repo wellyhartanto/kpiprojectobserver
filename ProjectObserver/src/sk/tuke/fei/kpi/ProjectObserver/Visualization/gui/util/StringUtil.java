@@ -1,13 +1,13 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util;
 
-import java.util.Iterator;
 import java.util.List;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 
 public class StringUtil {
 
-	public static String prepareMethodParameters(List<Param> params) {
+	private static String prepareMethodParameters(List<Param> params) {
 
 		String result = "";
 
@@ -19,6 +19,14 @@ public class StringUtil {
 		}
 
 		return result;
+	}
+
+	public static String convertMethodToString(Method method) {
+
+		String fullnametext = method.getVisibility() + " " + method.getReturnType() + " " + method.getName() + "("
+				+ StringUtil.prepareMethodParameters(method.getParams()) + ")";
+
+		return fullnametext;
 	}
 
 }

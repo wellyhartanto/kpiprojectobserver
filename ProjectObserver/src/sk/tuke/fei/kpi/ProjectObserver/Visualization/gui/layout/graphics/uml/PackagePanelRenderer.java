@@ -11,30 +11,18 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
-
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Element.Visibility;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
 import net.miginfocom.swing.MigLayout;
-
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
-
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+ 
 /**
  * @author MV
  * 

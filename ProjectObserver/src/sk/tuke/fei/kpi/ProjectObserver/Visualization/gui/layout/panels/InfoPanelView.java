@@ -16,8 +16,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util.StringUtil;
 
 public class InfoPanelView extends JPanel implements InfoPanelDisplay {
@@ -124,8 +124,7 @@ public class InfoPanelView extends JPanel implements InfoPanelDisplay {
 		if (object instanceof Method) {
 			Method me = ((Method) object);
 
-			String fullnametext = me.getVisibility() + " " + me.getReturnType() + " " + me.getName() + "(" + StringUtil.prepareMethodParameters(me.getParams())
-					+ ")";
+			String fullnametext = StringUtil.convertMethodToString(me);
 			JLabel fullname = new JLabel(fullnametext);
 			fullname.setFont(MyFonts.font3);
 			add(fullname, "wrap");

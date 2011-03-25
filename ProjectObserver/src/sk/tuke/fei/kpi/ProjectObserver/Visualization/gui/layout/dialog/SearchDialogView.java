@@ -30,7 +30,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
-
+ 
 public class SearchDialogView extends JDialog implements DocumentListener, SearchDialogDisplay {
 
 	private static final long serialVersionUID = -8274637867008423672L;

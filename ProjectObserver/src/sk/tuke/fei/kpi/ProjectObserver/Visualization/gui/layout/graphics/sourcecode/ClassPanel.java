@@ -11,7 +11,7 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
-
+ 
 public class ClassPanel extends JPanel {
 
 	/**

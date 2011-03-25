@@ -1,8 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.sourcecode;
 
 import java.awt.Component;
-import java.awt.Dimension;
-import java.util.Hashtable;
 
 import org.w3c.dom.Document;
 
@@ -14,7 +12,7 @@ import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
-
+ 
 public class ClassGraphComponent extends mxGraphComponent {
 
 	/**

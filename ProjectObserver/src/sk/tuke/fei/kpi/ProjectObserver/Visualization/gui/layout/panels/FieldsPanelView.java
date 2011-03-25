@@ -1,29 +1,27 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
-
-import org.jdesktop.swingx.JXTable;
-
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.FieldCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.FieldsTableModel;
 
 public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 
 	private static final long serialVersionUID = -8763946371835046265L;
-	private JXTable fieldsTable;
+	private JTable fieldsTable;
 	private FieldsTableModel fieldsTableModel;
+
 	public FieldsPanelView(List<Field> fields) {
 		setLayout(new MigLayout("fill"));
 		add(new JScrollPane(createFieldsTable(fields)), "grow");
@@ -34,29 +32,22 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 		return this;
 	}
 
-	private JXTable createFieldsTable(List<Field> fields) {
+	private JTable createFieldsTable(List<Field> fields) {
 
-		 fieldsTableModel = new FieldsTableModel();
+		fieldsTableModel = new FieldsTableModel();
 		fieldsTableModel.setData(fields);
-
-		fieldsTable = new JXTable(fieldsTableModel);
+		fieldsTable = new JTable(fieldsTableModel);
 		fieldsTable.getTableHeader().setFont(MyFonts.font3);
-		fieldsTable.setRolloverEnabled(true);
-		fieldsTable.setHorizontalScrollEnabled(true);
+		// fieldsTable.setRolloverEnabled(true);
+		// fieldsTable.setHorizontalScrollEnabled(true);
 		fieldsTable.setFillsViewportHeight(true);
-		fieldsTable.setEditable(true);
-
+		// fieldsTable.setEditable(true);
+		fieldsTable.setAutoscrolls(true);
 		fieldsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(fieldsTable);
 		fieldsTable.getSelectionModel().addListSelectionListener(listener);
 		fieldsTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
-
-		fieldsTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// documentTableMouseClicked(e, fieldsTable);
-			}
-		});
+		fieldsTable.setDefaultRenderer(Object.class, new FieldCellRenderer());
 		return fieldsTable;
 	}
 
@@ -66,14 +57,21 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 	}
 
 	@Override
-	public JXTable getTable() {
+	public JTable getTable() {
 		return fieldsTable;
 
 	};
-@Override
-public void setData(List<Field> fields) {
-	 fieldsTableModel.setData(fields);	
-	 fieldsTableModel.fireTableDataChanged();
-	 
-}
+
+	@Override
+	public void setData(List<Field> fields) {
+		fieldsTableModel.setData(fields);
+		fieldsTableModel.fireTableDataChanged();
+
+	}
+
+	@Override
+	public void setExtraFields(List<Field> fields) {
+		fieldsTableModel.setExtraFields(fields);
+
+	}
 }

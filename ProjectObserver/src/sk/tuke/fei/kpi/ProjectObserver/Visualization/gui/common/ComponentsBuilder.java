@@ -1,9 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common;
-
+ 
 import java.awt.Color;
-import java.awt.Font;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 public class ComponentsBuilder {
