@@ -17,8 +17,23 @@ public class EnumsTableModel extends GenericTableModel<Enum> {
 		super();
 		data = new ArrayList<Enum>();
 
-		columnNames = new String[] { Messages.getMessage("table.enumstable.column.name") };
+		columnNames = new String[] { Messages.getMessage("table.classestable.column.visibility"), Messages.getMessage("table.enumstable.column.name") };
 
 	}
 
+	@Override
+	public Object getValueAt(int row, int column) {
+
+		switch (column) {
+		case 0:
+			return data.get(row).getVisibility();
+		case 1:
+			return data.get(row).getName();
+
+		default:
+			break;
+		}
+
+		return "";
+	}
 }

@@ -9,9 +9,6 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.Gener
 
 public class MethodsTableModel extends GenericTableModel<Method> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 872988681095105283L;
 
 	private List<Method> extraMethods;
@@ -21,28 +18,23 @@ public class MethodsTableModel extends GenericTableModel<Method> {
 		data = new ArrayList<Method>();
 		extraMethods = new ArrayList<Method>();
 
-		columnNames = new String[] { Messages.getMessage("table.methodstable.column.name"), Messages.getMessage("table.methodstable.column.visibility"),
-				Messages.getMessage("table.methodstable.column.returntype") };
+		columnNames = new String[] { Messages.getMessage("table.methodstable.column.visibility"), Messages.getMessage("table.methodstable.column.returntype"),
+				Messages.getMessage("table.methodstable.column.name") };
 
 	}
 
 	@Override
 	public Object getValueAt(int row, int column) {
-
 		switch (column) {
 		case 0:
-			return data.get(row).getName();
-
+			return data.get(row).getReturnType();
 		case 1:
-
 			return data.get(row).getVisibility();
 		case 2:
-
-			return data.get(row).getReturnType();
+			return data.get(row).getName();
 		default:
 			break;
 		}
-
 		return "";
 	}
 

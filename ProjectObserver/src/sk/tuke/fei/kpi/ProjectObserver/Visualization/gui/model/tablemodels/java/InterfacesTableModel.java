@@ -8,18 +8,13 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.Gener
 
 public class InterfacesTableModel extends GenericTableModel<Interface> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1629050875612660093L;
 
 	public InterfacesTableModel() {
 		super();
 		data = new ArrayList<Interface>();
-
-		columnNames = new String[] { Messages.getMessage("table.interfacestable.column.name"),
-
-		Messages.getMessage("table.interfacestable.column.visibility") };
+		columnNames = new String[] { Messages.getMessage("table.interfacestable.column.visibility"), Messages.getMessage("table.interfacestable.column.name")
+		};
 
 	}
 
@@ -28,16 +23,12 @@ public class InterfacesTableModel extends GenericTableModel<Interface> {
 
 		switch (column) {
 		case 0:
-			return data.get(row).getName();
-
-		case 1:
-
 			return data.get(row).getVisibility();
-
+		case 1:
+			return data.get(row).getName();
 		default:
 			break;
 		}
-
 		return "";
 	}
 

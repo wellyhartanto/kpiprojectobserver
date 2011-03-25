@@ -1,11 +1,8 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
-
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.*;
 import java.awt.event.MouseEvent;
-import java.net.URL;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -15,13 +12,10 @@ import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.calendar.DateSelectionModel.SelectionMode;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.ClassesTableModel;
 
 public class ClassesPanelView extends JPanel implements ClassesPanelDisplay {

@@ -6,6 +6,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
 
 public class ExceptionsTableModel extends GenericTableModel<String> {
+	private static final long serialVersionUID = -1178155466701373851L;
 
 	public ExceptionsTableModel() {
 		super();
@@ -13,10 +14,5 @@ public class ExceptionsTableModel extends GenericTableModel<String> {
 
 		columnNames = new String[] { Messages.getMessage("table.exceptionstable.column.name") };
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1178155466701373851L;
 
 }

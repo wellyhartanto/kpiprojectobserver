@@ -16,7 +16,6 @@ public class ParamsTableModel extends GenericTableModel<Param> {
 	public ParamsTableModel() {
 		super();
 		data = new ArrayList<Param>();
-
 		columnNames = new String[] { Messages.getMessage("table.paramstable.column.name") };
 	}
 

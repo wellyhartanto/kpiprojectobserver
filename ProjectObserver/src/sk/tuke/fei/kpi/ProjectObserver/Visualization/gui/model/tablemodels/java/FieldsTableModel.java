@@ -21,28 +21,23 @@ public class FieldsTableModel extends GenericTableModel<Field> {
 		data = new ArrayList<Field>();
 		extraFields = new ArrayList<Field>();
 
-		columnNames = new String[] { Messages.getMessage("table.fieldstable.column.name"), Messages.getMessage("table.fieldstable.column.type"),
-				Messages.getMessage("table.fieldstable.column.visibility") };
+		columnNames = new String[] { Messages.getMessage("table.fieldstable.column.visibility"), Messages.getMessage("table.fieldstable.column.type"),
+				Messages.getMessage("table.fieldstable.column.name") };
 
 	}
 
 	@Override
 	public Object getValueAt(int row, int column) {
-
 		switch (column) {
 		case 0:
-			return data.get(row).getName();
-
+			return data.get(row).getVisibility();
 		case 1:
-
 			return data.get(row).getType();
 		case 2:
-
-			return data.get(row).getVisibility();
+			return data.get(row).getName();
 		default:
 			break;
 		}
-
 		return "";
 	}
 
