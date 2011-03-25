@@ -3,8 +3,6 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.ContainerAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -27,7 +25,6 @@ import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.application.SessionStorage;
 import org.jdesktop.swingx.JXHyperlink;
-import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
@@ -307,11 +304,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Class) nodeInfo).getMethods());
 			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
 
-			Difference difference = project.getMappingHolder().getDifference(((Class) nodeInfo).getFullyQualifiedName());
-			if (difference.differs()) {
-				methodsPanelPresenter.setExtraMethods(difference.getExtraMethods());
-			}
-
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Class) nodeInfo).getFields());
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
@@ -320,6 +312,12 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Class) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
+
+			Difference difference = project.getMappingHolder().getDifference(((Class) nodeInfo).getFullyQualifiedName());
+			if (difference.differs()) {
+				methodsPanelPresenter.setExtraMethods(difference.getExtraMethods());
+				fieldsPanelPresenter.setExtraFields(difference.getExtraFields());
+			}
 
 			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping().getClass(
 					((Class) nodeInfo).getFullyQualifiedName());
@@ -350,14 +348,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 					((Interface) nodeInfo).getFullyQualifiedName());
 
 			if (umlinterface != null) {
-
 				umlInterfacePanel = new InterfacePanel(umlinterface);
 				umlInterfacePanel.setVisible(true);
 				// rightPanel.add(umlInterfacePanel, "growx,growy");
 				rightPanel.setBottomComponent(umlInterfacePanel);
-
 			}
-
 		}
 		if (nodeInfo instanceof Enum) {
 			tabbedPane.removeAll();

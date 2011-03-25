@@ -16,8 +16,15 @@ public class FieldsPanelPresenter extends BasicPresenter<FieldsPanelDisplay> {
 		}
 		return instance;
 	}
+
 	private FieldsPanelPresenter(List<Field> fields) {
 		display = new FieldsPanelView(fields);
 		bind();
+	}
+
+	public void setExtraFields(List<Field> fields) {
+		if (instance != null) {
+			display.setExtraFields(fields);
+		}
 	}
 }

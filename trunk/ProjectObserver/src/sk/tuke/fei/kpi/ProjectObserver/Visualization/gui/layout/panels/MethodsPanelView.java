@@ -1,8 +1,5 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
@@ -11,15 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import net.miginfocom.swing.MigLayout;
-
-import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.decorator.Highlighter;
-
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
@@ -43,10 +33,8 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 	}
 
 	private JTable createMethodsTable(List<Method> methods) {
-
 		methodsTableModel = new MethodsTableModel();
 		methodsTableModel.setData(methods);
-
 		methodsTable = new JTable(methodsTableModel);
 		methodsTable.getTableHeader().setFont(MyFonts.font3);
 		// methodsTable.setRolloverEnabled(true);
@@ -58,16 +46,7 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		SelectionListener listener = new SelectionListener(methodsTable);
 		methodsTable.getSelectionModel().addListSelectionListener(listener);
 		methodsTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
-
-		methodsTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// documentTableMouseClicked(e, methodsTable);
-			}
-		});
-
 		methodsTable.setDefaultRenderer(Object.class, new MethodCellRenderer());
-
 		return methodsTable;
 
 	}
