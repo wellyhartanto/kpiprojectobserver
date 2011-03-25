@@ -17,8 +17,7 @@ public class ClassesTableModel extends GenericTableModel<Class> {
 		super();
 		data = new ArrayList<Class>();
 
-		columnNames = new String[] { Messages.getMessage("table.classestable.column.name"),
-				Messages.getMessage("table.classestable.column.visibility") };
+		columnNames = new String[] { Messages.getMessage("table.classestable.column.visibility"), Messages.getMessage("table.classestable.column.name") };
 
 	}
 
@@ -27,11 +26,10 @@ public class ClassesTableModel extends GenericTableModel<Class> {
 
 		switch (column) {
 		case 0:
-			return data.get(row).getName();
+			return data.get(row).getVisibility();
 
 		case 1:
-
-			return data.get(row).getVisibility();
+			return data.get(row).getName();
 
 		default:
 			break;
