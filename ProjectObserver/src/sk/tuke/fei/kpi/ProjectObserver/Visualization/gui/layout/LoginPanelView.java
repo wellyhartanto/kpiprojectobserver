@@ -85,8 +85,10 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// String[] language = { LoginPanelPresenter.SK_LANGUAGE,
 		// LoginPanelPresenter.EN_LANGUAGE };
 		languages = new JComboBox(Languages.getlanguages());
-		Preferences p = Preferences.userNodeForPackage(LoginPanelPresenter.class);
-		int defaultLanguage = p.getInt(CommonConstants.DEFAULT_LANGUAGE, Languages.SK.ordinal());
+		Preferences p = Preferences
+				.userNodeForPackage(LoginPanelPresenter.class);
+		int defaultLanguage = p.getInt(CommonConstants.DEFAULT_LANGUAGE,
+				Languages.SK.ordinal());
 		languages.setSelectedIndex(defaultLanguage);
 
 		projectsTable = new JXTable(new ProjectsTableModel());
@@ -97,32 +99,43 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectsTable.setEditable(true);
 		projectsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		projectsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		projectsTable.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
 
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
 
-				Project p = getSelectedProject();
-				if (p != null) {
-					infoProjectDescription.setText(p.getDescription());
-					repaint();
-				}
+						Project p = getSelectedProject();
+						if (p != null) {
+							infoProjectDescription.setText(p.getDescription());
+							repaint();
+						}
 
-			}
-		});
+					}
+				});
 
 		Font buttonsFont = MyFonts.tahomaBoldItalic14;
 		Dimension buttonsSize = new Dimension(120, 30);
 
-		openProject = new JButton(Messages.getMessage("loginpanel.buttons.open"));
-		deleteProject = new JButton(Messages.getMessage("loginpanel.buttons.delete"));
-		importProject = new JButton(Messages.getMessage("loginpanel.buttons.import"));
-		exportProject = new JButton(Messages.getMessage("loginpanel.buttons.export"));
+		openProject = new JButton(Messages
+				.getMessage("loginpanel.buttons.open"));
+		deleteProject = new JButton(Messages
+				.getMessage("loginpanel.buttons.delete"));
+		importProject = new JButton(Messages
+				.getMessage("loginpanel.buttons.import"));
+		exportProject = new JButton(Messages
+				.getMessage("loginpanel.buttons.export"));
 
-		createProject = new JButton(Messages.getMessage("loginpanel.buttons.create"));
-		loadSourceCode = new JButton(Messages.getMessage("loginpanel.buttons.loadsourcefile"));
-		loadUmlModel = new JButton(Messages.getMessage("loginpanel.buttons.loadumlfile"));
-
+		createProject = new JButton(Messages
+				.getMessage("loginpanel.buttons.create"));
+		loadSourceCode = new JButton(Messages
+				.getMessage("loginpanel.buttons.loadsourcefile"));
+		loadSourceCode.setToolTipText(Messages
+				.getMessage("tooltip.chooseowlfile"));
+		loadUmlModel = new JButton(Messages
+				.getMessage("loginpanel.buttons.loadumlfile"));
+		loadUmlModel.setToolTipText(Messages
+				.getMessage("tooltip.choosexmlfile"));
 		openProject.setFont(buttonsFont);
 		deleteProject.setFont(buttonsFont);
 		importProject.setFont(buttonsFont);
@@ -173,7 +186,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		projectDescription.setLineWrap(true);
 		projectDescription.setAutoscrolls(true);
 		projectDescription.setDocument(new JTextFieldLimit(300));
-		descriptionBackgroundText = Messages.getMessage("loginpanel.newproject.description");
+		descriptionBackgroundText = Messages
+				.getMessage("loginpanel.newproject.description");
 		projectDescription.setText(descriptionBackgroundText);
 		projectDescription.setForeground(backgroundTextColor);
 
@@ -190,7 +204,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				if (projectDescription.getText().equals(descriptionBackgroundText)) {
+				if (projectDescription.getText().equals(
+						descriptionBackgroundText)) {
 					projectDescription.setText("");
 					projectDescription.setForeground(forgroundTextColor);
 				}
@@ -200,7 +215,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// infoProjectDescription = new JTextArea(4, 50);
 
 		infoProjectDescription = new JTextPane();
-		infoProjectDescription.setMaximumSize(projectDescription.getPreferredSize());
+		infoProjectDescription.setMaximumSize(projectDescription
+				.getPreferredSize());
 		infoProjectDescription.setMinimumSize(new Dimension(100, 70));
 		// infoProjectDescription.setLineWrap(true);
 		// infoProjectDescription.setAutoscrolls(true);
@@ -211,16 +227,22 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		infoProjectDescription.setDisabledTextColor(Color.BLACK);
 		infoProjectDescription.setEnabled(false);
 
-		namePanel = new JErrorPanel(projectName, Messages.getMessage("message.error.fillproject"));
-		descriptionPanel = new JErrorPanel(projectDescription, Messages.getMessage("message.error.fillproject"));
-		umlFilePanel = new JErrorPanel(loadUmlModel, Messages.getMessage("message.error.selectfile"));
-		sourceCodeFilePanel = new JErrorPanel(loadSourceCode, Messages.getMessage("message.error.selectfile"));
+		namePanel = new JErrorPanel(projectName, Messages
+				.getMessage("message.error.fillproject"));
+		descriptionPanel = new JErrorPanel(projectDescription, Messages
+				.getMessage("message.error.fillproject"));
+		umlFilePanel = new JErrorPanel(loadUmlModel, Messages
+				.getMessage("message.error.selectfile"));
+		sourceCodeFilePanel = new JErrorPanel(loadSourceCode, Messages
+				.getMessage("message.error.selectfile"));
 
 		Dimension scBtnSize = loadSourceCode.getPreferredSize();
 		Dimension umlBtnSize = loadUmlModel.getPreferredSize();
 
-		loadSourceCode.setMinimumSize(umlBtnSize.getWidth() > scBtnSize.getWidth() ? umlBtnSize : scBtnSize);
-		loadUmlModel.setMinimumSize(umlBtnSize.getWidth() > scBtnSize.getWidth() ? umlBtnSize : scBtnSize);
+		loadSourceCode.setMinimumSize(umlBtnSize.getWidth() > scBtnSize
+				.getWidth() ? umlBtnSize : scBtnSize);
+		loadUmlModel.setMinimumSize(umlBtnSize.getWidth() > scBtnSize
+				.getWidth() ? umlBtnSize : scBtnSize);
 
 		setComponentsPosition();
 	}
@@ -284,9 +306,11 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		if (projectsTable.getSelectedRow() >= 0) {
 
-			int index = projectsTable.convertRowIndexToModel(projectsTable.getSelectedRow());
+			int index = projectsTable.convertRowIndexToModel(projectsTable
+					.getSelectedRow());
 
-			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+			ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
+					.getModel();
 			return tableModel.getData().get(index);
 		}
 		return null;
@@ -294,7 +318,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	@Override
 	public void removeProjectFromList(Project project) {
-		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable.getModel();
+		ProjectsTableModel tableModel = (ProjectsTableModel) projectsTable
+				.getModel();
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
 		infoProjectDescription.setText(null);
@@ -340,14 +365,16 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		boolean isCorrect = true;
 
-		if (projectName.getText().isEmpty() || projectName.getForeground() == backgroundTextColor) {
+		if (projectName.getText().isEmpty()
+				|| projectName.getForeground() == backgroundTextColor) {
 			isCorrect = false;
 			namePanel.showErrorMessage(true);
 		} else {
 			namePanel.showErrorMessage(false);
 		}
 
-		if (projectDescription.getText().isEmpty() || projectDescription.getForeground() == backgroundTextColor) {
+		if (projectDescription.getText().isEmpty()
+				|| projectDescription.getForeground() == backgroundTextColor) {
 			isCorrect = false;
 			descriptionPanel.showErrorMessage(true);
 		} else {

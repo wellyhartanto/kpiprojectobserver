@@ -72,7 +72,7 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 
 		setToolTipText(null);
-		
+
 		setPackage(node);
 
 		setInterface(node);
@@ -106,6 +106,8 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 					((Interface) node.getUserObject()).getFullyQualifiedName())
 					.differs()) {
 				setForeground(Color.RED);
+				setToolTipText(Messages
+						.getMessage("tooltip.containdifferences"));
 			}
 
 		}
@@ -119,6 +121,8 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 					((Class) node.getUserObject()).getFullyQualifiedName())
 					.differs()) {
 				setForeground(Color.RED);
+				setToolTipText(Messages
+						.getMessage("tooltip.containdifferences"));
 			}
 
 		}
