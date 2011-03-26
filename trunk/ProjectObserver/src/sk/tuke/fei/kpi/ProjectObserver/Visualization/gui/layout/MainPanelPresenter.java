@@ -39,18 +39,14 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		this.project = project;
 		display = new MainPanelView(this.project);
 		bind();
-
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
-
 		display.setNavigationTree(createTree());
 		display.setTreeValueChangedAction();
-
 		setListeners();
-
 	}
 
 	private void findSelectedElement() {
@@ -180,23 +176,17 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 	}
 
 	private JTree createTree() {
-
 		Application app = null;
 		// TestData.createTestData();
 		// app.setName("testproject");
-
 		app = project.getJavaModel();
-
 		DefaultMutableTreeNode root = createApplicationTree(app);
-
 		JTree navigationTree = new JTree(root);
 		navigationTree.setName("navigationTree");
-		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer());
-
+		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer(project, navigationTree));
 		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
 		return navigationTree;
-
 	}
 
 	private DefaultMutableTreeNode createPackageTree(Package p) {

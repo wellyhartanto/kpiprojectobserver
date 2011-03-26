@@ -6,6 +6,7 @@ import java.util.List;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util.StringUtil;
 
 public class MethodsTableModel extends GenericTableModel<Method> {
 
@@ -31,7 +32,7 @@ public class MethodsTableModel extends GenericTableModel<Method> {
 		case 1:
 			return data.get(row).getVisibility();
 		case 2:
-			return data.get(row).getName();
+			return StringUtil.convertMethodNameToString(data.get(row));
 		default:
 			break;
 		}
