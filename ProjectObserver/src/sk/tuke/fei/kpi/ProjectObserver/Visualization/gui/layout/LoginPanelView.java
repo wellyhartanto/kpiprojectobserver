@@ -90,7 +90,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		languages.setSelectedIndex(defaultLanguage);
 
 		projectsTable = new JXTable(new ProjectsTableModel());
-		projectsTable.getTableHeader().setFont(MyFonts.font3);
+		projectsTable.getTableHeader().setFont(MyFonts.tahoma14);
 		projectsTable.setRolloverEnabled(true);
 		projectsTable.setHorizontalScrollEnabled(true);
 		projectsTable.setFillsViewportHeight(true);
@@ -111,7 +111,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 			}
 		});
 
-		Font buttonsFont = MyFonts.font2;
+		Font buttonsFont = MyFonts.tahomaBoldItalic14;
 		Dimension buttonsSize = new Dimension(120, 30);
 
 		openProject = new JButton(Messages.getMessage("loginpanel.buttons.open"));

@@ -42,7 +42,7 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 		enumsTableModel.setData(enums);
 
 		enumsTable = new JXTable(enumsTableModel);
-		enumsTable.getTableHeader().setFont(MyFonts.font3);
+		enumsTable.getTableHeader().setFont(MyFonts.tahoma14);
 		enumsTable.setRolloverEnabled(true);
 		enumsTable.setHorizontalScrollEnabled(true);
 		enumsTable.setFillsViewportHeight(true);

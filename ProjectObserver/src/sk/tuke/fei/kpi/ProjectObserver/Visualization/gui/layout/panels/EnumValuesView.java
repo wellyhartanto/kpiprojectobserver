@@ -43,7 +43,7 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 		enumValuesTableModel.setData(valuestmp);
 
 		enumValuesTable = new JXTable(enumValuesTableModel);
-		enumValuesTable.getTableHeader().setFont(MyFonts.font3);
+		enumValuesTable.getTableHeader().setFont(MyFonts.tahoma14);
 		enumValuesTable.setRolloverEnabled(true);
 		enumValuesTable.setHorizontalScrollEnabled(true);
 		enumValuesTable.setFillsViewportHeight(true);

@@ -41,7 +41,7 @@ public class ClassesPanelView extends JPanel implements ClassesPanelDisplay {
 		classesTableModel.setData(classes);
 
 		classesTable = new JXTable(classesTableModel);
-		classesTable.getTableHeader().setFont(MyFonts.font3);
+		classesTable.getTableHeader().setFont(MyFonts.tahoma14);
 		classesTable.setRolloverEnabled(true);
 		classesTable.setHorizontalScrollEnabled(true);
 		classesTable.setFillsViewportHeight(true);

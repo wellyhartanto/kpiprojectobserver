@@ -22,7 +22,7 @@ public class InfoInterfacePanelView extends JPanel implements InfoPanelDisplay {
 		setLayout(new MigLayout("fillx"));
 
 		JLabel name = new JLabel(in.getName());
-		name.setFont(MyFonts.font3);
+		name.setFont(MyFonts.tahoma14);
 		add(name, "wrap");
 
 		if (in.getImplemented() != null && !in.getImplemented().isEmpty()) {
@@ -42,7 +42,7 @@ public class InfoInterfacePanelView extends JPanel implements InfoPanelDisplay {
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
 			if (component instanceof JLabel) {
-				component.setFont(MyFonts.font3);
+				component.setFont(MyFonts.tahoma14);
 			}
 		}
 

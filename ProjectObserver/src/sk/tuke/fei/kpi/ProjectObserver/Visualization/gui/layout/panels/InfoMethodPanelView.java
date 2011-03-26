@@ -24,11 +24,11 @@ public class InfoMethodPanelView extends JPanel implements InfoPanelDisplay {
 
 		String fullnametext = StringUtil.convertMethodToString(me);
 		JLabel fullname = new JLabel(fullnametext);
-		fullname.setFont(MyFonts.font3);
+		fullname.setFont(MyFonts.tahoma14);
 		add(fullname, "wrap");
 
 		JLabel name = new JLabel(me.getName());
-		name.setFont(MyFonts.font3);
+		name.setFont(MyFonts.tahoma14);
 		add(name, "wrap");
 
 		if (!me.getParams().isEmpty()) {
@@ -43,7 +43,7 @@ public class InfoMethodPanelView extends JPanel implements InfoPanelDisplay {
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
 			if (component instanceof JLabel) {
-				component.setFont(MyFonts.font3);
+				component.setFont(MyFonts.tahoma14);
 			}
 		}
 
