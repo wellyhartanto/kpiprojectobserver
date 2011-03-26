@@ -10,7 +10,7 @@ public class ComponentsBuilder {
 
 		JLabel errorLabel = new JLabel();
 		errorLabel.setForeground(Color.RED);
-		errorLabel.setFont(MyFonts.font7);
+		errorLabel.setFont(MyFonts.tahoma11);
 		errorLabel.setText(text);
  		return errorLabel;
 
@@ -21,7 +21,7 @@ public class ComponentsBuilder {
 
 		JLabel label = new JLabel();
 		label.setForeground(Color.DARK_GRAY);
-		label.setFont(MyFonts.font8);
+		label.setFont(MyFonts.tahomaBold10);
 		label.setText(text);
  		return label;
 

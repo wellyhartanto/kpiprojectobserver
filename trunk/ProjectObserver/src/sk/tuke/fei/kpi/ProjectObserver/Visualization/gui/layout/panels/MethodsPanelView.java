@@ -36,7 +36,7 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		methodsTableModel = new MethodsTableModel();
 		methodsTableModel.setData(methods);
 		methodsTable = new JTable(methodsTableModel);
-		methodsTable.getTableHeader().setFont(MyFonts.font3);
+		methodsTable.getTableHeader().setFont(MyFonts.tahoma14);
 		// methodsTable.setRolloverEnabled(true);
 		// methodsTable.setHorizontalScrollEnabled(true);
 		methodsTable.setFillsViewportHeight(true);

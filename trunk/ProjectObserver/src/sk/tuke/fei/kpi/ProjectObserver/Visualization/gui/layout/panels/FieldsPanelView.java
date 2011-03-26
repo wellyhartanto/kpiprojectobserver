@@ -37,7 +37,7 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 		fieldsTableModel = new FieldsTableModel();
 		fieldsTableModel.setData(fields);
 		fieldsTable = new JTable(fieldsTableModel);
-		fieldsTable.getTableHeader().setFont(MyFonts.font3);
+		fieldsTable.getTableHeader().setFont(MyFonts.tahoma14);
 		// fieldsTable.setRolloverEnabled(true);
 		// fieldsTable.setHorizontalScrollEnabled(true);
 		fieldsTable.setFillsViewportHeight(true);

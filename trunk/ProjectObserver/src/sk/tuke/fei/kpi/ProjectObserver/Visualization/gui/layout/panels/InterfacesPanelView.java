@@ -41,7 +41,7 @@ public class InterfacesPanelView extends JPanel implements InterfacesPanelDispla
 		interfacesTableModel.setData(interfaces);
 
 		interfacesTable = new JXTable(interfacesTableModel);
-		interfacesTable.getTableHeader().setFont(MyFonts.font3);
+		interfacesTable.getTableHeader().setFont(MyFonts.tahoma14);
 		interfacesTable.setRolloverEnabled(true);
 		interfacesTable.setHorizontalScrollEnabled(true);
 		interfacesTable.setFillsViewportHeight(true);

@@ -30,8 +30,9 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
- 
-public class SearchDialogView extends JDialog implements DocumentListener, SearchDialogDisplay {
+
+public class SearchDialogView extends JDialog implements DocumentListener,
+		SearchDialogDisplay {
 
 	private static final long serialVersionUID = -8274637867008423672L;
 	private JTextField entry;
@@ -90,17 +91,22 @@ public class SearchDialogView extends JDialog implements DocumentListener, Searc
 		jScrollPane1 = new JScrollPane(list);
 		jLabel1.setText(Messages.getMessage("dialog.search.searchtext"));
 
-		setLayout(new MigLayout("fill", "", "[growprio 50][][growprio 50]"));
+		setLayout(new MigLayout("fill", "",
+				"[growprio 50][growprio 50][][growprio 50]"));
 
-		JPanel panel1 = new JPanel(new MigLayout("fillx", "[growprio 50][]", ""));
-		panel1.add(jLabel1);
-		panel1.add(entry, "growx");
+		JPanel panel1 = new JPanel(
+				new MigLayout("fillx", "[growprio 50][]", ""));
+		// panel1.add(jLabel1,"wrap");
+		// panel1.add(entry, "growx");
+
+		add(jLabel1, "growx,wrap");
+		add(entry, "growx,wrap");
 
 		JPanel panel3 = new JPanel(new MigLayout("fillx"));
 		panel3.add(cancelButton, "align right");
 		panel3.add(okButton, "align right");
 
-		add(panel1, "grow,wrap");
+		// add(panel1, "grow,wrap");
 		add(jScrollPane1, "grow,wrap");
 		add(status, "wrap");
 		add(panel3, "span,align right");
@@ -141,6 +147,7 @@ public class SearchDialogView extends JDialog implements DocumentListener, Searc
 		public void actionPerformed(ActionEvent ev) {
 			entry.setText("");
 			entry.setBackground(entryBg);
+			setVisible(false);
 		}
 	}
 

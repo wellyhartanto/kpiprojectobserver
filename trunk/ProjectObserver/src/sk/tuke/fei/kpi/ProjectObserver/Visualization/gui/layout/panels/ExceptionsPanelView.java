@@ -40,7 +40,7 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 		exceptionsTableModel.setData(exceptions);
 
 		exceptionsTable = new JXTable(exceptionsTableModel);
-		exceptionsTable.getTableHeader().setFont(MyFonts.font3);
+		exceptionsTable.getTableHeader().setFont(MyFonts.tahoma14);
 		exceptionsTable.setRolloverEnabled(true);
 		exceptionsTable.setHorizontalScrollEnabled(true);
 		exceptionsTable.setFillsViewportHeight(true);

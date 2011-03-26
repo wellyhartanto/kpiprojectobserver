@@ -44,7 +44,7 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 
 		// packagesTable.setShowGrid(true, true);
 
-		packagesTable.getTableHeader().setFont(MyFonts.font3);
+		packagesTable.getTableHeader().setFont(MyFonts.tahoma14);
 		packagesTable.setRolloverEnabled(true);
 		packagesTable.setHorizontalScrollEnabled(true);
 		packagesTable.setFillsViewportHeight(true);

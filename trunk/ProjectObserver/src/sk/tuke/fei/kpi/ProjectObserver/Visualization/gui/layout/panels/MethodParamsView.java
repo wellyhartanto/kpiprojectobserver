@@ -41,7 +41,7 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 		paramsTableModel.setData(parameters);
 
 		paramsTable = new JXTable(paramsTableModel);
-		paramsTable.getTableHeader().setFont(MyFonts.font3);
+		paramsTable.getTableHeader().setFont(MyFonts.tahoma14);
 		paramsTable.setRolloverEnabled(true);
 		paramsTable.setHorizontalScrollEnabled(true);
 		paramsTable.setFillsViewportHeight(true);

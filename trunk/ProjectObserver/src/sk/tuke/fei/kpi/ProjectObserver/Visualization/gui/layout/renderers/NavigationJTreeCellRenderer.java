@@ -17,6 +17,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
 public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 
@@ -42,24 +43,36 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 
 		setOpaque(true);
 
-		iconPackage = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "package_obj.gif"));
-		iconInterface = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "int_obj.gif"));
-		iconClass = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "classes.gif"));
-		iconEnum = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_obj.gif"));
-		iconMethod = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "method_obj.gif"));
-		iconField = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "field_obj.gif"));
-		iconEnumValue = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
+		iconPackage = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "package_obj.gif"));
+		iconInterface = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "int_obj.gif"));
+		iconClass = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "classes.gif"));
+		iconEnum = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "enum_obj.gif"));
+		iconMethod = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "method_obj.gif"));
+		iconField = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "field_obj.gif"));
+		iconEnumValue = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
 
 	}
 
-	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+	public Component getTreeCellRendererComponent(JTree tree, Object value,
+			boolean sel, boolean expanded, boolean leaf, int row,
+			boolean hasFocus) {
 
-		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
+				row, hasFocus);
 
 		setBackground(new Color(255, 255, 255, 0));
 
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 
+		setToolTipText(null);
+		
 		setPackage(node);
 
 		setInterface(node);
@@ -78,9 +91,10 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 	private void setPackage(DefaultMutableTreeNode node) {
 		if (node.getUserObject() instanceof Package) {
 			setIcon(iconPackage);
-
-			if (hasPackageDifferences((Package) node.getUserObject()) && !isNodeExpanded(node)) {
+			if (hasPackageDifferences((Package) node.getUserObject())
+					&& !isNodeExpanded(node)) {
 				setForeground(Color.RED);
+				setToolTipText(Messages.getMessage("tooltip.packagediffers"));
 			}
 		}
 	}
@@ -88,7 +102,9 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 	private void setInterface(DefaultMutableTreeNode node) {
 		if (node.getUserObject() instanceof Interface) {
 			setIcon(iconInterface);
-			if (project.getMappingHolder().getDifference(((Interface) node.getUserObject()).getFullyQualifiedName()).differs()) {
+			if (project.getMappingHolder().getDifference(
+					((Interface) node.getUserObject()).getFullyQualifiedName())
+					.differs()) {
 				setForeground(Color.RED);
 			}
 
@@ -99,7 +115,9 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 
 		if (node.getUserObject() instanceof Class) {
 			setIcon(iconClass);
-			if (project.getMappingHolder().getDifference(((Class) node.getUserObject()).getFullyQualifiedName()).differs()) {
+			if (project.getMappingHolder().getDifference(
+					((Class) node.getUserObject()).getFullyQualifiedName())
+					.differs()) {
 				setForeground(Color.RED);
 			}
 
@@ -131,12 +149,14 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 			return hasPackageDifferences(pack);
 		}
 		for (Class class1 : package1.getClasses()) {
-			if (project.getMappingHolder().getDifference(class1.getFullyQualifiedName()).differs()) {
+			if (project.getMappingHolder().getDifference(
+					class1.getFullyQualifiedName()).differs()) {
 				return true;
 			}
 		}
 		for (Interface interface1 : package1.getInterfaces()) {
-			if (project.getMappingHolder().getDifference(interface1.getFullyQualifiedName()).differs()) {
+			if (project.getMappingHolder().getDifference(
+					interface1.getFullyQualifiedName()).differs()) {
 				return true;
 			}
 		}
