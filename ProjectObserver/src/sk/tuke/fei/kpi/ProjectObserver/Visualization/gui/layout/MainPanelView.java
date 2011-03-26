@@ -211,22 +211,14 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	@Override
 	public void setNavigationTree(JTree tree) {
 		navigationTree = tree;
-
-		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer());
-
-		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-
 		navigationTree.addTreeSelectionListener(new TreeSelectionListener() {
-
 			@Override
 			public void valueChanged(TreeSelectionEvent e) {
 				treeValueChangedAction();
 			}
 
 		});
-
 		leftScrollPane.setViewportView(navigationTree);
-
 	}
 
 	private void treeValueChangedAction() {
@@ -289,8 +281,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			if (umlpackage != null) {
 				umlPackagePanel = new PackagePanel(umlpackage);
 				umlPackagePanel.setVisible(true);
-				// rightPanel.add(umlPackagePanel, "growx,growy");
-
 				rightPanel.setBottomComponent(umlPackagePanel);
 			}
 
@@ -325,8 +315,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			if (umlclass != null) {
 				umlClassPanel = new ClassPanel(umlclass, difference);
 				umlClassPanel.setVisible(true);
-				// rightPanel.add(umlClassPanel, "growx,growy");
-
 				rightPanel.setBottomComponent(umlClassPanel);
 			}
 
@@ -350,7 +338,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			if (umlinterface != null) {
 				umlInterfacePanel = new InterfacePanel(umlinterface);
 				umlInterfacePanel.setVisible(true);
-				// rightPanel.add(umlInterfacePanel, "growx,growy");
 				rightPanel.setBottomComponent(umlInterfacePanel);
 			}
 		}
@@ -562,8 +549,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	@Override
 	public void restoreWindowPrefs() {
 		initTableProperties();
-		System.out.println("restoring");
-
 		// restore here
 		try {
 			sessionStorage.restore(this, TABLE_PROPERTIES_FILE);
@@ -574,9 +559,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	@Override
 	public void setVisible(boolean aFlag) {
 		super.setVisible(aFlag);
-
 		restoreWindowPrefs();
-
 	}
 
 }

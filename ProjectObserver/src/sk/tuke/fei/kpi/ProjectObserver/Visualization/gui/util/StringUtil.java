@@ -18,25 +18,30 @@ public class StringUtil {
 				result += ", ";
 			}
 		}
-
 		return result;
 	}
 
 	public static String convertMethodToString(Method method) {
 
 		String fullnametext = method.getVisibility() + " " + method.getReturnType() + " " + method.getName() + "("
-				+ StringUtil.prepareMethodParameters(method.getParams()) + " )";
+				+ StringUtil.prepareMethodParameters(method.getParams()) + ")";
 
 		return fullnametext;
 	}
-	
+
+	public static String convertMethodNameToString(Method method) {
+
+		String fullnametext = method.getName() + "(" + StringUtil.prepareMethodParameters(method.getParams()) + ")";
+
+		return fullnametext;
+	}
+
 	public static String convertConstructorToString(Constructor constructor) {
 
-		String fullnametext = constructor.getVisibility() + " " + constructor.getName() + "("
-				+ StringUtil.prepareMethodParameters(constructor.getParams()) + " )";
+		String fullnametext = constructor.getVisibility() + " " + constructor.getName() + "(" + StringUtil.prepareMethodParameters(constructor.getParams())
+				+ " )";
 
 		return fullnametext;
 	}
-	
 
 }

@@ -1,12 +1,16 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
+import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
@@ -16,114 +20,133 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 
 public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = 5876364977896542973L;
+	private static final long serialVersionUID = 5876364977896542973L;
 
-    private static final String IMAGES_FOLDER_PATH = "/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/resources/images/";
+	private static final String IMAGES_FOLDER_PATH = "/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/resources/images/";
 
-    private ImageIcon iconPackage;
-    private ImageIcon iconInterface;
-    private ImageIcon iconClass;
-    private ImageIcon iconEnum;
-    private ImageIcon iconMethod;
-    private ImageIcon iconField;
-    private ImageIcon iconEnumValue;
+	private ImageIcon iconPackage;
+	private ImageIcon iconInterface;
+	private ImageIcon iconClass;
+	private ImageIcon iconEnum;
+	private ImageIcon iconMethod;
+	private ImageIcon iconField;
+	private ImageIcon iconEnumValue;
 
-    public NavigationJTreeCellRenderer() {
+	private Project project;
+	private JTree tree;
 
-	iconPackage = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "package_obj.gif"));
-	iconInterface = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "int_obj.gif"));
-	iconClass = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "classes.gif"));
-	iconEnum = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_obj.gif"));
-	iconMethod = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "method_obj.gif"));
-	iconField = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "field_obj.gif"));
-	iconEnumValue = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
+	public NavigationJTreeCellRenderer(Project project, JTree tree) {
 
-    }
+		this.project = project;
+		this.tree = tree;
 
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
-	    boolean leaf, int row, boolean hasFocus) {
+		setOpaque(true);
 
-	super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-	if (isPackage(value)) {
-	    setIcon(iconPackage);
-	}
-	if (isInterface(value)) {
-	    setIcon(iconInterface);
+		iconPackage = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "package_obj.gif"));
+		iconInterface = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "int_obj.gif"));
+		iconClass = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "classes.gif"));
+		iconEnum = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_obj.gif"));
+		iconMethod = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "method_obj.gif"));
+		iconField = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "field_obj.gif"));
+		iconEnumValue = new ImageIcon(getClass().getResource(IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
+
 	}
 
-	if (isClass(value)) {
-	    setIcon(iconClass);
+	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+
+		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+
+		setBackground(new Color(255, 255, 255, 0));
+
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+
+		setPackage(node);
+
+		setInterface(node);
+
+		setClass(node);
+
+		setEnum(node);
+
+		setMethod(node);
+
+		setField(node);
+
+		return this;
 	}
 
-	if (isEnum(value)) {
-	    setIcon(iconEnum);
+	private void setPackage(DefaultMutableTreeNode node) {
+		if (node.getUserObject() instanceof Package) {
+			setIcon(iconPackage);
+
+			if (hasPackageDifferences((Package) node.getUserObject()) && !isNodeExpanded(node)) {
+				setForeground(Color.RED);
+			}
+		}
 	}
 
-	if (isMethod(value)) {
-	    setIcon(iconMethod);
-	}
-	if (isField(value)) {
-	    setIcon(iconField);
+	private void setInterface(DefaultMutableTreeNode node) {
+		if (node.getUserObject() instanceof Interface) {
+			setIcon(iconInterface);
+			if (project.getMappingHolder().getDifference(((Interface) node.getUserObject()).getFullyQualifiedName()).differs()) {
+				setForeground(Color.RED);
+			}
+
+		}
 	}
 
-	return this;
-    }
+	private void setClass(DefaultMutableTreeNode node) {
 
-    private boolean isPackage(Object value) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-	if (node.getUserObject() instanceof Package) {
-	    return true;
-	} else {
-	    return false;
-	}
-    }
+		if (node.getUserObject() instanceof Class) {
+			setIcon(iconClass);
+			if (project.getMappingHolder().getDifference(((Class) node.getUserObject()).getFullyQualifiedName()).differs()) {
+				setForeground(Color.RED);
+			}
 
-    private boolean isInterface(Object value) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-	if (node.getUserObject() instanceof Interface) {
-	    return true;
-	} else {
-	    return false;
+		}
 	}
-    }
 
-    private boolean isClass(Object value) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-	if (node.getUserObject() instanceof Class) {
-	    return true;
-	} else {
-	    return false;
+	private void setEnum(DefaultMutableTreeNode node) {
+		if (node.getUserObject() instanceof Enum) {
+			setIcon(iconEnum);
+		}
 	}
-    }
 
-    private boolean isEnum(Object value) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-	if (node.getUserObject() instanceof Enum) {
-	    return true;
-	} else {
-	    return false;
+	private void setMethod(DefaultMutableTreeNode node) {
+		if (node.getUserObject() instanceof Method) {
+			setIcon(iconMethod);
+		}
 	}
-    }
 
-    private boolean isMethod(Object value) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-	if (node.getUserObject() instanceof Method) {
-	    return true;
-	} else {
-	    return false;
-	}
-    }
+	private void setField(DefaultMutableTreeNode node) {
 
-    private boolean isField(Object value) {
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-	if (node.getUserObject() instanceof Field) {
-	    return true;
-	} else {
-	    return false;
+		if (node.getUserObject() instanceof Field) {
+			setIcon(iconField);
+		}
 	}
-    }
+
+	private boolean hasPackageDifferences(Package package1) {
+
+		for (Package pack : package1.getPackages()) {
+			return hasPackageDifferences(pack);
+		}
+		for (Class class1 : package1.getClasses()) {
+			if (project.getMappingHolder().getDifference(class1.getFullyQualifiedName()).differs()) {
+				return true;
+			}
+		}
+		for (Interface interface1 : package1.getInterfaces()) {
+			if (project.getMappingHolder().getDifference(interface1.getFullyQualifiedName()).differs()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isNodeExpanded(DefaultMutableTreeNode node) {
+		TreeNode[] ptr = node.getPath();
+		TreePath tp = new TreePath(ptr);
+		return tree.isExpanded(tp);
+	}
 
 }
