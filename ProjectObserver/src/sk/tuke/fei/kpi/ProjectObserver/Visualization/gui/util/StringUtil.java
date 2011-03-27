@@ -5,6 +5,7 @@ import java.util.List;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Constructor;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
+import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 
 public class StringUtil {
 
@@ -39,9 +40,23 @@ public class StringUtil {
 	public static String convertConstructorToString(Constructor constructor) {
 
 		String fullnametext = constructor.getVisibility() + " " + constructor.getName() + "(" + StringUtil.prepareMethodParameters(constructor.getParams())
-				+ " )";
+				+ ")";
 
 		return fullnametext;
 	}
 
+	
+	
+	public static String prepareArrayToString(List<TypeElement> elements) {
+
+		String result = "";
+
+		for (int i = 0; i < elements.size(); i++) {
+			result += elements.get(i).toString();
+			if (i < elements.size() - 1) {
+				result += ", ";
+			}
+		}
+		return result;
+	}
 }

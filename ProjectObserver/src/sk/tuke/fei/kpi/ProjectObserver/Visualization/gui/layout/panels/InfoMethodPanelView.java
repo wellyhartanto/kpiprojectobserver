@@ -22,23 +22,25 @@ public class InfoMethodPanelView extends JPanel implements InfoPanelDisplay {
 
 		setLayout(new MigLayout("fillx"));
 
-		String fullnametext = StringUtil.convertMethodToString(me);
-		JLabel fullname = new JLabel(fullnametext);
-		fullname.setFont(MyFonts.tahoma14);
-		add(fullname, "wrap");
-
-		JLabel name = new JLabel(me.getName());
+		JLabel name = new JLabel(Messages.getMessage("info.method") + " "
+				+ me.getName());
 		name.setFont(MyFonts.tahoma14);
-		add(name, "wrap");
+		add(name, "growx,wrap");
 
-		if (!me.getParams().isEmpty()) {
-			JLabel paramsNumber = new JLabel(String.format(Messages.getMessage("info.numberofparams"), String.valueOf(me.getParams().size())));
-			add(paramsNumber, "wrap");
-		}
-		if (!me.getExceptions().isEmpty()) {
-			JLabel exceptionsNumber = new JLabel(String.format(Messages.getMessage("info.numberofexceptions"), String.valueOf(me.getExceptions().size())));
-			add(exceptionsNumber, "wrap");
-		}
+		String fullnametext = StringUtil.convertMethodToString(me);
+		JLabel fullname = new JLabel("<html>" + fullnametext + "</html>");
+		fullname.setFont(MyFonts.tahoma14);
+		add(fullname, "growx,wrap");
+
+		/*
+		 * if (!me.getParams().isEmpty()) { JLabel paramsNumber = new
+		 * JLabel(String.format(Messages .getMessage("info.numberofparams"),
+		 * String.valueOf(me .getParams().size()))); add(paramsNumber, "wrap");
+		 * } if (!me.getExceptions().isEmpty()) { JLabel exceptionsNumber = new
+		 * JLabel(String.format(Messages .getMessage("info.numberofexceptions"),
+		 * String.valueOf(me .getExceptions().size()))); add(exceptionsNumber,
+		 * "wrap"); }
+		 */
 
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {

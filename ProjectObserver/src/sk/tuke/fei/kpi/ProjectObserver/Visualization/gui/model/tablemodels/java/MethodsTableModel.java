@@ -28,9 +28,9 @@ public class MethodsTableModel extends GenericTableModel<Method> {
 	public Object getValueAt(int row, int column) {
 		switch (column) {
 		case 0:
-			return data.get(row).getReturnType();
-		case 1:
 			return data.get(row).getVisibility();
+		case 1:
+			return data.get(row).getReturnType();
 		case 2:
 			return StringUtil.convertMethodNameToString(data.get(row));
 		default:
