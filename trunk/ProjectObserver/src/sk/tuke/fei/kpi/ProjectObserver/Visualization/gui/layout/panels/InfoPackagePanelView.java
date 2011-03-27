@@ -21,7 +21,7 @@ public class InfoPackagePanelView extends JPanel implements InfoPanelDisplay {
 
 		setLayout(new MigLayout("fillx"));
 
-		JLabel name = new JLabel(pa.getName());
+		JLabel name = new JLabel(Messages.getMessage("info.package")+" "+pa.getName());
 		name.setFont(MyFonts.tahoma14);
 		add(name, "wrap");
 

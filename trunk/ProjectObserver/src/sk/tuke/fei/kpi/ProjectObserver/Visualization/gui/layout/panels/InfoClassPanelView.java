@@ -22,7 +22,7 @@ public class InfoClassPanelView extends JPanel implements InfoPanelDisplay {
 	public InfoClassPanelView(Class cl) {
 		setLayout(new MigLayout("fillx"));
 
-		JLabel name = new JLabel(cl.getName());
+		JLabel name = new JLabel(Messages.getMessage("info.class")+" "+cl.getName());
 		name.setFont(MyFonts.tahoma14);
 		add(name, "wrap");
 
@@ -31,9 +31,9 @@ public class InfoClassPanelView extends JPanel implements InfoPanelDisplay {
 		}
 
 		if (cl.getConstructors() != null) {
-			add(new JLabel(Messages.getMessage("info.konstructors")), "wrap");
+			add(new JLabel(Messages.getMessage("info.konstructors")), "growx,wrap");
 			for (Constructor constructor : cl.getConstructors()) {
-				add(new JLabel(StringUtil.convertConstructorToString(constructor)), "wrap");
+				add(new JLabel(StringUtil.convertConstructorToString(constructor)), "growx,wrap");
 			}
 		}
 
