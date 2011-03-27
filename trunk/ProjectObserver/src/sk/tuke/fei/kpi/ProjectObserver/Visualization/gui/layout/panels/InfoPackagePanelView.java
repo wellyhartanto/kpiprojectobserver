@@ -21,25 +21,34 @@ public class InfoPackagePanelView extends JPanel implements InfoPanelDisplay {
 
 		setLayout(new MigLayout("fillx"));
 
-		JLabel name = new JLabel(Messages.getMessage("info.package")+" "+pa.getName());
+		JLabel name = new JLabel(Messages.getMessage("info.package") + " "
+				+ pa.getName());
 		name.setFont(MyFonts.tahoma14);
-		add(name, "wrap");
+		add(name, "growx,wrap");
 
 		if (!pa.getPackages().isEmpty()) {
-			JLabel packagesNumber = new JLabel(String.format(Messages.getMessage("info.numberofpackages"), String.valueOf(pa.getPackages().size())));
-			add(packagesNumber, "wrap");
+			JLabel packagesNumber = new JLabel(String.format(Messages
+					.getMessage("info.numberofpackages"), String.valueOf(pa
+					.getPackages().size())));
+			add(packagesNumber, "growx,wrap");
 		}
 		if (!pa.getInterfaces().isEmpty()) {
-			JLabel interfacesNumber = new JLabel(String.format(Messages.getMessage("info.numberofinterfaces"), String.valueOf(pa.getInterfaces().size())));
-			add(interfacesNumber, "wrap");
+			JLabel interfacesNumber = new JLabel(String.format(Messages
+					.getMessage("info.numberofinterfaces"), String.valueOf(pa
+					.getInterfaces().size())));
+			add(interfacesNumber, "growx,wrap");
 		}
 		if (!pa.getClasses().isEmpty()) {
-			JLabel classesNumber = new JLabel(String.format(Messages.getMessage("info.numberofclasses"), String.valueOf(pa.getClasses().size())));
-			add(classesNumber, "wrap");
+			JLabel classesNumber = new JLabel(String.format(Messages
+					.getMessage("info.numberofclasses"), String.valueOf(pa
+					.getClasses().size())));
+			add(classesNumber, "growx,wrap");
 		}
 		if (!pa.getEnums().isEmpty()) {
-			JLabel enumsNumber = new JLabel(String.format(Messages.getMessage("info.numberofenums"), String.valueOf(pa.getEnums().size())));
-			add(enumsNumber, "wrap");
+			JLabel enumsNumber = new JLabel(String.format(Messages
+					.getMessage("info.numberofenums"), String.valueOf(pa
+					.getEnums().size())));
+			add(enumsNumber, "growx,wrap");
 		}
 
 		List<Component> components = Arrays.asList(getComponents());

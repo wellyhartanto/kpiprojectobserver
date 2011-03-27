@@ -266,27 +266,27 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo,
 					infoPanelPresenter.getDisplay().asComponent());
 
-			packagesPanelPresenter = PackagesPanelPresenter
-					.getInstance(((Application) nodeInfo).getPackages());
-			tabbedPane.addTab(Messages.getMessage("title.packages"),
-					iconPackage, packagesPanelPresenter.getDisplay()
-							.asComponent());
-
-			classesPanelPresenter = ClassesPanelPresenter
-					.getInstance(((Application) nodeInfo).getClasses());
-			tabbedPane.addTab(Messages.getMessage("title.classes"), iconClass,
-					classesPanelPresenter.getDisplay().asComponent());
-
-			interfacesPanelPresenter = InterfacesPanelPresenter
-					.getInstance(((Application) nodeInfo).getInterfaces());
-			tabbedPane.addTab(Messages.getMessage("title.interfaces"),
-					iconInterface, interfacesPanelPresenter.getDisplay()
-							.asComponent());
-
-			enumsPanelPresenter = EnumsPanelPresenter
-					.getInstance(((Application) nodeInfo).getEnums());
-			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum,
-					enumsPanelPresenter.getDisplay().asComponent());
+//			packagesPanelPresenter = PackagesPanelPresenter
+//					.getInstance(((Application) nodeInfo).getPackages());
+//			tabbedPane.addTab(Messages.getMessage("title.packages"),
+//					iconPackage, packagesPanelPresenter.getDisplay()
+//							.asComponent());
+//
+//			classesPanelPresenter = ClassesPanelPresenter
+//					.getInstance(((Application) nodeInfo).getClasses());
+//			tabbedPane.addTab(Messages.getMessage("title.classes"), iconClass,
+//					classesPanelPresenter.getDisplay().asComponent());
+//
+//			interfacesPanelPresenter = InterfacesPanelPresenter
+//					.getInstance(((Application) nodeInfo).getInterfaces());
+//			tabbedPane.addTab(Messages.getMessage("title.interfaces"),
+//					iconInterface, interfacesPanelPresenter.getDisplay()
+//							.asComponent());
+//
+//			enumsPanelPresenter = EnumsPanelPresenter
+//					.getInstance(((Application) nodeInfo).getEnums());
+//			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum,
+//					enumsPanelPresenter.getDisplay().asComponent());
 
 		}
 
