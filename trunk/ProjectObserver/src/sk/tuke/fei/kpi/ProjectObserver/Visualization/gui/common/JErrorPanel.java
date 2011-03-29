@@ -20,7 +20,7 @@ public class JErrorPanel extends JPanel {
 		errorLabel = ComponentsBuilder.createErrorLabel(errorMessage);
 		errorLabel.setVisible(false);
 		
-		
+		setOpaque(false);
 		
 		add(component, "wrap");
 		add(errorLabel,"gapbefore 5");
@@ -32,11 +32,12 @@ public class JErrorPanel extends JPanel {
 		if (show) {
 			setBackground(Color.PINK);
 			errorLabel.setVisible(true);
-			
+			setOpaque(true);
 			
 		} else {
 			setBackground(new JLabel().getBackground());
 			errorLabel.setVisible(false);
+			setOpaque(false);
 		}
 
 	}

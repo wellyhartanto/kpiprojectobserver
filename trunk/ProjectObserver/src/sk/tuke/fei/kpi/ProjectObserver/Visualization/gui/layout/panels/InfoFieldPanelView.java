@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 
 public class InfoFieldPanelView extends JPanel implements InfoPanelDisplay {
 
@@ -23,7 +23,7 @@ public class InfoFieldPanelView extends JPanel implements InfoPanelDisplay {
 
 		JLabel name = new JLabel(Messages.getMessage("info.field") + " "
 				+ fl.getName());
-		name.setFont(MyFonts.tahoma14);
+		name.setFont(CommonFonts.tahoma14);
 		add(name, "growx,wrap");
 
 		add(new JLabel(fl.getVisibility() + " " + fl.getType() + " "
@@ -32,7 +32,7 @@ public class InfoFieldPanelView extends JPanel implements InfoPanelDisplay {
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
 			if (component instanceof JLabel) {
-				component.setFont(MyFonts.tahoma14);
+				component.setFont(CommonFonts.tahoma14);
 			}
 		}
 	}

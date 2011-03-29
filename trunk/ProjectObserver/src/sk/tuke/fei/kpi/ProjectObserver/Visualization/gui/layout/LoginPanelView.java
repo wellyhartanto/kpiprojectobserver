@@ -27,12 +27,14 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JErrorPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Languages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
 
 public class LoginPanelView extends JPanel implements LoginPanelDisplay {
@@ -84,6 +86,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private void initComponents() {
 		// String[] language = { LoginPanelPresenter.SK_LANGUAGE,
 		// LoginPanelPresenter.EN_LANGUAGE };
+		
+		setBackground(CommonColors.BACKGROUND_COLOR);
+		
 		languages = new JComboBox(Languages.getlanguages());
 		Preferences p = Preferences
 				.userNodeForPackage(LoginPanelPresenter.class);
@@ -92,7 +97,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		languages.setSelectedIndex(defaultLanguage);
 
 		projectsTable = new JXTable(new ProjectsTableModel());
-		projectsTable.getTableHeader().setFont(MyFonts.tahoma14);
+		projectsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		projectsTable.setRolloverEnabled(true);
 		projectsTable.setHorizontalScrollEnabled(true);
 		projectsTable.setFillsViewportHeight(true);
@@ -114,25 +119,25 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 					}
 				});
 
-		Font buttonsFont = MyFonts.tahomaBoldItalic14;
+		Font buttonsFont = CommonFonts.tahomaBoldItalic14;
 		Dimension buttonsSize = new Dimension(120, 30);
 
-		openProject = new JButton(Messages
+		openProject = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.open"));
-		deleteProject = new JButton(Messages
+		deleteProject = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.delete"));
-		importProject = new JButton(Messages
+		importProject = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.import"));
-		exportProject = new JButton(Messages
+		exportProject = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.export"));
 
-		createProject = new JButton(Messages
+		createProject = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.create"));
-		loadSourceCode = new JButton(Messages
+		loadSourceCode = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.loadsourcefile"));
 		loadSourceCode.setToolTipText(Messages
 				.getMessage("tooltip.chooseowlfile"));
-		loadUmlModel = new JButton(Messages
+		loadUmlModel = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.loadumlfile"));
 		loadUmlModel.setToolTipText(Messages
 				.getMessage("tooltip.choosexmlfile"));
@@ -248,31 +253,40 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	}
 
 	private void setComponentsPosition() {
-		setLayout(new MigLayout("", "50[growprio 50]50[]", "60[][]80[][][][][]"));
+		
+		JPanel loginPanel = new JPanel();
+		
+		loginPanel.setLayout(new MigLayout("", "50[growprio 50]50[]", "60[][]80[][][][][]"));
 
 		JScrollPane scroll = new JScrollPane(projectsTable);
 		scroll.setMaximumSize(new Dimension(1000, 200));
 
 		JPanel buttonsPanel = new JPanel(new MigLayout("insets 0"));
+		buttonsPanel.setOpaque(false);
 		buttonsPanel.add(openProject, "wrap");
 		buttonsPanel.add(deleteProject, "wrap");
 		buttonsPanel.add(importProject, "wrap");
 		buttonsPanel.add(exportProject, "wrap");
 
-		add(scroll, "growx");
-		add(buttonsPanel, "wrap");
+		loginPanel.add(scroll, "growx");
+		loginPanel.add(buttonsPanel, "wrap");
 
-		add(infoProjectDescription, "wrap");
+		loginPanel.add(infoProjectDescription, "wrap");
 
-		add(namePanel);
-		add(createProject, "wrap,top");
-		add(descriptionPanel, "wrap");
-		add(sourceCodeFilePanel, "split 2");
-		add(sourceCodeFileLbl, "span,gaptop 7,top,wrap");
-		add(umlFilePanel, "split 2");
-		add(umlFileLbl, "span,gaptop 7,top,wrap");
+		loginPanel.add(namePanel);
+		loginPanel.add(createProject, "wrap,top");
+		loginPanel.add(descriptionPanel, "wrap");
+		loginPanel.add(sourceCodeFilePanel, "split 2");
+		loginPanel.add(sourceCodeFileLbl, "span,gaptop 7,top,wrap");
+		loginPanel.add(umlFilePanel, "split 2");
+		loginPanel.add(umlFileLbl, "span,gaptop 7,top,wrap");
 
-		add(languages, "skip 3,align right");
+		loginPanel.add(languages, "skip 3,align right");
+		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
+		
+		
+		add(loginPanel);
+		
 	}
 
 	@Override

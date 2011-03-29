@@ -15,7 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.ClassesTableModel;
 
 public class ClassesPanelView extends JPanel implements ClassesPanelDisplay {
@@ -41,7 +41,7 @@ public class ClassesPanelView extends JPanel implements ClassesPanelDisplay {
 		classesTableModel.setData(classes);
 
 		classesTable = new JXTable(classesTableModel);
-		classesTable.getTableHeader().setFont(MyFonts.tahoma14);
+		classesTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		classesTable.setRolloverEnabled(true);
 		classesTable.setHorizontalScrollEnabled(true);
 		classesTable.setFillsViewportHeight(true);

@@ -15,7 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.ParamsTableModel;
 
@@ -41,7 +41,7 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 		paramsTableModel.setData(parameters);
 
 		paramsTable = new JXTable(paramsTableModel);
-		paramsTable.getTableHeader().setFont(MyFonts.tahoma14);
+		paramsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		paramsTable.setRolloverEnabled(true);
 		paramsTable.setHorizontalScrollEnabled(true);
 		paramsTable.setFillsViewportHeight(true);

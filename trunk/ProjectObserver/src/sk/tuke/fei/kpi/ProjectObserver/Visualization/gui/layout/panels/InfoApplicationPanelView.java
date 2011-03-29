@@ -14,7 +14,7 @@ import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 
 public class InfoApplicationPanelView extends JPanel implements
 		InfoPanelDisplay {
@@ -26,7 +26,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		setLayout(new MigLayout("fillx"));
 
 		JLabel about = new JLabel(Messages.getMessage("info.about"));
-		about.setFont(MyFonts.tahoma14);
+		about.setFont(CommonFonts.tahoma14);
 		add(about, "gapleft 30,gapright 30,gaptop 30,span,growx,wrap");
 
 		add(new JLabel(Messages.getMessage("info.explanation")), "gapleft 30,growx,wrap");
@@ -45,7 +45,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		packagelbl.setText(Messages.getMessage("info.packagename"));
 		packagelbl.setForeground(Color.RED);
 		packagelbl.setIcon(iconPackage);
-		packagelbl.setFont(MyFonts.dejavuSansBold10);
+		packagelbl.setFont(CommonFonts.dejavuSansBold10);
 		add(packagelbl, "gapleft 30,growx");
 		JLabel packageexpl = new JLabel(Messages
 				.getMessage("info.packageexplanation"));
@@ -55,7 +55,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		classlbl.setText(Messages.getMessage("info.classname"));
 		classlbl.setForeground(Color.RED);
 		classlbl.setIcon(iconClass);
-		classlbl.setFont(MyFonts.dejavuSansBold10);
+		classlbl.setFont(CommonFonts.dejavuSansBold10);
 		add(classlbl, "gapleft 30,growx");
 		JLabel classlblexpl = new JLabel(Messages
 				.getMessage("info.classexplanation"));
@@ -65,7 +65,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		interfacelbl.setText(Messages.getMessage("info.interfacename"));
 		interfacelbl.setForeground(Color.RED);
 		interfacelbl.setIcon(iconInterface);
-		interfacelbl.setFont(MyFonts.dejavuSansBold10);
+		interfacelbl.setFont(CommonFonts.dejavuSansBold10);
 		add(interfacelbl, "gapleft 30,growx");
 		JLabel interfaceexpl = new JLabel(Messages
 				.getMessage("info.interfaceexplanation"));
@@ -110,7 +110,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
 			if (component instanceof JLabel) {
-				component.setFont(MyFonts.tahoma14);
+				component.setFont(CommonFonts.tahoma14);
 			}
 		}
 

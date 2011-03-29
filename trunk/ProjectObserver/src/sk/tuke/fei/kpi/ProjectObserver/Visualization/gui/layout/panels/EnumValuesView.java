@@ -15,7 +15,7 @@ import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.swingx.JXTable;
 
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.EnumValuesTableModel;
 
@@ -43,7 +43,7 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 		enumValuesTableModel.setData(valuestmp);
 
 		enumValuesTable = new JXTable(enumValuesTableModel);
-		enumValuesTable.getTableHeader().setFont(MyFonts.tahoma14);
+		enumValuesTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		enumValuesTable.setRolloverEnabled(true);
 		enumValuesTable.setHorizontalScrollEnabled(true);
 		enumValuesTable.setFillsViewportHeight(true);

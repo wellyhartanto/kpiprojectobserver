@@ -11,7 +11,7 @@ import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.MethodCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.MethodsTableModel;
@@ -36,7 +36,7 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		methodsTableModel = new MethodsTableModel();
 		methodsTableModel.setData(methods);
 		methodsTable = new JTable(methodsTableModel);
-		methodsTable.getTableHeader().setFont(MyFonts.tahoma14);
+		methodsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		// methodsTable.setRolloverEnabled(true);
 		// methodsTable.setHorizontalScrollEnabled(true);
 		methodsTable.setFillsViewportHeight(true);

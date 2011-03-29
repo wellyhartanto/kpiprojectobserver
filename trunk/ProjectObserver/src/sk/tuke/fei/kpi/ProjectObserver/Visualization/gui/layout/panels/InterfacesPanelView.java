@@ -15,7 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.InterfacesTableModel;
 
@@ -41,7 +41,7 @@ public class InterfacesPanelView extends JPanel implements InterfacesPanelDispla
 		interfacesTableModel.setData(interfaces);
 
 		interfacesTable = new JXTable(interfacesTableModel);
-		interfacesTable.getTableHeader().setFont(MyFonts.tahoma14);
+		interfacesTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		interfacesTable.setRolloverEnabled(true);
 		interfacesTable.setHorizontalScrollEnabled(true);
 		interfacesTable.setFillsViewportHeight(true);
