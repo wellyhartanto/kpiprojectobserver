@@ -12,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Constructor;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util.StringUtil;
 
 public class InfoClassPanelView extends JPanel implements InfoPanelDisplay {
@@ -24,7 +24,7 @@ public class InfoClassPanelView extends JPanel implements InfoPanelDisplay {
 
 		JLabel name = new JLabel(Messages.getMessage("info.class") + " "
 				+ cl.getName());
-		name.setFont(MyFonts.tahoma14);
+		name.setFont(CommonFonts.tahoma14);
 		add(name, "growx,wrap");
 
 		if (cl.getSuperClass() != null) {
@@ -77,7 +77,7 @@ public class InfoClassPanelView extends JPanel implements InfoPanelDisplay {
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
 			if (component instanceof JLabel) {
-				component.setFont(MyFonts.tahoma14);
+				component.setFont(CommonFonts.tahoma14);
 			}
 		}
 

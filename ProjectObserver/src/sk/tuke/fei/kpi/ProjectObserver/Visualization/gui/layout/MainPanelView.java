@@ -37,9 +37,10 @@ import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.ClassPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.InterfacePanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.PackagePanel;
@@ -115,7 +116,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void initComponents() {
 
 		actions = new JPanel(new MigLayout("insets 0", "", "[]"));
-
+		actions.setOpaque(false);
 		iconChangeProject = new ImageIcon(getClass().getResource(
 				CommonConstants.IMAGES_FOLDER_PATH + "change24.png"));
 		iconSearch = new ImageIcon(getClass().getResource(
@@ -125,6 +126,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		changeProjectHl.setSelected(false);
 		changeProjectHl.setToolTipText(Messages
 				.getMessage("tooltip.changeproject"));
+		
+		
 		searchHl = new JXHyperlink();
 		searchHl.setIcon(iconSearch);
 		searchHl.setSelected(false);
@@ -139,7 +142,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setName("tabbedPane");
-		tabbedPane.setFont(MyFonts.tahomaBoldItalic14);
+		tabbedPane.setFont(CommonFonts.tahomaBoldItalic14);
 
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
 
@@ -206,6 +209,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
+		setBackground(CommonColors.LOGINPANEL_BUTTON_COLOR);
+		
 		// rightPanel.setLayout(new MigLayout("fill,insets 0", "",
 		// "[growprio 50][]"));
 		// rightPanel.add(tabbedPane, "growx,growy,wrap");

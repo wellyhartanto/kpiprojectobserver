@@ -15,7 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.EnumsTableModel;
 
@@ -42,7 +42,7 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 		enumsTableModel.setData(enums);
 
 		enumsTable = new JXTable(enumsTableModel);
-		enumsTable.getTableHeader().setFont(MyFonts.tahoma14);
+		enumsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		enumsTable.setRolloverEnabled(true);
 		enumsTable.setHorizontalScrollEnabled(true);
 		enumsTable.setFillsViewportHeight(true);

@@ -2,7 +2,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common;
 
 import java.awt.Font;
 
-public class MyFonts {
+public class CommonFonts {
 
 	public static Font tahoma16 = new Font("Tahoma", Font.PLAIN, 16);
 	public static Font tahomaBoldItalic14 = new Font("Tahoma", Font.BOLD | Font.ITALIC, 14);

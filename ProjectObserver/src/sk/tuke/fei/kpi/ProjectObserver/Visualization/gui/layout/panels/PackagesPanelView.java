@@ -15,7 +15,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.PackagesTableModel;
 
@@ -44,7 +44,7 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 
 		// packagesTable.setShowGrid(true, true);
 
-		packagesTable.getTableHeader().setFont(MyFonts.tahoma14);
+		packagesTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		packagesTable.setRolloverEnabled(true);
 		packagesTable.setHorizontalScrollEnabled(true);
 		packagesTable.setFillsViewportHeight(true);

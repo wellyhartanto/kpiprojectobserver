@@ -11,7 +11,7 @@ import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.MyFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.FieldCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.FieldsTableModel;
@@ -37,7 +37,7 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 		fieldsTableModel = new FieldsTableModel();
 		fieldsTableModel.setData(fields);
 		fieldsTable = new JTable(fieldsTableModel);
-		fieldsTable.getTableHeader().setFont(MyFonts.tahoma14);
+		fieldsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		// fieldsTable.setRolloverEnabled(true);
 		// fieldsTable.setHorizontalScrollEnabled(true);
 		fieldsTable.setFillsViewportHeight(true);
