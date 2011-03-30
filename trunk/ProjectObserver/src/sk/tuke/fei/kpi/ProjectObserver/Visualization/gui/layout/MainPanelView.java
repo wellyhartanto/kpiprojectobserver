@@ -209,7 +209,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
-		setBackground(CommonColors.LOGINPANEL_BUTTON_COLOR);
+		setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
 		
 		// rightPanel.setLayout(new MigLayout("fill,insets 0", "",
 		// "[growprio 50][]"));
