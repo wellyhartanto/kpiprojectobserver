@@ -1,8 +1,8 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -24,6 +24,7 @@ import javax.swing.event.ListSelectionListener;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
@@ -72,6 +73,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private JErrorPanel umlFilePanel;
 	private JErrorPanel sourceCodeFilePanel;
 
+	private JXHyperlink copyrightHyperlink;
+
 	String descriptionBackgroundText;
 	String nameBackgroundText;
 	Color backgroundTextColor = Color.GRAY;
@@ -86,9 +89,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private void initComponents() {
 		// String[] language = { LoginPanelPresenter.SK_LANGUAGE,
 		// LoginPanelPresenter.EN_LANGUAGE };
-		
-		setBackground(CommonColors.BACKGROUND_COLOR);
-		
+
+		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
+
 		languages = new JComboBox(Languages.getlanguages());
 		Preferences p = Preferences
 				.userNodeForPackage(LoginPanelPresenter.class);
@@ -119,9 +122,6 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 					}
 				});
 
-		Font buttonsFont = CommonFonts.tahomaBoldItalic14;
-		Dimension buttonsSize = new Dimension(120, 30);
-
 		openProject = ComponentsBuilder.createLoginPanelButton(Messages
 				.getMessage("loginpanel.buttons.open"));
 		deleteProject = ComponentsBuilder.createLoginPanelButton(Messages
@@ -141,24 +141,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 				.getMessage("loginpanel.buttons.loadumlfile"));
 		loadUmlModel.setToolTipText(Messages
 				.getMessage("tooltip.choosexmlfile"));
-		openProject.setFont(buttonsFont);
-		deleteProject.setFont(buttonsFont);
-		importProject.setFont(buttonsFont);
-		exportProject.setFont(buttonsFont);
-		createProject.setFont(buttonsFont);
-		loadSourceCode.setFont(buttonsFont);
-		loadUmlModel.setFont(buttonsFont);
 
 		sourceCodeFileLbl = new JLabel();
 		umlFileLbl = new JLabel();
-
-		openProject.setMinimumSize(buttonsSize);
-		deleteProject.setMinimumSize(buttonsSize);
-		importProject.setMinimumSize(buttonsSize);
-		exportProject.setMinimumSize(buttonsSize);
-		createProject.setMinimumSize(buttonsSize);
-		loadSourceCode.setMinimumSize(buttonsSize);
-		loadUmlModel.setMinimumSize(buttonsSize);
 
 		projectName = new JTextField(50);
 		projectName.setDocument(new JTextFieldLimit(20));
@@ -249,14 +234,17 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loadUmlModel.setMinimumSize(umlBtnSize.getWidth() > scBtnSize
 				.getWidth() ? umlBtnSize : scBtnSize);
 
+		copyrightHyperlink = ComponentsBuilder.createLoginAboutHyperlink(Messages.getMessage("loginpanel.copyright"));
+
 		setComponentsPosition();
 	}
 
 	private void setComponentsPosition() {
-		
+
 		JPanel loginPanel = new JPanel();
-		
-		loginPanel.setLayout(new MigLayout("", "50[growprio 50]50[]", "60[][]80[][][][][]"));
+
+		loginPanel.setLayout(new MigLayout("", "50[growprio 50]50[]",
+				"60[][]80[][][][][]"));
 
 		JScrollPane scroll = new JScrollPane(projectsTable);
 		scroll.setMaximumSize(new Dimension(1000, 200));
@@ -281,12 +269,19 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loginPanel.add(umlFilePanel, "split 2");
 		loginPanel.add(umlFileLbl, "span,gaptop 7,top,wrap");
 
-		loginPanel.add(languages, "skip 3,align right");
+		loginPanel.add(languages, "skip 3,align right,wrap");
 		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
-		
-		
-		add(loginPanel);
-		
+
+		JPanel aboutPanel = new JPanel(new MigLayout("insets 5"));
+		aboutPanel.setBackground(CommonColors.LOGIN_ABOUT_PANEL_COLOR);
+		aboutPanel.add(copyrightHyperlink);
+
+		JPanel centerPanel = new JPanel(new MigLayout("insets 0","","[]0[]"));
+
+		centerPanel.add(loginPanel, "wrap");
+		centerPanel.add(aboutPanel, "growx,wrap");
+		add(centerPanel,BorderLayout.CENTER);
+
 	}
 
 	@Override
