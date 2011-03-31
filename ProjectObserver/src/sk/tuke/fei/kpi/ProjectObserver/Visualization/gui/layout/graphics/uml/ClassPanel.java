@@ -5,8 +5,8 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
+import sk.tuke.fei.kpi.akAgent.integration.alignment.difference.Difference;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;

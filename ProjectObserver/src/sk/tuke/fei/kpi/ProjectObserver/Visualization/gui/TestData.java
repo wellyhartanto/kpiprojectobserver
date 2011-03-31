@@ -3,13 +3,13 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Application;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Interface;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package;
 
 public class TestData {
 

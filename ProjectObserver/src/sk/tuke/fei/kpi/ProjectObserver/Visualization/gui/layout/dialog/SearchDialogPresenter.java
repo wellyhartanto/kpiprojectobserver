@@ -8,9 +8,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
  
 public class SearchDialogPresenter extends BasicPresenter<SearchDialogDisplay> {
 

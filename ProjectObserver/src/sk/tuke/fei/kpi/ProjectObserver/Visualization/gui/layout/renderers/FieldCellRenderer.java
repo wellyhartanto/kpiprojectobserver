@@ -6,8 +6,8 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.FieldsTableModel;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
 
 public class FieldCellRenderer extends DefaultTableCellRenderer {
 

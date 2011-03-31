@@ -4,7 +4,7 @@ import java.awt.Component;
 
 import org.w3c.dom.Document;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface;
 
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.swing.mxGraphComponent;

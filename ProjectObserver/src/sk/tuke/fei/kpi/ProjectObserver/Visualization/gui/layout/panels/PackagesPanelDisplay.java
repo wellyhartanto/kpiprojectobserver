@@ -12,5 +12,5 @@ public interface PackagesPanelDisplay extends DisplayComponent {
 
 	JXTable getTable();
 
-	void setData(List<sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package> packages);
+	void setData(List<sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package> packages);
 }

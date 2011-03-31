@@ -20,9 +20,9 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element.Visibility;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Element.Visibility;
  
 
 /**
@@ -33,7 +33,7 @@ public class JPanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public JPanelRenderer(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class sourceClass) {
+	public JPanelRenderer(sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class sourceClass) {
 
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
 		setOpaque(false);

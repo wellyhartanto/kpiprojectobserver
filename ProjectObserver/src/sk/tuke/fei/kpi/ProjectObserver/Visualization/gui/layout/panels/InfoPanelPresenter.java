@@ -1,13 +1,13 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Application;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Interface;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package;
 
 public class InfoPanelPresenter extends BasicPresenter<InfoPanelDisplay> {
 
@@ -19,7 +19,7 @@ public class InfoPanelPresenter extends BasicPresenter<InfoPanelDisplay> {
 		if (object instanceof Package) {
 			display = new InfoPackagePanelView((Package) object);
 		}
-		if (object instanceof sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class) {
+		if (object instanceof sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class) {
 			display = new InfoClassPanelView((Class) object);
 		}
 		if (object instanceof Interface) {
@@ -28,7 +28,7 @@ public class InfoPanelPresenter extends BasicPresenter<InfoPanelDisplay> {
 		if (object instanceof Field) {
 			display = new InfoFieldPanelView((Field) object);
 		}
-		if (object instanceof sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum) {
+		if (object instanceof sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum) {
 			display = new InfoEnumPanelView((Enum) object);
 		}
 		if (object instanceof Method) {

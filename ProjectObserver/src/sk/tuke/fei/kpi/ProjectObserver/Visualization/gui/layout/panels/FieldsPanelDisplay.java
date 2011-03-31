@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.swing.JTable;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
 
 public interface FieldsPanelDisplay extends DisplayComponent {
 void setMouseListener(MouseListener l);
