@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JTable;
 import javax.swing.JTree;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.ClassesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumValuesPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.EnumsPanelPresenter;
@@ -17,6 +16,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodPar
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodsPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.PackagesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
 
 public interface MainPanelDisplay extends DisplayComponent {
 

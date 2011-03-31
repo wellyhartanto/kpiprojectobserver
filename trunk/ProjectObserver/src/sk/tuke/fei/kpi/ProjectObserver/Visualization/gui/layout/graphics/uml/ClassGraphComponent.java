@@ -4,8 +4,8 @@ import java.awt.Component;
 
 import org.w3c.dom.Document;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class;
+import sk.tuke.fei.kpi.akAgent.integration.alignment.difference.Difference;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class;
 
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.swing.mxGraphComponent;

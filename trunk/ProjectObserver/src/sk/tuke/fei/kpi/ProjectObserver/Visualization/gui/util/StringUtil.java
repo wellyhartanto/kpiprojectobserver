@@ -2,10 +2,10 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util;
 
 import java.util.List;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Constructor;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Constructor;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Param;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
 
 public class StringUtil {
 

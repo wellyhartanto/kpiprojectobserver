@@ -16,20 +16,20 @@ import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Application;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Interface;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
 
 public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 

@@ -18,11 +18,11 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Method;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.akAgent.integration.alignment.difference.Difference;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Field;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method;
 
 /**
  * @author MV
@@ -32,7 +32,7 @@ public class ClassPanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public ClassPanelRenderer(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlClass, Difference difference) {
+	public ClassPanelRenderer(sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class umlClass, Difference difference) {
 
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
 		setOpaque(false);

@@ -18,13 +18,13 @@ public class PackageGraphComponent extends mxGraphComponent {
 	 */
 	private static final long serialVersionUID = -1152655782652932774L;
 
-	private sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlPackage;
+	private sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlPackage;
 
 	/**
 	 * 
 	 * @param graph
 	 */
-	public PackageGraphComponent(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlPackage, mxGraph graph) {
+	public PackageGraphComponent(sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlPackage, mxGraph graph) {
 		super(graph);
 
 		this.umlPackage = umlPackage;

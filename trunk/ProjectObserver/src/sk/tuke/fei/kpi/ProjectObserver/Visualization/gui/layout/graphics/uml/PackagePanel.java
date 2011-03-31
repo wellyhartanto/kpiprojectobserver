@@ -22,7 +22,7 @@ public class PackagePanel extends JPanel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PackagePanel(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlPackage) {
+	public PackagePanel(sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlPackage) {
 		super();
 
 		setBackground(Color.WHITE);

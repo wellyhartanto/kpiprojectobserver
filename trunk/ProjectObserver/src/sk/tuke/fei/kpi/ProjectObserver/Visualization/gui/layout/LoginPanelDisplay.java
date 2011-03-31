@@ -3,8 +3,8 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
 
 public interface LoginPanelDisplay extends DisplayComponent {
 

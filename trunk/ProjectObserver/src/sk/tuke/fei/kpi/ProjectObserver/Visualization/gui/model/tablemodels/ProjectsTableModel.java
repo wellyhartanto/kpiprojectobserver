@@ -1,8 +1,8 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
 
 public class ProjectsTableModel extends GenericTableModel<Project> {
 	private static final long serialVersionUID = -1237649981122766844L;

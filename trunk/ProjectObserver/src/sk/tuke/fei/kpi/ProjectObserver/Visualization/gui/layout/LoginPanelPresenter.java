@@ -13,7 +13,6 @@ import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Languages;
@@ -21,6 +20,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ProgressDialog;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
 
 public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 

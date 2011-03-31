@@ -10,14 +10,14 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Interface;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package;
 
 public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 

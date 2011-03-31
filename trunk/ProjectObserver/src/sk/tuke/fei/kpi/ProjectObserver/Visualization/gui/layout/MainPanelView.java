@@ -25,18 +25,6 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.application.SessionStorage;
 import org.jdesktop.swingx.JXHyperlink;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.alignment.difference.Difference;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Application;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Class;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Element;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Enum;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Field;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Method;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Package;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
@@ -55,6 +43,18 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodPar
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.MethodsPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.PackagesPanelPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.GenericTableModel;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
+import sk.tuke.fei.kpi.akAgent.integration.alignment.difference.Difference;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Application;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Element;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Interface;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Param;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
 
 public class MainPanelView extends JPanel implements MainPanelDisplay {
 
@@ -172,7 +172,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
 
-		sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package pack = project
+		sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package pack = project
 				.getClassDiagram().getPackages().get(0);
 		while (!pack.getPackages().isEmpty()) {
 
@@ -323,7 +323,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum,
 					enumsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlpackage = project
+			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlpackage = project
 					.getMappingHolder().getJava2UmlMapping().getPackage(
 
 					((Package) nodeInfo).getFullyQualifiedName());
@@ -371,7 +371,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 						.setExtraFields(difference.getExtraFields());
 			}
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class umlclass = project
+			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class umlclass = project
 					.getMappingHolder().getJava2UmlMapping().getClass(
 							((Class) nodeInfo).getFullyQualifiedName());
 
@@ -398,7 +398,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField,
 					fieldsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface umlinterface = project
+			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlinterface = project
 					.getMappingHolder().getJava2UmlMapping().getInterface(
 
 					((Interface) nodeInfo).getFullyQualifiedName());

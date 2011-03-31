@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.jdesktop.swingx.JXTable;
 
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.Param;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.DisplayComponent;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Param;
 
 public interface MethodParamsDisplay extends DisplayComponent {
 void setMouseListener(MouseListener l);

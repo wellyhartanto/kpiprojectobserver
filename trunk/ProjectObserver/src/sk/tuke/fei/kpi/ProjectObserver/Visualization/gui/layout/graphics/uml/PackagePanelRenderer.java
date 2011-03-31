@@ -18,10 +18,10 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Interface;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package;
  
 /**
  * @author MV
@@ -31,7 +31,7 @@ public class PackagePanelRenderer extends JPanel {
 
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public PackagePanelRenderer(sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Package umlPackage) {
+	public PackagePanelRenderer(sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlPackage) {
 
 		setLayout(new MigLayout("insets 3", "", "[]0[]0[]"));
 		setOpaque(false);
@@ -73,7 +73,7 @@ public class PackagePanelRenderer extends JPanel {
 
 		add(separator2, "wrap,span,growx");
 		add(ComponentsBuilder.createDiagramLabel(Messages.getMessage("title.classes")), "center,span");
-		for (sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.uml.classdiagram.Class classs : umlPackage.getClasses()) {
+		for (sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class classs : umlPackage.getClasses()) {
 
 			JLabel classLbl = new JLabel();
 			classLbl.setText(classs.getVisibility() + " " + classs.getName());

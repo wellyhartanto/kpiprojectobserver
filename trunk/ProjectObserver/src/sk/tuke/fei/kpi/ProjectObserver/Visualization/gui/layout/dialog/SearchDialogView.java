@@ -26,10 +26,10 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 
 import net.miginfocom.swing.MigLayout;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.Project;
-import sk.tuke.fei.kpi.ProjectObserver.Integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.akAgent.integration.Project;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
 
 public class SearchDialogView extends JDialog implements DocumentListener,
 		SearchDialogDisplay {
