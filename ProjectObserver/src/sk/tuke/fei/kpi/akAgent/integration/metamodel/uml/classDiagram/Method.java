@@ -75,7 +75,7 @@ public class Method extends Element implements Alignable {
 			sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method method = (sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method) object;
 			switch (alignStrategy) {
 			default:		
-				boolean value = getVisibility().toString().equals(method.getVisibility().toString()) && method.getName().endsWith(getName()) && method.getReturnType().endsWith(returnType) && getParams().size() == method.getParams().size();
+				boolean value = /*getVisibility().toString().equals(method.getVisibility().toString()) &&*/ method.getName().endsWith(getName()) && method.getReturnType().endsWith(returnType) && getParams().size() == method.getParams().size();
 				if(value && params.size()!=0){
 					return testParams(method);
 				} else {
