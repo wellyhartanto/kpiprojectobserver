@@ -23,7 +23,7 @@ public interface MainPanelDisplay extends DisplayComponent {
 	void setChangeProjectAction(ActionListener l);
 
 	void setSearchAction(ActionListener l);
-
+	
 	void setTreeValueChangedAction();
 
 	void setDetailSelection(JTable table);

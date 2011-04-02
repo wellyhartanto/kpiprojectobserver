@@ -42,6 +42,8 @@ public class ClassGraphComponent extends mxGraphComponent {
 		getViewport().setOpaque(false);
 		graph.setView(graphView);
 
+		graph.setCellsEditable(false);
+		
 	}
 
 	public Component[] createComponents(mxCellState state) {

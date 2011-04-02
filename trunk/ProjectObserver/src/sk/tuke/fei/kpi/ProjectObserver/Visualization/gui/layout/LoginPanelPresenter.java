@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -195,6 +196,19 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			}
 		});
 
+		display.setKpiHyperlinkAction(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String url = "http://kpi.fei.tuke.sk";
+				try {
+					java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}				
+			}
+		});
+		
 	}
 
 	private Frame findParentFrame() {

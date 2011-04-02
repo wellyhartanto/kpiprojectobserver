@@ -33,7 +33,7 @@ public class ComponentsBuilder {
 
 	public static JButton createLoginPanelButton(String text) {
 		Font buttonsFont = CommonFonts.tahomaBold14;
-		Dimension buttonsSize = new Dimension(120, 35);
+		Dimension buttonsSize = new Dimension(120, 25);
 
 		JButton button = new JButton(text);
 		button.setBackground(CommonColors.LOGINPANEL_BUTTON_COLOR);
@@ -48,7 +48,7 @@ public class ComponentsBuilder {
 		JXHyperlink hyperlink = new JXHyperlink();
 		hyperlink.setText(text);
 		hyperlink.setForeground(CommonColors.LOGIN_ABOUT_HYPERLINK_COLOR);
-		hyperlink.setFont(CommonFonts.tahomaBold14);
+		hyperlink.setFont(CommonFonts.tahomaBold12);
 		return hyperlink;
 
 	}

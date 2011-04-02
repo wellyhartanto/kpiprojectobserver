@@ -7,8 +7,8 @@ public class CommonColors {
 	
 	public static Color LOGINPANEL_BUTTON_COLOR = new Color(253,190,33);
 	public static Color LOGINPANEL_BUTTON_TEXT_COLOR = Color.DARK_GRAY;
-	public static Color LOGIN_BACKGROUND_COLOR = new Color(198,222,255);
-	public static Color LOGINPANEL_COLOR =new Color(97,183,207);
+	public static Color LOGIN_BACKGROUND_COLOR = new Color(255,255,255);
+	public static Color LOGINPANEL_COLOR =new Color(198,222,255);
 	
 	public static Color LOGIN_ABOUT_PANEL_COLOR =new Color(5,125,159);
 	
@@ -17,6 +17,7 @@ public class CommonColors {
 	
 	public static Color MAIN_BACKGROUND_COLOR = new Color(97,183,207);
 	
+	public static Color JTREE_BACKGROUND_COLOR =new Color(198,222,255);
 
 	//5,125,159 darkerblue
 	//97,183,207 blue
