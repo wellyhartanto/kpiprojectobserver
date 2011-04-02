@@ -36,6 +36,7 @@ public class PackageGraphComponent extends mxGraphComponent {
 		codec.decode(doc.getDocumentElement(), graph.getStylesheet());
 		getViewport().setOpaque(false);
 		graph.setView(graphView);
+		graph.setCellsEditable(false);
 
 	}
 

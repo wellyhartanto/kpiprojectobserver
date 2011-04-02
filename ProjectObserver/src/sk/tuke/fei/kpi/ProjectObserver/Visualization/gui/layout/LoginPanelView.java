@@ -234,7 +234,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loadUmlModel.setMinimumSize(umlBtnSize.getWidth() > scBtnSize
 				.getWidth() ? umlBtnSize : scBtnSize);
 
-		copyrightHyperlink = ComponentsBuilder.createLoginAboutHyperlink(Messages.getMessage("loginpanel.copyright"));
+		copyrightHyperlink = ComponentsBuilder
+				.createLoginAboutHyperlink(Messages
+						.getMessage("loginpanel.copyright"));
 
 		setComponentsPosition();
 	}
@@ -244,7 +246,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		JPanel loginPanel = new JPanel();
 
 		loginPanel.setLayout(new MigLayout("", "50[growprio 50]50[]",
-				"60[][]80[][][][][]"));
+				"60[][]60[][][][][]"));
 
 		JScrollPane scroll = new JScrollPane(projectsTable);
 		scroll.setMaximumSize(new Dimension(1000, 200));
@@ -276,11 +278,12 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		aboutPanel.setBackground(CommonColors.LOGIN_ABOUT_PANEL_COLOR);
 		aboutPanel.add(copyrightHyperlink);
 
-		JPanel centerPanel = new JPanel(new MigLayout("insets 0","","[]0[]"));
+		JPanel centerPanel = new JPanel(new MigLayout("insets 0", "", "[]0[]"));
 
 		centerPanel.add(loginPanel, "wrap");
 		centerPanel.add(aboutPanel, "growx,wrap");
-		add(centerPanel,BorderLayout.CENTER);
+
+		add(centerPanel, BorderLayout.CENTER);
 
 	}
 
@@ -415,6 +418,11 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	public Object getSelectedLanguage() {
 
 		return languages.getSelectedItem();
+	}
+
+	@Override
+	public void setKpiHyperlinkAction(ActionListener actionListener) {
+		copyrightHyperlink.addActionListener(actionListener);
 	}
 
 }

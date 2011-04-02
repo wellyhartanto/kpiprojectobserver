@@ -12,7 +12,12 @@ public class CommonFonts {
 	public static Font tahoma12 = new Font("Tahoma", Font.PLAIN, 12);
 	public static Font tahoma11 = new Font("Tahoma", Font.PLAIN, 11);
 	public static Font tahomaBold10 = new Font("Tahoma", Font.BOLD, 10);
+	public static Font tahomaBold12 = new Font("Tahoma", Font.BOLD, 12);
+
 	public static Font dejavuSansBold10 = new Font("DejaVu Sans", Font.PLAIN, 13);
 
+	public static Font tahoma13 = new Font("Tahoma", Font.PLAIN, 13);
+
+	
 }
 

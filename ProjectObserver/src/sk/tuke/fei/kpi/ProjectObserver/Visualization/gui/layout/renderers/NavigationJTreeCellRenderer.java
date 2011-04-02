@@ -148,23 +148,24 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 	}
 
 	private boolean hasPackageDifferences(Package package1) {
-
+		boolean result = false;
+		
 		for (Package pack : package1.getPackages()) {
-			return hasPackageDifferences(pack);
+			result = hasPackageDifferences(pack);
 		}
 		for (Class class1 : package1.getClasses()) {
 			if (project.getMappingHolder().getDifference(
 					class1.getFullyQualifiedName()).differs()) {
-				return true;
+				result = true;
 			}
 		}
 		for (Interface interface1 : package1.getInterfaces()) {
 			if (project.getMappingHolder().getDifference(
 					interface1.getFullyQualifiedName()).differs()) {
-				return true;
+				result = true;
 			}
 		}
-		return false;
+		return result;
 	}
 
 	private boolean isNodeExpanded(DefaultMutableTreeNode node) {
