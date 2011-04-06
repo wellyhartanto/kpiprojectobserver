@@ -190,6 +190,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		navigationTree.setFont(CommonFonts.dejavuSansBold10);
 		javax.swing.ToolTipManager.sharedInstance().registerComponent(navigationTree);
 		
+		navigationTree.setRootVisible(false);
 		navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
 		
 		return navigationTree;
