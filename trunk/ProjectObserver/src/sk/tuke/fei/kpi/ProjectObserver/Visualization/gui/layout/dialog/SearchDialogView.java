@@ -84,6 +84,8 @@ public class SearchDialogView extends JDialog implements DocumentListener,
 		okButton = new JButton(Messages.getMessage("dialog.ok"));
 		cancelButton = new JButton(Messages.getMessage("dialog.cancel"));
 
+		getRootPane().setDefaultButton(okButton);
+		
 		// setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setTitle(Messages.getMessage("dialog.search.title"));
 
