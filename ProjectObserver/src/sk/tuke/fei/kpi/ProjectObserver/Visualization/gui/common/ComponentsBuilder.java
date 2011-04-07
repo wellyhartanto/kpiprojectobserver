@@ -15,7 +15,8 @@ public class ComponentsBuilder {
 
 		JLabel errorLabel = new JLabel();
 		errorLabel.setForeground(Color.RED);
-		errorLabel.setFont(CommonFonts.tahoma11);
+//		errorLabel.setFont(CommonFonts.tahoma11);
+		errorLabel.setFont(CommonFonts.test);
 		errorLabel.setText(text);
 		return errorLabel;
 

@@ -18,6 +18,13 @@ public class CommonFonts {
 
 	public static Font tahoma13 = new Font("Tahoma", Font.PLAIN, 13);
 
+	public static Font segoeUIBold12 =new Font("Segoe UI", Font.BOLD, 12);  
+	public static Font segoeUI11 =new Font("Segoe UI", Font.PLAIN, 11);  
+	public static Font segoeUI12 =new Font("Segoe UI", Font.PLAIN, 12);  
+	
+	public static Font helvetica12 =new Font("Helvetica", Font.PLAIN, 12); 
+	public static Font test =new Font("Serif", Font.PLAIN, 12); 
+	
 	
 }
 
