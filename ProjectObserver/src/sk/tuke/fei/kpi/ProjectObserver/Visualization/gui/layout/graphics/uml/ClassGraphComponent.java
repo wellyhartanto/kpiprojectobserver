@@ -43,6 +43,8 @@ public class ClassGraphComponent extends mxGraphComponent {
 		graph.setView(graphView);
 
 		graph.setCellsEditable(false);
+
+		graph.setConnectableEdges(false);
 		
 	}
 
