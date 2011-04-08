@@ -45,7 +45,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		packagelbl.setText(Messages.getMessage("info.packagename"));
 		packagelbl.setForeground(Color.RED);
 		packagelbl.setIcon(iconPackage);
-		packagelbl.setFont(CommonFonts.dejavuSansBold10);
+		packagelbl.setFont(CommonFonts.dejavuSans13);
 		add(packagelbl, "gapleft 30,growx");
 		JLabel packageexpl = new JLabel(Messages
 				.getMessage("info.packageexplanation"));
@@ -55,7 +55,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		classlbl.setText(Messages.getMessage("info.classname"));
 		classlbl.setForeground(Color.RED);
 		classlbl.setIcon(iconClass);
-		classlbl.setFont(CommonFonts.dejavuSansBold10);
+		classlbl.setFont(CommonFonts.dejavuSans13);
 		add(classlbl, "gapleft 30,growx");
 		JLabel classlblexpl = new JLabel(Messages
 				.getMessage("info.classexplanation"));
@@ -65,7 +65,7 @@ public class InfoApplicationPanelView extends JPanel implements
 		interfacelbl.setText(Messages.getMessage("info.interfacename"));
 		interfacelbl.setForeground(Color.RED);
 		interfacelbl.setIcon(iconInterface);
-		interfacelbl.setFont(CommonFonts.dejavuSansBold10);
+		interfacelbl.setFont(CommonFonts.dejavuSans13);
 		add(interfacelbl, "gapleft 30,growx");
 		JLabel interfaceexpl = new JLabel(Messages
 				.getMessage("info.interfaceexplanation"));

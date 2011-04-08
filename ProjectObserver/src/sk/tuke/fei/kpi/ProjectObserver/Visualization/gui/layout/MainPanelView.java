@@ -141,8 +141,10 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setName("tabbedPane");
-		tabbedPane.setFont(CommonFonts.tahomaBoldItalic14);
+		//tabbedPane.setFont(CommonFonts.tahomaBoldItalic14);
+		tabbedPane.setFont(CommonFonts.dejavuSans13);
 
+		
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
 
 		iconPackage = new ImageIcon(getClass().getResource(
