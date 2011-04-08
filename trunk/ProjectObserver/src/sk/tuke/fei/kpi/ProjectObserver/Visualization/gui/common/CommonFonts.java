@@ -14,7 +14,8 @@ public class CommonFonts {
 	public static Font tahomaBold10 = new Font("Tahoma", Font.BOLD, 10);
 	public static Font tahomaBold12 = new Font("Tahoma", Font.BOLD, 12);
 
-	public static Font dejavuSansBold10 = new Font("DejaVu Sans", Font.PLAIN, 13);
+	public static Font dejavuSans13 = new Font("DejaVu Sans", Font.PLAIN, 13);
+	public static Font dejavuSans12 = new Font("DejaVu Sans", Font.PLAIN, 12);
 
 	public static Font tahoma13 = new Font("Tahoma", Font.PLAIN, 13);
 

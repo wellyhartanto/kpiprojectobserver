@@ -17,7 +17,7 @@ OutputDir=C:\Temp\POsetup
 OutputBaseFilename=ProjectObserverSetup
 Compression=lzma
 SolidCompression=yes
-SetupIconFile=C:\workspaceEclipse\ProjectObserver\src\sk\tuke\fei\kpi\ProjectObserver\Visualization\gui\resources\images\icon.ico
+SetupIconFile=C:\EclipseWorkspace\ProjectObserver\src\sk\tuke\fei\kpi\ProjectObserver\Visualization\gui\resources\images\icon.ico
 WindowVisible=yes
 
 

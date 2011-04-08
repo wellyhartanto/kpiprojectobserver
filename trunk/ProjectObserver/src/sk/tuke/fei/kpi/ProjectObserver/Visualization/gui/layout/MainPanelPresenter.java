@@ -186,7 +186,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		navigationTree.setName("navigationTree");
 		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer(project, navigationTree));
 		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		navigationTree.setFont(CommonFonts.dejavuSansBold10);
+		navigationTree.setFont(CommonFonts.dejavuSans12);
 		javax.swing.ToolTipManager.sharedInstance().registerComponent(navigationTree);
 		
 		navigationTree.setRootVisible(false);

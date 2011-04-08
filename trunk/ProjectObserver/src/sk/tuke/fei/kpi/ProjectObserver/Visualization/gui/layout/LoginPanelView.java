@@ -1,18 +1,16 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.prefs.Preferences;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -105,7 +103,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		languages.setSelectedIndex(defaultLanguage);
 
 		projectsTable = new JXTable(new ProjectsTableModel());
-		projectsTable.getTableHeader().setFont(CommonFonts.tahoma14);
+//		projectsTable.getTableHeader().setFont(CommonFonts.tahoma14);
+		projectsTable.getTableHeader().setFont(CommonFonts.dejavuSans13);
+
 		projectsTable.setRolloverEnabled(true);
 		projectsTable.setHorizontalScrollEnabled(true);
 		projectsTable.setFillsViewportHeight(true);
@@ -220,10 +220,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		infoProjectDescription.setBackground(new Color(255, 255, 255, 0));
 		infoProjectDescription.setEditable(false);
 		infoProjectDescription.setDisabledTextColor(Color.BLACK);
+	
 		infoProjectDescription.setEnabled(false);
-		
 		infoProjectDescription.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
-		
 
 		namePanel = new JErrorPanel(projectName, Messages
 				.getMessage("message.error.fillproject"));
@@ -285,21 +284,23 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		JPanel aboutPanel = new JPanel(new MigLayout("insets 5"));
 		//aboutPanel.setBackground(CommonColors.LOGIN_ABOUT_PANEL_COLOR);
 		aboutPanel.add(copyrightHyperlink,"growx,align right");
-
+		aboutPanel.setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
 		JPanel centerPanel = new JPanel(new MigLayout("insets 0", "", "[]0[]"));
 
+		loginPanel.setBorder(BorderFactory.createTitledBorder(""));
 		centerPanel.add(loginPanel, "wrap");
 		centerPanel.add(aboutPanel, "growx,wrap");
 
+		
+		
+		
+		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
 		
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 40;      //make this component tall
-		c.weightx = 0.0;
-		c.gridwidth = 3;
 		c.gridx = 0;
 		c.gridy = 1;
 		add(centerPanel,c );
@@ -355,7 +356,6 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
 		infoProjectDescription.setText(null);
-		infoProjectDescription.repaint();
 		repaint();
 	}
 
