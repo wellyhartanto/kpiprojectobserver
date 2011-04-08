@@ -3,6 +3,10 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -28,6 +32,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
@@ -90,7 +95,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// String[] language = { LoginPanelPresenter.SK_LANGUAGE,
 		// LoginPanelPresenter.EN_LANGUAGE };
 
-//		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
+		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
 
 		languages = new JComboBox(Languages.getlanguages());
 		Preferences p = Preferences
@@ -275,7 +280,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loginPanel.add(umlFileLbl, "growx,gaptop 7,top");
 
 		loginPanel.add(languages, "align right,wrap");
-//		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
+		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
 
 		JPanel aboutPanel = new JPanel(new MigLayout("insets 5"));
 		//aboutPanel.setBackground(CommonColors.LOGIN_ABOUT_PANEL_COLOR);
@@ -286,7 +291,19 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		centerPanel.add(loginPanel, "wrap");
 		centerPanel.add(aboutPanel, "growx,wrap");
 
-		add(centerPanel, BorderLayout.CENTER);
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+
+		
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 40;      //make this component tall
+		c.weightx = 0.0;
+		c.gridwidth = 3;
+		c.gridx = 0;
+		c.gridy = 1;
+		add(centerPanel,c );
+		
 
 	}
 
@@ -338,7 +355,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		tableModel.getData().remove(project);
 		tableModel.fireTableDataChanged();
 		infoProjectDescription.setText(null);
-
+		infoProjectDescription.repaint();
 		repaint();
 	}
 

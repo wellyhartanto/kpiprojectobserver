@@ -33,7 +33,7 @@ public class ComponentsBuilder {
 	}
 
 	public static JButton createLoginPanelButton(String text) {
-		Font buttonsFont = CommonFonts.test;
+		Font buttonsFont = CommonFonts.dejavuSansBold10;
 		Dimension buttonsSize = new Dimension(120, 25);
 
 		JButton button = new JButton(text);
