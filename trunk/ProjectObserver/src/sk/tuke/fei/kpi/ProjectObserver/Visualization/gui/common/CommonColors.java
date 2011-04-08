@@ -9,6 +9,7 @@ public class CommonColors {
 //	
 	public static Color LOGINPANEL_BUTTON_COLOR = new Color(86,86,86);
 	public static Color LOGINPANEL_BUTTON_TEXT_COLOR = Color.WHITE;
+	
 	public static Color LOGIN_BACKGROUND_COLOR = new Color(255,255,255);
 	public static Color LOGINPANEL_COLOR =new Color(210,210,210);
 	

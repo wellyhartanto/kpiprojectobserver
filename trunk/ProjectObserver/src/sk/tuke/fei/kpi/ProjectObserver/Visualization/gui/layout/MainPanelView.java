@@ -25,7 +25,6 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.application.SessionStorage;
 import org.jdesktop.swingx.JXHyperlink;
 
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
@@ -209,7 +208,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
-		setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
+//		setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
 		
 		// rightPanel.setLayout(new MigLayout("fill,insets 0", "",
 		// "[growprio 50][]"));

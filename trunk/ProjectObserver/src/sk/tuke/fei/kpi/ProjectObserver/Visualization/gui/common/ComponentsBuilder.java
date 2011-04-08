@@ -25,7 +25,7 @@ public class ComponentsBuilder {
 	public static JLabel createDiagramLabel(String text) {
 
 		JLabel label = new JLabel();
-		label.setForeground(Color.DARK_GRAY);
+//		label.setForeground(Color.DARK_GRAY);
 		label.setFont(CommonFonts.tahomaBold10);
 		label.setText(text);
 		return label;
@@ -33,12 +33,12 @@ public class ComponentsBuilder {
 	}
 
 	public static JButton createLoginPanelButton(String text) {
-		Font buttonsFont = CommonFonts.tahomaBold14;
+		Font buttonsFont = CommonFonts.test;
 		Dimension buttonsSize = new Dimension(120, 25);
 
 		JButton button = new JButton(text);
-		button.setBackground(CommonColors.LOGINPANEL_BUTTON_COLOR);
-		button.setForeground(CommonColors.LOGINPANEL_BUTTON_TEXT_COLOR);
+//		button.setBackground(CommonColors.LOGINPANEL_BUTTON_COLOR);
+//		button.setForeground(CommonColors.LOGINPANEL_BUTTON_TEXT_COLOR);
 		button.setFont(buttonsFont);
 		button.setMinimumSize(buttonsSize);
 		return button;
@@ -48,7 +48,7 @@ public class ComponentsBuilder {
 
 		JXHyperlink hyperlink = new JXHyperlink();
 		hyperlink.setText(text);
-		hyperlink.setForeground(CommonColors.LOGIN_ABOUT_HYPERLINK_COLOR);
+//		hyperlink.setForeground(CommonColors.LOGIN_ABOUT_HYPERLINK_COLOR);
 		hyperlink.setFont(CommonFonts.tahomaBold12);
 		return hyperlink;
 
