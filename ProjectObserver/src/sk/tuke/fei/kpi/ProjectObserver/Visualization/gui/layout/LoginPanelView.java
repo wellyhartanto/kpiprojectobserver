@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -27,7 +28,6 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.JXTable;
 
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
@@ -90,7 +90,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// String[] language = { LoginPanelPresenter.SK_LANGUAGE,
 		// LoginPanelPresenter.EN_LANGUAGE };
 
-		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
+//		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
 
 		languages = new JComboBox(Languages.getlanguages());
 		Preferences p = Preferences
@@ -207,7 +207,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		infoProjectDescription = new JTextPane();
 		infoProjectDescription.setMaximumSize(projectDescription
 				.getPreferredSize());
-		infoProjectDescription.setMinimumSize(new Dimension(100, 70));
+		infoProjectDescription.setMinimumSize(new Dimension(100, 80));
 		// infoProjectDescription.setLineWrap(true);
 		// infoProjectDescription.setAutoscrolls(true);
 		// infoProjectDescription.setDocument(new JTextFieldLimit(300));
@@ -216,6 +216,9 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		infoProjectDescription.setEditable(false);
 		infoProjectDescription.setDisabledTextColor(Color.BLACK);
 		infoProjectDescription.setEnabled(false);
+		
+		infoProjectDescription.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		
 
 		namePanel = new JErrorPanel(projectName, Messages
 				.getMessage("message.error.fillproject"));
@@ -245,8 +248,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		JPanel loginPanel = new JPanel();
 
-		loginPanel.setLayout(new MigLayout("", "50[growprio 50]50[]",
-				"60[][]60[][][][][]"));
+		loginPanel.setLayout(new MigLayout("", "20[growprio 50]20[]20",
+				"20[][]10[][][][][]"));
 
 		JScrollPane scroll = new JScrollPane(projectsTable);
 		scroll.setMaximumSize(new Dimension(1000, 200));
@@ -261,7 +264,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loginPanel.add(scroll, "growx");
 		loginPanel.add(buttonsPanel, "wrap");
 
-		loginPanel.add(infoProjectDescription, "wrap");
+		loginPanel.add(infoProjectDescription, "grow,wrap");
 
 		loginPanel.add(namePanel);
 		loginPanel.add(createProject, "wrap,top");
@@ -269,14 +272,14 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loginPanel.add(sourceCodeFilePanel, "split 2");
 		loginPanel.add(sourceCodeFileLbl, "span,gaptop 7,top,wrap");
 		loginPanel.add(umlFilePanel, "split 2");
-		loginPanel.add(umlFileLbl, "span,gaptop 7,top,wrap");
+		loginPanel.add(umlFileLbl, "growx,gaptop 7,top");
 
-		loginPanel.add(languages, "skip 3,align right,wrap");
-		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
+		loginPanel.add(languages, "align right,wrap");
+//		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
 
 		JPanel aboutPanel = new JPanel(new MigLayout("insets 5"));
-		aboutPanel.setBackground(CommonColors.LOGIN_ABOUT_PANEL_COLOR);
-		aboutPanel.add(copyrightHyperlink);
+		//aboutPanel.setBackground(CommonColors.LOGIN_ABOUT_PANEL_COLOR);
+		aboutPanel.add(copyrightHyperlink,"growx,align right");
 
 		JPanel centerPanel = new JPanel(new MigLayout("insets 0", "", "[]0[]"));
 

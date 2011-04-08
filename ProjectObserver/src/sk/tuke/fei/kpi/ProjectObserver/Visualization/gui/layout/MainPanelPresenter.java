@@ -17,7 +17,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
@@ -191,7 +190,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		javax.swing.ToolTipManager.sharedInstance().registerComponent(navigationTree);
 		
 		navigationTree.setRootVisible(false);
-		navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
+	//	navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
 		
 		return navigationTree;
 	}
