@@ -153,7 +153,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		umlFileLbl = new JLabel();
 
 		projectName = new JTextField(50);
-		projectName.setDocument(new JTextFieldLimit(20));
+		projectName.setDocument(new JTextFieldLimit(35));
 		nameBackgroundText = Messages.getMessage("loginpanel.newproject.name");
 		projectName.setText(nameBackgroundText);
 		projectName.setForeground(backgroundTextColor);

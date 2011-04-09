@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -188,8 +189,11 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		navigationTree.setFont(CommonFonts.dejavuSans12);
 		javax.swing.ToolTipManager.sharedInstance().registerComponent(navigationTree);
-		
 		navigationTree.setRootVisible(false);
+		//set default width
+		navigationTree.setPreferredSize(new Dimension( 220,navigationTree.getPreferredSize().height));
+
+		
 	//	navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
 		
 		return navigationTree;
