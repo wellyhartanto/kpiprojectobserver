@@ -608,7 +608,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void initTableProperties() {
 		org.jdesktop.application.Application.getInstance().getContext()
 				.getLocalStorage().setDirectory(
-						new File(System.getProperty("user.home")));
+						new File(System.getProperty("java.io.tmpdir")));
 		sessionStorage = org.jdesktop.application.Application.getInstance()
 				.getContext().getSessionStorage();
 

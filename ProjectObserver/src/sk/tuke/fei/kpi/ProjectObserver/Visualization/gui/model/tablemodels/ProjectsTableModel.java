@@ -1,5 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels;
 
+import java.text.SimpleDateFormat;
+
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
 import sk.tuke.fei.kpi.akAgent.integration.Project;
@@ -25,7 +27,7 @@ public class ProjectsTableModel extends GenericTableModel<Project> {
 		case 2:
 			return data.get(row).getUmlFile().getName();
 		case 3:
-			return data.get(row).getCreationDate();
+			return SimpleDateFormat.getDateInstance().format(data.get(row).getCreationDate());
 		default:
 			break;
 		}
