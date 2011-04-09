@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
@@ -17,6 +18,8 @@ public class MainFrame extends JFrame {
 
 	private static MainFrame mainFrame;
 	private JComponent actualcomponent;
+	
+	private JScrollPane scrollPane;
 
 	public MainFrame() {
 		
@@ -40,6 +43,8 @@ public class MainFrame extends JFrame {
 			}
 		});
 
+		
+		scrollPane = new JScrollPane();
 	}
 
 	public static MainFrame getMainFrame() {
@@ -53,12 +58,26 @@ public class MainFrame extends JFrame {
 	}
 
 	public void setPanel(JComponent jComponent) {
-
+		
+//		remove(scrollPane);
+//		actualcomponent = jComponent;
+//		
+//		scrollPane = new JScrollPane(jComponent);
+//		if(jComponent instanceof MainPanelDisplay){
+//		scrollPane.setName("scrollpanemain");
+//		}
+//		setContentPane(scrollPane);
+//		setVisible(true);
+		
+		
+		
 		remove(actualcomponent);
 		actualcomponent = jComponent;
 		add(jComponent, "span,growx,growy,top");
 		setVisible(true);
 		actualcomponent.setVisible(true);
+		
+		  
 
 	}
 

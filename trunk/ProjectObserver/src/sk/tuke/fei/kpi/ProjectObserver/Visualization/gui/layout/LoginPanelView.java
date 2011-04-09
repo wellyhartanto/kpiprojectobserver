@@ -101,6 +101,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		int defaultLanguage = p.getInt(CommonConstants.DEFAULT_LANGUAGE,
 				Languages.SK.ordinal());
 		languages.setSelectedIndex(defaultLanguage);
+		
+		languages.setMinimumSize(new Dimension(50, 25));
 
 		projectsTable = new JXTable(new ProjectsTableModel());
 //		projectsTable.getTableHeader().setFont(CommonFonts.tahoma14);
@@ -291,21 +293,15 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		centerPanel.add(loginPanel, "wrap");
 		centerPanel.add(aboutPanel, "growx,wrap");
 
-		
-		
-		
+		centerPanel.setMinimumSize(centerPanel.getPreferredSize());
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-
-		
-		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
-		add(centerPanel,c );
 		
-
+		add(centerPanel,c );
 	}
 
 	@Override
