@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -144,6 +145,9 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
+		leftScrollPane.setPreferredSize(new Dimension(220,leftScrollPane.getPreferredSize().height));
+		
+		
 		rightPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		rightPanel.setName("rightPanel");
 

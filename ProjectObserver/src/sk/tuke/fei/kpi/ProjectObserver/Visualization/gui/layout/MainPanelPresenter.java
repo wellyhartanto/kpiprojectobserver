@@ -1,6 +1,5 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -19,10 +18,10 @@ import javax.swing.tree.TreeSelectionModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.ExportDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
-import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.PdfService;
 import sk.tuke.fei.kpi.akAgent.integration.Project;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
@@ -199,8 +198,10 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		javax.swing.ToolTipManager.sharedInstance().registerComponent(navigationTree);
 		navigationTree.setRootVisible(false);
 		// set default width
-		navigationTree.setPreferredSize(new Dimension(220, navigationTree.getPreferredSize().height));
-
+	//	navigationTree.setPreferredSize(new Dimension(220, navigationTree.getPreferredScrollableViewportSize().height));
+		
+		navigationTree.setScrollsOnExpand(true);
+		navigationTree.validate();
 		// navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
 
 		return navigationTree;
@@ -331,6 +332,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 	private void exportAction() {
 
-		PdfService.exportAll(project, "exportovanevsetko2");
+		ExportDialogPresenter dialogPresenter = new ExportDialogPresenter(project);
+		dialogPresenter.getDisplay().showDialog(true);
+
 	}
 }

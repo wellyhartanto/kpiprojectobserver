@@ -1,6 +1,7 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -84,6 +85,9 @@ public class SearchDialogView extends JDialog implements DocumentListener,
 		okButton = new JButton(Messages.getMessage("dialog.ok"));
 		cancelButton = new JButton(Messages.getMessage("dialog.cancel"));
 
+		okButton.setMinimumSize(new Dimension(75, okButton.getHeight()));
+		cancelButton.setMinimumSize(new Dimension(75, cancelButton.getHeight()));
+		
 		getRootPane().setDefaultButton(okButton);
 		
 		// setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
