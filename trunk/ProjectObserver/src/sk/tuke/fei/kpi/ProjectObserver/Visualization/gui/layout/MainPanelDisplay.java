@@ -24,6 +24,8 @@ public interface MainPanelDisplay extends DisplayComponent {
 
 	void setSearchAction(ActionListener l);
 	
+	void setExportAction(ActionListener l);
+	
 	void setTreeValueChangedAction();
 
 	void setDetailSelection(JTable table);

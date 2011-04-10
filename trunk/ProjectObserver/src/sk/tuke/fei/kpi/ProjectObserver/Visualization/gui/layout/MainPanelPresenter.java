@@ -22,6 +22,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.PdfService;
 import sk.tuke.fei.kpi.akAgent.integration.Project;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Application;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
@@ -83,6 +84,13 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 				display.saveWindowPrefs();
 
 				MainFrame.getMainFrame().setPanel(new LoginPanelPresenter().getDisplay().asComponent());
+			}
+		});
+
+		display.setExportAction(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				exportAction();
 			}
 		});
 
@@ -190,12 +198,11 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		navigationTree.setFont(CommonFonts.dejavuSans12);
 		javax.swing.ToolTipManager.sharedInstance().registerComponent(navigationTree);
 		navigationTree.setRootVisible(false);
-		//set default width
-		navigationTree.setPreferredSize(new Dimension( 220,navigationTree.getPreferredSize().height));
+		// set default width
+		navigationTree.setPreferredSize(new Dimension(220, navigationTree.getPreferredSize().height));
 
-		
-	//	navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
-		
+		// navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
+
 		return navigationTree;
 	}
 
@@ -322,4 +329,8 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 
 	}
 
+	private void exportAction() {
+
+		PdfService.exportAll(project, "exportovanevsetko2");
+	}
 }
