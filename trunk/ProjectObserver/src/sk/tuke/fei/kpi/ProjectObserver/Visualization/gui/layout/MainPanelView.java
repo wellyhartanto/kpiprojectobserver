@@ -104,6 +104,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private ImageIcon iconChangeProject;
 	private ImageIcon iconSearch;
 	private ImageIcon iconExport;
+	
+
 	private JXHyperlink changeProjectHl;
 	private JXHyperlink searchHl;
 	private JXHyperlink exportHl;
@@ -117,11 +119,22 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	private void initComponents() {
 
-		actions = new JPanel(new MigLayout("insets 0", "", "[]"));
+		actions = new JPanel(new MigLayout("insets 0", "", "3[]"));
 		actions.setOpaque(false);
-		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "change24.png"));
-		iconSearch = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "search24.png"));
-		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "export_icon24.png"));
+		// iconChangeProject = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "change24.png"));
+		// iconSearch = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "search24.png"));
+		// iconExport = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "export_icon24.png"));
+
+		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "changeblue.png"));
+		iconSearch = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "searchblue.png"));
+		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "exportblue.png"));
+		
 
 		changeProjectHl = new JXHyperlink();
 		changeProjectHl.setIcon(iconChangeProject);
@@ -145,9 +158,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
-		leftScrollPane.setPreferredSize(new Dimension(220,leftScrollPane.getPreferredSize().height));
-		
-		
+		leftScrollPane.setPreferredSize(new Dimension(220, leftScrollPane.getPreferredSize().height));
+
 		rightPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		rightPanel.setName("rightPanel");
 
@@ -304,10 +316,9 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlpackage = project.getMappingHolder()
-					.getJava2UmlMapping().getPackage(
+			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlpackage = project.getMappingHolder().getJava2UmlMapping().getPackage(
 
-					((Package) nodeInfo).getFullyQualifiedName());
+			((Package) nodeInfo).getFullyQualifiedName());
 
 			if (umlpackage != null) {
 				umlPackagePanel = new PackagePanel(umlpackage);
@@ -361,8 +372,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
 
-			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlinterface = project.getMappingHolder()
-					.getJava2UmlMapping().getInterface(
+			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlinterface = project.getMappingHolder().getJava2UmlMapping()
+					.getInterface(
 
 					((Interface) nodeInfo).getFullyQualifiedName());
 
@@ -555,8 +566,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private static final String TABLE_PROPERTIES_FILE = "projectobserverprefs.xml";
 
 	private void initTableProperties() {
-		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage().setDirectory(
-				new File(System.getProperty("java.io.tmpdir")));
+		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage().setDirectory(new File(System.getProperty("java.io.tmpdir")));
 		sessionStorage = org.jdesktop.application.Application.getInstance().getContext().getSessionStorage();
 
 	}

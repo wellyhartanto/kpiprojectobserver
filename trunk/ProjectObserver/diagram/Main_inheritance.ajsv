@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.3.v20110116-2128">
+        <class className="sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.Main" project="ProjectObserver" xLocation="0" yLocation="0"/>
+    </diagram>
+</ajsv>
