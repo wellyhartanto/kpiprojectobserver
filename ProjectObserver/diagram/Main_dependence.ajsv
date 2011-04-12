@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--AgileJ Ltd. (http://www.agilej.com)-->
+<ajsv>
+    <diagram style="defaultDiagramStyle" version="1.7.3.v20110116-2128">
+        <class className="sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.Main" project="ProjectObserver" xLocation="0" yLocation="0"/>
+        <class className="java.lang.Exception" project="ProjectObserver" xLocation="20" yLocation="20"/>
+        <class className="java.lang.String" project="ProjectObserver" xLocation="40" yLocation="40"/>
+        <class className="java.lang.Runnable" project="ProjectObserver" xLocation="60" yLocation="60"/>
+        <class className="java.lang.System" project="ProjectObserver" xLocation="80" yLocation="80"/>
+        <class className="sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.LoginPanelPresenter" project="ProjectObserver" xLocation="100" yLocation="100"/>
+        <class className="sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame" project="ProjectObserver" xLocation="120" yLocation="120"/>
+        <class className="java.awt.Color" project="ProjectObserver" xLocation="140" yLocation="140"/>
+    </diagram>
+</ajsv>

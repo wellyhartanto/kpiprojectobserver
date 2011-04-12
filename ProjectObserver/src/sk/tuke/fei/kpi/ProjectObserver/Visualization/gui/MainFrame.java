@@ -25,7 +25,11 @@ public class MainFrame extends JFrame {
 		
 		setSize(1000, 700);
 		
-		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
+//		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
+		
+		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "iconblue.png"));
+
+		
 		setIconImage(frameIcon.getImage());
 		setTitle("Project Observer");
 

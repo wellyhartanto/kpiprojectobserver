@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.prefs.Preferences;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -76,6 +77,13 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private JErrorPanel umlFilePanel;
 	private JErrorPanel sourceCodeFilePanel;
 
+	
+
+	private ImageIcon iconQuestion;
+	private JXHyperlink sourceQuestionHl;
+	private JXHyperlink umlQuestionHl;
+	
+	
 	private JXHyperlink copyrightHyperlink;
 
 	String descriptionBackgroundText;
@@ -243,6 +251,22 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loadUmlModel.setMinimumSize(umlBtnSize.getWidth() > scBtnSize
 				.getWidth() ? umlBtnSize : scBtnSize);
 
+		
+		
+		
+		iconQuestion = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "questionblue.png"));
+
+		sourceQuestionHl = new JXHyperlink();
+		sourceQuestionHl.setIcon(iconQuestion);
+		sourceQuestionHl.setSelected(false);
+		umlQuestionHl = new JXHyperlink();
+		umlQuestionHl.setIcon(iconQuestion);
+		umlQuestionHl.setSelected(false);
+		
+		
+		
+		
+		
 		copyrightHyperlink = ComponentsBuilder
 				.createLoginAboutHyperlink(Messages
 						.getMessage("loginpanel.copyright"));
@@ -275,11 +299,12 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loginPanel.add(namePanel);
 		loginPanel.add(createProject, "wrap,top");
 		loginPanel.add(descriptionPanel, "wrap");
-		loginPanel.add(sourceCodeFilePanel, "split 2");
+		loginPanel.add(sourceQuestionHl,"top,gaptop 6,split 3");
+		loginPanel.add(sourceCodeFilePanel, "");
 		loginPanel.add(sourceCodeFileLbl, "span,gaptop 7,top,wrap");
-		loginPanel.add(umlFilePanel, "split 2");
+		loginPanel.add(umlQuestionHl,"top,gaptop 6,split 3");
+		loginPanel.add(umlFilePanel, "");
 		loginPanel.add(umlFileLbl, "growx,gaptop 7,top");
-
 		loginPanel.add(languages, "align right,wrap");
 		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
 
