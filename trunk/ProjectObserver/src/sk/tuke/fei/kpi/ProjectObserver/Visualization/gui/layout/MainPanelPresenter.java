@@ -1,5 +1,9 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -14,9 +18,11 @@ import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.ExportDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
@@ -190,7 +196,26 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		// app.setName("testproject");
 		app = project.getJavaModel();
 		DefaultMutableTreeNode root = createApplicationTree(app);
-		JTree navigationTree = new JTree(root);
+		JTree navigationTree = new JTree(root){
+			
+			protected void paintComponent(Graphics g) {
+				Graphics2D g2d = (Graphics2D) g;
+				int w = getWidth();
+				int h = getHeight();
+
+				// Paint a gradient from top to bottom
+				GradientPaint gp = new GradientPaint(
+						0, 0, new Color(248,248,248),
+						0, w, new Color(253,253,253));
+				g2d.setPaint(gp);
+				g2d.fillRect(0, 0, w, h);
+				
+				setOpaque( false );
+			    super.paintComponent( g );
+			    setOpaque( true );
+				
+			}
+		};
 		navigationTree.setName("navigationTree");
 		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer(project, navigationTree));
 		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -202,7 +227,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		
 		navigationTree.setScrollsOnExpand(true);
 		navigationTree.validate();
-		// navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
+		navigationTree.setBackground(CommonColors.JTREE_BACKGROUND_COLOR);
 
 		return navigationTree;
 	}

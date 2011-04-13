@@ -32,8 +32,8 @@ public class Main {
 //				UIManager.put("control", new Color(226,236,249));
 //				UIManager.put("nimbusBlueGrey", new Color(179,223,242));
 //				
-//				UIManager.put("nimbusBase", new Color(159,203,142));
-				UIManager.put("control", new Color(226,236,249));
+	//			UIManager.put("nimbusBase", new Color(159,203,142));
+			//	UIManager.put("control", new Color(226,236,249));
 //				UIManager.put("info", new Color(218,218,158));
 //				UIManager.put("nimbusAlertYellow", new Color(255,220,35));
 //				UIManager.put("nimbusDisabledText", new Color(142,143,145));
@@ -44,7 +44,7 @@ public class Main {
 //				UIManager.put("nimbusOrange", new Color(191,98,4));
 //				UIManager.put("nimbusRed", new Color(169,46,34));
 //				UIManager.put("nimbusSelectedText", new Color(255,255,255));
-				UIManager.put("nimbusSelectionBackground", new Color(175,195,222));
+				UIManager.put("nimbusSelectionBackground", new Color(75,149,229));
 //				UIManager.put("text", new Color(0,0,0));
 
 //				

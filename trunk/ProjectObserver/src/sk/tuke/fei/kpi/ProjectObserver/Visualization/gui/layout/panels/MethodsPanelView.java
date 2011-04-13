@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ZebraJTable;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.MethodCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.MethodsTableModel;
@@ -23,7 +24,7 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 	private MethodsTableModel methodsTableModel;
 
 	public MethodsPanelView(List<Method> methods) {
-		setLayout(new MigLayout("fill"));
+		setLayout(new MigLayout("fill,insets 0"));
 		add(new JScrollPane(createMethodsTable(methods)), "grow");
 	}
 
@@ -35,7 +36,7 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 	private JTable createMethodsTable(List<Method> methods) {
 		methodsTableModel = new MethodsTableModel();
 		methodsTableModel.setData(methods);
-		methodsTable = new JTable(methodsTableModel);
+		methodsTable = new ZebraJTable(methodsTableModel);
 		methodsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		// methodsTable.setRolloverEnabled(true);
 		// methodsTable.setHorizontalScrollEnabled(true);

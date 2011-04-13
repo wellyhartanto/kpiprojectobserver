@@ -1,6 +1,12 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -8,6 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -16,6 +23,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -26,6 +35,7 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.application.SessionStorage;
 import org.jdesktop.swingx.JXHyperlink;
 
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
@@ -104,13 +114,15 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private ImageIcon iconChangeProject;
 	private ImageIcon iconSearch;
 	private ImageIcon iconExport;
-	
 
 	private JXHyperlink changeProjectHl;
 	private JXHyperlink searchHl;
 	private JXHyperlink exportHl;
 
+	private ImageIcon backgroundImage;
+
 	public MainPanelView(Project project) {
+
 		this.project = project;
 
 		initComponents();
@@ -119,7 +131,39 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	private void initComponents() {
 
-		actions = new JPanel(new MigLayout("insets 0", "", "3[]"));
+		backgroundImage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "pozadie3.jpg"));
+
+		 final Color OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR =
+	            new Color(64, 64, 64);
+		 final  Color OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR =
+	            new Color(135, 135, 135);    
+		actions = new JPanel(new MigLayout("insets 0", "[]8[]8[]", "3[]3")) {
+			protected void paintComponent(Graphics g) {
+				Graphics2D g2d = (Graphics2D) g;
+				int w = getWidth();
+				int h = getHeight();
+
+				// Paint a gradient from top to bottom
+				GradientPaint gp = new GradientPaint(
+						0, 0, getBackground(),
+						0, h, getBackground().darker());
+				g2d.setPaint(gp);
+				g2d.fillRect(0, 0, w, h);
+			}
+			
+			@Override
+		    public Border getBorder() {
+		        Window window = SwingUtilities.getWindowAncestor(this);
+		        return window != null && window.isFocused()
+		                ? BorderFactory.createMatteBorder(0,0,1,0,
+		                        OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR)
+		                : BorderFactory.createMatteBorder(0,0,1,0,
+		                       OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR);
+		    }
+			
+		};
+		
+		actions.setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
 		actions.setOpaque(false);
 		// iconChangeProject = new
 		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
@@ -134,7 +178,12 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "changeblue.png"));
 		iconSearch = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "searchblue.png"));
 		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "exportblue.png"));
-		
+
+		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "exchange32.png"));
+		// iconSearch = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "search24.png"));
+		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "export_32.png"));
 
 		changeProjectHl = new JXHyperlink();
 		changeProjectHl.setIcon(iconChangeProject);
@@ -162,7 +211,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		rightPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		rightPanel.setName("rightPanel");
-
+		rightPanel.setDividerSize(1);
+		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setName("tabbedPane");
 		// tabbedPane.setFont(CommonFonts.tahomaBoldItalic14);
@@ -186,6 +236,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		splitPane.setName("splitPane");
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
+		splitPane.setDividerSize(1);
+		
 
 		sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package pack = project.getClassDiagram().getPackages().get(0);
 		while (!pack.getPackages().isEmpty()) {
@@ -215,7 +267,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private void setComponentsPosition() {
 		setLayout(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
 
-		// setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
+		setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
 
 		// rightPanel.setLayout(new MigLayout("fill,insets 0", "",
 		// "[growprio 50][]"));
@@ -236,8 +288,17 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		});
 
-		add(actions, "top,wrap");
-		add(splitPane, "grow");
+		// add(actions, "top,wrap");
+		// add(splitPane, "grow");
+
+		JPanel mainJp = new JPanel(new MigLayout("fill,insets 0", "[]", "[growprio 50]0[]"));
+
+		mainJp.setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
+		setLayout(new MigLayout("fill,insets 0"));
+		mainJp.add(actions, "top,growx,wrap");
+		mainJp.add(splitPane, "grow");
+		add(mainJp, "grow");
+
 	}
 
 	@Override

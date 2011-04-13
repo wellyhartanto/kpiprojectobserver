@@ -8,25 +8,27 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ZebraJTable;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.MyTableCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.PackagesTableModel;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package;
 
 public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 
 	private static final long serialVersionUID = -7778417156272491486L;
-	private JXTable packagesTable;
+	private JTable packagesTable;
 	private PackagesTableModel packagesTableModel;
 
 	public PackagesPanelView(List<Package> packages) {
-		setLayout(new MigLayout("fill"));
+		setLayout(new MigLayout("fill,insets 0"));
 		add(new JScrollPane(createPackagesTable(packages)), "grow");
 	}
 
@@ -35,26 +37,27 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 		return this;
 	}
 
-	private JXTable createPackagesTable(List<Package> packages) {
+	private JTable createPackagesTable(List<Package> packages) {
 
 		packagesTableModel = new PackagesTableModel();
 		packagesTableModel.setData(packages);
 
-		packagesTable = new JXTable(packagesTableModel);
+		packagesTable = new ZebraJTable(packagesTableModel);
 
 		// packagesTable.setShowGrid(true, true);
 
 		packagesTable.getTableHeader().setFont(CommonFonts.tahoma14);
-		packagesTable.setRolloverEnabled(true);
-		packagesTable.setHorizontalScrollEnabled(true);
+//		packagesTable.setRolloverEnabled(true);
+//		packagesTable.setHorizontalScrollEnabled(true);
 		packagesTable.setFillsViewportHeight(true);
-		packagesTable.setEditable(true);
+//		packagesTable.setEditable(true);
 
 		packagesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		SelectionListener listener = new SelectionListener(packagesTable);
 		packagesTable.getSelectionModel().addListSelectionListener(listener);
 		packagesTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
+		packagesTable.setDefaultRenderer(Object.class, new MyTableCellRenderer());
 
 		packagesTable.addMouseListener(new MouseAdapter() {
 
@@ -72,7 +75,7 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 	}
 
 	@Override
-	public JXTable getTable() {
+	public JTable getTable() {
 		return packagesTable;
 
 	};

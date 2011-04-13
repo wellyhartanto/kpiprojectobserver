@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -15,7 +16,9 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ZebraJTable;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.MyTableCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.EnumsTableModel;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
 
@@ -23,11 +26,11 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 
 	private static final long serialVersionUID = 6922425165656739899L;
 
-	private JXTable enumsTable;
+	private JTable enumsTable;
 	private EnumsTableModel enumsTableModel;
 
 	public EnumsPanelView(List<Enum> enums) {
-		setLayout(new MigLayout("fill"));
+		setLayout(new MigLayout("fill,insets 0"));
 		add(new JScrollPane(createEnumsTable(enums)), "grow");
 	}
 
@@ -36,22 +39,24 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 		return this;
 	}
 
-	private JXTable createEnumsTable(List<Enum> enums) {
+	private JTable createEnumsTable(List<Enum> enums) {
 
 		enumsTableModel = new EnumsTableModel();
 		enumsTableModel.setData(enums);
 
-		enumsTable = new JXTable(enumsTableModel);
+		enumsTable =  (JTable)new ZebraJTable(enumsTableModel);
 		enumsTable.getTableHeader().setFont(CommonFonts.tahoma14);
-		enumsTable.setRolloverEnabled(true);
-		enumsTable.setHorizontalScrollEnabled(true);
+	//	enumsTable.setRolloverEnabled(true);
+	//	enumsTable.setHorizontalScrollEnabled(true);
 		enumsTable.setFillsViewportHeight(true);
-		enumsTable.setEditable(true);
+	//	enumsTable.setEditable(true);
 
 		enumsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(enumsTable);
 		enumsTable.getSelectionModel().addListSelectionListener(listener);
 		enumsTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
+
+		enumsTable.setDefaultRenderer(Object.class, new MyTableCellRenderer());
 
 		enumsTable.addMouseListener(new MouseAdapter() {
 			@Override
@@ -69,7 +74,7 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 	}
 
 	@Override
-	public JXTable getTable() {
+	public JTable getTable() {
 		return enumsTable;
 
 	};

@@ -9,11 +9,11 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
@@ -22,11 +22,11 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.
 public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 
 	private static final long serialVersionUID = -1081591320587590117L;
-	private JXTable enumValuesTable;
+	private JTable enumValuesTable;
 	private EnumValuesTableModel enumValuesTableModel;
 
 	public EnumValuesView(String[] values) {
-		setLayout(new MigLayout("fill"));
+		setLayout(new MigLayout("fill,insets 0"));
 		add(new JScrollPane(createEnumValuesTable(values)), "grow");
 	}
 
@@ -35,19 +35,19 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 		return this;
 	}
 
-	private JXTable createEnumValuesTable(String[] values) {
+	private JTable createEnumValuesTable(String[] values) {
 
 		List<String> valuestmp = Arrays.asList(values);
 
 		enumValuesTableModel = new EnumValuesTableModel();
 		enumValuesTableModel.setData(valuestmp);
 
-		enumValuesTable = new JXTable(enumValuesTableModel);
+		enumValuesTable = new JTable(enumValuesTableModel);
 		enumValuesTable.getTableHeader().setFont(CommonFonts.tahoma14);
-		enumValuesTable.setRolloverEnabled(true);
-		enumValuesTable.setHorizontalScrollEnabled(true);
+//		enumValuesTable.setRolloverEnabled(true);
+//		enumValuesTable.setHorizontalScrollEnabled(true);
 		enumValuesTable.setFillsViewportHeight(true);
-		enumValuesTable.setEditable(true);
+//		enumValuesTable.setEditable(true);
 
 		enumValuesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(enumValuesTable);
@@ -71,7 +71,7 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 	}
 
 	@Override
-	public JXTable getTable() {
+	public JTable getTable() {
 		return enumValuesTable;
 
 	};

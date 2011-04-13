@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
@@ -22,6 +23,8 @@ public class MainFrame extends JFrame {
 	private JScrollPane scrollPane;
 
 	public MainFrame() {
+		
+		//setUndecorated(true);
 		
 		setSize(1000, 700);
 		

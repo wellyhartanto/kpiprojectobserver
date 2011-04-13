@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ZebraJTable;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.FieldCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.FieldsTableModel;
@@ -23,7 +24,7 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 	private FieldsTableModel fieldsTableModel;
 
 	public FieldsPanelView(List<Field> fields) {
-		setLayout(new MigLayout("fill"));
+		setLayout(new MigLayout("fill,insets 0"));
 		add(new JScrollPane(createFieldsTable(fields)), "grow");
 	}
 
@@ -36,7 +37,7 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 
 		fieldsTableModel = new FieldsTableModel();
 		fieldsTableModel.setData(fields);
-		fieldsTable = new JTable(fieldsTableModel);
+		fieldsTable = new ZebraJTable(fieldsTableModel);
 		fieldsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		// fieldsTable.setRolloverEnabled(true);
 		// fieldsTable.setHorizontalScrollEnabled(true);
@@ -48,6 +49,7 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 		fieldsTable.getSelectionModel().addListSelectionListener(listener);
 		fieldsTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
 		fieldsTable.setDefaultRenderer(Object.class, new FieldCellRenderer());
+		
 		return fieldsTable;
 	}
 
