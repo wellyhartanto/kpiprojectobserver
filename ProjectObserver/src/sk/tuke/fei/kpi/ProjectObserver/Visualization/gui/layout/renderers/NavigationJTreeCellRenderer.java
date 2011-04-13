@@ -2,6 +2,9 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
@@ -57,8 +60,14 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 				IMAGES_FOLDER_PATH + "field_obj.gif"));
 		iconEnumValue = new ImageIcon(getClass().getResource(
 				IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
+		
+		
+		
 
 	}
+	
+
+
 
 	public Component getTreeCellRendererComponent(JTree tree, Object value,
 			boolean sel, boolean expanded, boolean leaf, int row,

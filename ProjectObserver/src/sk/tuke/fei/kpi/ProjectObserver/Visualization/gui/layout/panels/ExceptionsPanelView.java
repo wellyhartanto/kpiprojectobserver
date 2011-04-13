@@ -8,24 +8,25 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ZebraJTable;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels.common.SelectionListener;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.java.ExceptionsTableModel;
 
 public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDisplay {
 
 	private static final long serialVersionUID = 2225947043959574746L;
-	private JXTable exceptionsTable;
+	private JTable exceptionsTable;
 	private ExceptionsTableModel exceptionsTableModel;
 
 	public ExceptionsPanelView(List<String> exceptions) {
-		setLayout(new MigLayout("fill"));
+		setLayout(new MigLayout("fill,insets 0"));
 		add(new JScrollPane(createExceptionsTable(exceptions)), "grow");
 	}
 
@@ -34,17 +35,17 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 		return this;
 	}
 
-	private JXTable createExceptionsTable(List<String> exceptions) {
+	private JTable createExceptionsTable(List<String> exceptions) {
 
 		exceptionsTableModel = new ExceptionsTableModel();
 		exceptionsTableModel.setData(exceptions);
 
-		exceptionsTable = new JXTable(exceptionsTableModel);
+		exceptionsTable = (JTable) new ZebraJTable(exceptionsTableModel);
 		exceptionsTable.getTableHeader().setFont(CommonFonts.tahoma14);
-		exceptionsTable.setRolloverEnabled(true);
-		exceptionsTable.setHorizontalScrollEnabled(true);
+//		exceptionsTable.setRolloverEnabled(true);
+//		exceptionsTable.setHorizontalScrollEnabled(true);
 		exceptionsTable.setFillsViewportHeight(true);
-		exceptionsTable.setEditable(true);
+//		exceptionsTable.setEditable(true);
 
 		exceptionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(exceptionsTable);
@@ -67,7 +68,7 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 	}
 
 	@Override
-	public JXTable getTable() {
+	public JTable getTable() {
 		return exceptionsTable;
 
 	};

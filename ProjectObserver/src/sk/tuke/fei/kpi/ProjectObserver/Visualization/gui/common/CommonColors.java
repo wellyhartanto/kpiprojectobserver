@@ -11,7 +11,10 @@ public class CommonColors {
 	public static Color LOGINPANEL_BUTTON_TEXT_COLOR = Color.WHITE;
 	
 	public static Color LOGIN_BACKGROUND_COLOR = new Color(248,248,248);
-	public static Color LOGINPANEL_COLOR =new Color(208,208,208);
+	public static Color LOGINPANEL_COLOR =new Color(195,195,195);
+	public static Color LOGINPANEL_COLOR_FROM =new Color(220,220,220);
+	public static Color LOGINPANEL_COLOR_TO =new Color(190,190,190);
+	
 	//173,216,230
 	//0,98,149
 	//226,236,249
@@ -20,12 +23,15 @@ public class CommonColors {
 	public static Color LOGIN_ABOUT_HYPERLINK_COLOR =new Color(198,142,23);
 
 	
-	public static Color MAIN_BACKGROUND_COLOR = new Color(97,183,207);
+	public static Color MAIN_BACKGROUND_COLOR = new Color(195,195,195);
+	//157,164,183
+	//97,183,207
 	
-	public static Color JTREE_BACKGROUND_COLOR =new Color(198,222,255);
+	public static Color JTREE_BACKGROUND_COLOR =new Color(217,222,229);
+	//217,222,229
+	//212,225,233
 	
-	
-	
+	public static Color TABLE_ROW = new Color(242,245,249);
 	
 	
 	//modro oranzovy styl

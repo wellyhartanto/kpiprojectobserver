@@ -2,8 +2,12 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -18,6 +22,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -29,7 +34,6 @@ import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.swingx.JXHyperlink;
-import org.jdesktop.swingx.JXTable;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
@@ -39,6 +43,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JErrorPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.JTextFieldLimit;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Languages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ZebraJTable;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.MyTableCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.model.tablemodels.ProjectsTableModel;
 import sk.tuke.fei.kpi.akAgent.integration.Project;
 
@@ -53,7 +59,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	private JComboBox languages;
 
-	private JXTable projectsTable;
+	private JTable projectsTable;
 	private JTextPane infoProjectDescription;
 
 	private JButton openProject;
@@ -86,6 +92,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	
 	private JXHyperlink copyrightHyperlink;
 
+	private ImageIcon backgroundImage;
+	
 	String descriptionBackgroundText;
 	String nameBackgroundText;
 	Color backgroundTextColor = Color.GRAY;
@@ -101,6 +109,8 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// String[] language = { LoginPanelPresenter.SK_LANGUAGE,
 		// LoginPanelPresenter.EN_LANGUAGE };
 
+		backgroundImage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "pozadie3.jpg"));
+		
 		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
 
 		languages = new JComboBox(Languages.getlanguages());
@@ -112,16 +122,18 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		
 		languages.setMinimumSize(new Dimension(50, 25));
 
-		projectsTable = new JXTable(new ProjectsTableModel());
+		projectsTable = new ZebraJTable(new ProjectsTableModel());
 //		projectsTable.getTableHeader().setFont(CommonFonts.tahoma14);
 		projectsTable.getTableHeader().setFont(CommonFonts.dejavuSans13);
 
-		projectsTable.setRolloverEnabled(true);
-		projectsTable.setHorizontalScrollEnabled(true);
+//		projectsTable.setRolloverEnabled(true);
+//		projectsTable.setHorizontalScrollEnabled(true);
 		projectsTable.setFillsViewportHeight(true);
-		projectsTable.setEditable(true);
+//		projectsTable.setEditable(true);
 		projectsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+		projectsTable.setDefaultRenderer(Object.class, new MyTableCellRenderer());
+		
 		projectsTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
 
@@ -276,7 +288,27 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 	private void setComponentsPosition() {
 
-		JPanel loginPanel = new JPanel();
+		JPanel loginPanel = new JPanel(){
+			
+			protected void paintComponent(Graphics g) {
+				Graphics2D g2d = (Graphics2D) g;
+				int w = getWidth();
+				int h = getHeight();
+
+				// Paint a gradient from top to bottom
+				GradientPaint gp = new GradientPaint(
+						0, 0,CommonColors.LOGINPANEL_COLOR_FROM,
+						0, h, CommonColors.LOGINPANEL_COLOR_TO);
+
+				g2d.setPaint(gp);
+				g2d.fillRect(0, 0, w, h);
+
+			}
+			
+//			public void paintComponent(Graphics g) {
+//			    g.drawImage(backgroundImage.getImage(), 0, 0, this.getWidth(),this.getHeight(),this);
+//			  }
+		};
 
 		loginPanel.setLayout(new MigLayout("", "20[growprio 50]20[]20",
 				"20[][]10[][][][][]"));
