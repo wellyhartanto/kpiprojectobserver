@@ -2,6 +2,8 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 
 import java.awt.Color;
 
+import javax.swing.JFrame;
+import javax.swing.JRootPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -13,7 +15,6 @@ public class Main {
 	private static final long serialVersionUID = -1960464005712732926L;
 
 	public static void main(String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 
@@ -71,6 +72,7 @@ public class Main {
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				
 				MainFrame.getMainFrame().setPanel(
 						new LoginPanelPresenter().getDisplay().asComponent());
 			}

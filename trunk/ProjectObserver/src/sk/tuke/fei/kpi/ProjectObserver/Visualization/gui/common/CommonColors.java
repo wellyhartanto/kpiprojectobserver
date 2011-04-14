@@ -9,11 +9,16 @@ public class CommonColors {
 //	
 	public static Color LOGINPANEL_BUTTON_COLOR = new Color(86,86,86);
 	public static Color LOGINPANEL_BUTTON_TEXT_COLOR = Color.WHITE;
+	//248,248,248
+	//195,195,195
+	public static Color LOGIN_BACKGROUND_COLOR = new Color(227,232,233);
+	public static Color LOGINPANEL_COLOR =new Color(217,222,229);
+//	public static Color LOGINPANEL_COLOR_FROM =new Color(220,220,220);
+//	public static Color LOGINPANEL_COLOR_TO =new Color(190,190,190);
 	
-	public static Color LOGIN_BACKGROUND_COLOR = new Color(248,248,248);
-	public static Color LOGINPANEL_COLOR =new Color(195,195,195);
-	public static Color LOGINPANEL_COLOR_FROM =new Color(220,220,220);
-	public static Color LOGINPANEL_COLOR_TO =new Color(190,190,190);
+	public static Color LOGINPANEL_COLOR_FROM =new Color(247,252,253);
+	public static Color LOGINPANEL_COLOR_TO =new Color(227,232,233);
+	
 	
 	//173,216,230
 	//0,98,149

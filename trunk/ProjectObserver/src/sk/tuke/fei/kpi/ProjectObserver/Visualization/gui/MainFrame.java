@@ -24,13 +24,14 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		
+		
 		//setUndecorated(true);
 		
 		setSize(1000, 700);
 		
 //		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
 		
-		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "iconblue.png"));
+		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icondesktop.png"));
 
 		
 		setIconImage(frameIcon.getImage());

@@ -43,11 +43,10 @@ public class InterfacesPanelView extends JPanel implements InterfacesPanelDispla
 		interfacesTableModel.setData(interfaces);
 
 		interfacesTable =  (JTable)new ZebraJTable(interfacesTableModel);
-		interfacesTable.getTableHeader().setFont(CommonFonts.tahoma14);
-//		interfacesTable.setRolloverEnabled(true);
-//		interfacesTable.setHorizontalScrollEnabled(true);
+		interfacesTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		interfacesTable.setFont(CommonFonts.getTableContentFont());	
+		
 		interfacesTable.setFillsViewportHeight(true);
-//		interfacesTable.setEditable(true);
 
 		interfacesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(interfacesTable);

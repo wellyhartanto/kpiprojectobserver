@@ -45,11 +45,10 @@ public class EnumsPanelView extends JPanel implements EnumsPanelDisplay {
 		enumsTableModel.setData(enums);
 
 		enumsTable =  (JTable)new ZebraJTable(enumsTableModel);
-		enumsTable.getTableHeader().setFont(CommonFonts.tahoma14);
-	//	enumsTable.setRolloverEnabled(true);
-	//	enumsTable.setHorizontalScrollEnabled(true);
+		enumsTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		enumsTable.setFont(CommonFonts.getTableContentFont());	
+	
 		enumsTable.setFillsViewportHeight(true);
-	//	enumsTable.setEditable(true);
 
 		enumsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(enumsTable);

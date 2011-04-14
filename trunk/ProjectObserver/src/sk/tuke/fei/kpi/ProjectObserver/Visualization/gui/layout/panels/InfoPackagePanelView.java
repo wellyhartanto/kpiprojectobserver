@@ -9,11 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.InfoJPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Package;
 
-public class InfoPackagePanelView extends JPanel implements InfoPanelDisplay {
+public class InfoPackagePanelView extends InfoJPanel implements InfoPanelDisplay {
 
 	private static final long serialVersionUID = 159665078173976827L;
 
@@ -23,7 +24,7 @@ public class InfoPackagePanelView extends JPanel implements InfoPanelDisplay {
 
 		JLabel name = new JLabel(Messages.getMessage("info.package") + " "
 				+ pa.getName());
-		name.setFont(CommonFonts.tahoma14);
+	//	name.setFont(CommonFonts.tahoma14);
 		add(name, "growx,wrap");
 
 		if (!pa.getPackages().isEmpty()) {
@@ -54,7 +55,7 @@ public class InfoPackagePanelView extends JPanel implements InfoPanelDisplay {
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
 			if (component instanceof JLabel) {
-				component.setFont(CommonFonts.tahoma14);
+				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
 	}

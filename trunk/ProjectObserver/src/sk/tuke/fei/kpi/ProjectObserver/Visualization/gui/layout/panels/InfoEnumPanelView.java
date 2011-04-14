@@ -10,9 +10,10 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.InfoJPanel;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
 
-public class InfoEnumPanelView extends JPanel implements InfoPanelDisplay {
+public class InfoEnumPanelView extends InfoJPanel implements InfoPanelDisplay {
 
 	private static final long serialVersionUID = 159665078173976827L;
 
@@ -21,13 +22,13 @@ public class InfoEnumPanelView extends JPanel implements InfoPanelDisplay {
 		setLayout(new MigLayout("fillx"));
 
 		JLabel name = new JLabel(en.getName());
-		name.setFont(CommonFonts.tahoma14);
+	//	name.setFont(CommonFonts.tahoma14);
 		add(name, "wrap");
 
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
 			if (component instanceof JLabel) {
-				component.setFont(CommonFonts.tahoma14);
+				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
 

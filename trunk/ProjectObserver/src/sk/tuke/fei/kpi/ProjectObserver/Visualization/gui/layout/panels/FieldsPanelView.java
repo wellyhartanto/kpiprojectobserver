@@ -38,11 +38,10 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 		fieldsTableModel = new FieldsTableModel();
 		fieldsTableModel.setData(fields);
 		fieldsTable = new ZebraJTable(fieldsTableModel);
-		fieldsTable.getTableHeader().setFont(CommonFonts.tahoma14);
-		// fieldsTable.setRolloverEnabled(true);
-		// fieldsTable.setHorizontalScrollEnabled(true);
+		fieldsTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		fieldsTable.setFont(CommonFonts.getTableContentFont());	
+		
 		fieldsTable.setFillsViewportHeight(true);
-		// fieldsTable.setEditable(true);
 		fieldsTable.setAutoscrolls(true);
 		fieldsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(fieldsTable);
