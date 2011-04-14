@@ -35,6 +35,11 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 	private ImageIcon iconMethod;
 	private ImageIcon iconField;
 	private ImageIcon iconEnumValue;
+	
+	
+	private ImageIcon iconPackageDif;
+	private ImageIcon iconClassDif;
+	private ImageIcon iconInterfaceDif;
 
 	private Project project;
 	private JTree tree;
@@ -60,8 +65,13 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 				IMAGES_FOLDER_PATH + "field_obj.gif"));
 		iconEnumValue = new ImageIcon(getClass().getResource(
 				IMAGES_FOLDER_PATH + "enum_value_obj.gif"));
+		iconPackageDif = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "packagedif.gif"));
 		
-		
+		iconClassDif = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "classdif.gif"));
+		iconInterfaceDif = new ImageIcon(getClass().getResource(
+				IMAGES_FOLDER_PATH + "interfacedif.gif"));
 		
 
 	}
@@ -102,7 +112,8 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 			setIcon(iconPackage);
 			if (hasPackageDifferences((Package) node.getUserObject())
 					&& !isNodeExpanded(node)) {
-				setForeground(Color.RED);
+				setIcon(iconPackageDif);
+//				setForeground(Color.RED);
 				setToolTipText(Messages.getMessage("tooltip.packagediffers"));
 			}
 		}
@@ -112,9 +123,11 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 		if (node.getUserObject() instanceof Interface) {
 			setIcon(iconInterface);
 			if (project.getMappingHolder().getDifference(
+					((Interface) node.getUserObject()).getFullyQualifiedName())!=null&& project.getMappingHolder().getDifference(
 					((Interface) node.getUserObject()).getFullyQualifiedName())
 					.differs()) {
-				setForeground(Color.RED);
+				setIcon(iconInterfaceDif);
+//				setForeground(Color.RED);
 				setToolTipText(Messages
 						.getMessage("tooltip.containdifferences"));
 			}
@@ -127,9 +140,11 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 		if (node.getUserObject() instanceof Class) {
 			setIcon(iconClass);
 			if (project.getMappingHolder().getDifference(
+					((Class) node.getUserObject()).getFullyQualifiedName())!=null && project.getMappingHolder().getDifference(
 					((Class) node.getUserObject()).getFullyQualifiedName())
 					.differs()) {
-				setForeground(Color.RED);
+				setIcon(iconClassDif);
+//				setForeground(Color.RED);
 				setToolTipText(Messages
 						.getMessage("tooltip.containdifferences"));
 			}
@@ -163,13 +178,16 @@ public class NavigationJTreeCellRenderer extends DefaultTreeCellRenderer {
 			result = hasPackageDifferences(pack);
 		}
 		for (Class class1 : package1.getClasses()) {
+			
 			if (project.getMappingHolder().getDifference(
+					class1.getFullyQualifiedName())!=null &&  project.getMappingHolder().getDifference(
 					class1.getFullyQualifiedName()).differs()) {
 				result = true;
 			}
 		}
 		for (Interface interface1 : package1.getInterfaces()) {
 			if (project.getMappingHolder().getDifference(
+					interface1.getFullyQualifiedName())!=null && project.getMappingHolder().getDifference(
 					interface1.getFullyQualifiedName()).differs()) {
 				result = true;
 			}

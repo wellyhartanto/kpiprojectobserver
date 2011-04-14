@@ -219,7 +219,7 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 		navigationTree.setName("navigationTree");
 		navigationTree.setCellRenderer(new NavigationJTreeCellRenderer(project, navigationTree));
 		navigationTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		navigationTree.setFont(CommonFonts.dejavuSans12);
+		navigationTree.setFont(CommonFonts.getTreeContentFont());
 		javax.swing.ToolTipManager.sharedInstance().registerComponent(navigationTree);
 		navigationTree.setRootVisible(false);
 		// set default width

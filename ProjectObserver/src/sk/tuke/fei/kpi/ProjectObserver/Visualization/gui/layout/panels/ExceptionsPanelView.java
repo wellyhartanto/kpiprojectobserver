@@ -41,11 +41,10 @@ public class ExceptionsPanelView extends JPanel implements ExceptionsPanelDispla
 		exceptionsTableModel.setData(exceptions);
 
 		exceptionsTable = (JTable) new ZebraJTable(exceptionsTableModel);
-		exceptionsTable.getTableHeader().setFont(CommonFonts.tahoma14);
-//		exceptionsTable.setRolloverEnabled(true);
-//		exceptionsTable.setHorizontalScrollEnabled(true);
+		exceptionsTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		exceptionsTable.setFont(CommonFonts.getTableContentFont());	
+		
 		exceptionsTable.setFillsViewportHeight(true);
-//		exceptionsTable.setEditable(true);
 
 		exceptionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(exceptionsTable);

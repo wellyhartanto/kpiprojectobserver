@@ -37,11 +37,9 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 		methodsTableModel = new MethodsTableModel();
 		methodsTableModel.setData(methods);
 		methodsTable = new ZebraJTable(methodsTableModel);
-		methodsTable.getTableHeader().setFont(CommonFonts.tahoma14);
-		// methodsTable.setRolloverEnabled(true);
-		// methodsTable.setHorizontalScrollEnabled(true);
+		methodsTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		methodsTable.setFont(CommonFonts.getTableContentFont());	
 		methodsTable.setFillsViewportHeight(true);
-		// methodsTable.setEditable(true);
 		methodsTable.setAutoCreateRowSorter(true);
 		methodsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(methodsTable);

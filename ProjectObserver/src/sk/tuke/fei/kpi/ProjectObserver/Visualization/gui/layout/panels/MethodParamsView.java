@@ -42,11 +42,11 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 		paramsTableModel.setData(parameters);
 
 		paramsTable = new ZebraJTable(paramsTableModel);
-		paramsTable.getTableHeader().setFont(CommonFonts.tahoma14);
-//		paramsTable.setRolloverEnabled(true);
-//		paramsTable.setHorizontalScrollEnabled(true);
+		paramsTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		paramsTable.setFont(CommonFonts.getTableContentFont());	
+		
+		
 		paramsTable.setFillsViewportHeight(true);
-//		paramsTable.setEditable(true);
 
 		paramsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(paramsTable);

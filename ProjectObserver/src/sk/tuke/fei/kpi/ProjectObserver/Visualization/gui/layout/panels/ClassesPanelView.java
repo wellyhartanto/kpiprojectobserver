@@ -47,13 +47,11 @@ public class ClassesPanelView extends JPanel implements ClassesPanelDisplay {
 	//	classesTable = new JXTable(classesTableModel);
 		
 		classesTable =(JTable) new ZebraJTable(classesTableModel);
+		classesTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		classesTable.setFont(CommonFonts.getTableContentFont());	
+	
 		
-		
-		classesTable.getTableHeader().setFont(CommonFonts.tahoma14);
-//		classesTable.setRolloverEnabled(true);
-//		classesTable.setHorizontalScrollEnabled(true);
 		classesTable.setFillsViewportHeight(true);
-//		classesTable.setEditable(true);
 		classesTable.setDefaultRenderer(Object.class, new MyTableCellRenderer());
 		classesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		// SelectionListener listener = new SelectionListener(classesTable);

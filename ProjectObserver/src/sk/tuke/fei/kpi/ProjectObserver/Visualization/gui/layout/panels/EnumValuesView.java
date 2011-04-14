@@ -43,11 +43,11 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 		enumValuesTableModel.setData(valuestmp);
 
 		enumValuesTable = new JTable(enumValuesTableModel);
-		enumValuesTable.getTableHeader().setFont(CommonFonts.tahoma14);
-//		enumValuesTable.setRolloverEnabled(true);
-//		enumValuesTable.setHorizontalScrollEnabled(true);
+		enumValuesTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		enumValuesTable.setFont(CommonFonts.getTableContentFont());	
+		
+		
 		enumValuesTable.setFillsViewportHeight(true);
-//		enumValuesTable.setEditable(true);
 
 		enumValuesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		SelectionListener listener = new SelectionListener(enumValuesTable);

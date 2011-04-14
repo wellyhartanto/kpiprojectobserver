@@ -15,18 +15,27 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
 import javax.swing.JTree;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.basic.BasicToolBarUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -39,6 +48,7 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonConstants;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.TabbedPaneLabel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.ClassPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.InterfacePanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml.PackagePanel;
@@ -115,11 +125,10 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private ImageIcon iconSearch;
 	private ImageIcon iconExport;
 
-	private JXHyperlink changeProjectHl;
-	private JXHyperlink searchHl;
-	private JXHyperlink exportHl;
+	private JButton changeProjectHl;
+	private JButton searchHl;
+	private JButton exportHl;
 
-	private ImageIcon backgroundImage;
 
 	public MainPanelView(Project project) {
 
@@ -131,75 +140,80 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 	private void initComponents() {
 
-		backgroundImage = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "pozadie3.jpg"));
 
-		 final Color OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR =
-	            new Color(64, 64, 64);
-		 final  Color OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR =
-	            new Color(135, 135, 135);    
-		actions = new JPanel(new MigLayout("insets 0", "[]8[]8[]", "3[]3")) {
+		final Color OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR = new Color(64, 64, 64);
+		final Color OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR = new Color(135, 135, 135);
+		actions = new JPanel(new MigLayout("insets 0", "[][][][]", "1[]1")) {
 			protected void paintComponent(Graphics g) {
 				Graphics2D g2d = (Graphics2D) g;
 				int w = getWidth();
 				int h = getHeight();
 
 				// Paint a gradient from top to bottom
-				GradientPaint gp = new GradientPaint(
-						0, 0, getBackground(),
-						0, h, getBackground().darker());
+				GradientPaint gp = new GradientPaint(0, 0, getBackground(), 0, h, getBackground().darker());
 				g2d.setPaint(gp);
 				g2d.fillRect(0, 0, w, h);
 			}
-			
+
 			@Override
-		    public Border getBorder() {
-		        Window window = SwingUtilities.getWindowAncestor(this);
-		        return window != null && window.isFocused()
-		                ? BorderFactory.createMatteBorder(0,0,1,0,
-		                        OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR)
-		                : BorderFactory.createMatteBorder(0,0,1,0,
-		                       OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR);
-		    }
-			
+			public Border getBorder() {
+				Window window = SwingUtilities.getWindowAncestor(this);
+				return window != null && window.isFocused() ? BorderFactory.createMatteBorder(0, 0, 1, 0, OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR)
+						: BorderFactory.createMatteBorder(0, 0, 1, 0, OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR);
+			}
+
 		};
-		
+
 		actions.setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
 		actions.setOpaque(false);
+		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "change24.png"));
+		iconSearch = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "search24.png"));
+		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "export_icon24.png"));
+
 		// iconChangeProject = new
 		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
-		// "change24.png"));
+		// "changeblue.png"));
+		// iconSearch = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "searchblue.png"));
+		// iconExport = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "exportblue.png"));
+
+		// iconChangeProject = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "exchange32.png"));
 		// iconSearch = new
 		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
 		// "search24.png"));
 		// iconExport = new
 		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
-		// "export_icon24.png"));
+		// "export_32.png"));
 
-		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "changeblue.png"));
-		iconSearch = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "searchblue.png"));
-		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "exportblue.png"));
-
-		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "exchange32.png"));
-		// iconSearch = new
-		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
-		// "search24.png"));
-		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "export_32.png"));
-
-		changeProjectHl = new JXHyperlink();
+		changeProjectHl = new JButton();
 		changeProjectHl.setIcon(iconChangeProject);
 		changeProjectHl.setSelected(false);
 		changeProjectHl.setToolTipText(Messages.getMessage("tooltip.changeproject"));
+		changeProjectHl.setForeground(Color.BLACK);
+		changeProjectHl.setBackground(Color.GRAY);
+		changeProjectHl.setOpaque(false);
 
-		searchHl = new JXHyperlink();
+		searchHl = new JButton();
 		searchHl.setIcon(iconSearch);
 		searchHl.setSelected(false);
 		searchHl.setToolTipText(Messages.getMessage("tooltip.search"));
+		searchHl.setForeground(Color.BLACK);
+		searchHl.setBackground(Color.GRAY);
+		searchHl.setOpaque(false);
 
-		exportHl = new JXHyperlink();
+		exportHl = new JButton();
 		exportHl.setSelected(false);
 		exportHl.setIcon(iconExport);
 		exportHl.setToolTipText(Messages.getMessage("tooltip.export"));
 		// exportHl.setText(Messages.getMessage("main.menu.export"));
+		exportHl.setForeground(Color.BLACK);
+		exportHl.setBackground(Color.GRAY);
+		exportHl.setOpaque(false);
 
 		actions.add(changeProjectHl, "gapleft 10");
 		actions.add(searchHl);
@@ -212,11 +226,10 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		rightPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		rightPanel.setName("rightPanel");
 		rightPanel.setDividerSize(1);
-		
+
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setName("tabbedPane");
-		// tabbedPane.setFont(CommonFonts.tahomaBoldItalic14);
-		tabbedPane.setFont(CommonFonts.dejavuSans13);
+		tabbedPane.setFont(CommonFonts.getTabFont());
 
 		// tabbedPane.setMaximumSize(new Dimension(1000, 350));
 
@@ -237,7 +250,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		splitPane.setLeftComponent(leftScrollPane);
 		splitPane.setRightComponent(rightPanel);
 		splitPane.setDividerSize(1);
-		
 
 		sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package pack = project.getClassDiagram().getPackages().get(0);
 		while (!pack.getPackages().isEmpty()) {
@@ -295,6 +307,27 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		mainJp.setBackground(CommonColors.MAIN_BACKGROUND_COLOR);
 		setLayout(new MigLayout("fill,insets 0"));
+		// mainJp.add(actions, "top,growx,wrap");
+
+		JToolBar toolbar = new JToolBar();
+		JButton changeButton = new JButton(iconChangeProject);
+		JButton searchButton = new JButton(iconSearch);
+		JButton exportButton = new JButton(iconExport);
+		changeButton.setForeground(Color.BLACK);
+		changeButton.setBackground(Color.DARK_GRAY);
+		// Border line = new LineBorder(Color.BLACK);
+		// Border margin = new EmptyBorder(5, 15, 5, 15);
+		// Border compound = new CompoundBorder(line, margin);
+		// changeButton.setBorder(compound);
+		changeButton.setOpaque(false);
+		changeButton.setText("");
+
+		// actions.add(changeButton);
+
+		// toolbar.add(changeButton);
+		toolbar.add(searchButton);
+		toolbar.add(exportButton);
+		// mainJp.add(toolbar,"top,growx,wrap");
 		mainJp.add(actions, "top,growx,wrap");
 		mainJp.add(splitPane, "grow");
 		add(mainJp, "grow");
@@ -331,7 +364,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		if (nodeInfo instanceof Application) {
 			tabbedPane.removeAll();
-
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
@@ -365,17 +397,44 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
 
+			JLabel lbl = new TabbedPaneLabel(Messages.getMessage("title.info"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+
 			packagesPanelPresenter = PackagesPanelPresenter.getInstance(((Package) nodeInfo).getPackages());
 			tabbedPane.addTab(Messages.getMessage("title.packages"), iconPackage, packagesPanelPresenter.getDisplay().asComponent());
 
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.packages"));
+			lbl.setIcon(iconPackage);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+
 			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Package) nodeInfo).getClasses());
 			tabbedPane.addTab(Messages.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.classes"));
+			lbl.setIcon(iconClass);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			interfacesPanelPresenter = InterfacesPanelPresenter.getInstance(((Package) nodeInfo).getInterfaces());
 			tabbedPane.addTab(Messages.getMessage("title.interfaces"), iconInterface, interfacesPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.interfaces"));
+			lbl.setIcon(iconInterface);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Package) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.enums"));
+			lbl.setIcon(iconEnum);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlpackage = project.getMappingHolder().getJava2UmlMapping().getPackage(
 
@@ -393,21 +452,46 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
-
-			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Class) nodeInfo).getMethods());
-			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+			JLabel lbl = new TabbedPaneLabel(Messages.getMessage("title.info"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Class) nodeInfo).getFields());
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.fields"));
+			lbl.setIcon(iconField);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+
+			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Class) nodeInfo).getMethods());
+			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.methods"));
+			lbl.setIcon(iconMethod);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			classesPanelPresenter = ClassesPanelPresenter.getInstance(((Class) nodeInfo).getClasses());
 			tabbedPane.addTab(Messages.getMessage("title.classes"), iconClass, classesPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.classes"));
+			lbl.setIcon(iconClass);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			enumsPanelPresenter = EnumsPanelPresenter.getInstance(((Class) nodeInfo).getEnums());
 			tabbedPane.addTab(Messages.getMessage("title.enums"), iconEnum, enumsPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.enums"));
+			lbl.setIcon(iconEnum);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			Difference difference = project.getMappingHolder().getDifference(((Class) nodeInfo).getFullyQualifiedName());
-			if (difference.differs()) {
+			if (difference!=null && difference.differs()) {
 				methodsPanelPresenter.setExtraMethods(difference.getExtraMethods());
 				fieldsPanelPresenter.setExtraFields(difference.getExtraFields());
 			}
@@ -426,12 +510,27 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.removeAll();
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
-
-			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Interface) nodeInfo).getMethods());
-			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+			JLabel lbl = new TabbedPaneLabel(Messages.getMessage("title.info"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			fieldsPanelPresenter = FieldsPanelPresenter.getInstance(((Interface) nodeInfo).getFields());
 			tabbedPane.addTab(Messages.getMessage("title.fields"), iconField, fieldsPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.fields"));
+			lbl.setIcon(iconField);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+
+			methodsPanelPresenter = MethodsPanelPresenter.getInstance(((Interface) nodeInfo).getMethods());
+			tabbedPane.addTab(Messages.getMessage("title.methods"), iconMethod, methodsPanelPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.methods"));
+			lbl.setIcon(iconMethod);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlinterface = project.getMappingHolder().getJava2UmlMapping()
 					.getInterface(
@@ -449,27 +548,60 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			JLabel lbl = new TabbedPaneLabel(Messages.getMessage("title.info"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			enumValuesPresenter = EnumValuesPresenter.getInstance(((Enum) nodeInfo).getValues());
 			tabbedPane.addTab(Messages.getMessage("title.values"), iconEnumValue, enumValuesPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.values"));
+			lbl.setIcon(iconEnumValue);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+
 		}
 
 		if (nodeInfo instanceof Method) {
 			tabbedPane.removeAll();
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			JLabel lbl = new TabbedPaneLabel(Messages.getMessage("title.info"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			methodParamsPresenter = MethodParamsPresenter.getInstance(((Method) nodeInfo).getParams());
 			tabbedPane.addTab(Messages.getMessage("title.params"), iconInfo, methodParamsPresenter.getDisplay().asComponent());
+			lbl = new TabbedPaneLabel(Messages.getMessage("title.params"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			exceptionsPanelPresenter = ExceptionsPanelPresenter.getInstance(((Method) nodeInfo).getExceptions());
 			tabbedPane.addTab(Messages.getMessage("title.exceptions"), iconInfo, exceptionsPanelPresenter.getDisplay().asComponent());
+			lbl = new JLabel(Messages.getMessage("title.exceptions"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+
 		}
 		if (nodeInfo instanceof Field) {
 			tabbedPane.removeAll();
 
 			infoPanelPresenter = new InfoPanelPresenter(nodeInfo);
 			tabbedPane.addTab(Messages.getMessage("title.info"), iconInfo, infoPanelPresenter.getDisplay().asComponent());
+			JLabel lbl = new TabbedPaneLabel(Messages.getMessage("title.info"));
+			lbl.setIcon(iconInfo);
+			lbl.setIconTextGap(2);
+			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+
 		}
 		if ((nodeInfo instanceof Package) || (nodeInfo instanceof Class) || (nodeInfo instanceof Interface)) {
 			restoreWindowPrefs();

@@ -43,14 +43,9 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 		packagesTableModel.setData(packages);
 
 		packagesTable = new ZebraJTable(packagesTableModel);
-
-		// packagesTable.setShowGrid(true, true);
-
-		packagesTable.getTableHeader().setFont(CommonFonts.tahoma14);
-//		packagesTable.setRolloverEnabled(true);
-//		packagesTable.setHorizontalScrollEnabled(true);
+		packagesTable.getTableHeader().setFont(CommonFonts.getTableHeaderFont());
+		packagesTable.setFont(CommonFonts.getTableContentFont());
 		packagesTable.setFillsViewportHeight(true);
-//		packagesTable.setEditable(true);
 
 		packagesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
