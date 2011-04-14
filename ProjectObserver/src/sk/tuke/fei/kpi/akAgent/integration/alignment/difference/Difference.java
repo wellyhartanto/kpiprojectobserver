@@ -3,8 +3,11 @@ package sk.tuke.fei.kpi.akAgent.integration.alignment.difference;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import sk.tuke.fei.kpi.akAgent.integration.alignment.Aligner.AlignStrategy;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Application;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.ClassDiagram;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Field;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method;
@@ -17,6 +20,7 @@ import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method;
  */
 public class Difference implements Serializable {
 	private static final long serialVersionUID = -632343355526225153L;
+	private static transient Logger logger = Logger.getLogger(Difference.class);
 	
 	private ArrayList<sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method> missingMethods;
 	private ArrayList<sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method> extraMethods;
@@ -57,7 +61,16 @@ public class Difference implements Serializable {
 				missingFields.add(field);
 			}
 		}
+		findInconsistence(java, uml);
 	}
+	
+
+	private void findInconsistence(TypeElement java, sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.TypeElement uml) {
+		if(differs()){
+			logger.info("Classes "+java.getName()+" and "+uml.getName()+" may be not consistent.");
+		}		
+	}
+
 
 	private boolean findMethod(sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method method, sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.TypeElement uml) {
 		for (Method m : uml.getMethods()) {
@@ -123,8 +136,12 @@ public class Difference implements Serializable {
 	 * States whether implemented element has some missing methods.
 	 * @return true if elements doesn't implement every method from its model.
 	 */
+	/**
+	 * States whether implemented element has some missing methods.
+	 * @return true if elements doesn't implement every method from its model.
+	 */
 	public boolean hasMissingMethods(){
-		return missingMethods.size()!=0;
+		return missingMethods!=null && missingMethods.size()!=0;
 	}
 	
 	/**
@@ -132,7 +149,7 @@ public class Difference implements Serializable {
 	 * @return true if elements implements some methods that are not in model.
 	 */
 	public boolean hasExtraMethods(){
-		return extraMethods.size()!=0;
+		return extraMethods != null &&extraMethods.size()!=0;
 	}
 	
 	/**
@@ -140,7 +157,7 @@ public class Difference implements Serializable {
 	 * @return true if elements doesn't contain every method from its model.
 	 */
 	public boolean hasMissingFields(){
-		return missingFields.size()!=0;
+		return missingFields!= null &&missingFields.size()!=0;
 	}
 	
 	/**
@@ -148,7 +165,7 @@ public class Difference implements Serializable {
 	 * @return true if elements implements some fields that are not in model.
 	 */
 	public boolean hasExtraFields(){
-		return extraFields.size()!=0;
+		return extraFields != null && extraFields.size()!=0;
 	}
 	
 	/**

@@ -188,7 +188,7 @@ public abstract class Element implements Serializable, Comparable<Element> {
 	/**
 	 * Gets fully qualified name.
 	 * It includes fully qualified name of parent.
-	 * @return
+	 * @return fully qualified name
 	 */
 	public String getFullyQualifiedName() {
 		return parent == null?name : parent.getFullyQualifiedName()+"."+name;

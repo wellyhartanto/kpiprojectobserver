@@ -81,6 +81,7 @@ public class JavaAligner {
 				pair = classDiagramFinder.findClass(c,AlignStrategy.HEURISTIC);
 			}
 			if (pair == null) {
+				logger.info("Approximating "+c.getFullName());
 				pair = classDiagramFinder.findClass(c,AlignStrategy.APPROXIMATION);
 			}
 			if (pair != null) {

@@ -155,7 +155,7 @@ public class TypeElement extends Element implements Alignable {
 	/**
 	 * Gets names of classes/interfaces which this class extends/implements.
 	 * Transient property. Don't use it. It should be used only in process of creating model from input file.
-	 * @return
+	 * @return list of full names of implemented interfaces
 	 */
 	public List<String> getImplementedNames() {
 		return implementedNames;

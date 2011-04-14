@@ -19,7 +19,7 @@ public class Field extends Element {
 
 	/**
 	 * States whether this field is array type.
-	 * @return
+	 * @return true if field is array
 	 */
 	public boolean isArray() {
 		return isArray;
@@ -35,7 +35,7 @@ public class Field extends Element {
 
 	/**
 	 * Gets size of array
-	 * @return
+	 * @return size
 	 */
 	public Integer getSize() {
 		return size;

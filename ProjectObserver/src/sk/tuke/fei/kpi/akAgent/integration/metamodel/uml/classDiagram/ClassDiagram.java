@@ -103,8 +103,8 @@ public class ClassDiagram implements Serializable {
 	}
 
 	/**
-	 * Sets interfaces in this package.
-	 * @param interfaces list to set
+	 * Gets interfaces in this package.
+	 * @return list of interfaces
 	 */
 	public List<Interface> getInterfaces() {
 		return interfaces;

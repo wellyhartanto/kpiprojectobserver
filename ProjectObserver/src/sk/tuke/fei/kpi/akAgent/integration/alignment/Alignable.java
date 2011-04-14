@@ -4,7 +4,7 @@ import sk.tuke.fei.kpi.akAgent.integration.alignment.Aligner.AlignStrategy;
 
 /**
  * Alignable interface.
- * Object implementing this interface can be compared to the other objects according to selected {@link AlignmentStrategy}. 
+ * Object implementing this interface can be compared to the other objects according to selected {@link AlignStrategy}. 
  */
 public interface Alignable {
 	/**
