@@ -74,12 +74,20 @@ public class Method extends Element implements Alignable {
 		if (object instanceof sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method) {
 			sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method method = (sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method) object;
 			switch (alignStrategy) {
-			default:		
+			default:	
+				try{
+					
 				boolean value = /*getVisibility().toString().equals(method.getVisibility().toString()) &&*/ method.getName().endsWith(getName()) && method.getReturnType().endsWith(returnType) && getParams().size() == method.getParams().size();
 				if(value && params.size()!=0){
 					return testParams(method);
 				} else {
 					return value;
+				}}catch (NullPointerException e) {
+					System.out.println(getName());
+					System.out.println(method.getName());
+					System.out.println(getReturnType());
+					System.out.println(method.getReturnType());
+					System.out.println("#############"+getParent());
 				}
 			}
 		}

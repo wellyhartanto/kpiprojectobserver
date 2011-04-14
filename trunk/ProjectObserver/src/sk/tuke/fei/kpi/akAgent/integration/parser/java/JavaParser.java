@@ -75,7 +75,6 @@ public class JavaParser implements Parser<Application>, Disposable {
 	private void initModel(String pathname) {
 		ontology = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, null);
 		ontology.getDocumentManager().addAltEntry("http://www.jscc.sk/ontology/OOMOntology", "file:" + pathname);
-		ontology.getDocumentManager().addAltEntry("http://www.jscc.sk/ontology/OOMOntology.owl", "file:" + pathname);
 		ontology.read("http://www.jscc.sk/ontology/OOMOntology");
 	}
 
@@ -119,15 +118,21 @@ public class JavaParser implements Parser<Application>, Disposable {
 			Individual individual = i.next();
 			Constructor constructor = new Constructor();
 			setElement(constructor, individual);
+			
+			if(constructor.getName()==null){
+				constructor.setName(extranctNameFromUri(individual.getURI()));
+			}
+			if(constructor.getFullName()==null){
+				constructor.setFullName(extranctFullNameFromUri(individual.getURI()));
+			}
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isConstructorOf"));
 			String className = OwlUtils.getValue(node.toString(), '#');
 			TypeElement parent = classes.get(className);
-			if(parent!=null){
-			constructor.setParent(parent);
-			parent.getConstructors().add(constructor);
-			setParams(constructor);
-			} else{
-				System.out.println(className);
+			if (parent != null) {
+				constructor.setParent(parent);
+				parent.getConstructors().add(constructor);
+				setParams(constructor);
+			} else {
 			}
 		}
 	}
@@ -205,6 +210,14 @@ public class JavaParser implements Parser<Application>, Disposable {
 
 	private OwlUtils utils;
 
+	private String extranctNameFromUri(String uri){ 
+		return uri.substring(uri.indexOf('$')+1,uri.lastIndexOf(':'));
+	}
+
+
+	private String extranctFullNameFromUri(String uri) {
+		return uri.substring(uri.indexOf('#')+1,uri.lastIndexOf(':')).replace('$', '.');
+	}
 	/**
 	 * Load methods from ontology.
 	 */
@@ -213,6 +226,12 @@ public class JavaParser implements Parser<Application>, Disposable {
 			Individual individual = i.next();
 			Method method = new Method();
 			setElement(method, individual);
+			if(method.getName()==null){
+				method.setName(extranctNameFromUri(individual.getURI()));
+			}
+			if(method.getFullName()==null){
+				method.setFullName(extranctFullNameFromUri(individual.getURI()));
+			}
 			RDFNode returnType = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasReturnType"));
 			if (returnType != null)
 				method.setReturnType(filterType(OwlUtils.getValue(returnType.toString(), '#')));
@@ -258,7 +277,6 @@ public class JavaParser implements Parser<Application>, Disposable {
 					field.setParent(element);
 					element.getFields().add(field);
 				} else {
-					System.out.println(node.toString());
 				}
 			}
 			field.setType(filterType(OwlUtils.getValue(individual.getPropertyValue(new PropertyImpl(PREFIX + "hasType")).toString(), '#')));
@@ -331,12 +349,11 @@ public class JavaParser implements Parser<Application>, Disposable {
 		RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasName"));
 		if (node != null) {
 			element.setName(node.toString().replace("]", ""));
-
-		}
+		} 
 		node = individual.getPropertyValue(new PropertyImpl(PREFIX + "hasFullName"));
 		if (node != null) {
 			element.setFullName(node.toString().replace("]", ""));
-		}
+		} 
 		setModifiers(element, individual);
 
 	}

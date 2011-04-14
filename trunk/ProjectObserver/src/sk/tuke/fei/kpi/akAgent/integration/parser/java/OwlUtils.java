@@ -40,11 +40,8 @@ public class OwlUtils {
 	 */
 	private Query createQuery(String queryRequest) {
 		StringBuffer queryStr = new StringBuffer();
-		// Establish Prefixs
 		queryStr.append("PREFIX jscc: <").append(defaultNamespace).append("> ");
-		// Now add query
 		queryStr.append(queryRequest);
-		//logger.info(queryStr.toString());
 		return QueryFactory.create(queryStr.toString());
 	}
 
@@ -81,7 +78,7 @@ public class OwlUtils {
 
 	/**
 	 * Gets value from URI. 
-	 * Finds last occurence of separator and return string which starts after separator.
+	 * Finds last occurrence of separator and return string which starts after separator.
 	 * @param value URI
 	 * @param separator value separator
 	 * @return value

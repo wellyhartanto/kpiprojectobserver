@@ -42,12 +42,20 @@ public class Method extends BehavioralElement {
 			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method method = (sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method) object;
 			switch (alignStrategy) {
 			default:
+				try{
 				boolean value = /*getVisibility().toString().equalsIgnoreCase(method.getVisibility().toString()) &&*/ getName().equals(method.getName()) && returnType.endsWith(method.getReturnType())
 						&& getParams().size() == method.getParams().size();
 				if (value && !getParams().isEmpty()) {
 					return testParams(method);
 				} else {
 					return value;
+				}
+				} catch (NullPointerException ex){
+					System.out.println(getName());
+					System.out.println(method.getName());
+					System.out.println(getReturnType());
+					System.out.println(method.getReturnType());
+					System.out.println("--------------------------"+getParent());
 				}
 			}
 		}
