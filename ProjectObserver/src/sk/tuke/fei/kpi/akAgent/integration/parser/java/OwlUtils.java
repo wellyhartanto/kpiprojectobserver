@@ -52,20 +52,24 @@ public class OwlUtils {
 	 */
 	public List<Param> runParamQuery(String method) {
 		StringBuilder query = new StringBuilder("SELECT * WHERE {?param a jscc:Parameter; ");
-		query.append("jscc:hasName ?name;");
+		
 		query.append("jscc:hasType ?type; ");
 		query.append("jscc:isParameterOf <").append(method).append(">");
-		query.append(".}");
+		query.append(".");
+		query.append("OPTIONAL {?param jscc:hasName ?name}}");
+
 		Query q = createQuery(query.toString());
 		QueryExecution qexec = QueryExecutionFactory.create(q, model);
 		// Run Select
+		//if(method.contains("Question")){
+		//}
 		List<Param> result = new ArrayList<Param>();
 		try {
 			ResultSet response = qexec.execSelect();
 			while (response.hasNext()) {
 				QuerySolution soln = response.nextSolution();
 				Param param = new Param();
-				param.setName(soln.get("name").toString());
+				param.setName(soln.get("name")!=null ? soln.get("name").toString():"p");
 				param.setType(getValue(JavaParser.filterType(soln.get("type").toString()),'#'));
 				param.setOrder(Integer.parseInt(getValue(soln.get("param").toString(), '$')));
 				result.add(param);
