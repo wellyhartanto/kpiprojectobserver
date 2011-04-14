@@ -14,6 +14,7 @@ import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.BehavioralElement;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Class;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Constructor;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Element;
+import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Field;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Interface;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Method;
@@ -85,6 +86,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 		loadPackages();		
 		loadInterfaces();
 		loadClasses();
+		loadEnums();
 		loadMethods();
 		loadAttributes();
 		loadConstructors();
@@ -201,10 +203,48 @@ public class JavaParser implements Parser<Application>, Disposable {
 				clazz.setParent(parent);
 				classes.put(clazz.getFullName(), clazz);
 				setSuperClasses(clazz, individual);
-			} else if (!clazz.getName().equals(clazz.getFullName())) {
-				clazz.setExternal(true);
+			} else{
+				TypeElement par = null;
+				if (clazz.getFullName() != null &&clazz.getFullName().contains(".")) {
+					par = classes.get(clazz.getFullName().substring(0, clazz.getFullName().lastIndexOf('.')));
+				}
+				if (par != null) {
+					par.getClasses().add(clazz);
+					clazz.setParent(par);
+				} else if (!clazz.getName().equals(clazz.getFullName())) {
+					clazz.setExternal(true);
+				} else {
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Loads classes from ontology.
+	 */
+	private void loadEnums() {
+		for (Iterator<Individual> i = ontology.listIndividuals(new ResourceImpl(PREFIX + "Enum")); i.hasNext();) {
+			Individual individual = i.next();
+			Enum enumm = new sk.tuke.fei.kpi.akAgent.integration.metamodel.java.Enum();
+			setElement(enumm, individual);
+			Package parent = getPackage(enumm.getFullName(), '.');
+
+			if (parent != null) {
+				parent.getEnums().add(enumm);
+				enumm.setParent(parent);
 			} else {
-			}	
+				TypeElement par = null;
+				if (enumm.getFullName() != null) {
+					par = classes.get(enumm.getFullName().substring(0, enumm.getFullName().lastIndexOf('.')));
+				}
+				if (par != null) {
+					par.getEnums().add(enumm);
+					enumm.setParent(par);
+				} else if (!enumm.getName().equals(enumm.getFullName())) {
+					enumm.setExternal(true);
+				} else {
+				}
+			}
 		}
 	}
 
@@ -216,7 +256,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 
 
 	private String extranctFullNameFromUri(String uri) {
-		return uri.substring(uri.indexOf('#')+1,uri.lastIndexOf(':')).replace('$', '.');
+		return uri.substring(uri.indexOf('#')+1,uri.length());
 	}
 	/**
 	 * Load methods from ontology.
@@ -226,6 +266,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 			Individual individual = i.next();
 			Method method = new Method();
 			setElement(method, individual);
+			
 			if(method.getName()==null){
 				method.setName(extranctNameFromUri(individual.getURI()));
 			}
@@ -236,11 +277,12 @@ public class JavaParser implements Parser<Application>, Disposable {
 			if (returnType != null)
 				method.setReturnType(filterType(OwlUtils.getValue(returnType.toString(), '#')));
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isDefiningBehaviorOf"));
-			if (node != null) {
+			if (node != null) {				
 				TypeElement element = classes.get(OwlUtils.getValue(node.toString(), '#'));
 				if (element != null) {
 					method.setParent(element);
 					element.getMethods().add(method);
+				} else {
 				}
 			}
 			setParams(method);
@@ -257,9 +299,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 			element.setParams(utils.runParamQuery(PREFIX + element.getFullName()));
 		} else {
 			element.setParams(new ArrayList<Param>());
-		}
-	
-		
+		}		
 	}
 
 	/**
@@ -270,6 +310,7 @@ public class JavaParser implements Parser<Application>, Disposable {
 			Individual individual = i.next();
 			Field field = new Field();
 			setElement(field, individual);
+			
 			RDFNode node = individual.getPropertyValue(new PropertyImpl(PREFIX + "isFieldOf"));
 			if (node != null) {
 				TypeElement element = classes.get(OwlUtils.getValue(node.toString(), '#'));
@@ -377,6 +418,8 @@ public class JavaParser implements Parser<Application>, Disposable {
 	public static String filterType(String value){
 		if(value !=null && value.contains("$")){
 			return value.substring(value.indexOf('$')+1,value.length());
+		} else if(value!=null && value.contains("!")) {
+			return value.replaceFirst("!", "<").replaceFirst("!", ">");
 		} else {
 			return value;
 		}
