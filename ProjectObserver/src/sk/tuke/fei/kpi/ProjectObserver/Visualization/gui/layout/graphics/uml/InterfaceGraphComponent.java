@@ -1,6 +1,9 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
+import java.awt.Color;
 import java.awt.Component;
+
+import javax.swing.BorderFactory;
 
 import org.w3c.dom.Document;
 
@@ -12,7 +15,7 @@ import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
- 
+
 public class InterfaceGraphComponent extends mxGraphComponent {
 
 	/**
@@ -36,10 +39,12 @@ public class InterfaceGraphComponent extends mxGraphComponent {
 		Document doc = mxUtils.loadDocument(InterfaceGraphComponent.class.getResource(
 				"/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/layout/graphics/default-style.xml").toString());
 		codec.decode(doc.getDocumentElement(), graph.getStylesheet());
-		getViewport().setOpaque(false);
+		getViewport().setOpaque(true);
 		graph.setView(graphView);
 		graph.setCellsEditable(false);
+		setBorder(BorderFactory.createEmptyBorder());
 
+		getViewport().setBackground(Color.WHITE);
 
 	}
 

@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
+import net.miginfocom.swing.MigLayout;
+
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
- 
+
 public class PackagePanel extends JPanel {
 	/**
 	 * 
@@ -42,7 +46,7 @@ public class PackagePanel extends JPanel {
 		graph.getModel().beginUpdate();
 		try {
 
-			cell = (mxCell) graph.insertVertex(parent, null, "", 50, 20, 200, 200);
+			cell = (mxCell) graph.insertVertex(parent, null, "", 150, 20, 200, 200);
 
 		} finally {
 			graph.getModel().endUpdate();
@@ -51,12 +55,15 @@ public class PackagePanel extends JPanel {
 		double height = graphComponent.getGraphControl().getComponent(0).getPreferredSize().getHeight();
 		double width = graphComponent.getGraphControl().getComponent(0).getPreferredSize().getWidth();
 
-		graph.resizeCell(cell, new mxRectangle(50, 20, width, height));
+		graph.resizeCell(cell, new mxRectangle(150, 20, width, height));
+		
+		
+		setLayout(new BorderLayout(0,0));
+		
+		if (umlPackage != null) {
+			add(graphComponent, BorderLayout.CENTER);
 
-		setLayout(new BorderLayout());
-
-		add(graphComponent, BorderLayout.CENTER);
-
+		}
 		repaint();
 	}
 }

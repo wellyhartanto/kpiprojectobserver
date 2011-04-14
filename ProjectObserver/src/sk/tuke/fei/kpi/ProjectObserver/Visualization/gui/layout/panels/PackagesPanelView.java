@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,7 +30,9 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 
 	public PackagesPanelView(List<Package> packages) {
 		setLayout(new MigLayout("fill,insets 0"));
-		add(new JScrollPane(createPackagesTable(packages)), "grow");
+		JScrollPane sp =new JScrollPane(createPackagesTable(packages));
+		sp.setBorder(BorderFactory.createEmptyBorder());
+		add(sp, "grow");
 	}
 
 	@Override
@@ -53,7 +56,7 @@ public class PackagesPanelView extends JPanel implements PackagesPanelDisplay {
 		packagesTable.getSelectionModel().addListSelectionListener(listener);
 		packagesTable.getColumnModel().getSelectionModel().addListSelectionListener(listener);
 		packagesTable.setDefaultRenderer(Object.class, new MyTableCellRenderer());
-
+		
 		packagesTable.addMouseListener(new MouseAdapter() {
 
 			@Override

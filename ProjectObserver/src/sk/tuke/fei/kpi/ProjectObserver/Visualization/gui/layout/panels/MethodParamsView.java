@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,7 +29,9 @@ public class MethodParamsView extends JPanel implements MethodParamsDisplay {
 	private ParamsTableModel paramsTableModel ;
 	public MethodParamsView(List<Param> parameters) {
 		setLayout(new MigLayout("fill,insets 0"));
-		add(new JScrollPane(createParamsTable(parameters)), "grow");
+		JScrollPane sp =new JScrollPane(createParamsTable(parameters));
+		sp.setBorder(BorderFactory.createEmptyBorder());
+		add(sp, "grow");
 	}
 
 	@Override

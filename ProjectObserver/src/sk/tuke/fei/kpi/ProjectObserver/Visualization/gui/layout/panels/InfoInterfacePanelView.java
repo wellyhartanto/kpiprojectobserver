@@ -8,6 +8,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jdesktop.swingx.JXLabel;
+
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.InfoJPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
@@ -23,29 +25,23 @@ public class InfoInterfacePanelView extends InfoJPanel implements InfoPanelDispl
 
 		setLayout(new MigLayout("fillx"));
 
-		JLabel name = new JLabel(Messages.getMessage("info.interface") + " "
-				+ in.getName());
-	//	name.setFont(CommonFonts.tahoma14);
+		JLabel name = new JLabel(Messages.getMessage("info.interface") + " " + in.getName());
+		// name.setFont(CommonFonts.tahoma14);
 		add(name, "growx,wrap");
 
 		if (in.getImplemented() != null && !in.getImplemented().isEmpty()) {
-			add(new JLabel("<html>"
-					+ Messages.getMessage("info.implementedinterfaces")
-					+ StringUtil.prepareArrayToString(in.getImplemented())
-					+ "</html>"), "growx,wrap");
+			JXLabel jx = new JXLabel(Messages.getMessage("info.implementedinterfaces") + StringUtil.prepareArrayToString(in.getImplemented()));
+			jx.setLineWrap(true);
+			add(jx, "growx,wrap");
 		}
 
 		if (!in.getFields().isEmpty()) {
-			JLabel fieldsNumber = new JLabel(String.format(Messages
-					.getMessage("info.numberoffields"), String.valueOf(in
-					.getFields().size())));
+			JLabel fieldsNumber = new JLabel(String.format(Messages.getMessage("info.numberoffields"), String.valueOf(in.getFields().size())));
 			add(fieldsNumber, "growx,wrap");
 		}
 
 		if (!in.getMethods().isEmpty()) {
-			JLabel methodsNumber = new JLabel(String.format(Messages
-					.getMessage("info.numberofmethods"), String.valueOf(in
-					.getMethods().size())));
+			JLabel methodsNumber = new JLabel(String.format(Messages.getMessage("info.numberofmethods"), String.valueOf(in.getMethods().size())));
 			add(methodsNumber, "growx,wrap");
 		}
 

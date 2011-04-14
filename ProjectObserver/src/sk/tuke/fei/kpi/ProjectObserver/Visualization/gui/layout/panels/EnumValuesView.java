@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,7 +28,9 @@ public class EnumValuesView extends JPanel implements EnumValuesDisplay {
 
 	public EnumValuesView(String[] values) {
 		setLayout(new MigLayout("fill,insets 0"));
-		add(new JScrollPane(createEnumValuesTable(values)), "grow");
+		JScrollPane sp =new JScrollPane(createEnumValuesTable(values));
+		sp.setBorder(BorderFactory.createEmptyBorder());
+		add(sp, "grow");
 	}
 
 	@Override

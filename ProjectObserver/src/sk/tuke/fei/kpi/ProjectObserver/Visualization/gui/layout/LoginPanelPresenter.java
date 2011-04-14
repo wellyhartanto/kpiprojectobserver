@@ -48,7 +48,7 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			public void actionPerformed(ActionEvent e) {
 
 				Languages selectedLanguage = (Languages) display.getSelectedLanguage();
-//				Languages.setLanguage(selectedLanguage.ordinal());
+				// Languages.setLanguage(selectedLanguage.ordinal());
 
 				Preferences p = Preferences.userNodeForPackage(LoginPanelPresenter.class);
 				p.putInt(CommonConstants.DEFAULT_LANGUAGE, selectedLanguage.ordinal());
@@ -126,15 +126,10 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Project selectedProject = display.getSelectedProject();
-
 				display.removeProjectFromList(selectedProject);
-
 				if (selectedProject != null) {
-
 					ProjectService.deleteProject(selectedProject);
-
 				}
-
 			}
 		});
 
@@ -144,12 +139,11 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.showOpenDialog(display.asComponent());
-
-				ProjectService.importProject(fileChooser.getSelectedFile());
-
-				display.refreshTableModel();
-
+				int ret = fileChooser.showOpenDialog(display.asComponent());
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					ProjectService.importProject(fileChooser.getSelectedFile());
+					display.refreshTableModel();
+				}
 			}
 		});
 
@@ -162,12 +156,12 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				fileChooser.setMultiSelectionEnabled(false);
 				fileChooser.setSelectedFile(new File(display.getSelectedProject().getName()));
 
-				fileChooser.showSaveDialog(display.asComponent());
-
-				File file = fileChooser.getSelectedFile();
-				ProjectService.exportProject(display.getSelectedProject(), file);
+				int ret = fileChooser.showSaveDialog(display.asComponent());
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					ProjectService.exportProject(display.getSelectedProject(), file);
+				}
 			}
-
 		});
 
 		display.setLoadSourceAction(new ActionListener() {
@@ -177,9 +171,11 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.showOpenDialog(display.asComponent());
-				sourceCodeFile = fileChooser.getSelectedFile();
-				display.setSourceCodeFileLabel(sourceCodeFile.getName());
+				int ret = fileChooser.showOpenDialog(display.asComponent());
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					sourceCodeFile = fileChooser.getSelectedFile();
+					display.setSourceCodeFileLabel(sourceCodeFile.getName());
+				}
 			}
 		});
 
@@ -189,15 +185,17 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.showOpenDialog(display.asComponent());
-				umlFile = fileChooser.getSelectedFile();
+				int ret = fileChooser.showOpenDialog(display.asComponent());
 
-				display.setUmlFileLabel(umlFile.getName());
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					umlFile = fileChooser.getSelectedFile();
+					display.setUmlFileLabel(umlFile.getName());
+				}
 			}
 		});
 
 		display.setKpiHyperlinkAction(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String url = "http://kpi.fei.tuke.sk";
@@ -205,10 +203,10 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 					java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}				
+				}
 			}
 		});
-		
+
 	}
 
 	private Frame findParentFrame() {

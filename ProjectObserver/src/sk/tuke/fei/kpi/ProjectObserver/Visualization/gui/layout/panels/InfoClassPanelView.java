@@ -43,8 +43,9 @@ public class InfoClassPanelView extends InfoJPanel implements InfoPanelDisplay {
 		}
 
 		if (cl.getImplemented() != null && !cl.getImplemented().isEmpty()) {
-			add(new JLabel("<html>" + Messages.getMessage("info.implementedinterfaces") + StringUtil.prepareArrayToString(cl.getImplemented()) + "</html>"),
-					"growx,wrap");
+			JXLabel jx = new JXLabel(Messages.getMessage("info.implementedinterfaces") + StringUtil.prepareArrayToString(cl.getImplemented()));
+			jx.setLineWrap(true);
+			add(jx, "growx,wrap");
 		}
 
 		if (cl.getConstructors() != null) {

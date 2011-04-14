@@ -16,13 +16,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package;
- 
+
 /**
  * @author MV
  * 
@@ -32,7 +33,10 @@ public class PackagePanelRenderer extends JPanel {
 	private static final long serialVersionUID = 2106746763664760745L;
 
 	public PackagePanelRenderer(sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlPackage) {
-
+		if (umlPackage == null) {
+			return;
+		}
+		
 		setLayout(new MigLayout("insets 3", "", "[]0[]0[]"));
 		setOpaque(false);
 

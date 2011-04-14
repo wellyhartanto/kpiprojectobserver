@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,7 +30,9 @@ public class InterfacesPanelView extends JPanel implements InterfacesPanelDispla
 
 	public InterfacesPanelView(List<Interface> interfaces) {
 		setLayout(new MigLayout("fill,insets 0"));
-		add(new JScrollPane(createInterfacesTable(interfaces)), "grow");
+		JScrollPane sp =new JScrollPane(createInterfacesTable(interfaces));
+		sp.setBorder(BorderFactory.createEmptyBorder());
+		add(sp, "grow");
 	}
 
 	@Override
