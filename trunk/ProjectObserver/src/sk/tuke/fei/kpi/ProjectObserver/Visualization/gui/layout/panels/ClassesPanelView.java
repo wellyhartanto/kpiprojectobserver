@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,7 +32,9 @@ public class ClassesPanelView extends JPanel implements ClassesPanelDisplay {
 	
 	public ClassesPanelView(List<Class> classes) {
 		setLayout(new MigLayout("fill,insets 0"));
-		add(new JScrollPane(createClassesTable(classes)), "grow");
+		JScrollPane sp =new JScrollPane(createClassesTable(classes));
+		sp.setBorder(BorderFactory.createEmptyBorder());
+		add(sp, "grow");
 	}
 
 	@Override

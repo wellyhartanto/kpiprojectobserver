@@ -440,11 +440,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 			((Package) nodeInfo).getFullyQualifiedName());
 
-			if (umlpackage != null) {
+		//	if (umlpackage != null) {
 				umlPackagePanel = new PackagePanel(umlpackage);
 				umlPackagePanel.setVisible(true);
 				rightPanel.setBottomComponent(umlPackagePanel);
-			}
+	//		}
 
 		}
 		if (nodeInfo instanceof Class) {
@@ -499,11 +499,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping()
 					.getClass(((Class) nodeInfo).getFullyQualifiedName());
 
-			if (umlclass != null) {
+//			if (umlclass != null) {
 				umlClassPanel = new ClassPanel(umlclass, difference);
 				umlClassPanel.setVisible(true);
 				rightPanel.setBottomComponent(umlClassPanel);
-			}
+//			}
 
 		}
 		if (nodeInfo instanceof Interface) {

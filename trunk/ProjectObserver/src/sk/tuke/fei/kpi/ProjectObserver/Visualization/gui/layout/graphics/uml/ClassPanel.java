@@ -1,7 +1,8 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
- 
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 
 import javax.swing.JPanel;
 
@@ -46,7 +47,7 @@ public class ClassPanel extends JPanel {
 		graph.getModel().beginUpdate();
 		try {
 
-			cell = (mxCell) graph.insertVertex(parent, null, "", 50, 20, 200, 200);
+			cell = (mxCell) graph.insertVertex(parent, null, "", 150, 20, 200, 200);
 
 		} finally {
 			graph.getModel().endUpdate();
@@ -55,11 +56,14 @@ public class ClassPanel extends JPanel {
 		double height = graphComponent.getGraphControl().getComponent(0).getPreferredSize().getHeight();
 		double width = graphComponent.getGraphControl().getComponent(0).getPreferredSize().getWidth();
 
-		graph.resizeCell(cell, new mxRectangle(50, 20, width, height));
+		graph.resizeCell(cell, new mxRectangle(150, 20, width, height));
 
 		setLayout(new BorderLayout());
+		if (umlclass != null) {
+			add(graphComponent, BorderLayout.CENTER);
+		}
+	
 
-		add(graphComponent, BorderLayout.CENTER);
 		repaint();
 	}
 }

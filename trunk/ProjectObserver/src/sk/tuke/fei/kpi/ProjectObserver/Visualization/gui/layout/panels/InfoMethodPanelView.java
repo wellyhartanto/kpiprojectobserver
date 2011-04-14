@@ -8,6 +8,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jdesktop.swingx.JXLabel;
+
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.InfoJPanel;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
@@ -25,14 +27,15 @@ public class InfoMethodPanelView extends InfoJPanel implements InfoPanelDisplay 
 
 		JLabel name = new JLabel(Messages.getMessage("info.method") + " "
 				+ me.getName());
-	//	name.setFont(CommonFonts.tahoma14);
 		add(name, "growx,wrap");
 
 		String fullnametext = StringUtil.convertMethodToString(me);
-		JLabel fullname = new JLabel("<html>" + fullnametext + "</html>");
-	//	fullname.setFont(CommonFonts.tahoma14);
+		JXLabel fullname = new JXLabel( fullnametext );
+		fullname.setLineWrap(true);
 		add(fullname, "growx,wrap");
-
+		
+		
+		
 		/*
 		 * if (!me.getParams().isEmpty()) { JLabel paramsNumber = new
 		 * JLabel(String.format(Messages .getMessage("info.numberofparams"),

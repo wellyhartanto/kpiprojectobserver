@@ -1,6 +1,10 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
+import java.awt.Color;
 import java.awt.Component;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 import org.w3c.dom.Document;
 
@@ -39,17 +43,17 @@ public class ClassGraphComponent extends mxGraphComponent {
 		Document doc = mxUtils.loadDocument(ClassGraphComponent.class.getResource(
 				"/sk/tuke/fei/kpi/ProjectObserver/Visualization/gui/layout/graphics/default-style.xml").toString());
 		codec.decode(doc.getDocumentElement(), graph.getStylesheet());
-		getViewport().setOpaque(false);
+		getViewport().setOpaque(true);
 		graph.setView(graphView);
-
 		graph.setCellsEditable(false);
-
 		graph.setConnectableEdges(false);
-		
+		setBorder(BorderFactory.createEmptyBorder());
+		getViewport().setBackground(Color.WHITE);
 	}
 
 	public Component[] createComponents(mxCellState state) {
 		if (getGraph().getModel().isVertex(state.getCell())) {
+
 			return new Component[] { new ClassPanelRenderer(umlClass, difference) };
 		}
 

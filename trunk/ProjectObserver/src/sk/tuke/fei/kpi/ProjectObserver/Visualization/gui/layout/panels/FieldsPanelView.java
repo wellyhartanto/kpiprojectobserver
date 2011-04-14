@@ -3,6 +3,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,7 +26,9 @@ public class FieldsPanelView extends JPanel implements FieldsPanelDisplay {
 
 	public FieldsPanelView(List<Field> fields) {
 		setLayout(new MigLayout("fill,insets 0"));
-		add(new JScrollPane(createFieldsTable(fields)), "grow");
+		JScrollPane sp =new JScrollPane(createFieldsTable(fields));
+		sp.setBorder(BorderFactory.createEmptyBorder());
+		add(sp, "grow");
 	}
 
 	@Override

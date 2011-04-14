@@ -3,6 +3,7 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.panels;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,7 +26,9 @@ public class MethodsPanelView extends JPanel implements MethodsPanelDisplay {
 
 	public MethodsPanelView(List<Method> methods) {
 		setLayout(new MigLayout("fill,insets 0"));
-		add(new JScrollPane(createMethodsTable(methods)), "grow");
+		JScrollPane sp =new JScrollPane(createMethodsTable(methods));
+		sp.setBorder(BorderFactory.createEmptyBorder());
+		add(sp, "grow");
 	}
 
 	@Override

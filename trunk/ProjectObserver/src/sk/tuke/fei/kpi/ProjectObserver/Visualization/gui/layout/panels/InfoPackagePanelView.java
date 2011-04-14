@@ -23,7 +23,7 @@ public class InfoPackagePanelView extends InfoJPanel implements InfoPanelDisplay
 		setLayout(new MigLayout("fillx"));
 
 		JLabel name = new JLabel(Messages.getMessage("info.package") + " "
-				+ pa.getName());
+				+ pa.getFullName());
 	//	name.setFont(CommonFonts.tahoma14);
 		add(name, "growx,wrap");
 

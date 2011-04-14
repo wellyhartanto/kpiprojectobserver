@@ -8,7 +8,7 @@
  * this file please contact info (at) jgraph (dot) com.
  */
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
- 
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -33,7 +33,9 @@ public class ClassPanelRenderer extends JPanel {
 	private static final long serialVersionUID = 2106746763664760745L;
 
 	public ClassPanelRenderer(sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class umlClass, Difference difference) {
-
+		if (umlClass == null) {
+			return;
+		}
 		setLayout(new MigLayout("insets 5", "", "[]0[]0[]"));
 		setOpaque(false);
 

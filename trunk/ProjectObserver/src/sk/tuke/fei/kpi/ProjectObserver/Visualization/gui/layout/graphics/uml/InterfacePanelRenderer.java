@@ -28,12 +28,13 @@ import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method;
  * 
  */
 public class InterfacePanelRenderer extends JPanel {
- 
+
 	private static final long serialVersionUID = 2106746763664760745L;
 
-	public InterfacePanelRenderer(
-			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlInterface) {
-
+	public InterfacePanelRenderer(sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlInterface) {
+		if (umlInterface == null) {
+			return;
+		}
 		setLayout(new MigLayout("insets 3", "", "[]0[]0[]"));
 		setOpaque(false);
 
@@ -53,8 +54,7 @@ public class InterfacePanelRenderer extends JPanel {
 		for (Field field : umlInterface.getFields()) {
 
 			JLabel fieldLbl = new JLabel();
-			fieldLbl.setText(field.getVisibility() + " " + field.getType()
-					+ " " + field.getName());
+			fieldLbl.setText(field.getVisibility() + " " + field.getType() + " " + field.getName());
 			add(fieldLbl, "wrap");
 		}
 		add(separator1, "wrap,span,growx");
@@ -63,8 +63,7 @@ public class InterfacePanelRenderer extends JPanel {
 		for (Method method : umlInterface.getMethods()) {
 
 			JLabel methodLbl = new JLabel();
-			methodLbl.setText(method.getVisibility() + " "
-					+ method.getReturnType() + " " + method.getName());
+			methodLbl.setText(method.getVisibility() + " " + method.getReturnType() + " " + method.getName());
 
 			add(methodLbl, "wrap");
 
