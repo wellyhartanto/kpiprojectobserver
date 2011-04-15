@@ -3,7 +3,6 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class CommonFonts {
@@ -107,4 +106,10 @@ public class CommonFonts {
 		Font f = getLucidaGrande().deriveFont(11f);
 		return f;
 	}
+	public static Font getAboutTextFont() {
+		Font f = getLucidaGrande().deriveFont(12f);
+		return f;
+	}
+	
+	
 }

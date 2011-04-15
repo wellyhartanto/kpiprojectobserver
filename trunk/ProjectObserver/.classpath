@@ -24,20 +24,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jena/stax-api-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/wstx-asl-3.2.9.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jena/xercesImpl-2.7.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-cli-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-core-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-datatypes-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-dig-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-el-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-explanation-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-jena-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-modularity-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-owlapi-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-owlapiv3-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-pellint-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-query-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-rules-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pellet/pellet-test-src.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-looks-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-common-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/syntheticaWhiteVision.jar"/>

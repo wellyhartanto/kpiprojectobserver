@@ -1,13 +1,10 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
 
 import net.miginfocom.swing.MigLayout;
-
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -58,10 +55,14 @@ public class PackagePanel extends JPanel {
 		graph.resizeCell(cell, new mxRectangle(150, 20, width, height));
 		
 		
-		setLayout(new BorderLayout(0,0));
+		setLayout(new MigLayout("insets 0,fill","","[growprio 50][]"));
+//		JLabel title = new JLabel(Messages.getMessage("uml.title"));
+//		title.setOpaque(false);
+//		title.setFont(CommonFonts.getTableHeaderFont());
+//		add(title,"gapleft 4,gaptop 4,wrap");
 		
 		if (umlPackage != null) {
-			add(graphComponent, BorderLayout.CENTER);
+			add(graphComponent, "grow");
 
 		}
 		repaint();
