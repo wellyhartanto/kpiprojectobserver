@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
 public class ExportDialogView extends JDialog implements ExportDialogDisplay {
@@ -48,9 +49,14 @@ public class ExportDialogView extends JDialog implements ExportDialogDisplay {
 		missing = new JRadioButton(Messages.getMessage("dialog.export.missing"));
 		alluml = new JRadioButton(Messages.getMessage("dialog.export.alluml"));
 		ButtonGroup bg = new ButtonGroup();
-
+		
 		missing.setSelected(true);
 
+		all.setFont(CommonFonts.getNormalTextFont());
+		extra.setFont(CommonFonts.getNormalTextFont());
+		missing.setFont(CommonFonts.getNormalTextFont());
+		alluml.setFont(CommonFonts.getNormalTextFont());
+		
 		bg.add(missing);
 		bg.add(extra);
 		bg.add(all);
@@ -60,6 +66,9 @@ public class ExportDialogView extends JDialog implements ExportDialogDisplay {
 		cancelButton = new JButton(Messages.getMessage("dialog.cancel"));
 		okButton.setMinimumSize(new Dimension(75, okButton.getHeight()));
 		cancelButton.setMinimumSize(okButton.getPreferredSize());
+		
+		okButton.setFont(CommonFonts.getNormalTextFont());
+		cancelButton.setFont(CommonFonts.getNormalTextFont());
 		
 		getRootPane().setDefaultButton(okButton);
 

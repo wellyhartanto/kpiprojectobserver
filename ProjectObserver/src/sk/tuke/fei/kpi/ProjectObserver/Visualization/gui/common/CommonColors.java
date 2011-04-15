@@ -25,7 +25,7 @@ public class CommonColors {
 	//226,236,249
 	public static Color LOGIN_ABOUT_PANEL_COLOR =new Color(255,255,255);
 	
-	public static Color LOGIN_ABOUT_HYPERLINK_COLOR =new Color(198,142,23);
+	public static Color HYPERLINK_COLOR =new Color(30,144,255);
 
 	
 	public static Color MAIN_BACKGROUND_COLOR = new Color(195,195,195);

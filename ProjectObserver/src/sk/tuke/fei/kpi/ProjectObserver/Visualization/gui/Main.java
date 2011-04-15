@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.LoginPanelPresenter;
 
 public class Main {
@@ -48,8 +49,9 @@ public class Main {
 				UIManager.put("nimbusSelectionBackground", new Color(75,149,229));
 //				UIManager.put("text", new Color(0,0,0));
 
-//				
-				
+				UIManager.put("ToolTip.font", CommonFonts.getToolTipFont());
+				UIManager.put("Label.font",CommonFonts.getNormalTextFont());
+
 				
 //				UIManager.setLookAndFeel(new com.jgoodies.looks.plastic.Plastic3DLookAndFeel());
 //				UIManager.setLookAndFeel( new com.nilo.plaf.nimrod.NimRODLookAndFeel());

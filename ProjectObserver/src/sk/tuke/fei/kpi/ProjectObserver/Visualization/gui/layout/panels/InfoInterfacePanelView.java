@@ -51,7 +51,7 @@ public class InfoInterfacePanelView extends InfoJPanel implements InfoPanelDispl
 				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
-
+		name.setFont(CommonFonts.getInfoLabelFont());
 	}
 
 	@Override

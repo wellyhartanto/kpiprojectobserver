@@ -83,7 +83,7 @@ public class InfoClassPanelView extends InfoJPanel implements InfoPanelDisplay {
 				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
-
+		name.setFont(CommonFonts.getInfoLabelFont());
 	}
 
 	@Override

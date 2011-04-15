@@ -22,13 +22,11 @@ public class InfoFieldPanelView extends InfoJPanel implements InfoPanelDisplay {
 
 		setLayout(new MigLayout("fillx"));
 
-		JLabel name = new JLabel(Messages.getMessage("info.field") + " "
-				+ fl.getName());
-	//	name.setFont(CommonFonts.tahoma14);
+		JLabel name = new JLabel(Messages.getMessage("info.field") + " " + fl.getName());
+		// name.setFont(CommonFonts.tahoma14);
 		add(name, "growx,wrap");
 
-		add(new JLabel(fl.getVisibility() + " " + fl.getType() + " "
-				+ fl.getName()), "growx,wrap");
+		add(new JLabel(fl.getVisibility() + " " + fl.getType() + " " + fl.getName()), "growx,wrap");
 
 		List<Component> components = Arrays.asList(getComponents());
 		for (Component component : components) {
@@ -36,6 +34,7 @@ public class InfoFieldPanelView extends InfoJPanel implements InfoPanelDisplay {
 				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
+		name.setFont(CommonFonts.getInfoLabelFont());
 	}
 
 	@Override

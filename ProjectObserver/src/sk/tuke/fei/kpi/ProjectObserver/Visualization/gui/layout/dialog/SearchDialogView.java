@@ -28,6 +28,7 @@ import javax.swing.text.Highlighter;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.akAgent.integration.Project;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
@@ -82,8 +83,15 @@ public class SearchDialogView extends JDialog implements DocumentListener,
 		status = new JLabel();
 		jLabel1 = new JLabel();
 
+		entry.setFont(CommonFonts.getNormalTextFont());
+		status.setFont(CommonFonts.getNormalTextFont());
+		jLabel1.setFont(CommonFonts.getNormalTextFont());
+		
 		okButton = new JButton(Messages.getMessage("dialog.ok"));
 		cancelButton = new JButton(Messages.getMessage("dialog.cancel"));
+		
+		okButton.setFont(CommonFonts.getNormalTextFont());
+		cancelButton.setFont(CommonFonts.getNormalTextFont());
 
 		okButton.setMinimumSize(new Dimension(75, okButton.getHeight()));
 		cancelButton.setMinimumSize(new Dimension(75, cancelButton.getHeight()));
@@ -94,6 +102,8 @@ public class SearchDialogView extends JDialog implements DocumentListener,
 		setTitle(Messages.getMessage("dialog.search.title"));
 
 		list = new JList();
+		list.setFont(CommonFonts.getTableContentFont());
+		
 		jScrollPane1 = new JScrollPane(list);
 		jLabel1.setText(Messages.getMessage("dialog.search.searchtext"));
 

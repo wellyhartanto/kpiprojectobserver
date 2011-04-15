@@ -52,7 +52,7 @@ public class InfoMethodPanelView extends InfoJPanel implements InfoPanelDisplay 
 				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
-
+		name.setFont(CommonFonts.getInfoLabelFont());
 	}
 
 	@Override
