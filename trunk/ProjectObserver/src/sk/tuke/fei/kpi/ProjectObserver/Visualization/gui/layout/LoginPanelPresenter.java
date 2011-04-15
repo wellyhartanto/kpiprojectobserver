@@ -20,6 +20,8 @@ import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Languages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ProgressDialog;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.AboutDialogView;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.HelpDialogView;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.service.ProjectService;
 import sk.tuke.fei.kpi.akAgent.integration.Project;
@@ -196,19 +198,20 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 			}
 		});
 
-		display.setKpiHyperlinkAction(new ActionListener() {
+		display.setHelpAction(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String url = "http://kpi.fei.tuke.sk";
-				try {
-					java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				new HelpDialogView().setVisible(true);
 			}
 		});
+		display.setAboutAction(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AboutDialogView().setVisible(true);
+			}
+		});
 	}
 
 	private Frame findParentFrame() {

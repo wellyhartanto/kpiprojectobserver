@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.jws.Oneway;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -20,22 +21,22 @@ public class MainFrame extends JFrame {
 
 	private static MainFrame mainFrame;
 	private JComponent actualcomponent;
-	
+
 	private JScrollPane scrollPane;
 
 	public MainFrame() {
-		
-		
-		//setUndecorated(true);
-		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setUndecorated(true);
+
 		setSize(1000, 700);
 		setMinimumSize(new Dimension(760, 600));
-		
-//		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
-		
+
+		// ImageIcon frameIcon = new
+		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
+		// "icon.png"));
+
 		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icondesktop.png"));
 
-		
 		setIconImage(frameIcon.getImage());
 		setTitle("Project Observer");
 
@@ -53,7 +54,6 @@ public class MainFrame extends JFrame {
 			}
 		});
 
-		
 		scrollPane = new JScrollPane();
 	}
 
@@ -68,26 +68,22 @@ public class MainFrame extends JFrame {
 	}
 
 	public void setPanel(JComponent jComponent) {
-		
-//		remove(scrollPane);
-//		actualcomponent = jComponent;
-//		
-//		scrollPane = new JScrollPane(jComponent);
-//		if(jComponent instanceof MainPanelDisplay){
-//		scrollPane.setName("scrollpanemain");
-//		}
-//		setContentPane(scrollPane);
-//		setVisible(true);
-		
-		
-		
+
+		// remove(scrollPane);
+		// actualcomponent = jComponent;
+		//
+		// scrollPane = new JScrollPane(jComponent);
+		// if(jComponent instanceof MainPanelDisplay){
+		// scrollPane.setName("scrollpanemain");
+		// }
+		// setContentPane(scrollPane);
+		// setVisible(true);
+
 		remove(actualcomponent);
 		actualcomponent = jComponent;
 		add(jComponent, "span,growx,growy,top");
 		setVisible(true);
 		actualcomponent.setVisible(true);
-		
-		  
 
 	}
 
