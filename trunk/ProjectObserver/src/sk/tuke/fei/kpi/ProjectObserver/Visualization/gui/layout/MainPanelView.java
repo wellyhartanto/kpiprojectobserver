@@ -216,8 +216,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		exportHl.setOpaque(false);
 
 		actions.add(changeProjectHl, "gapleft 10");
-		actions.add(searchHl);
 		actions.add(exportHl);
+		actions.add(searchHl);
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
@@ -225,7 +225,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 
 		rightPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		rightPanel.setName("rightPanel");
-		rightPanel.setDividerSize(1);
+		rightPanel.setDividerSize(2);
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setName("tabbedPane");
@@ -606,6 +606,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		if ((nodeInfo instanceof Package) || (nodeInfo instanceof Class) || (nodeInfo instanceof Interface)) {
 			restoreWindowPrefs();
 		}
+		
+		
 		repaint();
 
 	}
@@ -790,6 +792,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			sessionStorage.restore(this, TABLE_PROPERTIES_FILE);
 		} catch (Exception e1) {
 		}
+		
+		if(tabbedPane.getTabCount()>0){
+			tabbedPane.setSelectedIndex(0);
+		}
+		
 	}
 
 	@Override

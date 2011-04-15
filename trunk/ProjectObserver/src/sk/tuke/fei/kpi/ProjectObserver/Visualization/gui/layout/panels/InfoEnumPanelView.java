@@ -31,7 +31,7 @@ public class InfoEnumPanelView extends InfoJPanel implements InfoPanelDisplay {
 				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
-
+		name.setFont(CommonFonts.getInfoLabelFont());
 	}
 
 	@Override

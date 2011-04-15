@@ -113,7 +113,6 @@ public class InfoApplicationPanelView extends JPanel implements
 				component.setFont(CommonFonts.getNormalTextFont());
 			}
 		}
-
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui;
 
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -28,6 +29,7 @@ public class MainFrame extends JFrame {
 		//setUndecorated(true);
 		
 		setSize(1000, 700);
+		setMinimumSize(new Dimension(760, 600));
 		
 //		ImageIcon frameIcon = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "icon.png"));
 		

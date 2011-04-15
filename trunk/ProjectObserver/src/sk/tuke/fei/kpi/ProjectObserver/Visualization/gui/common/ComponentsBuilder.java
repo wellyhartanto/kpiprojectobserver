@@ -44,7 +44,7 @@ public class ComponentsBuilder {
 
 		JXHyperlink hyperlink = new JXHyperlink();
 		hyperlink.setText(text);
-		hyperlink.setForeground(CommonColors.LOGIN_ABOUT_HYPERLINK_COLOR);
+		hyperlink.setForeground(CommonColors.HYPERLINK_COLOR);
 		hyperlink.setFont(CommonFonts.getHyperlinkFont());
 		return hyperlink;
 

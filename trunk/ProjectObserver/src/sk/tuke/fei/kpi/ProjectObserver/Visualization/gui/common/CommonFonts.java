@@ -98,4 +98,13 @@ public class CommonFonts {
 		Font f = getLucidaGrandeBold().deriveFont(12f);
 		return f;
 	}
+	
+	public static Font getInfoLabelFont() {
+		Font f = getLucidaGrandeBold().deriveFont(18f);
+		return f;
+	}
+	public static Font getToolTipFont() {
+		Font f = getLucidaGrande().deriveFont(11f);
+		return f;
+	}
 }
