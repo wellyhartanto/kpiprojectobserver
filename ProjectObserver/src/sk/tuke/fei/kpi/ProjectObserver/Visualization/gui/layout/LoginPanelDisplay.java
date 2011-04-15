@@ -24,7 +24,10 @@ public interface LoginPanelDisplay extends DisplayComponent {
 
 	void setLoadUmlAction(ActionListener actionListener);
 	
-	void setKpiHyperlinkAction(ActionListener actionListener);
+	void setHelpAction(ActionListener actionListener);
+	
+	void setAboutAction(ActionListener actionListener);
+	
 
 	boolean isNewProjectCorrect(File umlFile, File sourceCodeFile);
 

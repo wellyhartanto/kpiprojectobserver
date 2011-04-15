@@ -98,7 +98,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	private JXHyperlink sourceQuestionHl;
 	private JXHyperlink umlQuestionHl;
 
-	private JXHyperlink copyrightHyperlink;
+	
 
 
 	String descriptionBackgroundText;
@@ -265,7 +265,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		infoHl.setIcon(iconInformation);
 		infoHl.setSelected(false);
 		
-		copyrightHyperlink = ComponentsBuilder.createLoginAboutHyperlink(Messages.getMessage("loginpanel.copyright"));
+	
 
 		setComponentsPosition();
 	}
@@ -351,18 +351,6 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	//	loginPanel.setBorder(BorderFactory.createTitledBorder(""));
 		
 
-		JPanel aboutPanel = new JPanel(new MigLayout("insets 5"));
-		// aboutPanel.setBackground(CommonColors.LOGIN_ABOUT_PANEL_COLOR);
-		aboutPanel.add(copyrightHyperlink, "growx,align right");
-		aboutPanel.setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
-		JPanel centerPanel = new JPanel(new MigLayout("insets 0", "", "20[]0[]"));
-
-		centerPanel.add(loginPanel, "align center,span,wrap");
-		centerPanel.add(aboutPanel, "align center,wrap");
-
-		centerPanel.setMinimumSize(centerPanel.getPreferredSize());
-		centerPanel.setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
-		centerPanel.setOpaque(false);
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -515,8 +503,16 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 	}
 
 	@Override
-	public void setKpiHyperlinkAction(ActionListener actionListener) {
-		copyrightHyperlink.addActionListener(actionListener);
+	public void setHelpAction(ActionListener actionListener) {
+		helpHl.addActionListener(actionListener);
+		
 	}
+
+	@Override
+	public void setAboutAction(ActionListener actionListener) {
+		infoHl.addActionListener(actionListener);		
+	}
+
+	
 
 }
