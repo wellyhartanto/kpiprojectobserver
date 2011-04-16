@@ -30,15 +30,17 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-
-Source: "C:\Temp\PO\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Temp\POsource\start.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Temp\POsource\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{commondesktop}\Project Observer"; Filename: "{app}\po.jar"; Tasks: desktopicon; WorkingDir: "{app}"; IconFileName: "{app}\icondesktop.ico" ;Flags: runminimized
+Name: "{group}\Project Observer"; Filename: "{app}\start.bat";  WorkingDir: "{app}"; IconFileName: "{app}\icondesktop.ico" ;Flags: runminimized
+Name: "{group}\{cm:UninstallProgram,Project Observer}"; Filename: "{uninstallexe}"
+Name: "{commondesktop}\Project Observer"; Filename: "{app}\start.bat"; Tasks: desktopicon; WorkingDir: "{app}"; IconFileName: "{app}\icondesktop.ico" ;Flags: runminimized
 
 
 [Run]
-Filename: "{app}\po.jar"; Description: "{cm:LaunchProgram,Project Observer}"; Flags: shellexec postinstall skipifsilent
+Filename: "{app}\start.bat"; Description: "{cm:LaunchProgram,Project Observer}"; Flags: shellexec postinstall skipifsilent
 
 
