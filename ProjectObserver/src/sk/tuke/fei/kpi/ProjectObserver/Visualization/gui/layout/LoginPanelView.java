@@ -214,7 +214,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 
 		infoProjectDescription = new JXLabel();
 		infoProjectDescription.setLineWrap(true);
-		infoProjectDescription.setMaximumSize(projectDescription.getPreferredSize());
+		infoProjectDescription.setMaximumSize(new Dimension(550, 80));
 		infoProjectDescription.setMinimumSize(new Dimension(100, 80));
 		// infoProjectDescription.setLineWrap(true);
 		// infoProjectDescription.setAutoscrolls(true);
