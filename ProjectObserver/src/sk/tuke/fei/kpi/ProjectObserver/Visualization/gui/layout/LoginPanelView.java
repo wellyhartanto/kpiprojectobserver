@@ -108,7 +108,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		// LoginPanelPresenter.EN_LANGUAGE };
 
 
-		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
+//		setBackground(CommonColors.LOGIN_BACKGROUND_COLOR);
 		setOpaque(true);
 
 		languages = new JComboBox(Languages.getlanguages());
@@ -340,7 +340,7 @@ public class LoginPanelView extends JPanel implements LoginPanelDisplay {
 		loginPanel.add(infoHl,"align right");
 		
 		
-		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
+//		loginPanel.setBackground(CommonColors.LOGINPANEL_COLOR);
 	//	loginPanel.setBorder(BorderFactory.createTitledBorder(""));
 		
 

@@ -13,6 +13,7 @@ import javax.swing.JRadioButton;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 
@@ -76,6 +77,9 @@ public class ExportDialogView extends JDialog implements ExportDialogDisplay {
 		setTitle(Messages.getMessage("dialog.export.title"));
 
 		setLayout(new MigLayout("fill,insets 5", "20[][]20", "20[][][][]30[]20"));
+		getContentPane().setBackground(CommonColors.LOGINPANEL_COLOR_TO);
+		
+		
 		add(missing, "span,wrap");
 		add(extra, "span,wrap");
 		add(all, "span,wrap");

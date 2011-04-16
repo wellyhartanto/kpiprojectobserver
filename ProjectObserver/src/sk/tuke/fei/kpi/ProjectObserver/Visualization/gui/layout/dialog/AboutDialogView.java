@@ -28,7 +28,7 @@ public class AboutDialogView extends JDialog {
 	
 	
 	public AboutDialogView() {
-		setTitle("About");
+		setTitle(Messages.getMessage("dialog.about.title"));
 		setResizable(false);
 		setLocationByPlatform(true);
 		
