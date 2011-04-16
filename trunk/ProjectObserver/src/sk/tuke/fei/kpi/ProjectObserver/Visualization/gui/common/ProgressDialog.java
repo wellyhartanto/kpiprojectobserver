@@ -24,10 +24,15 @@ public class ProgressDialog extends JDialog {
 	super.setResizable(false);
 	super.setTitle(title);
 	super.setLayout(new MigLayout("", "[150::]"));
+	getContentPane().setBackground(CommonColors.LOGINPANEL_COLOR_TO);
+	
+	
 	JXBusyLabel label = new JXBusyLabel(new Dimension(32, 32));
-	label.setToolTipText("working");
+	label.setToolTipText("");
 	label.setBusy(true);
-	add(new JLabel(message), "center,wrap");
+	JLabel messa = new JLabel(message);
+	messa.setFont(CommonFonts.getNormalTextFont());
+	add(messa, "center,wrap");
 	add(label, "center,wrap");
 	pack();
 	setLocationRelativeTo(getOwner());

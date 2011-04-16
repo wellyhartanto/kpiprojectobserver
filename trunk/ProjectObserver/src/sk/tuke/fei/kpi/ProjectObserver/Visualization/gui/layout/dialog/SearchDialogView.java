@@ -28,13 +28,13 @@ import javax.swing.text.Highlighter;
 
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
 import sk.tuke.fei.kpi.akAgent.integration.Project;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.java.TypeElement;
 
-public class SearchDialogView extends JDialog implements DocumentListener,
-		SearchDialogDisplay {
+public class SearchDialogView extends JDialog implements DocumentListener, SearchDialogDisplay {
 
 	private static final long serialVersionUID = -8274637867008423672L;
 	private JTextField entry;
@@ -86,42 +86,37 @@ public class SearchDialogView extends JDialog implements DocumentListener,
 		entry.setFont(CommonFonts.getNormalTextFont());
 		status.setFont(CommonFonts.getNormalTextFont());
 		jLabel1.setFont(CommonFonts.getNormalTextFont());
-		
+
 		okButton = new JButton(Messages.getMessage("dialog.ok"));
 		cancelButton = new JButton(Messages.getMessage("dialog.cancel"));
-		
+
 		okButton.setFont(CommonFonts.getNormalTextFont());
 		cancelButton.setFont(CommonFonts.getNormalTextFont());
 
 		okButton.setMinimumSize(new Dimension(75, okButton.getHeight()));
 		cancelButton.setMinimumSize(new Dimension(75, cancelButton.getHeight()));
-		
+
 		getRootPane().setDefaultButton(okButton);
-		
+
 		// setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setTitle(Messages.getMessage("dialog.search.title"));
 
 		list = new JList();
 		list.setFont(CommonFonts.getTableContentFont());
-		
+
 		jScrollPane1 = new JScrollPane(list);
 		jLabel1.setText(Messages.getMessage("dialog.search.searchtext"));
 
-		setLayout(new MigLayout("fill", "",
-				"[growprio 50][growprio 50][][growprio 50]"));
+		setLayout(new MigLayout("fill", "", "[growprio 50][growprio 50][][growprio 50]"));
 
-		JPanel panel1 = new JPanel(
-				new MigLayout("fillx", "[growprio 50][]", ""));
-		// panel1.add(jLabel1,"wrap");
-		// panel1.add(entry, "growx");
-
+		getContentPane().setBackground(CommonColors.LOGINPANEL_COLOR_TO);
 		add(jLabel1, "growx,wrap");
 		add(entry, "growx,wrap");
 
 		JPanel panel3 = new JPanel(new MigLayout("fillx"));
 		panel3.add(cancelButton, "align right");
 		panel3.add(okButton, "align right");
-
+		panel3.setBackground(CommonColors.LOGINPANEL_COLOR_TO);
 		// add(panel1, "grow,wrap");
 		add(jScrollPane1, "grow,wrap");
 		add(status, "wrap");
