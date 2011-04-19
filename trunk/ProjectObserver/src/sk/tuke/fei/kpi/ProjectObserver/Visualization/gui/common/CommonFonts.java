@@ -38,7 +38,7 @@ public class CommonFonts {
 				// "LucidaGrandeBold.ttf");
 				InputStream fis;
 
-				System.out.println("citam bold");
+			//	System.out.println("citam bold");
 
 				fis = new FileInputStream(xmlFile);
 				bold = Font.createFont(Font.TRUETYPE_FONT, fis);
@@ -70,7 +70,7 @@ public class CommonFonts {
 				// "LucidaGrande.ttf");
 				InputStream fis;
 
-				System.out.println("citam font");
+//				System.out.println("citam font");
 
 				fis = new FileInputStream(xmlFile);
 				normal = Font.createFont(Font.TRUETYPE_FONT, fis);
