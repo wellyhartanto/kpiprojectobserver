@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -30,12 +28,8 @@ import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.plaf.basic.BasicToolBarUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -124,11 +118,12 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private ImageIcon iconChangeProject;
 	private ImageIcon iconSearch;
 	private ImageIcon iconExport;
+	private ImageIcon iconHelp;
 
 	private JButton changeProjectHl;
 	private JButton searchHl;
 	private JButton exportHl;
-
+	private JButton helpHl;
 
 	public MainPanelView(Project project) {
 
@@ -139,7 +134,6 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	}
 
 	private void initComponents() {
-
 
 		final Color OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR = new Color(64, 64, 64);
 		final Color OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR = new Color(135, 135, 135);
@@ -158,8 +152,9 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			@Override
 			public Border getBorder() {
 				Window window = SwingUtilities.getWindowAncestor(this);
-				return window != null && window.isFocused() ? BorderFactory.createMatteBorder(0, 0, 1, 0, OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR)
-						: BorderFactory.createMatteBorder(0, 0, 1, 0, OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR);
+				return window != null && window.isFocused() ? BorderFactory.createMatteBorder(0, 0, 1, 0,
+						OS_X_UNIFIED_TOOLBAR_FOCUSED_BOTTOM_COLOR) : BorderFactory.createMatteBorder(0, 0, 1, 0,
+						OS_X_UNIFIED_TOOLBAR_UNFOCUSED_BORDER_COLOR);
 			}
 
 		};
@@ -169,6 +164,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		iconChangeProject = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "change24.png"));
 		iconSearch = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "search24.png"));
 		iconExport = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "export_icon24.png"));
+		iconHelp = new ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH + "help_24.png"));
 
 		// iconChangeProject = new
 		// ImageIcon(getClass().getResource(CommonConstants.IMAGES_FOLDER_PATH +
@@ -215,9 +211,18 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		exportHl.setBackground(Color.GRAY);
 		exportHl.setOpaque(false);
 
+		helpHl = new JButton();
+		helpHl.setIcon(iconHelp);
+		helpHl.setSelected(false);
+		helpHl.setToolTipText(Messages.getMessage("tooltip.help"));
+		helpHl.setForeground(Color.BLACK);
+		helpHl.setBackground(Color.GRAY);
+		helpHl.setOpaque(false);
+
 		actions.add(changeProjectHl, "gapleft 10");
 		actions.add(exportHl);
 		actions.add(searchHl);
+		actions.add(helpHl);
 
 		leftScrollPane = new JScrollPane();
 		leftScrollPane.setName("leftScrollPane");
@@ -436,15 +441,16 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
 			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
-			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlpackage = project.getMappingHolder().getJava2UmlMapping().getPackage(
+			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Package umlpackage = project.getMappingHolder()
+					.getJava2UmlMapping().getPackage(
 
-			((Package) nodeInfo).getFullyQualifiedName());
+					((Package) nodeInfo).getFullyQualifiedName());
 
-		//	if (umlpackage != null) {
-				umlPackagePanel = new PackagePanel(umlpackage);
-				umlPackagePanel.setVisible(true);
-				rightPanel.setBottomComponent(umlPackagePanel);
-	//		}
+			// if (umlpackage != null) {
+			umlPackagePanel = new PackagePanel(umlpackage);
+			umlPackagePanel.setVisible(true);
+			rightPanel.setBottomComponent(umlPackagePanel);
+			// }
 
 		}
 		if (nodeInfo instanceof Class) {
@@ -491,7 +497,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
 			Difference difference = project.getMappingHolder().getDifference(((Class) nodeInfo).getFullyQualifiedName());
-			if (difference!=null && difference.differs()) {
+			if (difference != null && difference.differs()) {
 				methodsPanelPresenter.setExtraMethods(difference.getExtraMethods());
 				fieldsPanelPresenter.setExtraFields(difference.getExtraFields());
 			}
@@ -499,11 +505,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Class umlclass = project.getMappingHolder().getJava2UmlMapping()
 					.getClass(((Class) nodeInfo).getFullyQualifiedName());
 
-//			if (umlclass != null) {
-				umlClassPanel = new ClassPanel(umlclass, difference);
-				umlClassPanel.setVisible(true);
-				rightPanel.setBottomComponent(umlClassPanel);
-//			}
+			// if (umlclass != null) {
+			umlClassPanel = new ClassPanel(umlclass, difference);
+			umlClassPanel.setVisible(true);
+			rightPanel.setBottomComponent(umlClassPanel);
+			// }
 
 		}
 		if (nodeInfo instanceof Interface) {
@@ -532,8 +538,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
 			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 
-			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlinterface = project.getMappingHolder().getJava2UmlMapping()
-					.getInterface(
+			sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Interface umlinterface = project.getMappingHolder()
+					.getJava2UmlMapping().getInterface(
 
 					((Interface) nodeInfo).getFullyQualifiedName());
 
@@ -606,8 +612,7 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 		if ((nodeInfo instanceof Package) || (nodeInfo instanceof Class) || (nodeInfo instanceof Interface)) {
 			restoreWindowPrefs();
 		}
-		
-		
+
 		repaint();
 
 	}
@@ -754,6 +759,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	}
 
 	@Override
+	public void setHelpAction(ActionListener l) {
+		helpHl.addActionListener(l);
+	}
+
+	@Override
 	public void setExportAction(ActionListener l) {
 		exportHl.addActionListener(l);
 	}
@@ -761,7 +771,8 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 	private static final String TABLE_PROPERTIES_FILE = "projectobserverprefs.xml";
 
 	private void initTableProperties() {
-		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage().setDirectory(new File(System.getProperty("java.io.tmpdir")));
+		org.jdesktop.application.Application.getInstance().getContext().getLocalStorage().setDirectory(
+				new File(System.getProperty("java.io.tmpdir")));
 		sessionStorage = org.jdesktop.application.Application.getInstance().getContext().getSessionStorage();
 
 	}
@@ -792,11 +803,11 @@ public class MainPanelView extends JPanel implements MainPanelDisplay {
 			sessionStorage.restore(this, TABLE_PROPERTIES_FILE);
 		} catch (Exception e1) {
 		}
-		
-		if(tabbedPane.getTabCount()>0){
+
+		if (tabbedPane.getTabCount() > 0) {
 			tabbedPane.setSelectedIndex(0);
 		}
-		
+
 	}
 
 	@Override
