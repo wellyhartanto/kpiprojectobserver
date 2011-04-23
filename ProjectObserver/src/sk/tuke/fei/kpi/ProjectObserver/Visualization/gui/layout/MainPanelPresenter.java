@@ -18,13 +18,13 @@ import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonColors;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.CommonFonts;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.ExportDialogPresenter;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.HelpMainDialogView;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.dialog.SearchDialogPresenter;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.renderers.NavigationJTreeCellRenderer;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.mvp.BasicPresenter;
@@ -96,6 +96,13 @@ public class MainPanelPresenter extends BasicPresenter<MainPanelDisplay> {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				exportAction();
+			}
+		});
+		
+		display.setHelpAction(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new HelpMainDialogView().setVisible(true);
 			}
 		});
 

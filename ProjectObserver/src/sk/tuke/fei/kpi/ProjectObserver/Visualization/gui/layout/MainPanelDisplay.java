@@ -23,9 +23,11 @@ public interface MainPanelDisplay extends DisplayComponent {
 	void setChangeProjectAction(ActionListener l);
 
 	void setSearchAction(ActionListener l);
-	
+
+	void setHelpAction(ActionListener l);
+
 	void setExportAction(ActionListener l);
-	
+
 	void setTreeValueChangedAction();
 
 	void setDetailSelection(JTable table);
