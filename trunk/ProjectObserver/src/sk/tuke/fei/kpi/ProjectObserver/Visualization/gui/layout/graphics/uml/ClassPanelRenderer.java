@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.ComponentsBuilder;
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.common.Messages;
+import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.util.StringUtil;
 import sk.tuke.fei.kpi.akAgent.integration.alignment.difference.Difference;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Field;
 import sk.tuke.fei.kpi.akAgent.integration.metamodel.uml.classDiagram.Method;
@@ -65,7 +66,9 @@ public class ClassPanelRenderer extends JPanel {
 		add(ComponentsBuilder.createDiagramLabel(Messages.getMessage("title.methods")), "center,span");
 		for (Method method : umlClass.getMethods()) {
 			JLabel methodLbl = new JLabel();
-			methodLbl.setText(method.getVisibility() + " " + method.getReturnType() + " " + method.getName());
+			
+			
+			methodLbl.setText(StringUtil.convertUMLMethodToString(method));
 			if (difference.getMissingMethods().contains(method)) {
 				methodLbl.setForeground(Color.RED);
 			}
