@@ -45,23 +45,23 @@ public class HelpMainDialogView extends JDialog {
 		packageexplan.setIcon(iconPackageDiff);
 		packageexplan.setFont(CommonFonts.getAboutTextFont());
 		packageexplan.setLineWrap(true);
-		packageexplan.setForeground(Color.GRAY);
+		packageexplan.setForeground(Color.DARK_GRAY);
 
 		JXLabel classexplan = new JXLabel(Messages.getMessage("info.classexplanation"));
 		classexplan.setIcon(iconClassDiff);
 		classexplan.setFont(CommonFonts.getAboutTextFont());
 		classexplan.setLineWrap(true);
-		classexplan.setForeground(Color.GRAY);
+		classexplan.setForeground(Color.DARK_GRAY);
 
 		JXLabel interfaceexplan = new JXLabel(Messages.getMessage("info.interfaceexplanation"));
 		interfaceexplan.setIcon(iconInterfaceDiff);
 		interfaceexplan.setFont(CommonFonts.getAboutTextFont());
 		interfaceexplan.setLineWrap(true);
-		interfaceexplan.setForeground(Color.GRAY);
+		interfaceexplan.setForeground(Color.DARK_GRAY);
 		JXLabel mesterview = new JXLabel(Messages.getMessage("dialog.help.mainhelp.masterview"));
 		mesterview.setFont(CommonFonts.getAboutTextFont());
 		mesterview.setLineWrap(true);
-		mesterview.setForeground(Color.GRAY);
+		mesterview.setForeground(Color.DARK_GRAY);
 
 		left.add(mesterview, "wrap,gaptop 10");
 		left.add(packageexplan, "wrap,gaptop 10");
@@ -78,13 +78,13 @@ public class HelpMainDialogView extends JDialog {
 		extra.setOpaque(true);
 		
 		JXLabel extrafield = new JXLabel(Messages.getMessage("info.extra"));
-		extrafield.setForeground(Color.GRAY);
+		extrafield.setForeground(Color.DARK_GRAY);
 		extrafield.setFont(CommonFonts.getAboutTextFont());
 
 		JXLabel detailview = new JXLabel(Messages.getMessage("dialog.help.mainhelp.detailview"));
 		detailview.setFont(CommonFonts.getAboutTextFont());
 		detailview.setLineWrap(true);
-		detailview.setForeground(Color.GRAY);
+		detailview.setForeground(Color.DARK_GRAY);
 
 		rightTop.add(detailview, "span,growx,wrap");
 		rightTop.add(extra, "gapleft 1,growx");
@@ -94,12 +94,12 @@ public class HelpMainDialogView extends JDialog {
 		missing.setForeground(Color.RED);
 		
 		JXLabel missionfield = new JXLabel(Messages.getMessage("info.missing"));
-		missionfield.setForeground(Color.GRAY);
+		missionfield.setForeground(Color.DARK_GRAY);
 		missionfield.setFont(CommonFonts.getAboutTextFont());
 		JXLabel umlview = new JXLabel(Messages.getMessage("dialog.help.mainhelp.umlview"));
 		umlview.setFont(CommonFonts.getAboutTextFont());
 		umlview.setLineWrap(true);
-		umlview.setForeground(Color.GRAY);
+		umlview.setForeground(Color.DARK_GRAY);
 
 		rightBottom.add(umlview, "span,growx,wrap");
 		rightBottom.add(missing, "gapleft 1,growx");

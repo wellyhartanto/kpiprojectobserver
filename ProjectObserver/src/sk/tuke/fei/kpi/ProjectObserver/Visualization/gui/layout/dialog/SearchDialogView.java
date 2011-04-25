@@ -83,6 +83,8 @@ public class SearchDialogView extends JDialog implements DocumentListener, Searc
 		status = new JLabel();
 		jLabel1 = new JLabel();
 
+		
+		
 		entry.setFont(CommonFonts.getNormalTextFont());
 		status.setFont(CommonFonts.getNormalTextFont());
 		jLabel1.setFont(CommonFonts.getNormalTextFont());
@@ -185,6 +187,9 @@ public class SearchDialogView extends JDialog implements DocumentListener, Searc
 	@Override
 	public void setStatus(String status) {
 		this.status.setText(status);
+		this.status.setMaximumSize(new Dimension(this.getSize().width-25,this.getSize().height));
+		
+		this.status.repaint();
 	}
 
 	@Override
