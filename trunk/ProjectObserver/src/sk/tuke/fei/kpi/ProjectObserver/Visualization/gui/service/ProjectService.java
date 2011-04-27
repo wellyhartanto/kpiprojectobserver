@@ -33,7 +33,7 @@ public class ProjectService {
 			ex.printStackTrace();
 		}
 	}
-
+ 
 	public static List<Project> loadProjects() {
 
 		List<Project> projects = new ArrayList<Project>();
