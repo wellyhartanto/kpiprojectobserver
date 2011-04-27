@@ -27,7 +27,7 @@ public class TestData {
 	    for (int j = 0; j < 7; j++) {
 		Class c = new Class();
 		c.setName("class" + i + "." + j);
-
+ 
 		List<Method> methods = new ArrayList<Method>();
 		List<Field> fields = new ArrayList<Field>();
 
