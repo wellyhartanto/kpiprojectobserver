@@ -2,12 +2,8 @@ package sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.layout.graphics.uml;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
 
 import javax.swing.BorderFactory;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 import org.w3c.dom.Document;
 
@@ -46,7 +42,7 @@ public class PackageGraphComponent extends mxGraphComponent {
 		graph.setView(graphView);
 		graph.setCellsEditable(false);
 		graph.setConnectableEdges(false);
-		
+		graph.setCellsMovable(false);
 		setBorder(BorderFactory.createEmptyBorder());
 		
 		getViewport().setBackground(Color.WHITE);

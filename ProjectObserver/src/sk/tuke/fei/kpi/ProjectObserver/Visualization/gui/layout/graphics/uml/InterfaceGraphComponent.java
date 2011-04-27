@@ -42,6 +42,8 @@ public class InterfaceGraphComponent extends mxGraphComponent {
 		getViewport().setOpaque(true);
 		graph.setView(graphView);
 		graph.setCellsEditable(false);
+		graph.setConnectableEdges(false);
+		graph.setCellsMovable(false);
 		setBorder(BorderFactory.createEmptyBorder());
 
 		getViewport().setBackground(Color.WHITE);

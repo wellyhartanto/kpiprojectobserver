@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 
 import org.w3c.dom.Document;
 
@@ -47,6 +46,7 @@ public class ClassGraphComponent extends mxGraphComponent {
 		graph.setView(graphView);
 		graph.setCellsEditable(false);
 		graph.setConnectableEdges(false);
+		graph.setCellsMovable(false);
 		setBorder(BorderFactory.createEmptyBorder());
 		getViewport().setBackground(Color.WHITE);
 	}
