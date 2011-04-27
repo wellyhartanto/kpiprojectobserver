@@ -7,11 +7,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import sk.tuke.fei.kpi.ProjectObserver.Visualization.gui.MainFrame;
@@ -145,8 +145,13 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				fileChooser.setMultiSelectionEnabled(false);
 				int ret = fileChooser.showOpenDialog(display.asComponent());
 				if (ret == JFileChooser.APPROVE_OPTION) {
-					ProjectService.importProject(fileChooser.getSelectedFile());
-					display.refreshTableModel();
+					File f = fileChooser.getSelectedFile();
+					if (f.getName().toLowerCase().endsWith(".observer")) {
+						ProjectService.importProject(f);
+						display.refreshTableModel();
+					} else {
+						showWrongFileTypeWarning();
+					}
 				}
 			}
 		});
@@ -177,8 +182,12 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				fileChooser.setMultiSelectionEnabled(false);
 				int ret = fileChooser.showOpenDialog(display.asComponent());
 				if (ret == JFileChooser.APPROVE_OPTION) {
-					sourceCodeFile = fileChooser.getSelectedFile();
-					display.setSourceCodeFileLabel(sourceCodeFile.getName());
+					if (fileChooser.getSelectedFile().getName().toLowerCase().endsWith(".owl")) {
+						sourceCodeFile = fileChooser.getSelectedFile();
+						display.setSourceCodeFileLabel(sourceCodeFile.getName());
+					} else {
+						showWrongFileTypeWarning();
+					}
 				}
 			}
 		});
@@ -192,8 +201,12 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 				int ret = fileChooser.showOpenDialog(display.asComponent());
 
 				if (ret == JFileChooser.APPROVE_OPTION) {
-					umlFile = fileChooser.getSelectedFile();
-					display.setUmlFileLabel(umlFile.getName());
+					if (fileChooser.getSelectedFile().getName().toLowerCase().endsWith(".xml")) {
+						umlFile = fileChooser.getSelectedFile();
+						display.setUmlFileLabel(umlFile.getName());
+					} else {
+						showWrongFileTypeWarning();
+					}
 				}
 			}
 		});
@@ -223,5 +236,9 @@ public class LoginPanelPresenter extends BasicPresenter<LoginPanelDisplay> {
 
 			c = c.getParent();
 		}
+	}
+
+	private void showWrongFileTypeWarning() {
+		JOptionPane.showMessageDialog(display.asComponent(), Messages.getMessage("message.warning.invalidfile"), "", JOptionPane.WARNING_MESSAGE);
 	}
 }
